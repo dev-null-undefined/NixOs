@@ -14,7 +14,7 @@
       mutt
       # Commands
       lsd home-manager neofetch screenfetch tmux openssh gnumake tldr nmap
-      most sshfs feh youtube-dl ffmpeg
+      most sshfs feh youtube-dl ffmpeg unzip zip
       # Utilities
       wget curl git pandoc cmake light blueman fzf autorandr cron bat lolcat
       gnupg libnotify libinput-gestures hunspell aspell gspell xclip
@@ -28,7 +28,7 @@
       # ======= GUI programms ======
       arandr alacritty dolphin gparted flameshot spotify pavucontrol
       gnome.gnome-power-manager firefox brave copyq lxappearance wireshark
-      gimp shotcut vlc
+      gimp shotcut vlc blender font-manager
       # Comunication
       discord
       # ===========================
