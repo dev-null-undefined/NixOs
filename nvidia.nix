@@ -11,7 +11,7 @@ let
 in
 {
   environment.systemPackages = [ nvidia-offload ];
-
+  services.xserver.dpi = 96;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.prime = {

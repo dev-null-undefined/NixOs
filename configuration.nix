@@ -118,7 +118,8 @@
     mplus-outline-fonts
     dina-font
     proggyfonts
-    awesome
+    font-awesome_4
+    font-awesome
     meslo-lgs-nf
   ];
 
