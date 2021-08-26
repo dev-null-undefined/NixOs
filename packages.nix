@@ -30,7 +30,7 @@
       # ======= GUI programms ======
       arandr alacritty dolphin gparted flameshot spotify pavucontrol
       gnome.gnome-power-manager firefox brave copyq lxappearance wireshark
-      gimp shotcut vlc blender font-manager insomnia
+      gimp shotcut vlc blender font-manager insomnia mysql-workbench
       # Comunication
       discord
       # ===========================
@@ -47,6 +47,10 @@
       python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
       python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
       # --------------------------
+
+      # Spell checking
+      hunspell
+      hunspellDicts.en-us hunspellDicts.cs-cz
   ];
   nixpkgs.config = {
       allowUnfree = true;
