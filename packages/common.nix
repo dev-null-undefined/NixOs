@@ -10,7 +10,9 @@
 
     # Commands
     neofetch tmux openssh gnumake tldr nmap tree gcc
-    killall
+    killall 
+    # man page
+    man man-pages
 
     # Utilities
     wget curl git cmake gnupg lsof whois dnsutils
@@ -21,4 +23,10 @@
     python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
     # --------------------------
   ];
+   
+  # man pages
+  documentation.enable = true;
+  documentation.man.enable = true;
+  documentation.dev.enable = true;
+ 
 }
