@@ -7,15 +7,37 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nvidia.nix
-      ./packages.nix
+      ./packages/packages.nix
     ];
-
+  specialisation = {
+    gnome.configuration = {
+      system.nixos = {
+        label = "gnome";
+        tags = [ "gnome" ];
+      };
+      imports = [
+        ./gnome.nix
+      ];
+    };
+    i3.configuration = {
+      system.nixos = {
+        label = "i3";
+        tags = [ "i3" ];
+      };
+      imports = [
+        ./i3.nix
+      ];
+    };
+  };
   # Use the systemd-boot EFI boot loader.
   boot = {
       loader = {
-	  systemd-boot.enable = true;
-	  efi.canTouchEfiVariables = true;
+        grub = {
+          efiSupport = true;
+          device = "nodev";
+          useOSProber = true;
+        };
+        efi.canTouchEfiVariables = true;
       };
       resumeDevice = "/dev/nvme1n1p3";
   };
@@ -50,28 +72,6 @@
 
   environment.pathsToLink = [ "/libexec" ];
 
-  services.xserver = {
-    enable = true;
-
-    desktopManager = {
-      xterm.enable = false;
-    };
-   
-    displayManager = {
-        sddm.enable = true;
-        defaultSession = "none+i3";
-    };
-
-    windowManager.i3 = {
-      enable = true;
-      package = pkgs.i3-gaps;
-      extraPackages = with pkgs; [
-        rofi #application launcher most people use
-        i3lock #default i3 screen locker
-	i3status-rust
-     ];
-    };
-  };
 
   # Configure keymap in X11
   services.xserver.layout = "us";
