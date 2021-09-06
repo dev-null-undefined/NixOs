@@ -107,6 +107,11 @@
     meslo-lgs-nf
   ];
 
+  # lid close action
+  services.logind.lidSwitch = "ignore";
+  services.logind.lidSwitchDocked = "ignore";
+  services.logind.extraConfig = "HandleLidSwitch=ignore";
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
