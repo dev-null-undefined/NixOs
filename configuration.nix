@@ -8,6 +8,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./packages/packages.nix
+      ./grub-savedefault.nix
       ./users/default.nix
     ];
   specialisation = {
