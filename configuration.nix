@@ -8,6 +8,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./packages/packages.nix
+      ./users/default.nix
     ];
   specialisation = {
     gnome.configuration = {
@@ -90,24 +91,7 @@
     enable = true;
     touchpad.naturalScrolling = true;
   };
-
-
-  users.users.martin = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.zsh;
-    useDefaultShell = false;
-  };
-
-  # No sudo password 
-  security.sudo.extraRules = [{ 
-      users = [ "martin" ];
-      commands = [{ 
-	  command = "ALL";
-	  options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
-      }];
-  }];
-  
+ 
   fonts.fonts = with pkgs; [
     noto-fonts
     noto-fonts-cjk
