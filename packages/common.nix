@@ -10,7 +10,8 @@
 
     # Commands
     neofetch tmux openssh gnumake tldr nmap tree gcc
-    killall 
+    killall thefuck
+
     # man page
     man man-pages
 

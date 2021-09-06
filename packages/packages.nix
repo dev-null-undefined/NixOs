@@ -6,7 +6,7 @@
         ./common.nix
         ./zsh.nix
       ];
-
+      
     environment.systemPackages = with pkgs; [
       papirus-icon-theme
       # ----- Terminal tools -----
@@ -19,7 +19,7 @@
       # Commands
       lsd home-manager screenfetch gnumake
       most sshfs feh youtube-dl ffmpeg unzip zip asciinema
-      imagemagick 
+      imagemagick
       # Utilities
       pandoc light blueman fzf autorandr cron bat lolcat
       libnotify libinput-gestures hunspell aspell gspell xclip
@@ -30,10 +30,10 @@
       dunst
 
       # ======= GUI programms ======
-      spotify 
+      spotify
       firefox brave chromium
       copyq lxappearance wireshark
-      gimp-with-plugins vlc shotcut vlc blender 
+      gimp-with-plugins vlc shotcut vlc blender
       font-manager ark dolphin gparted flameshot pavucontrol arandr
       insomnia mysql-workbench alacritty
       # Comunication
