@@ -14,7 +14,6 @@
   specialisation = {
     gnome.configuration = {
       system.nixos = {
-        label = "gnome";
         tags = [ "gnome" ];
       };
       imports = [
@@ -23,11 +22,18 @@
     };
     i3.configuration = {
       system.nixos = {
-        label = "i3";
         tags = [ "i3" ];
       };
       imports = [
         ./i3.nix
+      ];
+    };
+    plasma.configuration = {
+      system.nixos = {
+        tags = [ "plasma" ];
+      };
+      imports = [
+        ./plasma.nix
       ];
     };
   };
