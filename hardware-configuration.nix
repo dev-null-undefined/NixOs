@@ -7,11 +7,13 @@
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
-
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+
+  # Air plane mode fix
+  boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
 
   fileSystems."/" =
     { device = "zroot/root";
@@ -31,6 +33,13 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/4661-989F";
       fsType = "vfat";
+    };
+  
+  fileSystems."/mnt/windows" = 
+    {
+      device = "/dev/disk/by-uuid/E60284100283E441";
+      fsType = "auto";
+      options = [ "defaults" "user" "rw" "utf8" "noauto" "umask=000" ];
     };
 
   swapDevices = [{
