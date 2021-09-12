@@ -1,10 +1,11 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
     imports =
       [
         ./common.nix
         ./zsh.nix
+        ./games.nix
       ];
       
     environment.systemPackages = with pkgs; [
@@ -34,7 +35,9 @@
       firefox brave chromium
       copyq lxappearance wireshark
       gimp-with-plugins vlc shotcut vlc blender
-      font-manager ark dolphin gparted flameshot pavucontrol arandr
+      font-manager ark 
+      dolphin gnome.nautilus pcmanfm 
+      gparted flameshot pavucontrol arandr
       insomnia mysql-workbench alacritty
       # Comunication
       discord

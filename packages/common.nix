@@ -6,17 +6,19 @@
   environment.systemPackages = with pkgs; [
     # TUIS
     vim_configurable neovim
-    htop ranger
+    htop 
+    mc ranger
 
     # Commands
-    neofetch tmux openssh gnumake tldr nmap tree gcc
-    killall thefuck
+    neofetch cpufetch
+    tmux openssh gnumake tldr nmap tree gcc
+    killall thefuck nix-diff nix-index
 
     # man page
     man man-pages
 
     # Utilities
-    wget curl git cmake gnupg lsof whois dnsutils
+    wget curl git cmake gnupg lsof whois dnsutils file
 
     # Languages
     python2 jdk jdk8 php nodejs nodePackages.npm
