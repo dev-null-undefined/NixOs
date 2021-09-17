@@ -12,7 +12,7 @@
     # Commands
     neofetch cpufetch
     tmux openssh gnumake tldr nmap tree gcc
-    killall thefuck nix-diff nix-index
+    killall thefuck nix-diff nix-index traceroute
 
     # man page
     man man-pages
@@ -21,7 +21,8 @@
     wget curl git cmake gnupg lsof whois dnsutils file
 
     # Languages
-    python2 jdk jdk8 php nodejs nodePackages.npm
+    jdk jdk8 php nodejs nodePackages.npm
+    python27Full python27Packages.virtualenv python27Packages.pip python27Packages.setuptools
     python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
     python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
     # --------------------------
