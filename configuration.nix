@@ -11,33 +11,8 @@
       ./packages/packages.nix
       ./grub-savedefault.nix
       ./users/default.nix
+      ./de/dwm.nix
     ];
-  specialisation = {
-    gnome.configuration = {
-      system.nixos = {
-        tags = [ "gnome" ];
-      };
-      imports = [
-        ./gnome.nix
-      ];
-    };
-    i3.configuration = {
-      system.nixos = {
-        tags = [ "i3" ];
-      };
-      imports = [
-        ./i3.nix
-      ];
-    };
-    plasma.configuration = {
-      system.nixos = {
-        tags = [ "plasma" ];
-      };
-      imports = [
-        ./plasma.nix
-      ];
-    };
-  };
   # Use the systemd-boot EFI boot loader.
   boot = {
       loader = {
