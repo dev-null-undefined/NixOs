@@ -6,6 +6,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      <nixos-hardware/msi/gs60>
       ./hardware-configuration.nix
       ./packages/packages.nix
       ./grub-savedefault.nix
