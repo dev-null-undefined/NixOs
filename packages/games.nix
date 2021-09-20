@@ -11,5 +11,6 @@
         fetchSubmodules = true;
       };
     })) 
+    vitetris
   ];
 }
