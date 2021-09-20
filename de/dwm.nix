@@ -38,6 +38,7 @@
     systemPackages = with pkgs; [
       rofi
       acpi
+      slock # locker
       xmenu
       wmname # fix problems with JDK 
       xorg.xbacklight
