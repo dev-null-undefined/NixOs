@@ -1,8 +1,13 @@
 { pkgs, ... }:
 
 {
+
+  hardware.opengl.driSupport32Bit = true;
+  hardware.opengl.enable = true;
+  hardware.pulseaudio.support32Bit = true;
+
   environment.systemPackages = with pkgs; [
-   (pkgs.multimc.overrideAttrs (oldAttrs: rec{
+    (pkgs.multimc.overrideAttrs (old: rec{
       src = fetchFromGitHub {
         owner = "AfoninZ";
         repo = "MultiMC5-Cracked";
@@ -12,5 +17,11 @@
       };
     })) 
     vitetris
+    lutris
+    gnome.zenity
+    vulkan-tools
+    vulkan-headers
+    vulkan-loader
+    vulkan-tools-lunarg
   ];
 }
