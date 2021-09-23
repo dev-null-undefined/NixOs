@@ -52,6 +52,9 @@
 
       # Libs
       xorg.libX11 xorg.libXinerama xorg.libXft imlib2
+
+      # dev tools
+      valgrind
   ];
   nixpkgs.config = {
       allowUnfree = true;
