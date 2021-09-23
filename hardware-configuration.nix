@@ -5,7 +5,9 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [ 
+      (modulesPath + "/installer/scan/not-detected.nix")
+      <nixos-hardware/msi/gs60>
     ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
@@ -14,6 +16,11 @@
 
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
+
+  # lid close action
+  services.logind.lidSwitch = "ignore";
+  services.logind.lidSwitchDocked = "ignore";
+  services.logind.extraConfig = "HandleLidSwitch=ignore";
 
   fileSystems."/" =
     { device = "zroot/root";

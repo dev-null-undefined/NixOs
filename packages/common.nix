@@ -18,7 +18,11 @@
     neofetch cpufetch
     tmux openssh gnumake tldr nmap tree gcc
     killall thefuck nix-diff nix-index traceroute pciutils
-    openssl
+    openssl most sshfs ffmpeg unzip zip 
+    imagemagick
+
+    # Utilities
+    coreutils
 
     # man page
     man man-pages

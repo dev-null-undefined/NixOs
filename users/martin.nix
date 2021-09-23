@@ -9,10 +9,10 @@
 
   # No sudo password 
   security.sudo.extraRules = [{ 
-      users = [ "martin" ];
-      commands = [{ 
-	  command = "ALL";
-	  options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
-      }];
+    users = [ "martin" ];
+    commands = [{ 
+	    command = "ALL";
+	    options= [ "NOPASSWD" ]; # "SETENV" # Adding the following could be a good idea
+    }];
   }];
 }

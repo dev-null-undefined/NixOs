@@ -1,10 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../nvidia-sync.nix ];
+  imports = [ 
+    ../nvidia-sync.nix
+    ./default.nix
+  ];
   
   services.xserver = {
-    enable = true;
     desktopManager.plasma5.enable = true;
     displayManager.sddm.enable = true;
   };

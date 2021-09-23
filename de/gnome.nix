@@ -2,10 +2,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../nvidia-offload.nix ];
+  imports = [ 
+    ../nvidia-offload.nix
+    ./default.nix
+  ];
   services.xserver = {
-    enable = true;
-
     desktopManager = {
       gnome.enable = true;
     };
