@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
-{
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+in {
     imports =
       [
         ./common.nix
@@ -31,6 +33,7 @@
 
       # ======= GUI programms ======
       spotify
+      libreoffice
       firefox brave chromium
       copyq lxappearance wireshark
       gimp-with-plugins vlc blender shotcut
@@ -55,6 +58,9 @@
 
       # dev tools
       valgrind
+
+      # FIT - TZP
+      unstable.mathematica
   ];
   nixpkgs.config = {
       allowUnfree = true;
