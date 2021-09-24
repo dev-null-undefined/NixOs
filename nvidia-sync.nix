@@ -5,9 +5,11 @@
     videoDrivers = [ "nvidia" ];
     dpi = 96;
     screenSection = ''
-      Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-      Option         "AllowIndirectGLXProtocol" "off"
-      Option         "TripleBuffer" "on"
+       Option         "nvidiaXineramaInfoOrder" "DFP-1"
+       Option         "metamodes" "1920x1080_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNC=Off}"
+       Option         "SLI" "Off"
+       Option         "MultiGPU" "Off"
+       Option         "BaseMosaic" "off"
     '';
   };
   hardware.nvidia.prime = {
