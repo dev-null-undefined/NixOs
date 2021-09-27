@@ -9,7 +9,7 @@
       ./hardware-configuration.nix
       ./packages/packages.nix
       ./users/default.nix
-      # ./de/dwm.nix
+      ./services/services.nix
     ];
   # Use the systemd-boot EFI boot loader.
   boot.loader.grub = {
