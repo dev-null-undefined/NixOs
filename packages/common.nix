@@ -8,6 +8,9 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    # Wire guard VPN
+    wireguard
+
     # TUIS
     vim_configurable neovim
     htop 
