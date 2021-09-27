@@ -9,7 +9,10 @@ in {
         ./zsh.nix
         ./games.nix
         ./discord.nix
+        ./vscode.nix
+        # ./audio.nix
       ];
+     
     environment.systemPackages = with pkgs; [
       papirus-icon-theme
       # ----- Terminal tools -----
@@ -17,7 +20,7 @@ in {
       lynx
       bpytop glances gotop nload iftop nethogs
       mutt
-      nyancat
+      nyancat pipes cmatrix
       hyperfine
       # Commands
       lsd home-manager screenfetch gnumake
@@ -47,8 +50,6 @@ in {
       #    JetBrains
       jetbrains.idea-ultimate jetbrains.phpstorm jetbrains.clion jetbrains.jdk jetbrains.pycharm-professional
 
-      vscode
-
       # Spell checking
       hunspell
       hunspellDicts.en-us hunspellDicts.cs-cz
@@ -57,10 +58,12 @@ in {
       xorg.libX11 xorg.libXinerama xorg.libXft imlib2
 
       # dev tools
-      valgrind
+      valgrind glibc
 
       # FIT - TZP
       unstable.mathematica
+
+      hidapi
   ];
   nixpkgs.config = {
       allowUnfree = true;
