@@ -4,38 +4,26 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    ./packages/packages.nix
-    ./grub-savedefault.nix
-    ./users/default.nix
-    ./de/dwm.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./packages/packages.nix
+      ./users/default.nix
+      # ./de/dwm.nix
+    ];
   # Use the systemd-boot EFI boot loader.
-  boot = {
-    loader = {
-      grub = {
-        efiSupport = true;
-        device = "nodev";
-        useOSProber = true;
-      };
-      efi.canTouchEfiVariables = true;
-    };
+  boot.loader.grub = {
+	version = 2;
+	enable = true;
+	device = "/dev/sdd";
   };
 
-  networking.hostName = "idk";
-  networking.hostId = "69faa160";
+  networking.hostName = "server_idk";
   networking.networkmanager.enable = true;
-  programs.nm-applet.enable = true;
-  # networking.wireless.enable = true;
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "Europe/Prague";
-
-  # Change default time limit for unit stop
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=5s
-  '';
 
   networking.useDHCP = false;
 
@@ -45,7 +33,6 @@
     keyMap = "us";
   };
 
-  environment.pathsToLink = [ "/libexec" ];
 
   system.stateVersion = "21.05"; # Did you read the comment?
 }

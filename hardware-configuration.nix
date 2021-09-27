@@ -2,51 +2,33 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix") ./windows-mount.nix ];
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "ahci" "xhci_pci" "firewire_ohci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "v4l2loopback" "ec_sys" ];
-  boot.extraModulePackages = with config.boot.kernelPackages;
-  [ v4l2loopback.out ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
-  # Air plane mode fix
-  boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/a02220dc-f143-44dd-adf0-de6b2db3e4b7";
+      fsType = "ext4";
+    };
 
-  boot.extraModprobeConfig = ''
-    # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
-    # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
-    # https://github.com/umlaeute/v4l2loopback
-    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
-    options ec_sys write_support=1
-  '';
-
-  # C perf debugging variables
-  boot.kernel.sysctl = {
-    "kernel.perf_event_paranoid" = true;
-    "kernel.kptr_restrict" = false;
-  };
-
-  # lid close action
-  services.logind.lidSwitch = "ignore";
-  services.logind.lidSwitchDocked = "ignore";
-  services.logind.extraConfig = "HandleLidSwitch=ignore";
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/feee7f36-8bcc-4d80-8626-086896503105";
-    fsType = "ext4";
-  };
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/8d7d4e81-0760-4650-b847-5aa472286c09";
+  fileSystems."/data1" =
+  {
+    device = "/dev/disk/by-uuid/9f3ebbcc-8402-4e8d-90be-c33bd1ec65f8";
     fsType = "ext4";
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/DA0A-EAB3";
-    fsType = "vfat";
+  fileSystems."/data2" =
+  {
+    device = "/dev/disk/by-uuid/6267ddf6-ce97-4d26-9da9-f3e4b96d7fb2";
+    fsType = "ext4";
   };
 
-  swapDevices = [{ device = "/dev/nvme1n1p2"; }];
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/90af3f02-8d42-4796-8637-8c9f9a8fc23c"; }
+    ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
