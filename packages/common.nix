@@ -32,9 +32,9 @@
 
     # Languages
     jdk jdk8 php nodejs nodePackages.npm yarn
-    # python27Full python27Packages.virtualenv python27Packages.pip python27Packages.setuptools
-    # python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
-    # python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
+    python27Full python27Packages.virtualenv python27Packages.pip python27Packages.setuptools
+    python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
+    python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
     # --------------------------
   ];
    
