@@ -22,4 +22,8 @@
         touchpad.naturalScrolling = true;
     };
   };
+  
+  environment.systemPackages = with pkgs; [
+      playerctl
+  ];
 }
