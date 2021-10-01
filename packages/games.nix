@@ -1,13 +1,19 @@
 { pkgs, ... }:
 
-{
+let
+    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
+in {
 
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.enable = true;
   hardware.pulseaudio.support32Bit = true;
 
+  boot.kernel.sysctl = {
+      "abi.vsyscall32" = 0;
+  };
+
   environment.systemPackages = with pkgs; [
-    (pkgs.multimc.overrideAttrs (old: rec{
+    (stable.multimc.overrideAttrs (old: rec{
       src = fetchFromGitHub {
         owner = "AfoninZ";
         repo = "MultiMC5-Cracked";

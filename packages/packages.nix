@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
 in {
     imports =
       [
@@ -39,11 +39,11 @@ in {
       libreoffice
       firefox brave chromium
       copyq lxappearance wireshark
-      gimp-with-plugins vlc blender shotcut
+      gimp-with-plugins vlc blender stable.shotcut
       font-manager ark 
       dolphin gnome.nautilus pcmanfm 
       gparted flameshot pavucontrol arandr
-      insomnia alacritty mysql-workbench
+      insomnia alacritty stable.mysql-workbench
 
       # ------- Programming -------
       # IDEs
@@ -61,7 +61,7 @@ in {
       valgrind glibc
 
       # FIT - TZP
-      unstable.mathematica
+      mathematica
 
       hidapi
   ];
