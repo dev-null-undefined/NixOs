@@ -28,7 +28,7 @@
   nixpkgs.overlays = [
     (final: prev: {
       dwm = prev.dwm.overrideAttrs (old: { 
-        src = /home/martin/Git/siduck76/chadwm/chadwm;
+        src = /home/martin/GitHub/Martin/dwm-flexipatch;
         buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
         preBuild = "make clean";
       });
