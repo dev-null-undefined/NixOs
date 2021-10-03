@@ -52,5 +52,25 @@
     sessionVariables.PATH = [ "/home/martin/.dwm" ];
   };
 
+  services.dwm-status = {
+    enable  = true;
+    order = [ "cpu_load" "audio" "battery" "time" ];
+    extraConfig = ''
+      separator = "    "
+      [audio]
+      mute = "ﱝ"
+      template = "{ICO} {VOL}%"
+      icons = ["奄", "奔", "墳"]
+
+      [battery]
+      charging = ""
+      discharging = ""
+      no_battery = ""
+      icons = ["", "", "", "", "", "", "", "", "", "", ""]
+
+      [time]
+      format = "%Y-%d-%m %H:%M"
+      '';
+  };
   #services.autorandr.enable = true;
 }
