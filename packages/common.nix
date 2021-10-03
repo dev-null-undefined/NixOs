@@ -25,6 +25,7 @@
     imagemagick
     nix-direnv
     direnv
+    jq
 
     # Utilities
     coreutils
