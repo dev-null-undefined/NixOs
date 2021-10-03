@@ -23,8 +23,9 @@ in {
       mutt
       nyancat pipes cmatrix
       hyperfine
+
       # Commands
-      lsd home-manager screenfetch gnumake
+      home-manager screenfetch gnumake
       feh youtube-dl asciinema
 
       # Utilities

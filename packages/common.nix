@@ -18,6 +18,7 @@
     sl # :D
 
     # Commands
+    lsd
     neofetch cpufetch
     tmux openssh gnumake tldr nmap tree gcc
     killall thefuck nix-diff nix-index traceroute pciutils
