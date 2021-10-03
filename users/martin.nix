@@ -2,7 +2,7 @@
 {
   users.users.martin = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "dialout" ];
     shell = pkgs.zsh;
     useDefaultShell = false;
   };
