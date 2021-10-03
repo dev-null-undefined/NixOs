@@ -7,10 +7,7 @@ in {
       [
         ./common.nix
         ./zsh.nix
-        ./games.nix
-        ./discord.nix
-        ./vscode.nix
-        ./teamviewer.nix
+        ./gui/gui.nix
         # ./audio.nix
       ];
      
@@ -43,19 +40,6 @@ in {
       dolphin gnome.nautilus pcmanfm 
       gparted flameshot pavucontrol arandr
       insomnia alacritty kitty stable.mysql-workbench
-
-      # ------- Programming -------
-      # IDEs
-      #    JetBrains
-      jetbrains.idea-ultimate jetbrains.phpstorm jetbrains.jdk jetbrains.pycharm-professional
-
-      (pkgs.jetbrains.clion.overrideAttrs (old: rec{
-        version = "2021.2.2";
-        src = fetchurl {
-          url = "https://download.jetbrains.com/cpp/CLion-${version}.tar.gz";
-          sha256 = "0q9givi3w8q7kdi5y7g1pj4c7kb00a4v0fvry04zsahdq5lzkikh";
-        };
-      }))
 
       # Spell checking
       hunspell
