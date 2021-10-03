@@ -10,6 +10,7 @@ in {
         ./games.nix
         ./discord.nix
         ./vscode.nix
+        ./teamviewer.nix
         # ./audio.nix
       ];
      
@@ -43,7 +44,7 @@ in {
       font-manager ark 
       dolphin gnome.nautilus pcmanfm 
       gparted flameshot pavucontrol arandr
-      insomnia alacritty stable.mysql-workbench
+      insomnia alacritty kitty stable.mysql-workbench
 
       # ------- Programming -------
       # IDEs
