@@ -28,7 +28,12 @@
   nixpkgs.overlays = [
     (final: prev: {
       dwm = prev.dwm.overrideAttrs (old: { 
-        src = /home/martin/GitHub/Martin/dwm-flexipatch;
+        src = pkgs.fetchFromGitHub {
+          owner = "ThreshMain";
+          repo = "dwm-flexipatch";
+          rev = "master";
+          sha256 = "0xjcj3y98yq0jdcc0chbkqdbk7k83ipd2hlldv42dqzmq7p0g2vj";
+        };
         buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
         preBuild = "make clean";
       });
@@ -47,5 +52,5 @@
     sessionVariables.PATH = [ "/home/martin/.dwm" ];
   };
 
-  services.autorandr.enable = true;
+  #services.autorandr.enable = true;
 }
