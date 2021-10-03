@@ -32,9 +32,6 @@ in {
       libnotify libinput-gestures hunspell aspell gspell xclip
       # --------------------------
 
-      # Notications deamon
-      dunst
-
       # ======= GUI programms ======
       spotify
       libreoffice
