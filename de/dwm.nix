@@ -72,5 +72,7 @@
       format = "%Y-%d-%m %H:%M"
       '';
   };
+
+  services.gnome.gnome-keyring.enable = true;
   #services.autorandr.enable = true;
 }
