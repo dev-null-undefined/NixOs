@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
     imports =
@@ -6,7 +6,7 @@
         ./common.nix
         ./zsh.nix
         ./gui/gui.nix
-        # ./audio.nix
+        ./docker.nix
       ];
      
     environment.systemPackages = with pkgs; [
@@ -17,6 +17,7 @@
       mutt
       nyancat pipes cmatrix
       hyperfine
+      mycli
 
       # Commands
       home-manager screenfetch gnumake
