@@ -3,7 +3,7 @@
 {
 
   environment.systemPackages = with pkgs; [
-      jetbrains.idea-ultimate jetbrains.phpstorm jetbrains.jdk jetbrains.pycharm-professional
+    jetbrains.idea-ultimate jetbrains.phpstorm jetbrains.jdk jetbrains.pycharm-professional jetbrains.webstorm
       (pkgs.jetbrains.clion.overrideAttrs (old: rec{
         version = "2021.2.2";
         src = fetchurl {

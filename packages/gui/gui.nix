@@ -14,6 +14,7 @@ in {
 
   environment.systemPackages = with pkgs; [
       # ======= GUI programms ======
+      obs-studio
       spotify
       libreoffice
       firefox brave chromium
