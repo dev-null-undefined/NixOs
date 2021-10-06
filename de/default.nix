@@ -4,11 +4,8 @@
 {
   imports = [ 
     ./fonts.nix
+    ./audio/audio.nix
   ];
-
-  # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -24,7 +21,6 @@
   };
   
   environment.systemPackages = with pkgs; [
-    playerctl
     dunst
   ];
 }

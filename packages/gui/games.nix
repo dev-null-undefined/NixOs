@@ -6,7 +6,6 @@ in {
 
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.enable = true;
-  hardware.pulseaudio.support32Bit = true;
 
   boot.kernel.sysctl = {
       "abi.vsyscall32" = 0;
