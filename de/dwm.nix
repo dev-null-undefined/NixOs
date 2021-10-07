@@ -48,6 +48,7 @@
       xmenu
       wmname # fix problems with JDK 
       xorg.xbacklight
+      gnome3.dconf
     ];
     sessionVariables.PATH = [ "/home/martin/.dwm" ];
   };

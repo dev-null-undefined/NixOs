@@ -2,11 +2,15 @@
 
 {
   imports = [
-    ./pulse.nix
+    # ./pulse.nix
+    ./pipewire.nix
   ];
-  # Enable sound.
-  sound.enable = true;
   environment.systemPackages = with pkgs; [
     playerctl
+    pulseaudio
+    patchage
+    carla
+    qjackctl
+    alsa-utils
   ];
 }
