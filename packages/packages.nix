@@ -13,14 +13,15 @@
       # ----- Terminal tools -----
       # TUI
       lynx
-      bpytop glances gotop nload iftop nethogs
+      bpytop glances gotop nload iftop nethogs bottom
       mutt
       nyancat pipes cmatrix
       hyperfine
       mycli
+      screenfetch neofetch cpufetch macchina
 
       # Commands
-      home-manager screenfetch gnumake
+      home-manager gnumake
       feh youtube-dl asciinema
 
       # Utilities

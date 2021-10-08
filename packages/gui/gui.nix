@@ -10,6 +10,7 @@ in {
     ./jetbrains.nix
     ./teamviewer.nix
     ./vscode.nix
+    ./mathematica.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -32,7 +33,5 @@ in {
 
       papirus-icon-theme
 
-      # FIT - TZP
-      mathematica
   ];
 }
