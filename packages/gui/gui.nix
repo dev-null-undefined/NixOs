@@ -11,6 +11,7 @@ in {
     ./teamviewer.nix
     ./vscode.nix
     ./mathematica.nix
+    ./virt-manager.nix
   ];
 
   environment.systemPackages = with pkgs; [
