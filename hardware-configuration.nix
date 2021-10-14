@@ -45,8 +45,8 @@
   fileSystems."/mnt/windows" = 
     {
       device = "/dev/disk/by-uuid/E60284100283E441";
-      fsType = "auto";
-      options = [ "defaults" "user" "rw" "utf8" "noauto" "umask=000" ];
+      fsType = "ntfs-3g";
+      options = [ "user" "rw" "utf8" "noauto" "umask=000" "uid=1000" ];
     };
 
   swapDevices = [{
