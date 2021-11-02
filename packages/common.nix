@@ -37,7 +37,7 @@
     wget curl git cmake gnupg lsof whois dnsutils file
 
     # Languages
-    jdk jdk8 jdk16_headless php nodejs nodePackages.npm yarn
+    jdk jdk8 jdk17_headless php nodejs nodePackages.npm yarn
     python27Full
     python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
     python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
