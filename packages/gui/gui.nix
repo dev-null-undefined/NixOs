@@ -16,6 +16,9 @@ in {
 
   environment.systemPackages = with pkgs; [
       # ======= GUI programms ======
+      ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
+        epkgs.vterm
+      ]))
       obs-studio
       ardour easyeffects
       spotify
