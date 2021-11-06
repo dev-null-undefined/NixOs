@@ -3,6 +3,6 @@
 {
   environment.systemPackages = with pkgs; [
     discord discord-ptb discord-canary
-    betterdiscord-installer
+    #betterdiscord-installer
   ];
 }
