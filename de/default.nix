@@ -22,5 +22,7 @@
   
   environment.systemPackages = with pkgs; [
     dunst
+    orchis-theme
+    vimix-gtk-themes
   ];
 }
