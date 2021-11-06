@@ -17,6 +17,12 @@
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
 
+  # C perf debugging variables
+  boot.kernel.sysctl = {
+    "kernel.perf_event_paranoid" = true;
+    "kernel.kptr_restrict" = false;
+  };
+
   # lid close action
   services.logind.lidSwitch = "ignore";
   services.logind.lidSwitchDocked = "ignore";

@@ -36,6 +36,7 @@
 
     # Utilities
     wget curl git cmake gnupg lsof whois dnsutils file
+    linuxKernel.packages.linux_5_10.perf
 
     # Languages
     jdk jdk8 jdk17_headless php nodejs nodePackages.npm yarn
