@@ -19,6 +19,7 @@ in {
       ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
         epkgs.vterm
       ]))
+      krita
       obs-studio
       ardour easyeffects
       spotify

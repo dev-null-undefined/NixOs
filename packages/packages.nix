@@ -18,6 +18,7 @@
       nyancat pipes cmatrix
       hyperfine
       mycli
+      wavemon wirelesstools iw
       screenfetch neofetch cpufetch macchina
 
       # Commands
@@ -26,7 +27,10 @@
 
       # Utilities
       pandoc light blueman fzf autorandr cron bat lolcat
-      libnotify libinput-gestures hunspell aspell gspell xclip
+      libnotify libinput-gestures xclip
+      hunspell aspell gspell
+      languagetool
+      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
       # --------------------------
 
       # Libs
