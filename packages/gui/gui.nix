@@ -36,7 +36,5 @@ in {
       hunspell
       hunspellDicts.en-us hunspellDicts.cs-cz
 
-      papirus-icon-theme
-
   ];
 }

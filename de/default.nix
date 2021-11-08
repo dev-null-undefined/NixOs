@@ -24,5 +24,6 @@
     dunst
     orchis-theme
     vimix-gtk-themes
+    papirus-icon-theme
   ];
 }
