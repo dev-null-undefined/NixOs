@@ -9,7 +9,7 @@
   services.xserver = {
     displayManager = {
         sddm.enable = true;
-        defaultSession = "customdwm";
+        defaultSession = "none+customdwm";
     };
 
     windowManager = {
