@@ -12,6 +12,7 @@ in {
     ./vscode.nix
     ./mathematica.nix
     ./virt-manager.nix
+    ./piper.nix
   ];
 
   environment.systemPackages = with pkgs; [
