@@ -9,6 +9,7 @@
     webstorm
     clion
     rider
+    #gateway
 
     jdk
   ];
