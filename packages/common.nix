@@ -8,6 +8,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    # Nixos
+    hydra-unstable
     # Wire guard VPN
     wireguard
 
@@ -19,6 +21,7 @@
 
     # Commands
     lsd
+    pv # pipe monitor
     tmux openssh gnumake tldr nmap tree gcc
     killall thefuck nix-diff nix-index traceroute pciutils
     openssl most sshfs ffmpeg unzip zip 
@@ -36,7 +39,7 @@
 
     # Utilities
     wget curl git cmake gnupg lsof whois dnsutils file
-    linuxKernel.packages.linux_5_10.perf
+    linuxKernel.packages.linux_5_10.perf # gcc-unwrapped
 
     # Languages
     jdk jdk8 jdk17_headless php nodejs nodePackages.npm yarn
