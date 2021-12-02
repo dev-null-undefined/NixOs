@@ -30,6 +30,7 @@ in {
       gimp-with-plugins vlc blender stable.shotcut
       font-manager ark
       dolphin gnome.nautilus pcmanfm
+      gitg
       gparted flameshot pavucontrol arandr
       insomnia alacritty kitty stable.mysql-workbench
 
