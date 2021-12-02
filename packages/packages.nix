@@ -34,7 +34,7 @@
       # --------------------------
 
       # Libs
-      xorg.libX11 xorg.libXinerama xorg.libXft imlib2
+      xorg.libX11 xorg.libXinerama xorg.libXft imlib2 ncurses
 
       # dev tools
       valgrind glibc
