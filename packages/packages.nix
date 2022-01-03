@@ -13,6 +13,7 @@
       # ----- Terminal tools -----
       # TUI
       lynx
+      android-tools
       bpytop glances gotop nload iftop nethogs bottom
       mutt
       nyancat pipes cmatrix
