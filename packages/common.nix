@@ -29,7 +29,7 @@
     nix-direnv
     direnv
     ripgrep
-    jq
+    jq bc
 
     # Utilities
     coreutils
