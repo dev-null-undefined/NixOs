@@ -27,8 +27,9 @@ in {
       libreoffice
       firefox brave chromium
       copyq lxappearance wireshark
-      gimp-with-plugins vlc blender stable.shotcut
+      gimp-with-plugins vlc mpv blender stable.shotcut
       font-manager ark
+      gnome.networkmanagerapplet
       dolphin gnome.nautilus pcmanfm
       gitg
       gparted flameshot pavucontrol arandr
