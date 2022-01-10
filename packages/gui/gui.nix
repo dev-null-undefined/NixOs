@@ -20,6 +20,9 @@ in {
       ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
         epkgs.vterm
       ]))
+      
+      element-desktop gomuks
+
       krita
       obs-studio
       ardour easyeffects
