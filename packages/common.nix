@@ -13,16 +13,19 @@
     # Wire guard VPN
     wireguard-tools
     rtorrent
+    dpkg
 
     # TUIS
     vim_configurable neovim
     htop 
     mc 
     sl # :D
+    mycli
 
     # Commands
     lsd
     pv # pipe monitor
+    neofetch cpufetch
     tmux openssh gnumake tldr nmap tree gcc
     killall thefuck nix-diff nix-index traceroute pciutils
     openssl most sshfs ffmpeg unzip zip 
