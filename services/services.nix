@@ -4,7 +4,7 @@
     imports =
       [
         ./ssh.nix
-        ./wireguard.nix
+       # ./wireguard.nix
         ./nextcloud.nix
         ./mariadb.nix
       ];
