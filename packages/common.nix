@@ -1,112 +1,58 @@
-{ pkgs, config, ... }:
+{ pkgs, ...}:
 
 {
   programs.gnupg.agent.enable = true;
 
-  imports = [ ./ranger.nix ];
+  imports = [
+    ./ranger.nix
+  ];
 
   environment.systemPackages = with pkgs; [
-    # dev-null.gns3-gui master.ubridge master.dynamips dev-null.gns3-server
     # Nixos
     hydra-unstable
     # Wire guard VPN
     wireguard-tools
+    rtorrent
 
     # TUIS
-    vim_configurable
-    neovim
-    htop
-    mc
+    vim_configurable neovim
+    htop 
+    mc 
     sl # :D
 
     # Commands
     lsd
-    # pipe monitor
-    pv
-    tmux
-    tldr
-    tree
-    most
-    sshfs
-    openssh
-    openssl
-    gnumake
-    nmap
-    traceroute
-    gcc
-    glibc
-    patchelf
-    killall
-    thefuck
-    nix-diff
-    nix-index
-    pciutils
-    unzip
-    zip
+    pv # pipe monitor
+    tmux openssh gnumake tldr nmap tree gcc
+    killall thefuck nix-diff nix-index traceroute pciutils
+    openssl most sshfs ffmpeg unzip zip 
+    imagemagick
     nix-direnv
     direnv
     ripgrep
-    jq
-    bc
-    mat2
-    onionshare
+    jq bc
 
     # Utilities
     coreutils
 
     # man page
-    man
-    man-pages
-
-    # multimedia manipulation
-    ffmpeg
-    imagemagick
+    man man-pages
 
     # Utilities
-    wget
-    curl
-    git
-    cmake
-    gnupg
-    lsof
-    whois
-    dnsutils
-    file
-    config.boot.kernelPackages.perf
-    perf-tools
-    bintools-unwrapped # gcc-unwrapped
-    gdb
-
-    # Java
-    jdk
-    jdk8
-    jdk11
+    wget curl git cmake gnupg lsof whois dnsutils file
+    linuxKernel.packages.linux_5_10.perf # gcc-unwrapped
 
     # Languages
-    php
-    nodejs
-    nodePackages.npm
-    yarn
-
-    # Python
+    jdk jdk8 jdk17_headless php nodejs nodePackages.npm yarn
     python27Full
-
-    python37Full
-
-    python38Full
-
-    (python3.withPackages (e: [
-        e.matplotlib
-        e.pygments
-    ]))
-
-    cargo
-    rustc
+    python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
+    python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
+    # --------------------------
   ];
-
+   
   # man pages
   documentation.enable = true;
   documentation.man.enable = true;
   documentation.dev.enable = true;
-
+ 
 }
