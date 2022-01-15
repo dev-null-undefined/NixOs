@@ -1,8 +1,11 @@
 { pkgs, ... }:
 
+let
+    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
+in
 {
   services.mysql = {
-    package = pkgs.mariadb;
+    package = stable.pkgs.mariadb;
     enable = true;
     initialScript = pkgs.writeText "mysql-init" ''
               CREATE USER 'nextcloud'@'localhost' IDENTIFIED BY 'hunter2';
