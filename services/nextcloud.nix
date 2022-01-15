@@ -1,11 +1,16 @@
 { pkgs, ... }:
 
+let
+    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
+in
 {
   networking.firewall.allowedTCPPorts = [ 80 ];
   services.nextcloud = {
+    package = pkgs.nextcloud23; 
     enable = true;
     hostName = "nextcloud";
-    https = true;
+    # https = true;
+    home = "/data1/nextcloud";
     caching = {
       apcu = true;
       redis = false;
@@ -17,8 +22,9 @@
       dbuser = "nextcloud";
       dbhost = "127.0.0.1";
       dbport = 3306;
-      dbpass = "MDVkMGU2NDVhYTBlMDQxZTJkMjRjNzRm";
-      adminpass = "YjQ3YzBhNTk2MzAwZjgyN2Q0MjY1ZmMz";
+      dbpassFile = "/var/nextcloud-db-pass";
+      adminpassFile = "/var/nextcloud-admin-pass";
+      extraTrustedDomains = [ "192.168.0.170" ];
     };
   };
 }
