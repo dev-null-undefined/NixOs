@@ -17,7 +17,6 @@
       nyancat pipes cmatrix
       hyperfine
       mycli
-      wavemon wirelesstools iw
       screenfetch neofetch cpufetch macchina
 
       # Commands
