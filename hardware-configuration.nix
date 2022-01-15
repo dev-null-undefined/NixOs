@@ -14,17 +14,19 @@
     { device = "/dev/disk/by-uuid/a02220dc-f143-44dd-adf0-de6b2db3e4b7";
       fsType = "ext4";
     };
-
-  fileSystems."/data1" =
-  {
+  
+  fileSystems."/data1" = 
+  { 
     device = "/dev/disk/by-uuid/9f3ebbcc-8402-4e8d-90be-c33bd1ec65f8";
     fsType = "ext4";
+    options = [ "user" "rw" ];
   };
 
-  fileSystems."/data2" =
-  {
+  fileSystems."/data2" = 
+  { 
     device = "/dev/disk/by-uuid/6267ddf6-ce97-4d26-9da9-f3e4b96d7fb2";
     fsType = "ext4";
+    options = [ "user" "rw" ];
   };
 
   swapDevices =
