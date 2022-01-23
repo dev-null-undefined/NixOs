@@ -44,7 +44,7 @@
   
   fileSystems."/mnt/windows" = 
     {
-      device = "/dev/disk/by-uuid/01D7C2AE04A59EE0";
+      device = "/dev/disk/by-uuid/905CDBC35CDBA1F0";
       fsType = "ntfs-3g";
       options = [ "user" "rw" "utf8" "noauto" "umask=000" "uid=1000" ];
     };
