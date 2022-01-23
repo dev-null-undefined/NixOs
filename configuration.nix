@@ -24,6 +24,11 @@
       };
   };
 
+  hardware.bluetooth.settings = {
+  General = {
+    ControllerMode = "bredr";
+  };
+};
   networking.hostName = "idk";
   networking.hostId = "69faa160";
   networking.networkmanager.enable = true;
