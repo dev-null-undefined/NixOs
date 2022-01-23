@@ -32,7 +32,7 @@ in {
       copyq lxappearance wireshark
       gimp-with-plugins vlc mpv blender stable.shotcut
       font-manager ark
-      gnome.networkmanagerapplet
+      networkmanagerapplet
       dolphin gnome.nautilus pcmanfm
       gitg
       gparted flameshot pavucontrol arandr

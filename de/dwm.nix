@@ -48,7 +48,7 @@
       # no longer needed thanks to dwm patchwmname # fix problems with JDK 
       pasystray
       xorg.xbacklight
-      gnome3.dconf
+      dconf
     ];
     sessionVariables.PATH = [ "/home/martin/.dwm" ];
   };
