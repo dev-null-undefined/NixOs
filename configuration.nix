@@ -22,7 +22,6 @@
         };
         efi.canTouchEfiVariables = true;
       };
-      resumeDevice = "/dev/nvme1n1p3";
   };
 
   networking.hostName = "idk";
