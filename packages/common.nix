@@ -30,6 +30,7 @@
     direnv
     ripgrep
     jq bc
+    mat2 onionshare
 
     # Utilities
     coreutils
