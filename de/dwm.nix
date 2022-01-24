@@ -8,8 +8,11 @@
    ];
   services.xserver = {
     displayManager = {
-        sddm.enable = true;
-        defaultSession = "none+customdwm";
+      sddm = {
+        enable = true;
+        autoNumlock = true;
+      };
+      defaultSession = "none+customdwm";
     };
 
     windowManager = {
