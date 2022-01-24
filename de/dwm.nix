@@ -32,18 +32,19 @@
           owner = "ThreshMain";
           repo = "dwm-flexipatch";
           rev = "master";
-          sha256 = "sha256-DqLOrOHaij63O/IKqIU0oZwfL5CdwZzQA49P9uQc9oM=";
+          sha256 = "sha256-19jOUtDFte8W88d7BzRh7OIPRjB00TFpGLCW0rwSXNU=";
         };
         buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
       });
     })
   ];
-  
+
+  programs.slock.enable = true;  
+
   environment = {
     systemPackages = with pkgs; [
       rofi
       acpi
-      slock # locker
       xmenu
       # no longer needed thanks to dwm patchwmname # fix problems with JDK 
       pasystray
