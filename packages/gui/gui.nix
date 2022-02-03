@@ -20,6 +20,8 @@ in {
       ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
         epkgs.vterm
       ]))
+      xournalpp
+      wxhexeditor
       
       element-desktop gomuks
 
