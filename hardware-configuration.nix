@@ -11,11 +11,19 @@
     ];
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "v4l2loopback" ];
+  boot.extraModulePackages = with config.boot.kernelPackages;
+    [ v4l2loopback.out ];
 
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
+
+  boot.extraModprobeConfig = ''
+    # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming
+    # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
+    # https://github.com/umlaeute/v4l2loopback
+    options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+  '';
 
   # C perf debugging variables
   boot.kernel.sysctl = {
