@@ -25,5 +25,6 @@
     orchis-theme
     vimix-gtk-themes
     papirus-icon-theme
+    gnome.seahorse
   ];
 }
