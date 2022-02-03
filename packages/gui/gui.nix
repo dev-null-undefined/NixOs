@@ -22,6 +22,8 @@ in {
       ]))
       xournalpp
       wxhexeditor
+
+      droidcam v4l-utils
       
       element-desktop gomuks
 
