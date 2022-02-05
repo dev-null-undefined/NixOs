@@ -27,4 +27,11 @@
     papirus-icon-theme
     gnome.seahorse
   ];
+  
+  hardware.bluetooth.settings = {
+    General = {
+      ControllerMode = "bredr";
+    };
+  };
+  
 }
