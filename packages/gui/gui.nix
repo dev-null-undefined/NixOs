@@ -21,7 +21,7 @@ in {
         epkgs.vterm
       ]))
       xournalpp
-      wxhexeditor
+      gnome.ghex
 
       droidcam v4l-utils
       
