@@ -33,6 +33,11 @@
   # Set your time zone.
   time.timeZone = "Europe/Prague";
 
+  # Change default time limit for unit stop
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=5s
+  '';
+
   networking.useDHCP = false;
 
   i18n.defaultLocale = "en_US.UTF-8";
