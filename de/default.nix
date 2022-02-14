@@ -25,9 +25,11 @@
     orchis-theme
     vimix-gtk-themes
     papirus-icon-theme
-    gnome.seahorse
   ];
   
+  programs.seahorse.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
   hardware.bluetooth.settings = {
     General = {
       ControllerMode = "bredr";
