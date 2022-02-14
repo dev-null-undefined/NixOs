@@ -42,7 +42,7 @@ in {
       dolphin gnome.nautilus pcmanfm
       gitg
       gparted flameshot pavucontrol arandr
-      insomnia alacritty kitty stable.mysql-workbench
+      insomnia alacritty stable.kitty stable.mysql-workbench
 
       # Spell checking
       hunspell
