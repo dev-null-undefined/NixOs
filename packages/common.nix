@@ -40,10 +40,10 @@
 
     # Utilities
     wget curl git cmake gnupg lsof whois dnsutils file
-    linuxKernel.packages.linux_5_10.perf # gcc-unwrapped
+    linuxKernel.packages.linux_5_10.perf bintools-unwrapped # gcc-unwrapped
 
     # Languages
-    jdk jdk8 jdk17_headless php nodejs nodePackages.npm yarn
+    jdk jdk8 jdk11 php nodejs nodePackages.npm yarn
     python27Full
     python37Full python37Packages.virtualenv python37Packages.pip python37Packages.setuptools
     python39Full python39Packages.virtualenv python39Packages.pip python39Packages.setuptools
