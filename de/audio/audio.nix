@@ -12,5 +12,8 @@
     carla
     qjackctl
     alsa-utils
+    alsa-lib
+    alsa-plugins
+    jack2
   ];
 }
