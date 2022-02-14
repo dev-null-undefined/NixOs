@@ -4,9 +4,9 @@
   imports =
     [ 
       (modulesPath + "/installer/scan/not-detected.nix")
-      <nixos-hardware/msi/gs60>
       ./windows-mount.nix
     ];
+    
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" "v4l2loopback" ];

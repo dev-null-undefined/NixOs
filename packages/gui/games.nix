@@ -1,8 +1,6 @@
 { pkgs, lib, ... }:
 
-let
-    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
-in {
+{
 
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.enable = true;

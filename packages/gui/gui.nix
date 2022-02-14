@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
-let
-    stable = import <nixos-stable> { config = { allowUnfree = true; }; };
-in {
+{
 
   imports = [
     ./discord.nix
@@ -29,7 +27,7 @@ in {
       
       element-desktop gomuks
 
-      krita
+      master.krita
       obs-studio
       ardour easyeffects
       spotify
@@ -42,7 +40,7 @@ in {
       dolphin gnome.nautilus pcmanfm
       gitg
       gparted flameshot pavucontrol arandr
-      insomnia alacritty stable.kitty stable.mysql-workbench
+      insomnia alacritty stable.kitty # stable.mysql-workbench
 
       # Spell checking
       hunspell

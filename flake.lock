@@ -1,0 +1,78 @@
+{
+  "nodes": {
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1644839920,
+        "narHash": "sha256-vNlES1A/j4MU2PQ+DVLi6VKIiAqga1dn5KNzYDR/T5A=",
+        "owner": "dev-null-undefined",
+        "repo": "nixos-hardware",
+        "rev": "adf5914b12b3acc6d22cb867bb150fffa999132c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dev-null-undefined",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1644525281,
+        "narHash": "sha256-D3VuWLdnLmAXIkooWAtbTGSQI9Fc1lkvAr94wTxhnTU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "48d63e924a2666baf37f4f14a18f19347fbd54a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1644831453,
+        "narHash": "sha256-BB3ZHPunowWYpkupUXlnrGXOzfsjB/UXipaXE3GYkHo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "879495ed009a724f0db5609a79c8e4d08d7d2611",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1644472683,
+        "narHash": "sha256-sP6iM4NksOYO6NFfTJ96cg+ClPnq6cdY30xKA1iYtyU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7adc9c14ec74b27358a8df9b973087e351425a79",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-21.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-master": "nixpkgs-master",
+        "nixpkgs-stable": "nixpkgs-stable"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
