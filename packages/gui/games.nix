@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
     stable = import <nixos-stable> { config = { allowUnfree = true; }; };
@@ -10,6 +10,15 @@ in {
   boot.kernel.sysctl = {
       "abi.vsyscall32" = 0;
   };
+
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    steam = pkgs.steam.override {
+      extraPkgs = pkgs: [ pkgs.glxinfo ];
+      withPrimus = true;
+    };
+  };
+  programs.steam.enable = true;
 
   environment.systemPackages = with pkgs; [
     # We will remember you multimc <3
@@ -36,9 +45,9 @@ in {
     vitetris
     lutris
     gnome.zenity
-    vulkan-tools
-    vulkan-headers
-    vulkan-loader
-    vulkan-tools-lunarg
+    stable.vulkan-tools
+    stable.vulkan-headers
+    stable.vulkan-loader
+    stable.vulkan-tools-lunarg
   ];
 }
