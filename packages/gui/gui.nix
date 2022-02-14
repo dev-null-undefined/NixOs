@@ -23,6 +23,8 @@ in {
       xournalpp
       gnome.ghex
 
+      dropbox
+
       droidcam v4l-utils
       
       element-desktop gomuks
