@@ -1,50 +1,75 @@
 { pkgs, config, ... }:
 
 {
-    imports =
-      [
-        ./common.nix
-        ./zsh.nix
-        ./gui/gui.nix
-        ./docker.nix
-      ];
-     
-    environment.systemPackages = with pkgs; [
-      # ----- Terminal tools -----
-      # TUI
-      lynx
-      android-tools
-      bpytop glances gotop nload iftop nethogs bottom
-      mutt
-      nyancat pipes cmatrix
-      hyperfine
-      mycli
-      wavemon wirelesstools iw
-      screenfetch neofetch cpufetch macchina
+  imports = [ ./common.nix ./zsh.nix ./gui/gui.nix ./docker.nix ];
 
-      # Commands
-      home-manager gnumake
-      feh youtube-dl asciinema
+  environment.systemPackages = with pkgs; [
+    # ----- Terminal tools -----
+    # TUI
+    lynx
+    android-tools
+    bpytop
+    glances
+    gotop
+    nload
+    iftop
+    nethogs
+    bottom
+    mutt
+    nyancat
+    pipes
+    cmatrix
+    hyperfine
+    mycli
+    wavemon
+    wirelesstools
+    iw
+    screenfetch
+    neofetch
+    cpufetch
+    macchina
 
-      # Utilities
-      pandoc light blueman fzf autorandr cron bat lolcat
-      libnotify libinput-gestures xclip
-      hunspell aspell gspell
-      languagetool
-      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-      # --------------------------
+    # Commands
+    home-manager
+    gnumake
+    feh
+    youtube-dl
+    asciinema
 
-      # Libs
-      xorg.libX11 xorg.libXinerama xorg.libXft imlib2 ncurses
+    # Utilities
+    pandoc
+    light
+    blueman
+    fzf
+    autorandr
+    cron
+    bat
+    lolcat
+    libnotify
+    libinput-gestures
+    xclip
+    hunspell
+    aspell
+    gspell
+    languagetool
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
-      # dev tools
-      valgrind glibc
+    # Libs
+    xorg.libX11
+    xorg.libXinerama
+    xorg.libXft
+    imlib2
+    ncurses
 
-      hidapi
+    # dev tools
+    valgrind
+    glibc
+
+    hidapi
   ];
   nixpkgs.config = {
-      allowUnfree = true;
-      #allowBroken = true;
+    allowUnfree = true;
+    #allowBroken = true;
   };
 
 }

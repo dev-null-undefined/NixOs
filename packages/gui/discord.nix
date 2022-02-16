@@ -1,8 +1,10 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
-    discord discord-ptb discord-canary
+    discord
+    discord-ptb
+    discord-canary
     #betterdiscord-installer
   ];
 }

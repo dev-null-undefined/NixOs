@@ -1,6 +1,1 @@
-{ config, lib, pkgs, ... } :
-{
-  boot.loader.grub = {
-    default = "saved";
-  };
-}
+{ config, lib, pkgs, ... }: { boot.loader.grub = { default = "saved"; }; }

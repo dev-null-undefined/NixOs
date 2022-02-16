@@ -14,37 +14,55 @@
   ];
 
   environment.systemPackages = with pkgs; [
-      # ======= GUI programms ======
-      ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [
-        epkgs.vterm
-      ]))
-      xournalpp
-      gnome.ghex
+    # ======= GUI programms ======
+    ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]))
+    xournalpp
+    gnome.ghex
 
-      dropbox
+    dropbox
 
-      droidcam v4l-utils
-      
-      element-desktop gomuks
+    droidcam
+    v4l-utils
 
-      master.krita
-      obs-studio
-      ardour easyeffects
-      spotify
-      libreoffice
-      firefox brave chromium
-      copyq lxappearance wireshark
-      gimp-with-plugins vlc mpv blender stable.shotcut
-      font-manager ark
-      networkmanagerapplet
-      dolphin gnome.nautilus pcmanfm
-      gitg
-      gparted flameshot pavucontrol arandr
-      insomnia alacritty stable.kitty # stable.mysql-workbench
+    element-desktop
+    gomuks
 
-      # Spell checking
-      hunspell
-      hunspellDicts.en-us hunspellDicts.cs-cz
+    master.krita
+    obs-studio
+    ardour
+    easyeffects
+    spotify
+    libreoffice
+    firefox
+    brave
+    chromium
+    copyq
+    lxappearance
+    wireshark
+    gimp-with-plugins
+    vlc
+    mpv
+    blender
+    stable.shotcut
+    font-manager
+    ark
+    networkmanagerapplet
+    dolphin
+    gnome.nautilus
+    pcmanfm
+    gitg
+    gparted
+    flameshot
+    pavucontrol
+    arandr
+    insomnia
+    alacritty
+    stable.kitty # stable.mysql-workbench
+
+    # Spell checking
+    hunspell
+    hunspellDicts.en-us
+    hunspellDicts.cs-cz
 
   ];
 }

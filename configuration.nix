@@ -4,24 +4,23 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./packages/packages.nix
-      ./grub-savedefault.nix
-      ./users/default.nix
-      ./de/dwm.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./packages/packages.nix
+    ./grub-savedefault.nix
+    ./users/default.nix
+    ./de/dwm.nix
+  ];
   # Use the systemd-boot EFI boot loader.
   boot = {
-      loader = {
-        grub = {
-          efiSupport = true;
-          device = "nodev";
-          useOSProber = true;
-        };
-        efi.canTouchEfiVariables = true;
+    loader = {
+      grub = {
+        efiSupport = true;
+        device = "nodev";
+        useOSProber = true;
       };
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   networking.hostName = "idk";

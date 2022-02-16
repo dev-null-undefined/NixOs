@@ -1,11 +1,7 @@
-
 { config, pkgs, ... }:
 
 {
-  imports = [ 
-    ../nvidia-sync.nix
-    ./default.nix
-   ];
+  imports = [ ../nvidia-sync.nix ./default.nix ];
   services.xserver = {
     displayManager = {
       sddm = {
@@ -16,21 +12,20 @@
     };
 
     windowManager = {
-      session = [{ 
+      session = [{
         name = "customdwm";
-        start =
-          ''
+        start = ''
           /home/martin/.dwm/autostart &
           waitPID=$!
-          '';
-      }]; 
+        '';
+      }];
       dwm.enable = true;
     };
   };
 
   nixpkgs.overlays = [
     (final: prev: {
-      dwm = prev.dwm.overrideAttrs (old: { 
+      dwm = prev.dwm.overrideAttrs (old: {
         src = pkgs.fetchFromGitHub {
           owner = "ThreshMain";
           repo = "dwm-flexipatch";
@@ -42,7 +37,7 @@
     })
   ];
 
-  programs.slock.enable = true;  
+  programs.slock.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
@@ -58,7 +53,7 @@
   };
 
   services.dwm-status = {
-    enable  = true;
+    enable = true;
     order = [ "cpu_load" "audio" "battery" "time" ];
     extraConfig = ''
       separator = "    "
@@ -75,7 +70,7 @@
 
       [time]
       format = "%Y-%d-%m %H:%M"
-      '';
+    '';
   };
   services.gvfs.enable = true;
   services.autorandr.enable = true;

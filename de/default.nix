@@ -1,11 +1,7 @@
-
 { config, pkgs, ... }:
 
 {
-  imports = [ 
-    ./fonts.nix
-    ./audio/audio.nix
-  ];
+  imports = [ ./fonts.nix ./audio/audio.nix ];
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
@@ -15,25 +11,21 @@
     layout = "us";
     # Enable touchpad support (enabled default in most desktopManager).
     libinput = {
-        enable = true;
-        touchpad.naturalScrolling = true;
+      enable = true;
+      touchpad.naturalScrolling = true;
     };
   };
-  
+
   environment.systemPackages = with pkgs; [
     dunst
     orchis-theme
     vimix-gtk-themes
     papirus-icon-theme
   ];
-  
+
   programs.seahorse.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  hardware.bluetooth.settings = {
-    General = {
-      ControllerMode = "bredr";
-    };
-  };
-  
+  hardware.bluetooth.settings = { General = { ControllerMode = "bredr"; }; };
+
 }

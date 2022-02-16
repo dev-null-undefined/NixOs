@@ -5,10 +5,7 @@
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.enable = true;
 
-  boot.kernel.sysctl = {
-      "abi.vsyscall32" = 0;
-  };
-
+  boot.kernel.sysctl = { "abi.vsyscall32" = 0; };
 
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
@@ -29,7 +26,7 @@
     #    fetchSubmodules = true;
     #  };
     #})) 
-    (polymc.overrideAttrs (old: rec{
+    (polymc.overrideAttrs (old: rec {
       src = fetchFromGitHub {
         owner = "lebestnoob";
         repo = "PolyMC-Offline";
@@ -39,7 +36,7 @@
       };
       patches = [ ];
     }))
-    
+
     vitetris
     lutris
     gnome.zenity
