@@ -27,6 +27,9 @@
     element-desktop
     gomuks
 
+    # Nix formatter
+    nixfmt
+
     master.krita
     obs-studio
     ardour
