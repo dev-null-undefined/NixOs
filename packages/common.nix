@@ -71,6 +71,7 @@
     file
     linuxKernel.packages.linux_5_10.perf
     bintools-unwrapped # gcc-unwrapped
+    gdb
 
     # Java
     jdk
@@ -95,6 +96,10 @@
     python39Packages.virtualenv
     python39Packages.pip
     python39Packages.setuptools
+    python39Packages.pygments
+
+    cargo
+    rustc
   ];
 
   # man pages
