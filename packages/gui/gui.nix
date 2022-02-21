@@ -34,7 +34,7 @@
     # Nix formatter
     nixfmt
 
-    master.krita
+    krita
     obs-studio
     ardour
     easyeffects
