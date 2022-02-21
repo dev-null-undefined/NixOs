@@ -27,6 +27,8 @@
     element-desktop
     gomuks
 
+    git-open
+
     # Nix formatter
     nixfmt
 
