@@ -12,5 +12,7 @@
     font-awesome_4
     font-awesome
     meslo-lgs-nf
+    jetbrains-mono
+    overpass
   ];
 }
