@@ -19,6 +19,8 @@
     xournalpp
     gnome.ghex
 
+    gnuplot
+
     dropbox
 
     droidcam
