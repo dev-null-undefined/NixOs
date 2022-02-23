@@ -88,15 +88,11 @@
     python27Full
 
     python37Full
-    python37Packages.virtualenv
-    python37Packages.pip
-    python37Packages.setuptools
 
-    python39Full
-    python39Packages.virtualenv
-    python39Packages.pip
-    python39Packages.setuptools
-    python39Packages.pygments
+    (python3.withPackages (e: [
+        e.matplotlib
+        e.pygments
+    ]))
 
     cargo
     rustc
