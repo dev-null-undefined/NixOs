@@ -64,12 +64,17 @@
     arandr
     insomnia
     alacritty
-    stable.kitty # stable.mysql-workbench
+    stable.kitty
+    ccls
+    nodePackages.bash-language-server
+    shellcheck
 
     # Spell checking
     hunspell
     hunspellDicts.en-us
     hunspellDicts.cs-cz
+
+    proselint
 
   ];
 }
