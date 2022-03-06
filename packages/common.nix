@@ -9,7 +9,7 @@
     # Nixos
     hydra-unstable
     # Wire guard VPN
-    wireguard
+    wireguard-tools
 
     # TUIS
     vim_configurable
