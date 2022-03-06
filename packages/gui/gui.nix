@@ -67,6 +67,7 @@
     stable.kitty
     ccls
     nodePackages.bash-language-server
+    nodePackages.typescript-language-server
     shellcheck
 
     # Spell checking
