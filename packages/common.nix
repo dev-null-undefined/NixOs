@@ -33,6 +33,8 @@
     nmap
     traceroute
     gcc
+    glibc
+    patchelf
     killall
     thefuck
     nix-diff
@@ -69,7 +71,8 @@
     whois
     dnsutils
     file
-    linuxKernel.packages.linux_5_10.perf
+    config.boot.kernelPackages.perf
+    perf-tools
     bintools-unwrapped # gcc-unwrapped
     gdb
 
