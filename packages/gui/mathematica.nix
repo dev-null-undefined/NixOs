@@ -7,7 +7,7 @@ in {
   environment.systemPackages = with pkgs;
     [
       # FIT - TZP
-      (pkgs.mathematica.overrideAttrs (old: {
+      (pkgs.dev-null.mathematica.overrideAttrs (old: {
         version = version;
         lang = lang;
         language = "English";
