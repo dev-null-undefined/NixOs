@@ -6,6 +6,7 @@
   imports = [ ./ranger.nix ];
 
   environment.systemPackages = with pkgs; [
+    # dev-null.gns3-gui master.ubridge master.dynamips dev-null.gns3-server
     # Nixos
     hydra-unstable
     # Wire guard VPN
@@ -91,6 +92,8 @@
     python27Full
 
     python37Full
+
+    python38Full
 
     (python3.withPackages (e: [
         e.matplotlib
