@@ -4,8 +4,8 @@
     noto-fonts-cjk
     noto-fonts-emoji
     liberation_ttf
-    fira-code
-    fira-code-symbols
+    master.fira-code
+    master.fira-code-symbols
     mplus-outline-fonts
     dina-font
     proggyfonts

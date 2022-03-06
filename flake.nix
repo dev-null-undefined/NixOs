@@ -5,10 +5,14 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs?ref=master";
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs?ref=main";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nix-ld = {
+      url = "github:Mic92/nix-ld";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
-    , nixpkgs-dev-null, ... }@inputs:
+    , nixpkgs-dev-null, nix-ld, ... }@inputs:
     let
       system = "x86_64-linux";
       overlay-master = final: prev: {
