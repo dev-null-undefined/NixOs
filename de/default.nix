@@ -26,6 +26,11 @@
   programs.seahorse.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  hardware.bluetooth.settings = { General = { ControllerMode = "bredr"; }; };
+  hardware.bluetooth.settings.General = {
+    ControllerMode = "bredr";
+    Enable = "Source,Sink,Media,Socket";
+  };
+
+  hardware.enableAllFirmware = true;
 
 }
