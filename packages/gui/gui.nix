@@ -15,7 +15,7 @@
 
   environment.systemPackages = with pkgs; [
     # ======= GUI programms ======
-    ((emacsPackagesNgGen emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]))
+    ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]))
     xournalpp
     gnome.ghex
 
