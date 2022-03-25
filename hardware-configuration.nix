@@ -6,9 +6,9 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "v4l2loopback" ];
+  boot.kernelModules = [ "kvm-intel" "v4l2loopback" "ec_sys" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
-    [ v4l2loopback.out ];
+  [ v4l2loopback.out ];
 
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
@@ -18,6 +18,7 @@
     # card_label: Name of virtual camera, how it'll show up in Skype, Zoom, Teams
     # https://github.com/umlaeute/v4l2loopback
     options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
+    options ec_sys write_support=1
   '';
 
   # C perf debugging variables
