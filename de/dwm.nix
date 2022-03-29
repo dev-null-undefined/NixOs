@@ -30,7 +30,7 @@
           owner = "ThreshMain";
           repo = "dwm-flexipatch";
           rev = "master";
-          sha256 = "sha256-6nEFy1yf3ZTWRwGHh4Y1mbaRejKdiCREJePBt0dlE6w=";
+          sha256 = "sha256-9xY8EShk5koRIL7gUuW2F1mdAuq9n4aSt50W1Y1wr18=";
         };
         buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
       });
