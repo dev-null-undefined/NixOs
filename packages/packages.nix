@@ -5,6 +5,7 @@
       [
         ./common.nix
         ./zsh.nix
+        ./docker.nix
       ];
 
     environment.systemPackages = with pkgs; [
