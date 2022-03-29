@@ -8,6 +8,8 @@
   ];
 
   environment.systemPackages = with pkgs; [
+    gsmartcontrol
+    smartmontools
     # Nixos
     hydra-unstable
     # Wire guard VPN
