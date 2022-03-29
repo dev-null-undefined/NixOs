@@ -8,7 +8,7 @@ in
   services.nextcloud = {
     package = pkgs.nextcloud23; 
     enable = true;
-    hostName = "nextcloud";
+    hostName = "cloud.dev-null.me";
     # https = true;
     home = "/data1/nextcloud";
     caching = {
@@ -24,7 +24,7 @@ in
       dbport = 3306;
       dbpassFile = "/var/nextcloud-db-pass";
       adminpassFile = "/var/nextcloud-admin-pass";
-      extraTrustedDomains = [ "192.168.0.170" ];
+      extraTrustedDomains = [ "192.168.0.170" "cloud.dev-null.me" ];
     };
   };
 }
