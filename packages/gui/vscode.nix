@@ -12,6 +12,7 @@ let
     emmanuelbeziat.vscode-great-icons
     eamodio.gitlens
     mhutchie.git-graph
+    ms-vsliveshare.vsliveshare
   ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     {
       name = "LiveServer";
