@@ -19,6 +19,7 @@
     # https://github.com/umlaeute/v4l2loopback
     options v4l2loopback exclusive_caps=1 card_label="Virtual Camera"
     options ec_sys write_support=1
+    options nvidia_drm modeset=1
   '';
 
   # C perf debugging variables
