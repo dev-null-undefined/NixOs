@@ -13,6 +13,7 @@ let
     eamodio.gitlens
     mhutchie.git-graph
     ms-vsliveshare.vsliveshare
+    ms-vscode.cpptools
   ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     {
       name = "LiveServer";

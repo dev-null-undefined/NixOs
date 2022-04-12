@@ -30,12 +30,12 @@
       src = fetchFromGitHub {
         owner = "lebestnoob";
         repo = "PolyMC-Offline";
-        rev = "dcb9e5c153dfcac3d56f7266a6a9dadbdcb26e86";
-        sha256 = "sha256-8OYIw+IIWxfmtWgD7Ft64PfiOkdFzQ0GD09ifgdQwfQ=";
+        rev = "6c2365bb83c33a6232cc36051ce2838659c888b4";
+        sha256 = "sha256-3EYY4aoWGh/9BnvncKBnHDF+f1TvaR00Ydx0tw0ncN8=";
         fetchSubmodules = true;
       };
-      patches = [ ];
     }))
+    #polymc
 
 
     vitetris

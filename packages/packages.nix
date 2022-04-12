@@ -63,7 +63,6 @@
 
     # dev tools
     valgrind
-    glibc
 
     hidapi
   ];
