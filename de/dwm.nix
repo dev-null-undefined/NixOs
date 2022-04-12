@@ -44,7 +44,7 @@
       rofi
       acpi
       xmenu
-      # no longer needed thanks to dwm patchwmname # fix problems with JDK 
+      # no longer needed thanks to dwm patchwmname # fix problems with JDK
       pasystray
       xorg.xbacklight
       dconf
