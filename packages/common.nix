@@ -7,8 +7,6 @@
 
   environment.systemPackages = with pkgs; [
     # dev-null.gns3-gui master.ubridge master.dynamips dev-null.gns3-server
-    # Nixos
-    hydra-unstable
     # Wire guard VPN
     wireguard-tools
 
@@ -72,6 +70,7 @@
     whois
     dnsutils
     file
+    fd
     config.boot.kernelPackages.perf
     perf-tools
     bintools-unwrapped # gcc-unwrapped
