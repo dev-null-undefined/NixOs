@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../nvidia-sync.nix ./default.nix ];
+  imports = [ ../nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix ];
   services.xserver = {
     displayManager = {
       sddm = {
@@ -73,5 +73,4 @@
     '';
   };
   services.gvfs.enable = true;
-  services.autorandr.enable = true;
 }
