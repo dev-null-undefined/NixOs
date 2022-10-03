@@ -21,9 +21,14 @@
     orchis-theme
     vimix-gtk-themes
     papirus-icon-theme
+    gnome-icon-theme
   ];
 
-  programs.seahorse.enable = true;
+  programs = {
+    seahorse.enable = true;
+    noisetorch.enable = true;
+  };
+
   services.gnome.gnome-keyring.enable = true;
 
   hardware.bluetooth.settings.General = {
