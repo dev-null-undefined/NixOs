@@ -41,6 +41,9 @@
 
   environment = {
     systemPackages = with pkgs; [
+      gnome.gnome-disk-utility
+      gnome.gnome-tweaks
+
       rofi
       acpi
       xmenu
