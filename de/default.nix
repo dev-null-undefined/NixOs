@@ -32,6 +32,9 @@
       pinentryFlavor = "gtk2";
     };
   };
+
+  xdg.mime.defaultApplications = {
+    "inode/directory" = [ "org.gnome.Nautilus.desktop"];
   };
 
   services.gnome.gnome-keyring.enable = true;
