@@ -10,10 +10,13 @@
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs: [ pkgs.glxinfo ];
-      withPrimus = true;
+      #    withPrimus = true;
     };
   };
-  programs.steam.enable = true;
+  programs = {
+    steam.enable = true;
+    gamemode.enable = true;
+  };
 
   environment.systemPackages = with pkgs; [
     # We will remember you multimc <3
@@ -26,17 +29,20 @@
     #    fetchSubmodules = true;
     #  };
     #})) 
-    (polymc.overrideAttrs (old: rec {
-      src = fetchFromGitHub {
-        owner = "lebestnoob";
-        repo = "PolyMC-Offline";
-        rev = "6c2365bb83c33a6232cc36051ce2838659c888b4";
-        sha256 = "sha256-3EYY4aoWGh/9BnvncKBnHDF+f1TvaR00Ydx0tw0ncN8=";
-        fetchSubmodules = true;
-      };
-    }))
-    #polymc
+    # (master.polymc.overrideAttrs (old: rec {
+      # src = fetchFromGitHub {
+        # owner = "dev-null-undefined";
+        # repo = "PolyMC";
+        # rev = "a9717e5d3ac379fd46eedac86655b31c831a7dd7";
+        # sha256 = "sha256-Ji/Xa+jv0LEGsKttat9heyaSPCgZTYpVc0ZOA4evpVQ=";
+        # fetchSubmodules = true;
+      # };
+    # }))
+    #polymc RIP polymc LOL
 
+    wineWowPackages.stable
+    wine
+    winetricks
 
     vitetris
     lutris
