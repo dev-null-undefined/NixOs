@@ -7,7 +7,7 @@
     # ----- Terminal tools -----
     # TUI
     lynx
-    android-tools
+    stable.android-tools
     bpytop
     glances
     gotop
