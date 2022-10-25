@@ -35,16 +35,6 @@
 
     gnuplot
     remake
-    libjpeg_original
-    libjpeg_original.dev
-    ncurses
-    ncurses.dev
-    libpng12
-    libpng12.dev
-    zlib
-    zlib.dev
-    libusb1
-    libusb1.dev
 
     dropbox
 
