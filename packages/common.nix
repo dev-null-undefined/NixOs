@@ -1,11 +1,13 @@
 { pkgs, config, ... }:
 
 {
-  programs.gnupg.agent.enable = true;
+  programs.firejail.enable = true;
+  security.apparmor.enable = true;
 
   imports = [ ./ranger.nix ];
 
   environment.systemPackages = with pkgs; [
+    dev-null.ruby
     # dev-null.gns3-gui master.ubridge master.dynamips dev-null.gns3-server
     # Wire guard VPN
     wireguard-tools
@@ -15,10 +17,14 @@
     neovim
     htop
     mc
+    aria
     sl # :D
+    termdown # timer/stopwatch
 
     # Commands
+    delta
     lsd
+    cloc
     # pipe monitor
     pv
     tmux
@@ -41,6 +47,7 @@
     pciutils
     unzip
     zip
+    unrar-wrapper
     nix-direnv
     direnv
     ripgrep
@@ -51,6 +58,8 @@
 
     # Utilities
     coreutils
+    usbutils
+    dhcp
 
     # man page
     man
@@ -61,10 +70,12 @@
     imagemagick
 
     # Utilities
+    mitmproxy # https proxy
+    burpsuite
     wget
     curl
     git
-    cmake
+    stable.cmake
     gnupg
     lsof
     whois
@@ -80,6 +91,8 @@
     jdk
     jdk8
     jdk11
+    jprofiler
+    visualvm
 
     # Languages
     php
@@ -87,20 +100,34 @@
     nodePackages.npm
     yarn
 
+    # C# mrkda jazyk
+    dotnet-sdk
+    mono
+    msbuild
+
     # Python
     python27Full
 
-    python37Full
+    (python3.withPackages (e: [ e.matplotlib e.pygments e.numpy e.tkinter e.pandas ]))
 
-    python38Full
-
-    (python3.withPackages (e: [
-        e.matplotlib
-        e.pygments
-    ]))
-
+    # RUST
     cargo
     rustc
+    pkg-config
+    dbus
+
+    # C++ intepreter
+    cling
+
+    # Clang
+    clang_14
+    lldb_14
+    libclang
+    clang_multi
+    clang-tools
+    clang-manpages
+    clang-analyzer
+
   ];
 
   # man pages
