@@ -1,7 +1,14 @@
 { pkgs, ... }:
 
 {
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;
+    virtualbox.host = {
+      enable = true;
+      enableHardening = false;
+    };
+  };
   programs.dconf.enable = true;
-  environment.systemPackages = with pkgs; [ stable.virt-manager ];
+  hardware.opengl.enable = true;
+  environment.systemPackages = with pkgs; [ virt-manager ];
 }
