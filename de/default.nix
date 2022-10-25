@@ -27,6 +27,11 @@
   programs = {
     seahorse.enable = true;
     noisetorch.enable = true;
+    gnupg.agent = {
+      enable = true;
+      pinentryFlavor = "gtk2";
+    };
+  };
   };
 
   services.gnome.gnome-keyring.enable = true;
