@@ -6,6 +6,7 @@
     liberation_ttf
     master.fira-code
     master.fira-code-symbols
+    carlito
     mplus-outline-fonts.githubRelease
     dina-font
     proggyfonts
