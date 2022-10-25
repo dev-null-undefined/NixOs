@@ -10,7 +10,7 @@
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs: [ pkgs.glxinfo ];
-      #    withPrimus = true;
+         withPrimus = true;
     };
   };
   programs = {
@@ -38,7 +38,7 @@
         # fetchSubmodules = true;
       # };
     # }))
-    #polymc RIP polymc LOL
+    #polymc
 
     wineWowPackages.stable
     wine
