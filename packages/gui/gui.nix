@@ -21,6 +21,8 @@
     etcher
     thunderbird
 
+    burpsuite # proxy
+
     audacity
 
     tesseract

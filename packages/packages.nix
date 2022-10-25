@@ -48,11 +48,6 @@
     libnotify
     libinput-gestures
     xclip
-    hunspell
-    aspell
-    gspell
-    languagetool
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
 
     # Libs
     xorg.libX11
@@ -68,7 +63,6 @@
   ];
   nixpkgs.config = {
     allowUnfree = true;
-    #allowBroken = true;
   };
 
 }

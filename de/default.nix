@@ -22,6 +22,13 @@
     vimix-gtk-themes
     papirus-icon-theme
     gnome-icon-theme
+
+    # Spell checking
+    hunspell
+    aspell
+    gspell
+    languagetool
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
   ];
 
   programs = {

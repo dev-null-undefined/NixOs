@@ -17,17 +17,16 @@
     neovim
     htop
     mc
-    aria
+    aria # download utility
     sl # :D
     termdown # timer/stopwatch
 
     # Commands
-    delta
-    lsd
-    cloc
-    # pipe monitor
-    pv
-    tmux
+    delta # diff
+    lsd # better ls
+    cloc # line counter
+    pv # pipe monitor
+    tmux # term multiplexor
     tldr
     tree
     most
@@ -53,7 +52,7 @@
     ripgrep
     jq
     bc
-    mat2
+    mat2 # meta data stripper
     onionshare
 
     # Utilities
@@ -71,7 +70,6 @@
 
     # Utilities
     mitmproxy # https proxy
-    burpsuite
     wget
     curl
     git
