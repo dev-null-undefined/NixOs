@@ -2,7 +2,7 @@
 
 {
 
-  environment.systemPackages = with pkgs.dev-null.jetbrains; [
+  environment.systemPackages = with pkgs.master.jetbrains; [
     idea-ultimate
     phpstorm
     pycharm-professional
