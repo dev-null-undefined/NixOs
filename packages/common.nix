@@ -108,7 +108,8 @@
     # Python
     python27Full
 
-    (python3.withPackages (e: [ e.matplotlib e.pygments e.numpy e.tkinter e.pandas ]))
+    (python3.withPackages
+      (e: [ e.matplotlib e.pygments e.numpy e.tkinter e.pandas ]))
 
     # RUST
     cargo

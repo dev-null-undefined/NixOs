@@ -8,7 +8,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" "v4l2loopback" "ec_sys" ];
   boot.extraModulePackages = with config.boot.kernelPackages;
-  [ v4l2loopback.out ];
+    [ v4l2loopback.out ];
 
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];

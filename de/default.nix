@@ -34,7 +34,7 @@
   };
 
   xdg.mime.defaultApplications = {
-    "inode/directory" = [ "org.gnome.Nautilus.desktop"];
+    "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
   };
 
   services.gnome.gnome-keyring.enable = true;
