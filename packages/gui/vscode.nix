@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  extensions = (with pkgs.vscode-extensions; [
+  extensions = (with pkgs.master.vscode-extensions; [
     bbenoist.nix
     ms-python.python
     ms-azuretools.vscode-docker
@@ -13,8 +13,15 @@ let
     eamodio.gitlens
     mhutchie.git-graph
     ms-vsliveshare.vsliveshare
-    ms-vscode.cpptools
+    jnoortheen.nix-ide
+    github.copilot
   ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+    {
+      name = "avr-support";
+      publisher = "rockcat";
+      version = "0.0.1";
+      sha256 = "sha256-JbO9MZDnd4olODFwoWDHdxsJKIHOb1VhUpAk4g7I1y4=";
+    }
     {
       name = "LiveServer";
       publisher = "ritwickdey";
@@ -30,6 +37,7 @@ let
         "86de969b55fbce27a7f9f8ccbfceb8a8ff8ecf833a5fa7f64578eb4e1511afa7";
     }
   ];
-  vscode-with-extensions =
-    pkgs.vscode-with-extensions.override { vscodeExtensions = extensions; };
+  vscode-with-extensions = pkgs.master.vscode-with-extensions.override {
+    vscodeExtensions = extensions;
+  };
 in { config.environment.systemPackages = [ vscode-with-extensions ]; }
