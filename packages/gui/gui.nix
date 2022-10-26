@@ -26,12 +26,17 @@
     audacity
 
     tesseract
+
     gnome.gnome-screenshot
+    gnome-usage
+    gnome.gnome-nettool
+    gnome.ghex
+    stable.gnome.nautilus
+    stable.gnome.gnome-terminal
 
     ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]))
     xournalpp
     rnote
-    gnome.ghex
 
     gnuplot
     remake
@@ -69,7 +74,6 @@
     font-manager
     ark
     networkmanagerapplet
-    stable.gnome.nautilus
     pcmanfm
     gitg
     gparted
@@ -79,7 +83,6 @@
     insomnia
     alacritty
     stable.kitty
-    stable.gnome.gnome-terminal
     ccls
     nodePackages.bash-language-server
     nodePackages.typescript-language-server
