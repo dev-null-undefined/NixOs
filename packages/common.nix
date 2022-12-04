@@ -27,7 +27,7 @@
     cloc # line counter
     pv # pipe monitor
     tmux # term multiplexor
-    tldr
+    tealdeer
     tree
     most
     sshfs
