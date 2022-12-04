@@ -2,13 +2,51 @@
 
 {
   imports = [ ../nvidia-offload.nix ./default.nix ];
+  
   hardware.pulseaudio.enable = false;
-  services.xserver = {
-    desktopManager = { gnome.enable = true; };
+  services = {
 
-    displayManager = {
-      gdm.enable = true;
-      gdm.wayland = false;
+    switcherooControl.enable = true;
+
+    xserver = {
+      desktopManager.gnome.enable = true;
+
+      displayManager = {
+        gdm.enable = true;
+        gdm.wayland = true;
+      };
     };
   };
+
+  environment.systemPackages = (with pkgs; [ 
+    gnome.gnome-tweaks
+
+    # GS connect dependency
+    gnome.nautilus-python
+
+    # Xorg like screen share
+    xdg-desktop-portal-gnome
+
+    # vitals extension dependencies
+    libgtop
+    lm_sensors
+  ]) ++ (with pkgs.gnomeExtensions; [ 
+      sound-output-device-chooser
+      vitals
+      dash-to-panel
+      removable-drive-menu
+      gsconnect
+      appindicator
+      unite
+      custom-hot-corners-extended
+      animation-tweaks
+  ]);
+
+
+  xdg.portal.wlr.enable = true;
+
+  services.udev.packages = with pkgs; [ gnome.gnome-settings-daemon ];
+
+  services.dbus.packages = with pkgs; [ gnome2.GConf ];
+
 }
