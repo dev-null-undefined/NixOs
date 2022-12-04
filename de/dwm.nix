@@ -2,6 +2,9 @@
 
 {
   imports = [ ../nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix ];
+
+  services.blueman.enable = true;
+
   services.xserver = {
     displayManager = {
       sddm = {
@@ -30,7 +33,7 @@
           owner = "ThreshMain";
           repo = "dwm-flexipatch";
           rev = "master";
-          sha256 = "sha256-9xY8EShk5koRIL7gUuW2F1mdAuq9n4aSt50W1Y1wr18=";
+          sha256 = "sha256-Xrr5nusg4Z/gFFGEg9iD212ugEZSV9UaSm2ot35RMZk=";
         };
         buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
       });
