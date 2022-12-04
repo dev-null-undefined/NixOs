@@ -22,6 +22,10 @@
     thunderbird
 
     burpsuite # proxy
+    gtkwave
+    verilog
+
+    ghidra
 
     audacity
 
@@ -46,6 +50,7 @@
     droidcam
     v4l-utils
 
+    tdesktop
     element-desktop
     gomuks
 
@@ -82,7 +87,7 @@
     arandr
     insomnia
     alacritty
-    stable.kitty
+    kitty
     ccls
     nodePackages.bash-language-server
     nodePackages.typescript-language-server

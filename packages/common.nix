@@ -12,15 +12,6 @@
     # Wire guard VPN
     wireguard-tools
 
-    # TUIS
-    vim_configurable
-    neovim
-    htop
-    mc
-    aria # download utility
-    sl # :D
-    termdown # timer/stopwatch
-
     # Commands
     delta # diff
     lsd # better ls
@@ -124,7 +115,7 @@
     lldb_14
     libclang
     clang_multi
-    clang-tools
+    clang-tools_14
     clang-manpages
     clang-analyzer
 

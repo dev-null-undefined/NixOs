@@ -4,26 +4,59 @@
   imports = [ ./common.nix ./zsh.nix ./gui/gui.nix ./docker.nix ];
 
   environment.systemPackages = with pkgs; [
+    stable.android-tools
+
     # ----- Terminal tools -----
     # TUI
-    lynx
-    stable.android-tools
+    vim_configurable
+    neovim
+
+    broot # cd with fd and fzf
+
+    procs # better ps
+    du-dust # better du
+    duf # better df
+    ncdu # TUI windirstat
+    termdown # timer/stopwatch
+
+
+    mc # file manager
+    aria # download utility
+    lynx # web browser
+
+    # Usage monitors
     bpytop
     glances
     gotop
-    nload
-    iftop
-    nethogs
+    zenith
+    htop
+    atop
+    nvitop
     bottom
-    mutt
+
+    # Network monitors
+    iftop
+    nload
+    nethogs
+    gping # TUI ping with graph
+
+    mutt # email client
+
+    # Funny programs
     nyancat
     pipes
     cmatrix
-    hyperfine
-    mycli
+    sl
+
+    hyperfine # terminal benchmark
+
+    mycli # mariadb TUI server connector
+
     wavemon
     wirelesstools
     iw
+
+    # Flex spec sharing Utilities
     screenfetch
     neofetch
     cpufetch
@@ -61,8 +94,4 @@
 
     hidapi
   ];
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
 }
