@@ -17,6 +17,18 @@ let
     github.copilot
   ]) ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     {
+      name = "veriloghdl";
+      publisher = "mshr-h";
+      version = "1.5.5";
+      sha256 = "sha256-zWe69azXBEK6pzEt2L3Lv5Y2d99J4s1tmswmVMhyNG4=";
+    }
+    {
+      name = "verilogformat";
+      publisher = "ericsonj";
+      version = "1.0.1";
+      sha256 = "sha256-TqsKN2NRzICWGf0ydUHlTg/F5iNrlZqt4sh17UGsxPU=";
+    }
+    {
       name = "avr-support";
       publisher = "rockcat";
       version = "0.0.1";
