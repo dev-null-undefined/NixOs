@@ -38,7 +38,7 @@
     #    fetchSubmodules = true;
     #  };
     #}))
-    #polymc
+    prismlauncher
 
     wineWowPackages.stable
     wine
