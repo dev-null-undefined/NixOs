@@ -4,12 +4,13 @@
 { config, pkgs, ... }:
 
 {
+
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./packages/packages.nix
     ./grub-savedefault.nix
     ./users/default.nix
-    ./de/dwm.nix
+    ./de/gnome.nix
     ./services/services.nix
   ];
   # Use the systemd-boot EFI boot loader.
@@ -47,6 +48,11 @@
   };
 
   environment.pathsToLink = [ "/libexec" ];
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
