@@ -84,6 +84,7 @@
     perf-tools
     bintools-unwrapped # gcc-unwrapped
     gdb
+    radare2
 
     # Java
     jdk
