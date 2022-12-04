@@ -15,5 +15,6 @@
     meslo-lgs-nf
     jetbrains-mono
     overpass
+    monocraft
   ];
 }
