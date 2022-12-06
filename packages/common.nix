@@ -34,11 +34,12 @@
     thefuck
     nix-diff
     nix-index
+    nix-direnv
+    nix-output-monitor
     pciutils
     unzip
     zip
     unrar-wrapper
-    nix-direnv
     direnv
     ripgrep
     jq
