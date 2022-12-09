@@ -10,7 +10,7 @@
     ./packages/packages.nix
     ./grub-savedefault.nix
     ./users/default.nix
-    ./de/gnome.nix
+    ./de/dwm.nix
     ./services/services.nix
     ./yubikey/yubikey.nix
   ];
