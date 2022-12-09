@@ -36,10 +36,14 @@
   ];
 
   programs = {
+
+    ssh.startAgent = false;
+
     seahorse.enable = true;
     noisetorch.enable = true;
     gnupg.agent = {
       enable = true;
+      enableSSHSupport = true;
       pinentryFlavor = "gtk2";
     };
   };
