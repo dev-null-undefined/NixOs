@@ -81,7 +81,21 @@
     networkmanagerapplet
     pcmanfm
     gitg
+ 
     gparted
+    # gparted dependecies
+    exfatprogs
+    btrfs-progs
+    dosfstools
+    f2fs-tools
+    gpart
+    mtools 
+    ntfs3g
+    e2fsprogs
+    lvm2
+    cryptsetup
+
+    partition-manager
     stable.flameshot
     pavucontrol
     arandr
