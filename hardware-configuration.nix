@@ -10,6 +10,10 @@
   boot.extraModulePackages = with config.boot.kernelPackages;
     [ v4l2loopback.out ];
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  hardware.enableAllFirmware = true;
+
   # Air plane mode fix
   boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
 
@@ -50,4 +54,6 @@
   swapDevices = [{ device = "/dev/nvme1n1p2"; }];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
