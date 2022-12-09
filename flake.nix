@@ -6,7 +6,8 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs?ref=master";
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs?ref=main";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixpkgs-testing.url = "github:LunNova/nixpkgs?ref=lunnova/xdg-open-workaround";
+    nixpkgs-testing.url =
+      "github:LunNova/nixpkgs?ref=lunnova/xdg-open-workaround";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
