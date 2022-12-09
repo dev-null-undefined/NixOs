@@ -12,18 +12,8 @@
     ./users/default.nix
     ./de/gnome.nix
     ./services/services.nix
+    ./yubikey/yubikey.nix
   ];
-  # Use the systemd-boot EFI boot loader.
-  boot = {
-    loader = {
-      grub = {
-        efiSupport = true;
-        device = "nodev";
-        useOSProber = true;
-      };
-      efi.canTouchEfiVariables = true;
-    };
-  };
 
   networking.hostName = "idk";
   networking.hostId = "69faa160";
