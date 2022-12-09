@@ -2,7 +2,7 @@
 
 {
   imports = [ ../nvidia-offload.nix ./default.nix ];
-  
+
   hardware.pulseaudio.enable = false;
   services = {
 
@@ -18,7 +18,7 @@
     };
   };
 
-  environment.systemPackages = (with pkgs; [ 
+  environment.systemPackages = (with pkgs; [
     gnome.gnome-tweaks
 
     # Xorg like screen share
@@ -27,18 +27,17 @@
     # vitals extension dependencies
     libgtop
     lm_sensors
-  ]) ++ (with pkgs.gnomeExtensions; [ 
-      sound-output-device-chooser
-      vitals
-      dash-to-panel
-      removable-drive-menu
-      gsconnect
-      appindicator
-      unite
-      custom-hot-corners-extended
-      animation-tweaks
+  ]) ++ (with pkgs.gnomeExtensions; [
+    sound-output-device-chooser
+    vitals
+    dash-to-panel
+    removable-drive-menu
+    gsconnect
+    appindicator
+    unite
+    custom-hot-corners-extended
+    animation-tweaks
   ]);
-
 
   xdg.portal.wlr.enable = true;
 
