@@ -45,8 +45,13 @@
         specialArgs = { inherit inputs; };
         modules = [
           ({ config, pkgs, ... }: {
-            nixpkgs.overlays =
-              [ overlay-stable overlay-master overlay-dev-null overlay-testing ];
+            nixpkgs.overlays = [
+              overlay-stable
+              overlay-master
+              overlay-dev-null
+              overlay-testing
+              (import ./custom)
+            ];
             nix.extraOptions = "experimental-features = nix-command flakes";
             nix.package = pkgs.nix;
             nixpkgs.config.allowUnfree = true;
