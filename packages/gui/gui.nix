@@ -26,6 +26,7 @@
     verilog
 
     ghidra
+    netdiscover
 
     audacity
 
