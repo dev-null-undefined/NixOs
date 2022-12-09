@@ -18,6 +18,9 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # password manager
+    keepassxc
+
     dunst
     orchis-theme
     vimix-gtk-themes
