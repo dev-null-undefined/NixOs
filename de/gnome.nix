@@ -21,9 +21,6 @@
   environment.systemPackages = (with pkgs; [ 
     gnome.gnome-tweaks
 
-    # GS connect dependency
-    gnome.nautilus-python
-
     # Xorg like screen share
     xdg-desktop-portal-gnome
 
