@@ -47,12 +47,5 @@
     keyMap = "us";
   };
 
-  environment.pathsToLink = [ "/libexec" ];
-
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
-
   system.stateVersion = "22.05"; # Did you read the comment?
 }

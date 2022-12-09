@@ -49,6 +49,7 @@
               [ overlay-stable overlay-master overlay-dev-null overlay-testing ];
             nix.extraOptions = "experimental-features = nix-command flakes";
             nix.package = pkgs.nix;
+            nixpkgs.config.allowUnfree = true;
             nix.registry.nixpkgs.flake = inputs.nixpkgs;
           })
 
