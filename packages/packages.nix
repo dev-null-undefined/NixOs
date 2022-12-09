@@ -1,16 +1,13 @@
 { pkgs, config, ... }:
 
 {
-  imports = [ ./common.nix ./zsh.nix ./gui/gui.nix ./docker.nix ];
+  imports = [ ./common.nix ./zsh.nix ./gui/gui.nix ./docker.nix ./vim.nix ];
 
   environment.systemPackages = with pkgs; [
     stable.android-tools
 
     # ----- Terminal tools -----
     # TUI
-    vim_configurable
-    neovim
-
     broot # cd with fd and fzf
 
     procs # better ps
@@ -18,7 +15,6 @@
     duf # better df
     ncdu # TUI windirstat
     termdown # timer/stopwatch
-
 
     mc # file manager
     aria # download utility
