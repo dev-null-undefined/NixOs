@@ -35,8 +35,8 @@
     gnome-usage
     gnome.gnome-nettool
     gnome.ghex
-    stable.gnome.nautilus
-    stable.gnome.gnome-terminal
+    gnome.nautilus-python
+    gnome.gnome-terminal
 
     ((emacsPackagesFor emacs).emacsWithPackages (epkgs: [ epkgs.vterm ]))
     xournalpp
