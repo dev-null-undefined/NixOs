@@ -5,6 +5,11 @@
 
   services.blueman.enable = true;
 
+  security.pam.services = {
+    sddm.u2fAuth = true;
+#    i3lock.u2Auth = true;
+  };
+
   services.xserver = {
     displayManager = {
       sddm = {
