@@ -1,62 +1,68 @@
 {
   inputs = {
     #nixpkgs.url = "github:dev-null-undefined/nixpkgs?ref=nixos-unstable";
-    nixpkgs.url = "github:NixOs/nixpkgs?ref=nixos-unstable";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs?ref=nixos-22.11";
-    nixpkgs-master.url = "github:NixOS/nixpkgs?ref=master";
-    nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs?ref=main";
+    nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixpkgs-testing.url =
-      "github:LunNova/nixpkgs?ref=lunnova/xdg-open-workaround";
+
+    nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
+    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/main";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
     , nixpkgs-dev-null, nixpkgs-testing, ... }@inputs:
     let
       system = "x86_64-linux";
-      overlay-master = final: prev: {
-        master = import nixpkgs-master {
+
+      mkPkgs = pkgs: overlays:
+        pkgs {
           inherit system;
+          overlays = overlays;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [ "electron-12.2.3" ];
         };
-      };
-      overlay-stable = final: prev: {
-        stable = import nixpkgs-stable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      };
-      overlay-dev-null = final: prev: {
-        dev-null = import nixpkgs-dev-null {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      };
-      overlay-testing = final: prev: {
-        testing = import nixpkgs-testing {
-          inherit system;
-          config.allowUnfree = true;
-        };
-      };
-    in with nixpkgs.lib; {
-      nixosConfigurations.idk = inputs.nixpkgs.lib.nixosSystem {
+
+      mkOverlay = { input, name, overlays ? [ ] }:
+        (final: prev: ({ "${name}" = mkPkgs (import input) overlays; }));
+
+      pkgs = mkPkgs (import nixpkgs) [
+        (mkOverlay ({
+          input = nixpkgs-stable;
+          name = "stable";
+        }))
+        (mkOverlay ({
+          input = nixpkgs-dev-null;
+          name = "dev-null";
+        }))
+        (mkOverlay ({
+          input = nixpkgs-testing;
+          name = "testing";
+        }))
+        (mkOverlay ({
+          input = nixpkgs-master;
+          name = "master";
+        }))
+        (import ./custom)
+        (final: prev: { libnma = prev.dev-null.libnma; })
+      ];
+    in {
+      nixosConfigurations.idk = nixpkgs.lib.nixosSystem {
         inherit system;
+        inherit pkgs;
+
         # Things in this set are passed to modules and accessible
         # in the top-level arguments (e.g. `{ pkgs, lib, inputs, ... }:`).
         specialArgs = { inherit inputs; };
+
         modules = [
           ({ config, pkgs, ... }: {
-            nixpkgs.overlays = [
-              overlay-stable
-              overlay-master
-              overlay-dev-null
-              overlay-testing
-              (import ./custom)
-            ];
+            imports =
+              [ "${nixpkgs-dev-null}/nixos/modules/programs/i3lock-u2f.nix" ];
             nix.extraOptions = "experimental-features = nix-command flakes";
             nix.package = pkgs.nix;
             nixpkgs.config.allowUnfree = true;
-            nix.registry.nixpkgs.flake = inputs.nixpkgs;
           })
 
           nixos-hardware.nixosModules.msi-gs60
