@@ -68,7 +68,6 @@
     # Utilities
     pandoc
     light
-    blueman
     fzf
     autorandr
     cron

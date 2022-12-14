@@ -18,14 +18,21 @@
   };
 
   environment.systemPackages = with pkgs; [
+    # bluetooth manager
+    blueman
+
     # password manager
     keepassxc
 
     dunst
     orchis-theme
     vimix-gtk-themes
+
     papirus-icon-theme
     gnome-icon-theme
+
+    # cursor themes
+    phinger-cursors
 
     # Spell checking
     hunspell
