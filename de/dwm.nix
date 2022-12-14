@@ -7,8 +7,11 @@
 
   security.pam.services = {
     sddm.u2fAuth = true;
-#    i3lock.u2Auth = true;
   };
+
+  programs.i3lock-u2f.enable = true;
+
+  services.power-profiles-daemon.enable = true;
 
   services.xserver = {
     displayManager = {
