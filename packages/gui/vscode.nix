@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  extensions = (with pkgs.master.vscode-extensions; [
+  extensions = (with pkgs.vscode-extensions; [
     bbenoist.nix
     ms-python.python
     ms-azuretools.vscode-docker

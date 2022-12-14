@@ -73,6 +73,7 @@
     lxappearance
     wireshark
     gimp-with-plugins
+    feh
     vlc
     mpv
     blender

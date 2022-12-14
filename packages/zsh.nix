@@ -8,5 +8,25 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-completions
+
+    # Cat with syntax highlight
+    bat
+
+    # Flex spec sharing Utilities
+    screenfetch
+    neofetch
+    cpufetch
+    macchina
+
+    # mariadb TUI server connector
+    mycli
+
+    # Funny programs
+    nyancat
+    pipes
+    cmatrix
+    sl
+    lolcat
+    hollywood
   ];
 }

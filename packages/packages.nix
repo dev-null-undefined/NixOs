@@ -4,8 +4,6 @@
   imports = [ ./common.nix ./zsh.nix ./gui/gui.nix ./docker.nix ./vim.nix ];
 
   environment.systemPackages = with pkgs; [
-    stable.android-tools
-
     # ----- Terminal tools -----
     # TUI
     broot # cd with fd and fzf
@@ -38,30 +36,15 @@
 
     mutt # email client
 
-    # Funny programs
-    nyancat
-    pipes
-    cmatrix
-    sl
-
     hyperfine # terminal benchmark
-
-    mycli # mariadb TUI server connector
 
     wavemon
     wirelesstools
     iw
 
-    # Flex spec sharing Utilities
-    screenfetch
-    neofetch
-    cpufetch
-    macchina
-
     # Commands
     home-manager
     gnumake
-    feh
     youtube-dl
     asciinema
 
@@ -71,8 +54,6 @@
     fzf
     autorandr
     cron
-    bat
-    lolcat
     libnotify
     libinput-gestures
     xclip
