@@ -9,7 +9,7 @@
       })
       # discord-ptb
       # discord-canary
-      #dev-null.webcord
+      webcord.webcord
       # betterdiscord-installer
     ];
 }

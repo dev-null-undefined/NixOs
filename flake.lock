@@ -96,6 +96,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-webcord": {
+      "locked": {
+        "lastModified": 1671221703,
+        "narHash": "sha256-xG+stBYGPtuCanneLHTxFVZ6S92+Qfo1jrpmTjqzGrk=",
+        "owner": "dev-null-undefined",
+        "repo": "nixpkgs",
+        "rev": "5db3ec23757c1582c161cd80f2cfa06bb9e9c683",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dev-null-undefined",
+        "ref": "webcord",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "nixos-hardware": "nixos-hardware",
@@ -103,7 +119,8 @@
         "nixpkgs-dev-null": "nixpkgs-dev-null",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
-        "nixpkgs-testing": "nixpkgs-testing"
+        "nixpkgs-testing": "nixpkgs-testing",
+        "nixpkgs-webcord": "nixpkgs-webcord"
       }
     }
   },

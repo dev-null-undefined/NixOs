@@ -8,11 +8,12 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
+    nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
     nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/main";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
-    , nixpkgs-dev-null, nixpkgs-testing, ... }@inputs:
+    , nixpkgs-dev-null, nixpkgs-webcord, nixpkgs-testing, ... }@inputs:
     let
       system = "x86_64-linux";
 
@@ -43,6 +44,10 @@
         (mkOverlay ({
           input = nixpkgs-master;
           name = "master";
+        }))
+        (mkOverlay ({
+          input = nixpkgs-webcord;
+          name = "webcord";
         }))
         (import ./custom)
         (final: prev: { libnma = prev.dev-null.libnma; })
