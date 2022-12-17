@@ -12,6 +12,13 @@
     # Cat with syntax highlight
     bat
 
+    # fuzzy finders
+    fzf
+    broot
+
+    # Better ls
+    lsd
+
     # Flex spec sharing Utilities
     screenfetch
     neofetch

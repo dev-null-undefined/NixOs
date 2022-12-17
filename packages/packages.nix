@@ -6,8 +6,6 @@
   environment.systemPackages = with pkgs; [
     # ----- Terminal tools -----
     # TUI
-    broot # cd with fd and fzf
-
     procs # better ps
     du-dust # better du
     duf # better df
@@ -51,7 +49,6 @@
     # Utilities
     pandoc
     light
-    fzf
     autorandr
     cron
     libnotify

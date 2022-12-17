@@ -14,7 +14,6 @@
 
     # Commands
     delta # diff
-    lsd # better ls
     cloc # line counter
     pv # pipe monitor
     tmux # term multiplexor
