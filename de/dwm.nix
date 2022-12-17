@@ -5,9 +5,7 @@
 
   services.blueman.enable = true;
 
-  security.pam.services = {
-    sddm.u2fAuth = true;
-  };
+  security.pam.services.sddm.u2fAuth = true;
 
   programs.i3lock-u2f.enable = true;
 
@@ -30,23 +28,20 @@
           waitPID=$!
         '';
       }];
-      dwm.enable = true;
+      dwm = {
+        package = pkgs.dwm.overrideAttrs (old: {
+          src = pkgs.fetchFromGitHub {
+            owner = "ThreshMain";
+            repo = "dwm-flexipatch";
+            rev = "master";
+            sha256 = "sha256-Xrr5nusg4Z/gFFGEg9iD212ugEZSV9UaSm2ot35RMZk=";
+          };
+          buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
+        });
+        enable = true;
+      };
     };
   };
-
-  nixpkgs.overlays = [
-    (final: prev: {
-      dwm = prev.dwm.overrideAttrs (old: {
-        src = pkgs.fetchFromGitHub {
-          owner = "ThreshMain";
-          repo = "dwm-flexipatch";
-          rev = "master";
-          sha256 = "sha256-Xrr5nusg4Z/gFFGEg9iD212ugEZSV9UaSm2ot35RMZk=";
-        };
-        buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
-      });
-    })
-  ];
 
   programs.slock.enable = true;
 
