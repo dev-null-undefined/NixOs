@@ -2,7 +2,7 @@
   fonts = {
     fonts = with pkgs; [
       ubuntu_font_family
-      
+
       noto-fonts
       noto-fonts-cjk
 
@@ -21,21 +21,19 @@
       proggyfonts
       font-awesome_4
       font-awesome
-      
+
       meslo-lgs-nf
       jetbrains-mono
-      
+
       overpass
       monocraft
     ];
 
     fontDir.enable = true;
-    
+
     enableDefaultFonts = true;
     fontconfig = {
-      defaultFonts = {
-        emoji = [ "Noto Color Emoji" "Twitter Color Emoji" ];
-      };
+      defaultFonts = { emoji = [ "Noto Color Emoji" "Twitter Color Emoji" ]; };
     };
   };
 }

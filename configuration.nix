@@ -29,7 +29,7 @@
     DefaultTimeoutStopSec=5s
   '';
 
-    # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader.
   boot.plymouth = {
     enable = true;
     themePackages = [ pkgs.adi1090x-plymouth ];
