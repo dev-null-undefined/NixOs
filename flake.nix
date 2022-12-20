@@ -6,6 +6,7 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
@@ -64,7 +65,7 @@
         modules = [
           ({ config, pkgs, ... }: {
             imports =
-              [ "${nixpkgs-dev-null}/nixos/modules/programs/i3lock-u2f.nix" ];
+              [ "${nixpkgs-dev-null}/nixos/modules/programs/i3lock.nix" ];
             nix.extraOptions = "experimental-features = nix-command flakes";
             nix.package = pkgs.nix;
             nixpkgs.config.allowUnfree = true;

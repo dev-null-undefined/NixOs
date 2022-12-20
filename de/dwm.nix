@@ -7,7 +7,11 @@
 
   security.pam.services.sddm.u2fAuth = true;
 
-  programs.i3lock-u2f.enable = true;
+  programs.i3lock = {
+    enable = true;
+    u2fSupport = true;
+    package = pkgs.dev-null.i3lock-color;
+  };
 
   services.power-profiles-daemon.enable = true;
 
@@ -34,7 +38,7 @@
             owner = "ThreshMain";
             repo = "dwm-flexipatch";
             rev = "master";
-            sha256 = "sha256-Xrr5nusg4Z/gFFGEg9iD212ugEZSV9UaSm2ot35RMZk=";
+            sha256 = "sha256-D4JFYI7IAz4uxtXgEDa72BMxSJpwCl/FoFRxhMB29zM=";
           };
           buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
         });
