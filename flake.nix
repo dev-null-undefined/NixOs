@@ -51,7 +51,6 @@
           name = "webcord";
         }))
         (import ./custom)
-        (final: prev: { libnma = prev.dev-null.libnma; })
       ];
     in {
       nixosConfigurations.idk = nixpkgs.lib.nixosSystem {
