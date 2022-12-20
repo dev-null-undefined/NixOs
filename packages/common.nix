@@ -7,8 +7,6 @@
   imports = [ ./ranger.nix ];
 
   environment.systemPackages = with pkgs; [
-    dev-null.ruby
-    # dev-null.gns3-gui master.ubridge master.dynamips dev-null.gns3-server
     # Wire guard VPN
     wireguard-tools
 
@@ -64,6 +62,7 @@
     wget
     curl
     git
+    gh # github tui
     stable.cmake
     gnupg
     lsof
