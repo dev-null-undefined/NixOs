@@ -16,6 +16,9 @@
   programs.kdeconnect.enable = true;
   services.gnome.sushi.enable = true;
   environment.systemPackages = with pkgs; [
+    # Logitech headphones controll
+    headsetcontrol
+
     # ======= GUI programms ======
     kiterunner
     etcher

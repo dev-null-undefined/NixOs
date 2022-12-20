@@ -21,6 +21,9 @@
   environment.systemPackages = (with pkgs; [
     gnome.gnome-tweaks
 
+    # A app-indicator for GNOME desktops wireless headsets
+    headset-charge-indicator
+
     # Xorg like screen share
     xdg-desktop-portal-gnome
 
