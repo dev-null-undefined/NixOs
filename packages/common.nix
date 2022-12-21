@@ -10,6 +10,9 @@
     # Wire guard VPN
     wireguard-tools
 
+    # pee sponge vipe etc..
+    moreutils
+
     # Commands
     delta # diff
     cloc # line counter
