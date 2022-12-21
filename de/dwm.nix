@@ -53,8 +53,11 @@
     systemPackages = with pkgs; [
       gnome.gnome-disk-utility
       gnome.gnome-tweaks
+      gnome.nautilus
 
       rofi
+      ulauncher
+
       acpi
       xmenu
       # no longer needed thanks to dwm patchwmname # fix problems with JDK
