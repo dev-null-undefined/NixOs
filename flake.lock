@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "dwm-dev-null": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1671273524,
+        "narHash": "sha256-D4JFYI7IAz4uxtXgEDa72BMxSJpwCl/FoFRxhMB29zM=",
+        "owner": "dev-null-undefined",
+        "repo": "dwm-flexipatch",
+        "rev": "c5472e6b2905d8a5318e7610921b75fa6c252a7f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dev-null-undefined",
+        "ref": "master",
+        "repo": "dwm-flexipatch",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1671631481,
@@ -50,11 +67,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1671628906,
-        "narHash": "sha256-7U6q0vSUZFSdyQituqtUF8sWsmey20OgjJ3bK1bXVDs=",
+        "lastModified": 1671658455,
+        "narHash": "sha256-TjAtaE6agyVpCLXioPumV0oHUfCfQ+XuqEC2EdlGc2s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cd39b90b6f5c7333116c75b1cb9a132cf2d56714",
+        "rev": "5d6fa6fdeb97ce5763f8bc2fa7b4185c3562c43a",
         "type": "github"
       },
       "original": {
@@ -114,6 +131,7 @@
     },
     "root": {
       "inputs": {
+        "dwm-dev-null": "dwm-dev-null",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-dev-null": "nixpkgs-dev-null",

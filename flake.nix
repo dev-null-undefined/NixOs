@@ -8,13 +8,18 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
+    dwm-dev-null = {
+      url = "github:dev-null-undefined/dwm-flexipatch/master";
+      flake = false;
+    };
+
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
     nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/main";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
-    , nixpkgs-dev-null, nixpkgs-webcord, nixpkgs-testing, ... }@inputs:
+    , dwm-dev-null, nixpkgs-dev-null, nixpkgs-webcord, nixpkgs-testing }@inputs:
     let
       system = "x86_64-linux";
 

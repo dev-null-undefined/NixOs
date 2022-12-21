@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [ ../nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix ];
@@ -34,12 +34,7 @@
       }];
       dwm = {
         package = pkgs.dwm.overrideAttrs (old: {
-          src = pkgs.fetchFromGitHub {
-            owner = "ThreshMain";
-            repo = "dwm-flexipatch";
-            rev = "master";
-            sha256 = "sha256-D4JFYI7IAz4uxtXgEDa72BMxSJpwCl/FoFRxhMB29zM=";
-          };
+          src = inputs.dwm-dev-null;
           buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
         });
         enable = true;
