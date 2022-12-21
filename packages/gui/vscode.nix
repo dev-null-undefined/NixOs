@@ -30,7 +30,7 @@ let
       sha256 = "sha256-ht6Wm1X7zien+fjMv864qP+Oz4M6X6f2RXjrThURr6c=";
     }
   ];
-  vscode-with-extensions = pkgs.master.vscode-with-extensions.override {
+  vscode-with-extensions = pkgs.vscode-with-extensions.override {
     vscodeExtensions = extensions;
   };
 in { config.environment.systemPackages = [ vscode-with-extensions ]; }
