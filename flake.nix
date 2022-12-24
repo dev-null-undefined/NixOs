@@ -68,10 +68,7 @@
 
         modules = [
           ({ config, pkgs, ... }: {
-            imports =
-              [ "${nixpkgs-dev-null}/nixos/modules/programs/i3lock.nix" ];
             nix.extraOptions = "experimental-features = nix-command flakes";
-            nix.package = pkgs.nix;
             nixpkgs.config.allowUnfree = true;
           })
 
