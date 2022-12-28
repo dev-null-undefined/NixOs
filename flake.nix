@@ -6,7 +6,6 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-    nixos-hardware.inputs.nixpkgs.follows = "nixpkgs";
 
     dwm-dev-null = {
       url = "github:dev-null-undefined/dwm-flexipatch/master";
