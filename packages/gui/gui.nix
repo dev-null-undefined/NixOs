@@ -11,10 +11,12 @@
     ./mathematica.nix
     ./virt-manager.nix
     ./piper.nix
+    ./via-qmk.nix
   ];
   nixpkgs.config.permittedInsecurePackages = [ "electron-12.2.3" ];
   programs.kdeconnect.enable = true;
   services.gnome.sushi.enable = true;
+
   environment.systemPackages = with pkgs; [
     # Logitech headphones controll
     headsetcontrol
