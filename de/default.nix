@@ -5,8 +5,6 @@
 
   hardware.bluetooth.enable = true;
 
-  hardware.bluetooth.settings.General = { ControllerMode = "bredr"; };
-
   services.xserver = {
     enable = true;
     layout = "us";
