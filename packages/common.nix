@@ -13,6 +13,9 @@
     # pee sponge vipe etc..
     moreutils
 
+    # Compression statistics
+    compsize
+
     # Commands
     delta # diff
     cloc # line counter
@@ -49,6 +52,7 @@
 
     # Utilities
     coreutils
+    netcat-gnu
     usbutils
     dhcp
 
