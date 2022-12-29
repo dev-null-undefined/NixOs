@@ -7,10 +7,14 @@
 
   security.pam.services.sddm.u2fAuth = true;
 
-  programs.i3lock = {
-    enable = true;
-    u2fSupport = true;
-    package = pkgs.dev-null.i3lock-color;
+  programs = {
+    i3lock = {
+      enable = true;
+      u2fSupport = true;
+      package = pkgs.dev-null.i3lock-color;
+    };
+    kdeconnect = { enable = true; };
+    slock = { enable = true; };
   };
 
   services.power-profiles-daemon.enable = true;
@@ -41,8 +45,6 @@
       };
     };
   };
-
-  programs.slock.enable = true;
 
   environment = {
     systemPackages = with pkgs; [
