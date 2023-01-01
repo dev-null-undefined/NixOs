@@ -19,8 +19,6 @@
   networking.hostName = "idk";
   networking.hostId = "69faa160";
   networking.networkmanager.enable = true;
-  programs.nm-applet.enable = true;
-  # networking.wireless.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Prague";

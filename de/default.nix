@@ -41,6 +41,7 @@
   ];
 
   programs = {
+    nm-applet.enable = true;
 
     ssh.startAgent = false;
 
