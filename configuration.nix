@@ -13,6 +13,7 @@
     ./de/dwm.nix
     ./services/services.nix
     ./yubikey/yubikey.nix
+    ./plymouth.nix
   ];
 
   networking.hostName = "idk";
@@ -28,13 +29,6 @@
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=5s
   '';
-
-  # Use the systemd-boot EFI boot loader.
-  boot.plymouth = {
-    enable = true;
-    themePackages = [ pkgs.adi1090x-plymouth ];
-    theme = "loader_2";
-  };
 
   networking.useDHCP = false;
 
