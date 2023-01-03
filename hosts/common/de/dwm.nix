@@ -12,7 +12,7 @@
     i3lock = {
       enable = true;
       u2fSupport = true;
-      package = pkgs.dev-null.i3lock-color;
+      package = pkgs.i3lock-color;
     };
     kdeconnect = { enable = true; };
     slock = { enable = true; };
