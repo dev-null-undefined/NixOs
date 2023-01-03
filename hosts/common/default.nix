@@ -1,5 +1,6 @@
 { pkgs, config, ... }: {
-  imports = [ ./users/default.nix ./packages/default.nix ];
+  imports =
+    [ ./users/default.nix ./packages/default.nix ./services/default.nix ];
 
   # Change default time limit for unit stop
   systemd.extraConfig = ''

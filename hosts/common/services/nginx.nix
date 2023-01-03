@@ -10,6 +10,8 @@ in {
   services.nginx = {
     enable = true;
     virtualHosts."dev-null.me" = {
+      addSSL = true;
+      enableACME = true;
       root = visualSorting;
       locations."~ /\\.git".extraConfig = ''
         deny all;
