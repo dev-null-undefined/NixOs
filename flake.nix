@@ -16,10 +16,17 @@
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
     nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/jetbrains-update";
 
+    flake-utils.url = "github:numtide/flake-utils";
+
     # https://github.com/thiagokokada/nix-alien
     # Run unpatched binaries on Nix/NixOS
-    nix-alien.url = "github:thiagokokada/nix-alien";
-    nix-alien.inputs.nixpkgs.follows = "nixpkgs";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = {
@@ -32,6 +39,7 @@
     nixpkgs-dev-null,
     nixpkgs-webcord,
     nixpkgs-testing,
+    flake-utils,
     nix-alien,
   } @ inputs: let
     mkPkgs = pkgs: overlays: system:
@@ -131,6 +139,10 @@
         value = nixpkgs.lib.nixosSystem (mkHost config);
       })
       hostConfigs);
-    formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+    formatter = builtins.listToAttrs (builtins.map (system: {
+        name = system;
+        value = nixpkgs.legacyPackages.${system}.alejandra;
+      })
+      flake-utils.lib.defaultSystems);
   };
 }

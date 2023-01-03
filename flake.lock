@@ -34,7 +34,9 @@
     },
     "nix-alien": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -168,6 +170,7 @@
     "root": {
       "inputs": {
         "dwm-dev-null": "dwm-dev-null",
+        "flake-utils": "flake-utils",
         "nix-alien": "nix-alien",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
