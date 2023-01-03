@@ -18,6 +18,9 @@ in {
       # lsp server for nix
       nil
 
+      # Prefetcher for sha256
+      nurl
+
       # Linter
       statix
 
