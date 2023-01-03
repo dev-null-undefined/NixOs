@@ -14,7 +14,7 @@
 
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
-    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/main";
+    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/jetbrains-update";
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
