@@ -5,6 +5,7 @@
   ...
 }: {
   imports = [
+    ./btrfs-tools.nix
     ./tui.nix
     ./zsh.nix
     ./development/ides/default.nix
