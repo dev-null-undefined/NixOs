@@ -17,7 +17,6 @@ in {
     recommendedTlsSettings = true;
 
     virtualHosts."dev-null.me" = {
-      addSSL = true;
       enableACME = true;
       forceSSL = true;
       root = visualSorting;
