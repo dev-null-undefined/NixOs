@@ -37,6 +37,9 @@ in {
 
       # dependency graphs in ranger like view
       nix-tree
+
+      # Run packages without installing them (test drive)
+      comma
     ]
     ++ alien-pkgs;
 }
