@@ -9,9 +9,17 @@ let
 in {
   services.nginx = {
     enable = true;
+
+    # Use recommended settings
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
+
     virtualHosts."dev-null.me" = {
       addSSL = true;
       enableACME = true;
+      forceSSL = true;
       root = visualSorting;
       locations."~ /\\.git".extraConfig = ''
         deny all;
