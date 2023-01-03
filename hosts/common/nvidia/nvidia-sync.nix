@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = ["nvidia"];
     dpi = 96;
     screenSection = ''
       Option         "metamodes" "1920x1080_144 +0+0 {ForceCompositionPipeline=On, ForceFullCompositionPipeline=On, AllowGSYNC=Off}"

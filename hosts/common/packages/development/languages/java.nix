@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     # Java
     jdk
@@ -9,5 +11,4 @@
     jprofiler
     visualvm
   ];
-
 }

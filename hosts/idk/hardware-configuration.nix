@@ -1,21 +1,24 @@
-{ config, lib, pkgs, modulesPath, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     ./hardware-partitions.nix
   ];
 
-  boot.kernelModules = [ "kvm-intel" "v4l2loopback" "ec_sys" ];
-  boot.extraModulePackages = with config.boot.kernelPackages;
-    [ v4l2loopback.out ];
+  boot.kernelModules = ["kvm-intel" "v4l2loopback" "ec_sys"];
+  boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback.out];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   hardware.enableAllFirmware = true;
 
   # Air plane mode fix
-  boot.kernelParams = [ "acpi_osi=!" ''acpi_osi="Windows 2006"'' ];
+  boot.kernelParams = ["acpi_osi=!" ''acpi_osi="Windows 2006"''];
 
   boot.extraModprobeConfig = ''
     # exclusive_caps: Skype, Zoom, Teams etc. will only show device when actually streaming

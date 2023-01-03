@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   imports = [
     ./discord.nix
     ./games.nix
@@ -17,7 +14,7 @@
     ../development/ides/emacs.nix
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [ "electron-12.2.3" ];
+  nixpkgs.config.permittedInsecurePackages = ["electron-12.2.3"];
 
   services.gnome.sushi.enable = true;
 
@@ -106,6 +103,5 @@
     hunspellDicts.cs-cz
 
     proselint
-
   ];
 }

@@ -1,7 +1,9 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [ ./fonts.nix ./audio/audio.nix ../packages/gui/default.nix ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
 
   hardware.bluetooth.enable = true;
 
@@ -39,7 +41,7 @@
     aspell
     gspell
     languagetool
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+    (aspellWithDicts (dicts: with dicts; [en en-computers en-science]))
   ];
 
   programs = {
@@ -57,7 +59,7 @@
   };
 
   xdg.mime.defaultApplications = {
-    "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+    "inode/directory" = ["org.gnome.Nautilus.desktop"];
   };
 
   services.gnome.gnome-keyring.enable = true;

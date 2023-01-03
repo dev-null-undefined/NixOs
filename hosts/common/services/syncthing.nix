@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   username = "martin";
   domain = "sync.me";
 in {
@@ -12,9 +10,7 @@ in {
   services.syncthing = {
     enable = true;
     user = username;
-    dataDir =
-      "/home/${username}/Documents"; # Default folder for new synced folders
-    configDir =
-      "/home/${username}/Documents/.config/syncthing"; # Folder for Syncthing's settings and keys
+    dataDir = "/home/${username}/Documents"; # Default folder for new synced folders
+    configDir = "/home/${username}/Documents/.config/syncthing"; # Folder for Syncthing's settings and keys
   };
 }

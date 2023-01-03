@@ -1,7 +1,4 @@
-{ pkgs, ... }:
-
-{
-
+{pkgs, ...}: {
   environment.systemPackages = with pkgs.testing.jetbrains; [
     idea-ultimate
     phpstorm

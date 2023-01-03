@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> { } }:
+{pkgs ? import <nixpkgs> {}}:
 pkgs.stdenv.mkDerivation rec {
   pname = "adi1090x-plymouth";
   version = "0.0.1";
@@ -8,7 +8,7 @@ pkgs.stdenv.mkDerivation rec {
     rev = "bf2f570bee8e84c5c20caac353cbe1d811a4745f";
   };
 
-  buildInputs = [ pkgs.git ];
+  buildInputs = [pkgs.git];
 
   configurePhase = ''
     mkdir -p $out/share/plymouth/themes/

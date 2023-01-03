@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib; {
   options.boot.loader.grub.saveDefault = mkOption {
     type = types.bool;

@@ -1,15 +1,16 @@
-{ pkgs, lib, ... }:
-
 {
-
+  pkgs,
+  lib,
+  ...
+}: {
   hardware.opengl.driSupport32Bit = true;
   hardware.opengl.enable = true;
 
-  boot.kernel.sysctl = { "abi.vsyscall32" = 0; };
+  boot.kernel.sysctl = {"abi.vsyscall32" = 0;};
 
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs: [ pkgs.glxinfo ];
+      extraPkgs = pkgs: [pkgs.glxinfo];
       withPrimus = true;
     };
   };
@@ -28,7 +29,7 @@
     #    sha256 = "0nyf3gm0r3k3dbi4bd21g2lj840nkhz43pnlfjcz199y2f3zbdbl";
     #    fetchSubmodules = true;
     #  };
-    #})) 
+    #}))
     #(master.polymc.overrideAttrs (old: rec {
     #  src = fetchFromGitHub {
     #    owner = "dev-null-undefined";

@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   visualSorting = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "VisualSorting";
@@ -8,7 +7,7 @@ let
   };
 in {
   # Enable http and https ports
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [80 443];
 
   services.nginx = {
     enable = true;

@@ -1,5 +1,8 @@
-{ pkgs, config, ... }:
-let
+{
+  pkgs,
+  config,
+  ...
+}: let
   # generate via openvpn --genkey --secret openvpn-laptop.key
   client-key = "/root/openvpn-${config.hostname}.key";
   domain = "dev-null.me";
@@ -11,11 +14,11 @@ in {
   networking.nat = {
     enable = true;
     externalInterface = "enp0s3";
-    internalInterfaces = [ vpn-dev ];
+    internalInterfaces = [vpn-dev];
   };
-  networking.firewall.trustedInterfaces = [ vpn-dev ];
-  networking.firewall.allowedUDPPorts = [ port ];
-  environment.systemPackages = [ pkgs.openvpn ]; # for key generation
+  networking.firewall.trustedInterfaces = [vpn-dev];
+  networking.firewall.allowedUDPPorts = [port];
+  environment.systemPackages = [pkgs.openvpn]; # for key generation
   services.openvpn.servers.${client-name}.config = ''
     dev ${vpn-dev}
     proto udp
@@ -65,4 +68,3 @@ in {
     fi
   '';
 }
-

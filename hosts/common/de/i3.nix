@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [ ../nvidia/nvidia-sync.nix ./default.nix ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [../nvidia/nvidia-sync.nix ./default.nix];
   services.xserver = {
-    desktopManager = { xterm.enable = false; };
+    desktopManager = {xterm.enable = false;};
 
     displayManager = {
       sddm.enable = true;

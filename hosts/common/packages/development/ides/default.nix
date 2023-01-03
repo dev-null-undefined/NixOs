@@ -1,5 +1,8 @@
-{ config, pkgs, lib, ... }:
-
 {
-  imports = [ ./vim.nix ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [./vim.nix];
 }

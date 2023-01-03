@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   services.pcscd.enable = true;
-  services.udev.packages = with pkgs; [ yubikey-personalization ];
+  services.udev.packages = with pkgs; [yubikey-personalization];
 
   services.yubikey-agent.enable = true;
 

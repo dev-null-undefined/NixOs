@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.xserver.dpi = 96;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["nvidia"];
   hardware.nvidia = {
     modesetting.enable = true;
     prime = {

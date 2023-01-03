@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   fonts = {
     fonts = with pkgs; [
       ubuntu_font_family
@@ -33,7 +33,7 @@
 
     enableDefaultFonts = true;
     fontconfig = {
-      defaultFonts = { emoji = [ "Noto Color Emoji" "Twitter Color Emoji" ]; };
+      defaultFonts = {emoji = ["Noto Color Emoji" "Twitter Color Emoji"];};
     };
   };
 }

@@ -1,8 +1,10 @@
-{ config, pkgs, inputs, ... }:
-
 {
-  imports =
-    [ ../nvidia/nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix ];
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [../nvidia/nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix];
 
   services.blueman.enable = true;
 
@@ -14,8 +16,8 @@
       u2fSupport = true;
       package = pkgs.i3lock-color;
     };
-    kdeconnect = { enable = true; };
-    slock = { enable = true; };
+    kdeconnect = {enable = true;};
+    slock = {enable = true;};
   };
 
   services.power-profiles-daemon.enable = true;
@@ -30,17 +32,19 @@
     };
 
     windowManager = {
-      session = [{
-        name = "customdwm";
-        start = ''
-          /home/martin/.dwm/autostart &
-          waitPID=$!
-        '';
-      }];
+      session = [
+        {
+          name = "customdwm";
+          start = ''
+            /home/martin/.dwm/autostart &
+            waitPID=$!
+          '';
+        }
+      ];
       dwm = {
         package = pkgs.dwm.overrideAttrs (old: {
           src = inputs.dwm-dev-null;
-          buildInputs = old.buildInputs ++ [ pkgs.imlib2 ];
+          buildInputs = old.buildInputs ++ [pkgs.imlib2];
         });
         enable = true;
       };
@@ -63,12 +67,12 @@
       xorg.xbacklight
       dconf
     ];
-    sessionVariables.PATH = [ "/home/martin/.dwm" ];
+    sessionVariables.PATH = ["/home/martin/.dwm"];
   };
 
   services.dwm-status = {
     enable = true;
-    order = [ "cpu_load" "audio" "battery" "time" ];
+    order = ["cpu_load" "audio" "battery" "time"];
     extraConfig = ''
       separator = "    "
       [audio]

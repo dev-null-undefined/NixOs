@@ -1,7 +1,10 @@
-{ config, pkgs, lib, ... }:
-
 {
-  imports = [ ./docker.nix ./languages/default.nix ];
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
+  imports = [./docker.nix ./languages/default.nix];
 
   environment.systemPackages = with pkgs; [
     cloc # line counter
@@ -24,6 +27,5 @@
     lsof
     file
     fd
-
   ];
 }

@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   virtualisation = {
     libvirtd.enable = true;
     virtualbox.host = {
@@ -10,5 +8,5 @@
   };
   programs.dconf.enable = true;
   hardware.opengl.enable = true;
-  environment.systemPackages = with pkgs; [ virt-manager ];
+  environment.systemPackages = with pkgs; [virt-manager];
 }

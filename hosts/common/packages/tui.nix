@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   environment.systemPackages = with pkgs; [
     # ----- Terminal tools -----
     # TUI

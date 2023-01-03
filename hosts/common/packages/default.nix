@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ... }:
-
 {
+  pkgs,
+  config,
+  lib,
+  ...
+}: {
   imports = [
     ./tui.nix
     ./zsh.nix
@@ -23,12 +26,6 @@
     unzip
     zip
     unrar-wrapper
-
-    # nix tools
-    nix-diff
-    nix-index
-    nix-direnv
-    nix-output-monitor
 
     direnv
     ripgrep
@@ -64,5 +61,4 @@
     pkg-config
     dbus
   ];
-
 }

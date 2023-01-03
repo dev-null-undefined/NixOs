@@ -1,7 +1,8 @@
-{ pkgs, config, ... }:
-
 {
-
+  pkgs,
+  config,
+  ...
+}: {
   # C perf debugging variables
   boot.kernel.sysctl = {
     "kernel.perf_event_paranoid" = true;
@@ -10,7 +11,6 @@
 
   environment.systemPackages = with pkgs;
     [
-
       glibc
       patchelf
 
@@ -54,7 +54,8 @@
 
       # dev tools
       valgrind
-    ] ++ (lib.lists.optionals (config.nixpkgs.system == "x86_64-linux") [
+    ]
+    ++ (lib.lists.optionals (config.nixpkgs.system == "x86_64-linux") [
       # Multilib support
       gcc_multi
       clang_multi

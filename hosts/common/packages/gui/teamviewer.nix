@@ -1,5 +1,3 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   services.teamviewer.enable = true;
 }
