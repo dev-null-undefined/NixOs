@@ -20,9 +20,8 @@
   outputs = { self, nixpkgs, nixpkgs-stable, nixpkgs-master, nixos-hardware
     , dwm-dev-null, nixpkgs-dev-null, nixpkgs-webcord, nixpkgs-testing }@inputs:
     let
-      system = "x86_64-linux";
 
-      mkPkgs = pkgs: overlays:
+      mkPkgs = pkgs: overlays: system:
         pkgs {
           inherit system;
           overlays = overlays;
@@ -30,52 +29,77 @@
           config.permittedInsecurePackages = [ "electron-12.2.3" ];
         };
 
-      mkOverlay = { input, name, overlays ? [ ] }:
-        (final: prev: ({ "${name}" = mkPkgs (import input) overlays; }));
+      mkOverlay =
+        { input ? inputs."nixpkgs-${name}", name, overlays ? [ ], system }:
+        (final: prev: ({ "${name}" = mkPkgs (import input) overlays system; }));
 
-      pkgs = mkPkgs (import nixpkgs) [
-        (mkOverlay ({
-          input = nixpkgs-stable;
-          name = "stable";
-        }))
-        (mkOverlay ({
-          input = nixpkgs-dev-null;
-          name = "dev-null";
-        }))
-        (mkOverlay ({
-          input = nixpkgs-testing;
-          name = "testing";
-        }))
-        (mkOverlay ({
-          input = nixpkgs-master;
-          name = "master";
-        }))
-        (mkOverlay ({
-          input = nixpkgs-webcord;
-          name = "webcord";
-        }))
-        (import ./custom)
-      ];
-    in {
-      nixosConfigurations.idk = nixpkgs.lib.nixosSystem {
+      pkgs = system:
+        mkPkgs (import nixpkgs) [
+          (mkOverlay ({
+            inherit system;
+            name = "stable";
+          }))
+          (mkOverlay ({
+            inherit system;
+            name = "dev-null";
+          }))
+          (mkOverlay ({
+            inherit system;
+            name = "testing";
+          }))
+          (mkOverlay ({
+            inherit system;
+            name = "master";
+          }))
+          (mkOverlay ({
+            inherit system;
+            name = "webcord";
+          }))
+          (import ./pkgs)
+        ] system;
+
+      mkHost = { hostname, system ? "x86_64-linux", modules ? [ ] }: {
         inherit system;
-        inherit pkgs;
-
-        # Things in this set are passed to modules and accessible
-        # in the top-level arguments (e.g. `{ pkgs, lib, inputs, ... }:`).
+        pkgs = pkgs system;
         specialArgs = { inherit inputs; };
-
         modules = [
-          ({ config, pkgs, ... }: {
-            nix.extraOptions = "experimental-features = nix-command flakes";
+          ./modules/grub-savedefault.nix
+          ./modules/hostname.nix
+          ({ config, lib, pkgs, ... }: {
+            inherit hostname;
+            nix = {
+              settings = {
+                experimental-features = [ "nix-command" "flakes" ];
+                auto-optimise-store = true;
+                keep-outputs = true;
+                keep-derivations = true;
+              };
+              nixPath = lib.mapAttrsToList (k: v: "${k}=${v.to.path}")
+                config.nix.registry;
+              registry =
+                nixpkgs.lib.mapAttrs (_: value: { flake = value; }) inputs;
+              # Make use of latest `nix` to allow usage of `nix flake`s.
+              package = pkgs.nix;
+            };
             nixpkgs.config.allowUnfree = true;
           })
-
-          nixos-hardware.nixosModules.msi-gs60
-
-          ./configuration.nix
-        ];
+          (./hosts + "/${hostname}/hardware-configuration.nix")
+          (./hosts + "/${hostname}/default.nix")
+          ./hosts/common/default.nix
+        ] ++ modules;
       };
 
+      hostConfigs = [
+        { hostname = "idk"; }
+        {
+          hostname = "oracle-server";
+          system = "aarch64-linux";
+        }
+      ];
+    in {
+      nixosConfigurations = builtins.listToAttrs (builtins.map (config: {
+        name = config.hostname;
+        value = nixpkgs.lib.nixosSystem (mkHost config);
+      }) hostConfigs);
     };
 }
