@@ -67,6 +67,8 @@
     easyeffects
     spotify
     libreoffice
+    onlyoffice-bin
+
     firefox
     brave
     chromium
