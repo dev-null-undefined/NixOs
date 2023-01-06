@@ -3,7 +3,6 @@
 in {
   imports = [./mariadb.nix ./nginx.nix];
 
-  networking.firewall.allowedTCPPorts = [80];
   services = {
     nextcloud = {
       package = pkgs.nextcloud25;
@@ -44,6 +43,7 @@ in {
           forceSSL = true;
           ## LetsEncrypt
           enableACME = true;
+          http3 = true;
         };
       };
     };
