@@ -24,8 +24,9 @@ in {
       # Linter
       statix
 
-      # Nix formatter
+      # Nix formatters
       nixfmt
+      alejandra
 
       # nix tools
       nix-diff
