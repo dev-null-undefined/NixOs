@@ -26,7 +26,11 @@
     doc.enable = true;
 
     info.enable = true;
-    man.enable = true;
+
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
   };
 
   # sandboxing
