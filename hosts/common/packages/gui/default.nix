@@ -24,7 +24,6 @@
 
     # ======= GUI programms ======
     kiterunner
-    etcher
     thunderbird
 
     burpsuite # proxy
