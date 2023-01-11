@@ -47,7 +47,6 @@
         inherit system;
         overlays = overlays;
         config.allowUnfree = true;
-        config.permittedInsecurePackages = ["electron-12.2.3"];
       };
 
     mkOverlay = {
