@@ -5,8 +5,6 @@
 }: {
   environment.systemPackages = with pkgs; [
     # Python
-    python27Full
-
     python39Packages.ueberzug
 
     (python3.withPackages
