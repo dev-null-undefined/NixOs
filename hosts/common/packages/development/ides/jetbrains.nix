@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs.testing.jetbrains; [
+  environment.systemPackages = with pkgs.master.jetbrains; [
     idea-ultimate
     phpstorm
     pycharm-professional

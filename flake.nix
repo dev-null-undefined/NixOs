@@ -14,7 +14,7 @@
 
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
-    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/jetbrains-update";
+    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/master";
 
     flake-utils.url = "github:numtide/flake-utils";
 
