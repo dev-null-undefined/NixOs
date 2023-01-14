@@ -26,6 +26,7 @@
     # Archives
     unzip
     zip
+    lrzip
     unrar-wrapper
 
     direnv
