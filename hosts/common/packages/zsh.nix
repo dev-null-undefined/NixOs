@@ -24,7 +24,7 @@
     screenfetch
     neofetch
     cpufetch
-    macchina
+    #macchina
 
     # mariadb TUI server connector
     mycli
