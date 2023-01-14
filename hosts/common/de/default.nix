@@ -58,8 +58,11 @@
     };
   };
 
-  xdg.mime.defaultApplications = {
-    "inode/directory" = ["org.gnome.Nautilus.desktop"];
+  xdg = {
+    portal.enable = true;
+    mime.defaultApplications = {
+      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+    };
   };
 
   services.gnome.gnome-keyring.enable = true;
