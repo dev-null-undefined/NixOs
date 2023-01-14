@@ -28,6 +28,9 @@
     gtkwave
     verilog
 
+    # advanced hex editor
+    imhex 
+
     ghidra
     netdiscover
 
