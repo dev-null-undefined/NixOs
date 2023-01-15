@@ -43,45 +43,8 @@
     nix-alien,
   } @ inputs: let
     nixosModules = import ./modules;
-    mkPkgs = pkgs: overlays: system:
-      pkgs {
-        inherit system;
-        overlays = overlays;
-        config.allowUnfree = true;
-      };
-
-    mkOverlay = {
-      input ? inputs."nixpkgs-${name}",
-      name,
-      overlays ? [],
-      system,
-    }: (final: prev: {"${name}" = mkPkgs (import input) overlays system;});
-
-    pkgs = system:
-      mkPkgs (import nixpkgs) [
-        (mkOverlay {
-          inherit system;
-          name = "stable";
-        })
-        (mkOverlay {
-          inherit system;
-          name = "dev-null";
-        })
-        (mkOverlay {
-          inherit system;
-          name = "testing";
-        })
-        (mkOverlay {
-          inherit system;
-          name = "master";
-        })
-        (mkOverlay {
-          inherit system;
-          name = "webcord";
-        })
-        (import ./pkgs)
-      ]
-      system;
+    overlays = import ./overlays {inherit inputs;};
+    pkgs = system: overlays.mkPkgs (import nixpkgs) (overlays.overlays system) system;
 
     mkHost = {
       hostname,
