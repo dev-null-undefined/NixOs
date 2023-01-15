@@ -29,7 +29,7 @@
     verilog
 
     # advanced hex editor
-    imhex 
+    imhex
 
     ghidra
     netdiscover
