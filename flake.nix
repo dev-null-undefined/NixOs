@@ -42,6 +42,7 @@
     flake-utils,
     nix-alien,
   } @ inputs: let
+    nixosModules = import ./modules;
     mkPkgs = pkgs: overlays: system:
       pkgs {
         inherit system;
@@ -91,9 +92,8 @@
       pkgs = pkgs system;
       specialArgs = {inherit inputs;};
       modules =
-        [
-          ./modules/grub-savedefault.nix
-          ./modules/hostname.nix
+        nixosModules
+        ++ [
           ({
             config,
             lib,
@@ -120,6 +120,7 @@
           })
           (./hosts + "/${hostname}/hardware-configuration.nix")
           (./hosts + "/${hostname}/default.nix")
+
           ./hosts/common/default.nix
         ]
         ++ modules;
