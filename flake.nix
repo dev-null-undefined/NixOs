@@ -96,29 +96,28 @@
         system = "aarch64-linux";
       }
     ];
-  in {
-    nixosConfigurations = builtins.listToAttrs (builtins.concatMap (config: [
-        {
-          name = config.hostname;
-          value = nixpkgs.lib.nixosSystem (mkHost config);
-        }
-        {
-          name = "${config.hostname}-vm";
-          value = nixpkgs.lib.nixosSystem (mkHost (config
-            // {
-              modules =
-                nixpkgs.lib.lists.optional (config ? modules) config.modules
-                ++ [
-                  ./hosts/common/vm/default.nix
-                ];
-            }));
-        }
-      ])
-      hostConfigs);
-    formatter = builtins.listToAttrs (builtins.map (system: {
-        name = system;
-        value = nixpkgs.legacyPackages.${system}.alejandra;
-      })
-      flake-utils.lib.defaultSystems);
-  };
+  in
+    {
+      nixosConfigurations =
+        builtins.foldl' (
+          acc: config:
+            {
+              "${config.hostname}" = nixpkgs.lib.nixosSystem (mkHost config);
+              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (mkHost (config
+                // {
+                  modules =
+                    nixpkgs.lib.lists.optional (config ? modules) config.modules
+                    ++ [
+                      ./hosts/common/vm/default.nix
+                    ];
+                }));
+            }
+            // acc
+        ) {}
+        hostConfigs;
+    }
+    // (flake-utils.lib.eachDefaultSystem (system: {
+      packages = pkgs system;
+      formatter = nixpkgs.legacyPackages.${system}.alejandra;
+    }));
 }
