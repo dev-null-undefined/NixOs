@@ -134,10 +134,23 @@
       }
     ];
   in {
-    nixosConfigurations = builtins.listToAttrs (builtins.map (config: {
-        name = config.hostname;
-        value = nixpkgs.lib.nixosSystem (mkHost config);
-      })
+    nixosConfigurations = builtins.listToAttrs (builtins.concatMap (config: [
+        {
+          name = config.hostname;
+          value = nixpkgs.lib.nixosSystem (mkHost config);
+        }
+        {
+          name = "${config.hostname}-vm";
+          value = nixpkgs.lib.nixosSystem (mkHost (config
+            // {
+              modules =
+                nixpkgs.lib.lists.optional (config ? modules) config.modules
+                ++ [
+                  ./hosts/common/vm/default.nix
+                ];
+            }));
+        }
+      ])
       hostConfigs);
     formatter = builtins.listToAttrs (builtins.map (system: {
         name = system;
