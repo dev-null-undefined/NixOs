@@ -42,10 +42,16 @@
         }
       ];
       dwm = {
-        package = pkgs.dwm.overrideAttrs (old: {
-          src = inputs.dwm-dev-null;
-          buildInputs = old.buildInputs ++ [pkgs.imlib2];
-        });
+        package = with pkgs;
+          dwm.overrideAttrs (old: {
+            src = fetchFromGitHub {
+              owner = "dev-null-undefined";
+              repo = "dwm-flexipatch";
+              rev = "7779b8e66197e9eca0e5d89a790601db39315b15";
+              hash = "sha256-kEzMK+A+o9/nV6p8WuAEUYyAqSdf4y5aI2siOgI9fjg=";
+            };
+            buildInputs = old.buildInputs ++ [imlib2];
+          });
         enable = true;
       };
     };

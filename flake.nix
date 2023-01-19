@@ -7,11 +7,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    dwm-dev-null = {
-      url = "github:dev-null-undefined/dwm-flexipatch/master";
-      flake = false;
-    };
-
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
     nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
     nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/master";
@@ -35,7 +30,6 @@
     nixpkgs-stable,
     nixpkgs-master,
     nixos-hardware,
-    dwm-dev-null,
     nixpkgs-dev-null,
     nixpkgs-webcord,
     nixpkgs-testing,

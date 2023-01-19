@@ -1,22 +1,5 @@
 {
   "nodes": {
-    "dwm-dev-null": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1671273524,
-        "narHash": "sha256-D4JFYI7IAz4uxtXgEDa72BMxSJpwCl/FoFRxhMB29zM=",
-        "owner": "dev-null-undefined",
-        "repo": "dwm-flexipatch",
-        "rev": "c5472e6b2905d8a5318e7610921b75fa6c252a7f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "dev-null-undefined",
-        "ref": "master",
-        "repo": "dwm-flexipatch",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "locked": {
         "lastModified": 1667395993,
@@ -169,7 +152,6 @@
     },
     "root": {
       "inputs": {
-        "dwm-dev-null": "dwm-dev-null",
         "flake-utils": "flake-utils",
         "nix-alien": "nix-alien",
         "nixos-hardware": "nixos-hardware",
