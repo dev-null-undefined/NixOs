@@ -48,9 +48,9 @@
     vitetris
     lutris
     gnome.zenity
-    stable.vulkan-tools
-    stable.vulkan-headers
-    stable.vulkan-loader
-    stable.vulkan-tools-lunarg
+    vulkan-tools
+    vulkan-headers
+    vulkan-loader
+    vulkan-tools-lunarg
   ];
 }

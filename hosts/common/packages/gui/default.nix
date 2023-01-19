@@ -31,7 +31,7 @@
     tesseract # OCR engine
 
     gnome.gnome-screenshot
-    stable.flameshot
+    flameshot
 
     gnome-usage
     gnome.gnome-terminal
