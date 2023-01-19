@@ -27,7 +27,7 @@
     #macchina
 
     # mariadb TUI server connector
-    mycli
+    stable.mycli
 
     # Funny programs
     nyancat

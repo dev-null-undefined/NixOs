@@ -23,7 +23,7 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-stable";
         flake-utils.follows = "flake-utils";
       };
     };
@@ -55,8 +55,7 @@
       pkgs = pkgs system;
       specialArgs = {inherit inputs;};
       modules =
-        nixosModules
-        ++ [
+        [
           ({
             config,
             lib,
@@ -86,7 +85,8 @@
 
           ./hosts/common/default.nix
         ]
-        ++ modules;
+        ++ modules
+        ++ nixosModules;
     };
 
     hostConfigs = [
