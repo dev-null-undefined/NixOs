@@ -13,6 +13,7 @@
     # Networking
     nmap # network scanner
     tcpdump # packet analyzer
+    netdiscover # quick LAN scanner
     traceroute
     mitmproxy # https proxy
     whois # domain lookup

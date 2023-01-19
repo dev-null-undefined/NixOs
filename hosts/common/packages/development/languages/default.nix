@@ -12,5 +12,6 @@
     ./php.nix
     ./python.nix
     ./rust.nix
+    ./verilog.nix
   ];
 }

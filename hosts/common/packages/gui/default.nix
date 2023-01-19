@@ -8,6 +8,11 @@
     ./piper.nix
     ./via-qmk.nix
     ./gparted.nix
+    ./file-managers.nix
+    ./media.nix
+    ./browsers.nix
+    ./terminals.nix
+    ./networking.nix
 
     ../development/ides/jetbrains.nix
     ../development/ides/vscode.nix
@@ -17,88 +22,43 @@
   services.gnome.sushi.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # Logitech headphones controll
-    headsetcontrol
+    headsetcontrol # Logitech headphones controll
 
-    # ======= GUI programms ======
-    kiterunner
     thunderbird
 
-    burpsuite # proxy
     gtkwave
-    verilog
 
-    # advanced hex editor
-    imhex
-
-    ghidra
-    netdiscover
-
-    audacity
-
-    tesseract
+    tesseract # OCR engine
 
     gnome.gnome-screenshot
-    gnome-usage
-    gnome.gnome-nettool
-    gnome.ghex
-    gnome.nautilus-python
-    gnome.gnome-terminal
+    stable.flameshot
 
-    xournalpp
-    rnote
+    gnome-usage
+    gnome.gnome-terminal
+    gnome.gnome-power-manager
 
     gnuplot
 
-    dropbox
+    tdesktop # Telegram desctop client
+    element-desktop # Matrix desctop client
+    gomuks # Matrix terminal client
 
-    droidcam
-    v4l-utils
-
-    tdesktop
-    element-desktop
-    gomuks
-
-    git-open
-
-    krita
-    obs-studio
-    ardour
-    easyeffects
-    spotify
     libreoffice
     onlyoffice-bin
 
-    # Browsers
-    firefox
-    vivaldi
-    vivaldi-ffmpeg-codecs # Additional support for proprietary codecs for Vivaldi
-    brave
-    chromium
-    google-chrome-dev
-
     copyq
-    lxappearance
-    wireshark
-    gimp-with-plugins
-    feh
-    vlc
-    mpv
-    blender
-    stable.shotcut
-    font-manager
-    ark
-    networkmanagerapplet
-    pcmanfm
-    gitg
 
+    lxappearance
+    font-manager
+
+    ark # archive manager
     partition-manager
-    stable.flameshot
-    pavucontrol
+
+    gitg
+    git-open
+
     arandr
-    insomnia
-    alacritty
-    kitty
+
     ccls
     nodePackages.bash-language-server
     nodePackages.typescript-language-server
