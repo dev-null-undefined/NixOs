@@ -8,5 +8,6 @@
     # discord-canary
     webcord.webcord
     # betterdiscord-installer
+    armcord
   ];
 }
