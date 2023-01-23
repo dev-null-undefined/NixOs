@@ -11,11 +11,15 @@
     duf # better df
     ncdu # TUI windirstat
     termdown # timer/stopwatch
+    tre-command # better tree
 
     mc # file manager
     ranger # file manager
     aria # download utility
     lynx # web browser
+    browsh # better web browser
+
+    httpie # command line HTTP client
 
     # Usage monitors
     bpytop
@@ -29,6 +33,7 @@
     iftop
     nload
     nethogs
+    bandwhich
     gping # TUI ping with graph
 
     mutt # email client

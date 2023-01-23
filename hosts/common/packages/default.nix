@@ -43,6 +43,7 @@
     delta # diff
     tmux # term multiplexor
     tealdeer
+    navi # interactive tldr
     tree
     most
     sshfs
