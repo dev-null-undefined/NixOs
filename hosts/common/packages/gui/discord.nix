@@ -8,6 +8,8 @@
     # discord-canary
     webcord.webcord
     # betterdiscord-installer
-    armcord
+    (master.armcord.override {
+      nss = nss_latest;
+    })
   ];
 }
