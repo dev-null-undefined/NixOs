@@ -61,7 +61,9 @@
   xdg = {
     portal.enable = true;
     mime.defaultApplications = {
-      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+      "inode/directory" = ["nemo.desktop"];
+      "x-scheme-handler/http" = ["firefox.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop"];
     };
   };
 
