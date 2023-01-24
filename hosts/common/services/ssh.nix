@@ -7,8 +7,10 @@ in {
   services.openssh = {
     enable = true;
     forwardX11 = true;
-    passwordAuthentication = false;
     ports = [22 8022];
+    settings = {
+      PasswordAuthentication = false;
+    };
   };
   users.users = {
     root.openssh.authorizedKeys.keys = sshKeys;
