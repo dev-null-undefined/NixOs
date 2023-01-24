@@ -14,6 +14,4 @@
   boot.extraModulePackages = [];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

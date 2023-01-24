@@ -72,7 +72,10 @@
               # Make use of latest `nix` to allow usage of `nix flake`s.
               package = pkgs.nix;
             };
-            nixpkgs.config.allowUnfree = true;
+            nixpkgs = {
+              config.allowUnfree = true;
+              hostPlatform = lib.mkDefault system;
+            };
           })
           (./hosts + "/${hostname}/hardware-configuration.nix")
           (./hosts + "/${hostname}/hardware-partitions.nix")
