@@ -1,5 +1,10 @@
-{pkgs, ...}: let
-  domain = "cloud.dev-null.me";
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  nextcloud-domain = "cloud.${config.domain}";
 in {
   imports = [./mariadb.nix ./nginx.nix];
 
@@ -7,7 +12,7 @@ in {
     nextcloud = {
       package = pkgs.nextcloud25;
       enable = true;
-      hostName = domain;
+      hostName = lib.mkDefault nextcloud-domain;
       https = true;
       home = "/nextcloud";
       caching = {
@@ -38,7 +43,7 @@ in {
     nginx = {
       # Setup Nextcloud virtual host to listen on ports
       virtualHosts = {
-        ${domain} = {
+        "${config.services.nextcloud.hostName}" = {
           ## Force HTTP redirect to HTTPS
           forceSSL = true;
           ## LetsEncrypt

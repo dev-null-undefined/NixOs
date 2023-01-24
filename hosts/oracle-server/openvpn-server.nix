@@ -5,7 +5,7 @@
 }: let
   # generate via openvpn --genkey --secret openvpn-laptop.key
   client-key = "/root/openvpn-${config.hostname}.key";
-  domain = "dev-null.me";
+  domain = config.domain;
   vpn-dev = "tun0";
   port = 1194;
   client-name = "msi-laptop";
