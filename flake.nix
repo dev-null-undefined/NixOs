@@ -93,6 +93,7 @@
         hostname = "oracle-server";
         system = "aarch64-linux";
       }
+      {hostname = "homie";}
     ];
   in
     {
