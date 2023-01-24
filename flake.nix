@@ -75,6 +75,7 @@
             nixpkgs.config.allowUnfree = true;
           })
           (./hosts + "/${hostname}/hardware-configuration.nix")
+          (./hosts + "/${hostname}/hardware-partitions.nix")
           (./hosts + "/${hostname}/default.nix")
 
           ./hosts/common/default.nix

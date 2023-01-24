@@ -5,10 +5,7 @@
   modulesPath,
   ...
 }: {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-    ./hardware-partitions.nix
-  ];
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot.kernelModules = ["kvm-intel" "v4l2loopback" "ec_sys"];
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback.out];
