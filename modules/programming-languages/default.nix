@@ -42,8 +42,6 @@ in {
   ];
 
   config = mkIf (config.programming-languages.enable) {
-    programming-languages.languages = builtins.foldl' (acc: language:
-      acc // {"${language}".enable = mkDefault config.programming-languages.defaultLanguageValue;}) {}
-    allLanguages;
+    programming-languages.languages = genAttrs allLanguages (language: {enable = mkDefault config.programming-languages.defaultLanguageValue;});
   };
 }
