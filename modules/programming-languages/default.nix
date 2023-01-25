@@ -4,7 +4,8 @@
   ...
 }:
 with lib; let
-  allLanguages = attrsets.filterAttrs (key: _: key != "default.nix" && strings.hasSuffix ".nix" key) (builtins.readDir ./.);
+  allLanguageFiles = builtins.readDir ./languages;
+  allLanguages = attrsets.mapAttrsToList (key: _: strings.removeSuffix ".nix" key) allLanguageFiles;
   languageOption = with types; {
     options.enable = mkOption {
       type = bool;
@@ -29,18 +30,20 @@ in {
   };
 
   imports = [
-    ./c.nix
-    ./csharp.nix
-    ./java.nix
-    ./js.nix
-    ./nix.nix
-    ./php.nix
-    ./python.nix
-    ./rust.nix
-    ./verilog.nix
+    ./languages/c.nix
+    ./languages/csharp.nix
+    ./languages/java.nix
+    ./languages/js.nix
+    ./languages/nix.nix
+    ./languages/php.nix
+    ./languages/python.nix
+    ./languages/rust.nix
+    ./languages/verilog.nix
   ];
 
   config = mkIf (config.programming-languages.enable) {
-    programming-languages.languages = attrsets.mapAttrs' (name: value: nameValuePair (strings.removeSuffix ".nix" name) {enable = mkDefault config.programming-languages.defaultLanguageValue;}) allLanguages;
+    programming-languages.languages = builtins.foldl' (acc: language:
+      acc // {"${language}".enable = mkDefault config.programming-languages.defaultLanguageValue;}) {}
+    allLanguages;
   };
 }
