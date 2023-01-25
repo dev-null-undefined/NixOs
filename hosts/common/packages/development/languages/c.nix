@@ -59,5 +59,6 @@
       # Multilib support
       gcc_multi
       clang_multi
-    ]);
+    ])
+    ++ (lib.lists.optionals (config.services.xserver.enable) [ghidra]);
 }
