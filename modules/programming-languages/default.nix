@@ -8,14 +8,24 @@ with lib; let
   languageOption = with types; {
     options.enable = mkOption {
       type = bool;
-      default = true;
       description = "If given tools for language should be enabled";
     };
   };
 in {
-  options.programming-languages = mkOption {
-    type = with types; attrsOf (submodule languageOption);
-    description = "Hostname of the current system";
+  options.programming-languages = {
+    languages = mkOption {
+      type = with types; attrsOf (submodule languageOption);
+      default = {};
+      description = "Set of languageOption submodule.";
+    };
+
+    enable = mkEnableOption "Programming languages";
+
+    defaultLanguageValue = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Default value that will be set for each language.";
+    };
   };
 
   imports = [
@@ -30,5 +40,7 @@ in {
     ./verilog.nix
   ];
 
-  config.programming-languages = attrsets.mapAttrs' (name: value: nameValuePair (strings.removeSuffix ".nix" name) {enable = mkDefault true;}) allLanguages;
+  config = mkIf (config.programming-languages.enable) {
+    programming-languages.languages = attrsets.mapAttrs' (name: value: nameValuePair (strings.removeSuffix ".nix" name) {enable = mkDefault config.programming-languages.defaultLanguageValue;}) allLanguages;
+  };
 }

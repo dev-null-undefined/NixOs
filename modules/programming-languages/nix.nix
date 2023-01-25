@@ -10,7 +10,7 @@
     nix-index-update
   ];
 in
-  lib.mkIf (config.programming-languages.nix.enable) {
+  lib.mkIf (config.programming-languages.languages.nix.enable or false) {
     programs.nix-ld.enable = true;
     environment.systemPackages = with pkgs;
       [

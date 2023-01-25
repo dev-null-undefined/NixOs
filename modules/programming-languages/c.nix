@@ -4,7 +4,7 @@
   config,
   ...
 }:
-lib.mkIf (config.programming-languages.c.enable) {
+lib.mkIf (config.programming-languages.languages.c.enable or false) {
   # C perf debugging variables
   boot.kernel.sysctl = {
     "kernel.perf_event_paranoid" = true;

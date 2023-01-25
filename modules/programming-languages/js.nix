@@ -4,7 +4,7 @@
   config,
   ...
 }:
-lib.mkIf (config.programming-languages.js.enable) {
+lib.mkIf (config.programming-languages.languages.js.enable or false) {
   environment.systemPackages = with pkgs; [
     # JavaScript
     nodejs
