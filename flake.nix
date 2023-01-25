@@ -84,7 +84,7 @@
           ./hosts/common/default.nix
         ]
         ++ modules
-        ++ nixosModules;
+        ++ (nixpkgs.lib.attrsets.mapAttrsToList (_: value: value) nixosModules);
     };
 
     hostConfigs = [
@@ -97,6 +97,7 @@
     ];
   in
     {
+      inherit nixosModules;
       nixosConfigurations =
         builtins.foldl' (
           acc: config:
