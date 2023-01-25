@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   inputs,
   ...
@@ -8,42 +9,43 @@
     nix-alien
     nix-index-update
   ];
-in {
-  programs.nix-ld.enable = true;
-  environment.systemPackages = with pkgs;
-    [
-      # nix documentation
-      manix
+in
+  lib.mkIf (config.programming-languages.nix.enable) {
+    programs.nix-ld.enable = true;
+    environment.systemPackages = with pkgs;
+      [
+        # nix documentation
+        manix
 
-      # lsp server for nix
-      nil
+        # lsp server for nix
+        nil
 
-      # Prefetcher for sha256
-      nurl
+        # Prefetcher for sha256
+        nurl
 
-      # Linter
-      statix
+        # Linter
+        statix
 
-      # Nix formatters
-      nixfmt
-      alejandra
+        # Nix formatters
+        nixfmt
+        alejandra
 
-      # nix tools
-      nix-diff
+        # nix tools
+        nix-diff
 
-      # Fast searching for lib or package
-      nix-index
+        # Fast searching for lib or package
+        nix-index
 
-      nix-direnv
+        nix-direnv
 
-      # Build monitoring tool
-      nix-output-monitor
+        # Build monitoring tool
+        nix-output-monitor
 
-      # dependency graphs in ranger like view
-      nix-tree
+        # dependency graphs in ranger like view
+        nix-tree
 
-      # Run packages without installing them (test drive)
-      comma
-    ]
-    ++ alien-pkgs;
-}
+        # Run packages without installing them (test drive)
+        comma
+      ]
+      ++ alien-pkgs;
+  }

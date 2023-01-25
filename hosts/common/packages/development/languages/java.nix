@@ -1,8 +1,10 @@
 {
   pkgs,
+  lib,
   config,
   ...
-}: {
+}:
+lib.mkIf (config.programming-languages.java.enable) {
   environment.systemPackages = with pkgs; [
     # Java
     jdk

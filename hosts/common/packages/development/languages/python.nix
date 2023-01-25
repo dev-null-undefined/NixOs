@@ -1,8 +1,10 @@
 {
   pkgs,
+  lib,
   config,
   ...
-}: {
+}:
+lib.mkIf (config.programming-languages.python.enable) {
   environment.systemPackages = with pkgs; [
     # Python
     python39Packages.ueberzug

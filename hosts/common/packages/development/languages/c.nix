@@ -1,8 +1,10 @@
 {
   pkgs,
+  lib,
   config,
   ...
-}: {
+}:
+lib.mkIf (config.programming-languages.c.enable) {
   # C perf debugging variables
   boot.kernel.sysctl = {
     "kernel.perf_event_paranoid" = true;
