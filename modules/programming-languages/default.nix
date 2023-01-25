@@ -4,7 +4,7 @@
   ...
 }:
 with lib; let
-  allLanguages = attrsets.filterAttrs (key: _: key != "default.nix" && strings.hasSuffix ".nix" key) (builtins.readDir ../hosts/common/packages/development/languages);
+  allLanguages = attrsets.filterAttrs (key: _: key != "default.nix" && strings.hasSuffix ".nix" key) (builtins.readDir ./.);
   languageOption = with types; {
     options.enable = mkOption {
       type = bool;
@@ -17,6 +17,18 @@ in {
     type = with types; attrsOf (submodule languageOption);
     description = "Hostname of the current system";
   };
+
+  imports = [
+    ./c.nix
+    ./csharp.nix
+    ./java.nix
+    ./js.nix
+    ./nix.nix
+    ./php.nix
+    ./python.nix
+    ./rust.nix
+    ./verilog.nix
+  ];
 
   config.programming-languages = attrsets.mapAttrs' (name: value: nameValuePair (strings.removeSuffix ".nix" name) {enable = mkDefault true;}) allLanguages;
 }

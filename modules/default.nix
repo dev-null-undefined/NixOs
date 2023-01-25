@@ -3,5 +3,5 @@
   ./hostname.nix
   ./isVM.nix
   ./domain.nix
-  ./programming-languages.nix
+  ./programming-languages
 ]
