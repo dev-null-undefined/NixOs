@@ -106,9 +106,10 @@
               "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (mkHost (config
                 // {
                   modules =
-                    nixpkgs.lib.lists.optional (config ? modules) config.modules
+                    (config.modules or [])
                     ++ [
-                      ./hosts/common/vm/default.nix
+                      ({modulesPath, ...}: {imports = [(modulesPath + "/virtualisation/qemu-vm.nix")];})
+                      {isVM = true;}
                     ];
                 }));
             }
