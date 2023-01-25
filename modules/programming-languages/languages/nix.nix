@@ -23,6 +23,9 @@ in
         # Prefetcher for sha256
         nurl
 
+        # Automated PR testing and building
+        nix-review
+
         # Linter
         statix
 
