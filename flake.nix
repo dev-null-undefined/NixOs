@@ -108,8 +108,7 @@
                   modules =
                     (config.modules or [])
                     ++ [
-                      ({modulesPath, ...}: {imports = [(modulesPath + "/virtualisation/qemu-vm.nix")];})
-                      {isVM = true;}
+                      ./modules/isVM/implementation.nix
                     ];
                 }));
             }
