@@ -13,6 +13,7 @@
     ./browsers.nix
     ./terminals.nix
     ./networking.nix
+    ./editors.nix
 
     ../development/ides/jetbrains.nix
     ../development/ides/vscode.nix
@@ -43,7 +44,7 @@
     element-desktop # Matrix desctop client
     gomuks # Matrix terminal client
 
-    libreoffice
+    stable.libreoffice
     onlyoffice-bin
 
     copyq

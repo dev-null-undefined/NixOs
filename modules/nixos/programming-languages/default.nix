@@ -39,6 +39,7 @@ in {
     ./languages/python.nix
     ./languages/rust.nix
     ./languages/verilog.nix
+    ./languages/shell.nix
   ];
 
   config = mkIf (config.programming-languages.enable) {

@@ -25,6 +25,7 @@
     rnote
 
     # Audio
+    spotifywm
     spotify
 
     # Video

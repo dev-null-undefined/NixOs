@@ -11,7 +11,7 @@
     inputs.nixos-hardware.nixosModules.msi-gs60
     ../common/network-manager.nix
 
-    ../common/de/dwm.nix
+    ../common/de/hyprland.nix
     ../common/plymouth.nix
 
     ../common/services/syncthing.nix

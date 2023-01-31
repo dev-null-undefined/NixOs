@@ -36,6 +36,9 @@
     };
   };
 
+  # get completion for system packages (e.g. systemd).
+  environment.pathsToLink = ["/share/zsh"];
+
   # sandboxing
   programs.firejail.enable = true;
   security.apparmor.enable = true;

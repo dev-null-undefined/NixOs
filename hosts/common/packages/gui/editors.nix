@@ -6,7 +6,5 @@
     imhex
 
     gnome.ghex
-
-    ghidra
   ];
 }

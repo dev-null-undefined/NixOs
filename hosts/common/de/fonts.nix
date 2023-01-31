@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   fonts = {
     fonts = with pkgs; [
+      material-symbols
+
       ubuntu_font_family
 
       noto-fonts
@@ -31,9 +33,15 @@
 
     fontDir.enable = true;
 
-    enableDefaultFonts = true;
+    enableDefaultFonts = false;
+
     fontconfig = {
-      defaultFonts = {emoji = ["Noto Color Emoji" "Twitter Color Emoji"];};
+      defaultFonts = {
+        #serif = ["Noto Serif" "Noto Color Emoji"];
+        #sansSerif = ["Noto Sans" "Noto Color Emoji"];
+        emoji = ["Noto Color Emoji" "Twitter Color Emoji"];
+        #monospace = ["MesloLGS NF" "Noto Color Emoji"];
+      };
     };
   };
 }

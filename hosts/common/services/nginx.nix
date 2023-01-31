@@ -19,6 +19,5 @@ in {
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-
   };
 }

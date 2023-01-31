@@ -6,7 +6,7 @@
     })
     # discord-ptb
     # discord-canary
-    webcord.webcord
+    webcord
     # betterdiscord-installer
     (master.armcord.override {
       nss = nss_latest;

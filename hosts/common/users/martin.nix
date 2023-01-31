@@ -12,6 +12,7 @@ in {
       ["wheel" "dialout" "disk"]
       ++ ifTheyExist [
         "network"
+        "video"
         "networkmanager"
         "wireshark"
         "mysql"
