@@ -3,22 +3,32 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }: {
   imports = [
     # Include the results of the hardware scan.
     inputs.nixos-hardware.nixosModules.msi-gs60
-    ../common/network-manager.nix
-
-    ../common/de/dwm.nix
-    ../common/plymouth.nix
-
-    ../common/services/syncthing.nix
-    ../common/services/mariadb.nix
-
     ./yubikey/yubikey.nix
   ];
+
+  generated = {
+    enable = true;
+
+    network-manager.enable = true;
+    de.hyprland.enable = true;
+    plymouth.enable = true;
+    services = {
+      syncthing.enable = true;
+      mariadb.enable = true;
+    };
+  };
+
+  documentation.man.generateCaches = lib.mkForce false;
+  documentation.nixos.includeAllModules = lib.mkForce false;
+
+  systemd.sleep.extraConfig = "HibernateDelaySec=1h";
 
   networking.hostId = "69faa160";
 

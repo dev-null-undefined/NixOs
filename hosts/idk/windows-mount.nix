@@ -13,7 +13,7 @@
   environment.systemPackages = with pkgs; [ntfs3g];
 
   fileSystems."/mnt/windows" = {
-    device = "/dev/disk/by-uuid/905CDBC35CDBA1F0";
+    device = "/dev/disk/by-uuid/B866D53266D4F25C";
     fsType = "ntfs3g-suid";
     options = ["user" "rw" "utf8" "noauto" "umask=000" "uid=1000"];
   };
