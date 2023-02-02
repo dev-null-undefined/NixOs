@@ -92,6 +92,69 @@ in ''
 
   compdef _nix-pkg nix-pkg
 
+  compdef nix-path=nix-pkg
+  compdef nix-find=nix-pkg
+  compdef nix-tre=nix-pkg
+
+  center-text() {
+    text="''${@}"
+    width=$(tput cols)
+
+    # Calculate the number of dashes needed
+    dashes=$(printf '%.s─' $(seq 1 ''${width}))
+
+    # Calculate the number of spaces needed to center the text
+    spaces=$(((''${width} - ''${#text}) / 2))
+
+    # Add spaces before and after the text to center it
+    centered_text=$(printf "%''${spaces}s%s%''${spaces}s" " " "''${text}" " ")
+
+    # Display the horizontal line with text in the center
+    echo "''${dashes}"
+    echo "''${centered_text}"
+    echo "''${dashes}"
+  }
+
+  nix-eval() {
+    hostname=$(hostname)
+
+    while (($#)); do
+      option="$1"
+
+      shift
+      
+      center-text nix eval ${NIXOS_CURRENT_CONFIG}#nixosConfigurations.''${hostname}.''${option}
+      nix eval ${NIXOS_CURRENT_CONFIG}#nixosConfigurations.''${hostname}.''${option}
+
+    done
+  }
+
+  function _nix-custom-eval() {
+    hostname=$(hostname)
+    local ifs_bk="$IFS"
+    local input=("''${(Q)words[-1]}")
+    IFS=$'\n'
+    local res=($(NIX_GET_COMPLETIONS=2 nix eval ''${NIXOS_CONFIG_DIR}"#nixosConfigurations."''${hostname}".$input[@]" 2>/dev/null))
+    IFS="$ifs_bk"
+    local tpe="''${''${res[1]}%%>	*}"
+    local -a suggestions
+    declare -a suggestions
+    for suggestion in ''${res:1}; do
+      # Remove the common path
+      option=''${''${''${(@s/#/)suggestion}:1}##nixosConfigurations.''${hostname}.}
+      suggestions+=("''${option%%	*}")
+    done
+    local -a args
+    if [[ "$tpe" == filenames ]]; then
+      args+=('-f')
+    elif [[ "$tpe" == attrs ]]; then
+      args+=('-S' ''')
+    fi
+    compadd -J nix "''${args[@]}" -a suggestions
+  }
+
+  compdef _nix-custom-eval nix-eval
+
   ngrep() {
     ${aliases.sgrep} "$*" "${NIXOS_CURRENT_CONFIG}"
   }
