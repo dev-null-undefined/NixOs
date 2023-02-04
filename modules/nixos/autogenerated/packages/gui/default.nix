@@ -1,25 +1,25 @@
 {pkgs, ...}: {
-  imports = [
-    ./discord.nix
-    ./games.nix
-    ./teamviewer.nix
-    ./mathematica.nix
-    ./virt-manager.nix
-    ./piper.nix
-    ./via-qmk.nix
-    ./gparted.nix
-    ./file-managers.nix
-    ./media.nix
-    ./browsers.nix
-    ./terminals.nix
-    ./networking.nix
-    ./editors.nix
-
-    ../development/ides/jetbrains.nix
-    ../development/ides/vscode.nix
-    ../development/ides/emacs.nix
-  ];
-
+  # imports = [
+  #   ./discord.nix
+  #   ./games.nix
+  #   ./teamviewer.nix
+  #   ./mathematica.nix
+  #   ./virt-manager.nix
+  #   ./piper.nix
+  #   ./via-qmk.nix
+  #   ./gparted.nix
+  #   ./file-managers.nix
+  #   ./media.nix
+  #   ./browsers.nix
+  #   ./terminals.nix
+  #   ./networking.nix
+  #   ./editors.nix
+  #
+  #   ../development/ides/jetbrains.nix
+  #   ../development/ides/vscode.nix
+  #   ../development/ides/emacs.nix
+  # ];
+  #
   services.gnome.sushi.enable = true;
 
   environment.systemPackages = with pkgs; [

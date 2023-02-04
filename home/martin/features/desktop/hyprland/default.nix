@@ -28,6 +28,8 @@
     swaylock-effects
 
     showmethekey
+
+    swaynotificationcenter
   ];
 
   wayland.windowManager.hyprland = {

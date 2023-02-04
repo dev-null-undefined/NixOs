@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  config.environment.systemPackages = with pkgs.stable; [
+  environment.systemPackages = with pkgs.stable; [
     (vscode-with-extensions.override
       {
         vscodeExtensions =

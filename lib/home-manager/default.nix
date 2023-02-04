@@ -28,7 +28,7 @@
     system ? "x86_64-linux",
     ...
   } @ hmConfig: {
-    pkgs = self.lib.mkPkgsWithOverlays system;
+    pkgs = self.lib.internal.mkPkgsWithOverlays system;
     extraSpecialArgs = {inherit inputs self;};
     modules = mkHomeModules hmConfig;
   };

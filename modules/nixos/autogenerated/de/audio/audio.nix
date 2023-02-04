@@ -1,8 +1,8 @@
 {pkgs, ...}: {
-  imports = [
+  #imports = [
     # ./pulse.nix
-    ./pipewire.nix
-  ];
+  #  ./pipewire.nix
+  #];
   environment.systemPackages = with pkgs; [
     playerctl
     pulseaudio

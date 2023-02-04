@@ -9,7 +9,7 @@
     modules ? [],
   }: {
     inherit system;
-    pkgs = self.lib.mkPkgsWithOverlays system;
+    pkgs = self.lib.internal.mkPkgsWithOverlays system;
     specialArgs = {inherit inputs self;};
     modules =
       [
@@ -52,7 +52,7 @@
         (../../hosts + "/${hostname}/hardware-partitions.nix")
         (../../hosts + "/${hostname}/default.nix")
 
-        ../../hosts/common/default.nix
+        #../../hosts/common/default.nix
       ]
       ++ modules
       ++ (inputs.nixpkgs.lib.attrsets.mapAttrsToList (_: value: value) self.nixosModules);

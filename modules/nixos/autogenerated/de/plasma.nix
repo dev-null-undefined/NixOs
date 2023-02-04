@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  imports = [../nvidia/nvidia-sync.nix ./default.nix];
+#  imports = [../nvidia/nvidia-sync.nix ./default.nix];
 
   services.xserver = {
     desktopManager.plasma5.enable = true;

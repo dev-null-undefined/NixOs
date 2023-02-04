@@ -5,7 +5,7 @@
   lib,
   ...
 }: {
-  imports = [../nvidia/nvidia-sync.nix ./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
+#  imports = [../nvidia/nvidia-sync.nix ./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
 
   hardware.bluetooth.enable = true;
 

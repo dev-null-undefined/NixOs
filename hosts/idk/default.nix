@@ -9,16 +9,18 @@
   imports = [
     # Include the results of the hardware scan.
     inputs.nixos-hardware.nixosModules.msi-gs60
-    ../common/network-manager.nix
-
-    ../common/de/hyprland.nix
-    ../common/plymouth.nix
-
-    ../common/services/syncthing.nix
-    ../common/services/mariadb.nix
-
-    ./yubikey/yubikey.nix
+    # ../common/network-manager.nix
+    #
+    # ../common/de/hyprland.nix
+    # ../common/plymouth.nix
+    #
+    # ../common/services/syncthing.nix
+    # ../common/services/mariadb.nix
+    #
+    # ./yubikey/yubikey.nix
   ];
+
+  systemd.sleep.extraConfig = "HibernateDelaySec=1h";
 
   networking.hostId = "69faa160";
 

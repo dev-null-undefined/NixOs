@@ -4,14 +4,12 @@
   lib,
   ...
 }: {
-  imports = [
-    ./btrfs-tools.nix
-    ./tui.nix
-    ./zsh.nix
-    ./development/ides/default.nix
-    ./development/default.nix
-  ];
-
+  
+  # generated.packages.btrfs-tools.enable = lib.mkDefault true;
+  # generated.packages.tui.enable = lib.mkDefault true;
+  # generated.packages.zsh.enable = lib.mkDefault true;
+  # generated.packages.development.enable = lib.mkDefault true;
+  #
   environment.systemPackages = with pkgs; [
     # Utilities
     coreutils

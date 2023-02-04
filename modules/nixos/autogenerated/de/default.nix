@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  imports = [./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
+#  imports = [./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
 
   hardware.bluetooth.enable = true;
 

@@ -8,7 +8,7 @@
 
     # Execute favorite apps at launch
     exec-once = copyq
-    exec-once = dunst
+    exec-once = swaync
     exec-once = waybar
     exec-once = pasystray
     exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
@@ -115,6 +115,7 @@
     bind = $mainMod,      E, exec, nemo
     bind = $mainMod,      C, exec, wofi --show drun
     bind = CTRL SHIFT,    A, exec, copyq toggle
+    bind = CTRL SHIFT,    N, exec, swaync-client -t -sw
 
     bind = $mainMod, L, exec, swaylock
     bind = CTRL SHIFT, Escape, exec, wlogout

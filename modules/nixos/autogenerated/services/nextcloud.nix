@@ -6,7 +6,7 @@
 }: let
   nextcloud-domain = "cloud.${config.domain}";
 in {
-  imports = [./mariadb.nix ./nginx.nix];
+#  imports = [./mariadb.nix ./nginx.nix];
 
   services = {
     nextcloud = {

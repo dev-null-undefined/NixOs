@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  imports = [../nvidia/nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix];
+#  imports = [../nvidia/nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix];
 
   services.blueman.enable = true;
 

@@ -4,5 +4,5 @@
   lib,
   ...
 }: {
-  imports = [./vim.nix];
+#  imports = [./vim.nix];
 }
