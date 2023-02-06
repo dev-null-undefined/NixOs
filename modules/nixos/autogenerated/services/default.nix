@@ -1,3 +1,3 @@
 {pkgs, lib, ...}: {
-#  generated.services.acme.enable = lib.mkDefault true;
+  generated.services.acme.enable = lib.mkDefault true;
 }

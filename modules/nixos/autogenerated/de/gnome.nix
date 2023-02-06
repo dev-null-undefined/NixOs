@@ -3,7 +3,9 @@
   pkgs,
   ...
 }: {
-#  imports = [../nvidia/nvidia-offload.nix ./default.nix];
+  
+  generated.nvidia.nvidia-offload.enable = true;
+  generated.de.enable = true;
 
   hardware.pulseaudio.enable = false;
   services = {

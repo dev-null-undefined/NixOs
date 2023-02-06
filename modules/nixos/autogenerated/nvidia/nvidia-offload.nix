@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-#  imports = [./nvidia-default.nix];
+  generated.nvidia.nvidia-default.enable = true;
 
   hardware.nvidia.modesetting.enable = true;
 }

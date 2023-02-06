@@ -105,6 +105,7 @@
             // acc
         ) {}
         homeConfigs;
+      checks = (f: f {}) {a = "test";};
     }
     // (flake-utils.lib.eachDefaultSystem (system: {
       packages = lib.internal.mkPkgsWithOverlays system;

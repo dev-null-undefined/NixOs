@@ -3,7 +3,10 @@
   pkgs,
   ...
 }: {
-#  imports = [../nvidia/nvidia-sync.nix ./default.nix];
+
+  generated.nvidia.nvidia-sync.enable = true;
+  generated.de.enable = true;
+
   services.xserver = {
     desktopManager = {xterm.enable = false;};
 

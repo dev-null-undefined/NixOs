@@ -5,7 +5,11 @@
   lib,
   ...
 }: {
-#  imports = [../nvidia/nvidia-sync.nix ./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
+
+  generated.nvidia.nvidia-sync.enable = true;
+  generated.de.fonts.enable = true;
+  generated.de.audio.enable = true;
+  generated.packages.gui.enable = true;
 
   hardware.bluetooth.enable = true;
 

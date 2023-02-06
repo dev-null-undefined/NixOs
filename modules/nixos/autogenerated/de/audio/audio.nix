@@ -1,8 +1,7 @@
 {pkgs, ...}: {
-  #imports = [
-    # ./pulse.nix
-  #  ./pipewire.nix
-  #];
+  generated.de.audio.pipewire.enable = true;
+  generated.de.audio.pulse.enable = false;
+
   environment.systemPackages = with pkgs; [
     playerctl
     pulseaudio

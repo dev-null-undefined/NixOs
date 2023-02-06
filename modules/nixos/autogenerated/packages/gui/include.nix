@@ -1,25 +1,12 @@
-{pkgs, ...}: {
-  # imports = [
-  #   ./discord.nix
-  #   ./games.nix
-  #   ./teamviewer.nix
-  #   ./mathematica.nix
-  #   ./virt-manager.nix
-  #   ./piper.nix
-  #   ./via-qmk.nix
-  #   ./gparted.nix
-  #   ./file-managers.nix
-  #   ./media.nix
-  #   ./browsers.nix
-  #   ./terminals.nix
-  #   ./networking.nix
-  #   ./editors.nix
-  #
-  #   ../development/ides/jetbrains.nix
-  #   ../development/ides/vscode.nix
-  #   ../development/ides/emacs.nix
-  # ];
-  #
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  generated.packages.development.ides.jetbrains.enable = lib.mkDefault true;
+  generated.packages.development.ides.vscode.enable = lib.mkDefault true;
+  generated.packages.development.ides.emacs.enable = lib.mkDefault true;
+
   services.gnome.sushi.enable = true;
 
   environment.systemPackages = with pkgs; [

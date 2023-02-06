@@ -6,7 +6,8 @@
 }: let
   nextcloud-domain = "cloud.${config.domain}";
 in {
-#  imports = [./mariadb.nix ./nginx.nix];
+  generated.services.mariadb.enable = lib.mkDefault true;
+  generated.services.nginx.enable = lib.mkDefault true;
 
   services = {
     nextcloud = {
@@ -28,7 +29,7 @@ in {
         dbport = 3306;
         dbpassFile = "/var/nextcloud-db-pass";
         adminpassFile = "/var/nextcloud-admin-pass";
-        extraTrustedDomains = ["cloud.dev-null.me"];
+        extraTrustedDomains = ["cloud.${config.domain}"];
       };
     };
     mysql = {

@@ -3,7 +3,9 @@
   pkgs,
   ...
 }: {
-#  imports = [./fonts.nix ./audio/audio.nix ../packages/gui/default.nix];
+
+  generated.de.fonts.enable = true;
+  generated.de.audio.enable = true;
 
   hardware.bluetooth.enable = true;
 

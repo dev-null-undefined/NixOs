@@ -4,7 +4,10 @@
   inputs,
   ...
 }: {
-#  imports = [../nvidia/nvidia-sync.nix ./default.nix ./autorandr/autorandr.nix];
+
+  generated.nvidia.nvidia-sync.enable = true;
+  generated.de.enable = true;
+  generated.de.autorandr.enable = true;
 
   services.blueman.enable = true;
 
