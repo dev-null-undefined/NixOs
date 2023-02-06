@@ -9,7 +9,7 @@
     modules ? [],
   }: {
     inherit system;
-    pkgs = self.lib.mkPkgsWithOverlays system;
+    pkgs = self.lib.internal.mkPkgsWithOverlays system;
     specialArgs = {inherit inputs self;};
     modules =
       [

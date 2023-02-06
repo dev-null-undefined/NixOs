@@ -47,7 +47,6 @@
     hyprland,
     hyprland-contrib,
   } @ inputs: let
-
     hostConfigs = [
       {hostname = "idk";}
       {
@@ -67,7 +66,7 @@
       )
       hostConfigs;
 
-      lib = import ./lib { inherit inputs self; };
+    lib = import ./lib {inherit inputs self;};
   in
     {
       inherit lib;
@@ -79,8 +78,8 @@
         builtins.foldl' (
           acc: config:
             {
-              "${config.hostname}" = nixpkgs.lib.nixosSystem (lib.mkHost config);
-              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib.mkHost (config
+              "${config.hostname}" = nixpkgs.lib.nixosSystem (lib.internal.mkHost config);
+              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib.internal.mkHost (config
                 // {
                   modules =
                     (config.modules or [])
@@ -95,13 +94,17 @@
       homeConfigurations =
         builtins.foldl' (
           acc: config:
-            {"${config.username}@${config.hostname}" = home-manager.lib.homeManagerConfiguration (lib.mkHome config);}
+            {
+              "${config.username}@${config.hostname}" =
+                home-manager.lib.homeManagerConfiguration
+                (lib.internal.mkHome config);
+            }
             // acc
         ) {}
         homeConfigs;
     }
     // (flake-utils.lib.eachDefaultSystem (system: {
-      packages = lib.mkPkgsWithOverlays system;
+      packages = lib.internal.mkPkgsWithOverlays system;
       formatter = nixpkgs.legacyPackages.${system}.alejandra;
     }));
 }
