@@ -8,7 +8,11 @@ in ''
 
   sudo-nom-rebuild-fallback() {
     if ! command -v nom-rebuild &>/dev/null; then
-      sudo nixos-rebuild "$@"
+      if ! command -v nomos-rebuild &>/dev/null; then
+         sudo nixos-rebuild "$@"
+      else
+         sudo nomos-rebuild "$@"
+      fi
     else
       sudo nom-rebuild "$@"
     fi
