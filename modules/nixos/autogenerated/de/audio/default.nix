@@ -1,6 +1,9 @@
-{pkgs, ...}: {
-  generated.de.audio.pipewire.enable = true;
-  generated.de.audio.pulse.enable = false;
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  generated.de.audio.pipewire.enable = lib.mkDefault true;
 
   environment.systemPackages = with pkgs; [
     playerctl

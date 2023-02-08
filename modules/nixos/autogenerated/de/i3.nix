@@ -3,9 +3,8 @@
   pkgs,
   ...
 }: {
-
-  generated.nvidia.nvidia-sync.enable = true;
   generated.de.enable = true;
+  generated.nvidia.nvidia-sync.enable = true;
 
   services.xserver = {
     desktopManager = {xterm.enable = false;};

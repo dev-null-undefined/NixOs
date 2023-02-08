@@ -8,7 +8,7 @@ in
   + (import ./edit-command-line.nix)
   + ''
     # Immediately report changes in background job status.
-    setopt notify 
+    setopt notify
 
     # Arrow-key driven autocomplete menu
     zstyle ':completion:*' menu select

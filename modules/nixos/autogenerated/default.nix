@@ -4,6 +4,9 @@
   config,
   ...
 }: {
+  generated.users.enable = lib.mkDefault true;
+  generated.packages.enable = lib.mkDefault true;
+  generated.services.enable = lib.mkDefault true;
 
   # Change default time limit for unit stop
   systemd.extraConfig = ''

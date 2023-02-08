@@ -1,11 +1,13 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
-
   generated.de.fonts.enable = true;
   generated.de.audio.enable = true;
+
+  generated.packages.gui.enable = lib.mkDefault true;
 
   hardware.bluetooth.enable = true;
 

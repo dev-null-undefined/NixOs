@@ -126,7 +126,7 @@ in ''
       option="$1"
 
       shift
-      
+
       center-text nix eval ${NIXOS_CURRENT_CONFIG}#nixosConfigurations.''${hostname}.''${option}
       nix eval ${NIXOS_CURRENT_CONFIG}#nixosConfigurations.''${hostname}.''${option}
 

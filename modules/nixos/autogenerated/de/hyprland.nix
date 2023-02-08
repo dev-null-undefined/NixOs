@@ -5,7 +5,6 @@
   lib,
   ...
 }: {
-
   generated.nvidia.nvidia-sync.enable = true;
   generated.de.fonts.enable = true;
   generated.de.audio.enable = true;

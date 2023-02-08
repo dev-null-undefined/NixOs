@@ -3,9 +3,8 @@
   pkgs,
   ...
 }: {
-  
-  generated.nvidia.nvidia-offload.enable = true;
   generated.de.enable = true;
+  generated.nvidia.nvidia-offload.enable = true;
 
   hardware.pulseaudio.enable = false;
   services = {

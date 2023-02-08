@@ -4,7 +4,6 @@
   inputs,
   ...
 }: {
-
   generated.nvidia.nvidia-sync.enable = true;
   generated.de.enable = true;
   generated.de.autorandr.enable = true;
