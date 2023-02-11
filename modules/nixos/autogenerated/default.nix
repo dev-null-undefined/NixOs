@@ -36,6 +36,8 @@
       enable = true;
       generateCaches = true;
     };
+
+    nixos.includeAllModules = true;
   };
 
   # get completion for system packages (e.g. systemd).
