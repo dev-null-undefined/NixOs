@@ -6,7 +6,7 @@
 }: let
   # Dependencies
   htop = "${pkgs.htop}/bin/htop";
-  ikhal = "${pkgs.stable.khal}/bin/ikhal";
+  ikhal = "${pkgs.khal}/bin/ikhal";
   nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
   nm-tui = ''"${pkgs.networkmanager}/bin/nmtui connect"'';
 

@@ -21,7 +21,7 @@
 
   environment.systemPackages = with pkgs; [
     # We will remember you multimc <3
-    #(stable.multimc.overrideAttrs (old: rec{
+    #(multimc.overrideAttrs (old: rec{
     #  src = fetchFromGitHub {
     #    owner = "AfoninZ";
     #    repo = "MultiMC5-Cracked";
