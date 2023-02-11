@@ -13,7 +13,21 @@
 in
   lib
   // {
-    internal =
+    internal = let
+      getAttrsPathsSep = attrset: sep:
+        if builtins.isAttrs attrset && attrset != {}
+        then
+          lib.lists.flatten (lib.attrsets.mapAttrsToList (name: value:
+            builtins.map (paths:
+              name
+              + (
+                if paths != ""
+                then sep + paths
+                else ""
+              )) (getAttrsPathsSep value sep))
+          attrset)
+        else [""];
+    in
       {
         mkOverlay = {
           input ? inputs."nixpkgs-${name}",
@@ -30,6 +44,10 @@ in
           lib.strings.concatMapStrings
           (_: string)
           (lib.lists.range 0 count);
+
+        inherit getAttrsPathsSep;
+
+        getAttrsPaths = attrset: getAttrsPathsSep attrset ".";
       }
       // (import ./home-manager args)
       // (import ./nixos args);
