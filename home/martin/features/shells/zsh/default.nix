@@ -6,6 +6,11 @@
   ...
 }: {
   imports = [../default.nix];
+
+  home.packages = with pkgs; [
+    nomos-rebuild
+  ];
+
   programs.zsh = {
     enable = true;
 
