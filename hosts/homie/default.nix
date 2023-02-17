@@ -5,14 +5,7 @@
   pkgs,
   ...
 }: {
-  imports = [
-    #../common/services/mariadb.nix
-    #../common/services/nextcloud.nix
-    #../common/services/nginx.nix
-    #../common/services/openvpn-server.nix
-    ../common/services/ssh.nix
-    #../common/services/syncthing.nix
-  ];
+  generated.services.ssh.enable = true;
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

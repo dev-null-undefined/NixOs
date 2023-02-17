@@ -6,15 +6,21 @@
   ...
 }: {
   imports = [
-    ../common/services/mariadb.nix
-    ../common/services/nextcloud.nix
-    ../common/services/nginx.nix
-    ../common/services/ssh.nix
-    ../common/services/syncthing.nix
-
     ./nginx-vhosts.nix
     ./openvpn-server.nix
   ];
+
+  generated = {
+    enable = true;
+
+    services = {
+      mariadb.enable = true;
+      nextcloud.enable = true;
+      nginx.enable = true;
+      ssh.enable = true;
+      syncthing.enable = true;
+    };
+  };
 
   domain = "dev-null.me";
 
