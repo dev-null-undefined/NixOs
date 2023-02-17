@@ -44,6 +44,8 @@
             config.allowUnfree = true;
             hostPlatform = lib.mkDefault system;
           };
+
+          generated.enable = lib.mkDefault true;
         })
         inputs.hyprland.nixosModules.default
 
@@ -51,8 +53,6 @@
         (../../hosts + "/${hostname}/hardware-configuration.nix")
         (../../hosts + "/${hostname}/hardware-partitions.nix")
         (../../hosts + "/${hostname}/default.nix")
-
-        #../../hosts/common/default.nix
       ]
       ++ modules
       ++ (inputs.nixpkgs.lib.attrsets.mapAttrsToList (_: value: value) self.nixosModules);

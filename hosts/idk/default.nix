@@ -14,8 +14,6 @@
   ];
 
   generated = {
-    enable = true;
-
     network-manager.enable = true;
     de.hyprland.enable = true;
     plymouth.enable = true;
