@@ -5,46 +5,42 @@
   ...
 }: let
   nextcloud-domain = "cloud.${config.domain}";
+  service = config.services.nextcloud;
+  cfg = service.config;
 in {
-  generated.services.mariadb.enable = lib.mkDefault true;
-  generated.services.nginx.enable = lib.mkDefault true;
+  generated = {
+    services.mariadb.enable = lib.mkDefault true;
+    services.nginx.enable = lib.mkDefault true;
+  };
 
   services = {
     nextcloud = {
-      package = pkgs.nextcloud25;
       enable = true;
+      package = pkgs.nextcloud25;
       hostName = lib.mkDefault nextcloud-domain;
       https = true;
       home = "/nextcloud";
-      caching = {
-        apcu = true;
-        redis = false;
-        memcached = true;
-      };
       config = {
         dbtype = "mysql";
-        dbname = "nextcloud";
-        dbuser = "nextcloud";
-        dbhost = "127.0.0.1";
         dbport = 3306;
         dbpassFile = "/var/nextcloud-db-pass";
         adminpassFile = "/var/nextcloud-admin-pass";
-        extraTrustedDomains = ["cloud.${config.domain}"];
+        extraTrustedDomains = [service.hostName];
       };
     };
     mysql = {
-      ensureDatabases = ["nextcloud"];
+      ensureDatabases = [cfg.dbname];
       ensureUsers = [
         {
-          name = "nextcloud";
-          ensurePermissions = {"nextcloud.*" = "ALL PRIVILEGES";};
+          name = cfg.dbuser;
+          ensurePermissions = {"${cfg.dbname}.*" = "ALL PRIVILEGES";};
         }
       ];
     };
     nginx = {
       # Setup Nextcloud virtual host to listen on ports
       virtualHosts = {
-        "${config.services.nextcloud.hostName}" = {
+        "${service.hostName}" = {
           ## Force HTTP redirect to HTTPS
           forceSSL = true;
           ## LetsEncrypt
