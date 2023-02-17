@@ -3,19 +3,16 @@
   lib,
   ...
 }: {
-  hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.enable = true;
-
   boot.kernel.sysctl = {"abi.vsyscall32" = 0;};
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    steam = pkgs.steam.override {
-      extraPkgs = pkgs: [pkgs.glxinfo];
-      withPrimus = true;
-    };
-  };
   programs = {
-    steam.enable = true;
+    steam = {
+      enable = true;
+      package = pkgs.steam.override {
+        extraPkgs = pkgs: [pkgs.glxinfo];
+        withPrimus = true;
+      };
+    };
     gamemode.enable = true;
   };
 
