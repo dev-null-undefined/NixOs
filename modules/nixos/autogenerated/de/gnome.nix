@@ -3,22 +3,12 @@
   pkgs,
   ...
 }: {
-  generated.de.x11.enable = true;
-  generated.nvidia.nvidia-offload.enable = true;
+  generated = {
+    de.x11.enable = true;
+    nvidia.nvidia-offload.enable = true;
+  };
 
   hardware.pulseaudio.enable = false;
-  services = {
-    switcherooControl.enable = true;
-
-    xserver = {
-      desktopManager.gnome.enable = true;
-
-      displayManager = {
-        gdm.enable = true;
-        gdm.wayland = true;
-      };
-    };
-  };
 
   environment.systemPackages =
     (with pkgs; [
@@ -48,7 +38,19 @@
 
   xdg.portal.wlr.enable = true;
 
-  services.udev.packages = with pkgs; [gnome.gnome-settings-daemon];
+  services = {
+    switcherooControl.enable = true;
 
-  services.dbus.packages = with pkgs; [gnome2.GConf];
+    xserver = {
+      desktopManager.gnome.enable = true;
+
+      displayManager = {
+        gdm.enable = true;
+        gdm.wayland = true;
+      };
+    };
+
+    udev.packages = with pkgs; [gnome.gnome-settings-daemon];
+    dbus.packages = with pkgs; [gnome2.GConf];
+  };
 }
