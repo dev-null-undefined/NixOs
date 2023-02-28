@@ -24,7 +24,7 @@
     history = {
       extended = true;
       ignoreSpace = false;
-      share = false;
+      share = true;
       save = 10000000;
       size = 10000000;
     };
