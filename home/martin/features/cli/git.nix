@@ -18,7 +18,7 @@
       commit.verbose = true;
     };
     lfs = {enable = true;};
-    ignores = [".direnv" "result"];
+    ignores = [".direnv" "result*" ".ccls-cache" "a.out"];
     delta = {enable = true;};
     signing = {
       signByDefault = true;
