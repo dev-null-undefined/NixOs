@@ -6,10 +6,14 @@
   environment.systemPackages = with pkgs; [nvitop];
 
   hardware = {
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      extraPackages = [pkgs.vaapiIntel];
+      driSupport = true;
+      driSupport32Bit = true;
+    };
     nvidia = {
       nvidiaSettings = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
 
