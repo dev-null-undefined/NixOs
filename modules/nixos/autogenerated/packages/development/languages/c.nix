@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-lib.mkIf (config.programming-languages.languages.c.enable or false) {
+}: {
   # C perf debugging variables
   boot.kernel.sysctl = {
     "kernel.perf_event_paranoid" = true;
@@ -53,6 +52,8 @@ lib.mkIf (config.programming-languages.languages.c.enable or false) {
 
       # lsp server for C++
       ccls
+      # Man pages for stl
+      stdman
 
       # dev tools
       valgrind

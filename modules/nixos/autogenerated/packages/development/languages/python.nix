@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-lib.mkIf (config.programming-languages.languages.python.enable or false) {
+}: {
   environment.systemPackages = with pkgs; [
     # Python
     python39Packages.ueberzug

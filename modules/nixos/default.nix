@@ -3,6 +3,5 @@
   hostname = import ./hostname.nix;
   isVm = import ./isVM;
   domain = import ./domain.nix;
-  programming-languages = import ./programming-languages;
   generated = import ./generator.nix;
 }
