@@ -250,4 +250,11 @@
   windowrule = float, title:^(Volume Control)$
   windowrule = size 800 600, title:^(Volume Control)$
   windowrule = move 75 44%, title:^(Volume Control)$
+
+  # Jetbrains products
+  windowrulev2 = float,floating:0,class:^(jetbrains-.*),title:^(win.*)
+  windowrulev2 = float,class:^(jetbrains-.*),title:^(Welcome to.*)
+  windowrulev2 = center,class:^(jetbrains-.*),title:^(Replace All)$
+  windowrulev2 = forceinput,class:^(jetbrains-.*)
+  windowrulev2 = windowdance,class:^(jetbrains-.*) # allows IDE to move child windows
 ''
