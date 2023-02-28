@@ -10,7 +10,6 @@
       enable = true;
       package = pkgs.steam.override {
         extraPkgs = pkgs: [pkgs.glxinfo];
-        withPrimus = true;
       };
     };
     gamemode.enable = true;
@@ -36,6 +35,8 @@
     #    fetchSubmodules = true;
     #  };
     #}))
+    glxinfo
+
     prismlauncher
 
     wineWowPackages.stable
@@ -43,11 +44,15 @@
     winetricks
 
     vitetris
+
     lutris
     gnome.zenity
     vulkan-tools
     vulkan-headers
     vulkan-loader
     vulkan-tools-lunarg
+
+    sway # For running league of legends since it's broken on hyprland :D
+    dmenu
   ];
 }

@@ -3,6 +3,10 @@
   config,
   ...
 }: {
+  programs = {
+    bandwhich.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     # ----- Terminal tools -----
     # TUI
@@ -24,7 +28,7 @@
     hydra-check # check for sucessfull build or failiure on hydra
 
     # Usage monitors
-    bpytop
+    btop
     glances
     gotop
     htop
@@ -35,7 +39,6 @@
     iftop
     nload
     nethogs
-    bandwhich
     gping # TUI ping with graph
 
     mutt # email client
