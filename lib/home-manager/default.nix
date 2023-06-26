@@ -14,9 +14,10 @@
         home.stateVersion = "22.11";
         home.username = username;
 
-        # Let Home Manager install and manage itself.
+        #Let Home Manager install and manage itself.
         programs.home-manager.enable = true;
 
+        imports = [inputs.hyprland.homeManagerModules.default];
         home.homeDirectory = "/home/${home.username}";
       }
     ]

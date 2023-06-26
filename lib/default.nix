@@ -9,6 +9,10 @@
       inherit system;
       overlays = overlays;
       config.allowUnfree = true;
+      #config.allowBroken = true;
+      #config.permittedInsecurePackages = [
+      #  "electron-21.4.0"
+      #];
     };
 in
   lib

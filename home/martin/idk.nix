@@ -3,12 +3,10 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./features/desktop/hyprland
-    ./features/cli
-    ./features/shells/zsh
-    ./features/programs/default.nix
-  ];
+  generated.home = {
+    enable = true;
+    desktop.hyprland.enable = true;
+  };
 
   # -----   ------
   #| DP-4| |eDP-1 |
@@ -21,7 +19,6 @@
       isPrimary = true;
       refreshRate = 144;
       x = 0;
-      workspace = "1";
     }
     {
       name = "DP-3";
@@ -30,7 +27,14 @@
       isPrimary = true;
       refreshRate = 144;
       x = 0;
-      workspace = "1";
+    }
+    {
+      name = "DP-2";
+      width = 2560;
+      height = 1440;
+      isPrimary = true;
+      refreshRate = 60;
+      x = 0;
     }
     {
       name = "eDP-1";
@@ -38,7 +42,6 @@
       height = 1080;
       refreshRate = 144;
       x = 1920;
-      workspace = "2";
     }
   ];
 }

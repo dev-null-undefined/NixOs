@@ -10,7 +10,7 @@
   boot.kernelModules = ["kvm-intel" "v4l2loopback" "ec_sys"];
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback.out];
 
-  # boot.kernelPackages = pkgs.linuxPackages_latest; latest kernel doesn't work with nvidia proprietery driver
+  boot.kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
 
   hardware.enableAllFirmware = true;
 
@@ -39,5 +39,10 @@
 
     # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
     nvidiaBusId = "PCI:1:0:0";
+  };
+
+  # Default number of cores to use for building nix derivations
+  nix.settings = {
+    max-jobs = 1;
   };
 }
