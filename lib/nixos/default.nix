@@ -55,6 +55,6 @@
         (../../hosts + "/${hostname}/default.nix")
       ]
       ++ modules
-      ++ (inputs.nixpkgs.lib.attrsets.mapAttrsToList (_: value: value) self.nixosModules);
+      ++ (builtins.attrValues self.nixosModules);
   };
 }

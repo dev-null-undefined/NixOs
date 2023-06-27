@@ -21,7 +21,7 @@
         home.homeDirectory = "/home/${home.username}";
       }
     ]
-    ++ (inputs.nixpkgs.lib.attrsets.mapAttrsToList (_: value: value) self.home-managerModules);
+    ++ (builtins.attrValues self.home-managerModules);
 
   mkHome = {
     username,
