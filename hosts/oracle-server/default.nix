@@ -16,6 +16,7 @@
       ssh.enable = true;
       syncthing.enable = true;
     };
+    users.lomohov.enable = true;
   };
 
   domain = "dev-null.me";
