@@ -6,10 +6,10 @@
 in {
   services.openssh = {
     enable = true;
-    forwardX11 = true;
     ports = [22 8022];
     settings = {
       PasswordAuthentication = false;
+      X11Forwarding = true;
     };
   };
   users.users = {
