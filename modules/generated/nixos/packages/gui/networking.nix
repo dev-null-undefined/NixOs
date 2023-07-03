@@ -9,6 +9,8 @@
 
     burpsuite # proxy
 
+    zap # Web crawler
+
     kiterunner # content discovery tool
   ];
 }

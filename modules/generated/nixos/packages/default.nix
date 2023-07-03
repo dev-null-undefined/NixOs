@@ -19,6 +19,8 @@
     # pee sponge vipe etc..
     moreutils
 
+    lshw
+
     # man page
     man
     man-pages
