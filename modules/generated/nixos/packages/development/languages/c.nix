@@ -65,6 +65,10 @@
 
       # static analysis tool
       cppcheck
+      cpplint
+
+      # makefile checker  
+      checkmake
     ]
     ++ (lib.lists.optionals (config.nixpkgs.system == "x86_64-linux") [
       # Multilib support

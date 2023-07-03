@@ -1,11 +1,10 @@
 {
   lib,
-  config,
   pkgs,
   ...
 }:
 with lib; {
-  home.file.".config/nvim/settings.lua".source = ./init.lua;
+    home.file.".config/nvim/settings.lua".source = ./init.lua;
 
   home.packages = with pkgs; [
     nixd
@@ -13,6 +12,9 @@ with lib; {
     sumneko-lua-language-server
     stylua # Lua
     clang-tools
+    checkmake
+    cpplint
+    nil
   ];
 
   programs.zsh = {
@@ -35,26 +37,22 @@ with lib; {
       {
         plugin = vim-monokai;
         config = "syntax on
-                    colorscheme monokai";
+                colorscheme monokai";
       }
       {
         plugin = lualine-nvim;
         type = "lua";
         config = "require('lualine').setup()";
       }
-      {
-        plugin = telescope-nvim;
-        type = "lua";
-        config = ''
-          require('telescope').setup()
-        '';
-      }
+      telescope-nvim
       vim-nix
       plenary-nvim
 
       cmp-nvim-lsp
 
       nvim-lspconfig
+
+      pkgs.vimPlugins.null-ls-nvim
 
       # completion
       nvim-cmp
@@ -75,6 +73,7 @@ with lib; {
           }
         '';
       }
+      which-key-nvim
     ];
 
     extraConfig = ''
