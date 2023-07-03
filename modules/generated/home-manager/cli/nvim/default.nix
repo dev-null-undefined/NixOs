@@ -15,6 +15,7 @@ with lib; {
     checkmake
     cpplint
     nil
+    vscode-langservers-extracted
   ];
 
   programs.zsh = {
@@ -36,8 +37,10 @@ with lib; {
     plugins = with pkgs.vimPlugins; [
       {
         plugin = vim-monokai;
-        config = "syntax on
-                colorscheme monokai";
+        config = ''
+          syntax on
+          colorscheme monokai
+        '';
       }
       {
         plugin = lualine-nvim;
@@ -59,6 +62,8 @@ with lib; {
       cmp-nvim-lsp
       cmp-buffer
       cmp-path
+      cmp-calc
+      cmp-emoji
       cmp_luasnip
       luasnip
 

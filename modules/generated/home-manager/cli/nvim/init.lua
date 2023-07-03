@@ -1,19 +1,6 @@
 local o = vim.opt
 local g = vim.g
 
--- Autocmds
-vim.cmd [[
-   augroup CursorLine
-   au!
-   au VimEnter * setlocal cursorline
-   au WinEnter * setlocal cursorline
-   au BufWinEnter * setlocal cursorline
-   au WinLeave * setlocal nocursorline
-   augroup END
-
-   autocmd FileType nix setlocal shiftwidth=4
-]]
-
 -- Keybinds
 local map = vim.api.nvim_set_keymap
 local opts = { silent = true, noremap = true }
@@ -43,7 +30,6 @@ o.undofile = true
 
 -- Indentation
 o.tabstop = 4
-o.expandtab = true
 o.scrolloff = 5
 
 -- Set clipboard to use system clipboard
@@ -88,28 +74,28 @@ end
 local wk = require("which-key")
 
 wk.register({
-    f = {
-        name = "file",
-        f = { "<cmd>Telescope find_files<cr>", "Find File" },
-        g = { "<cmd>Telescope live_grep<cr>", "Live file grep" },
-        b = { "<cmd>Telescope buffers<cr>", "Chose buffer" },
-        r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-    },
-    c = {
-        name = "code",
-        f = { vim.lsp.buf.format, "Format document" },
-        a = { vim.lsp.buf.code_action, "Format document" },
-        e = { vim.diagnostic.open_float, "Open floating error message" },
-        l = { vim.lsp.codelens.run, "Run code lens" },
-    },
-    g = {
-        name = "Move",
-        d = { telescope_builtin.lsp_definitions, "Go to definitions" },
-        D = { vim.lsp.buf.declaration, "Go to declaration" },
-        i = { telescope_builtin.lsp_implementations, "Go to implementation" },
-        y = { telescope_builtin.lsp_type_definitions, "Go to type defintion" },
-        r = { telescope_builtin.lsp_references, "Go to references" },
-    }
+	f = {
+		name = "file",
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		g = { "<cmd>Telescope live_grep<cr>", "Live file grep" },
+		b = { "<cmd>Telescope buffers<cr>", "Chose buffer" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+	},
+	c = {
+		name = "code",
+		f = { vim.lsp.buf.format, "Format document" },
+		a = { vim.lsp.buf.code_action, "Format document" },
+		e = { vim.diagnostic.open_float, "Open floating error message" },
+		l = { vim.lsp.codelens.run, "Run code lens" },
+	},
+	g = {
+		name = "Move",
+		d = { telescope_builtin.lsp_definitions, "Go to definitions" },
+		D = { vim.lsp.buf.declaration, "Go to declaration" },
+		i = { telescope_builtin.lsp_implementations, "Go to implementation" },
+		y = { telescope_builtin.lsp_type_definitions, "Go to type defintion" },
+		r = { telescope_builtin.lsp_references, "Go to references" },
+	}
 }, { prefix = "<leader>" })
 
 -- lsp
@@ -120,33 +106,33 @@ local lspconfig = require("lspconfig")
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities = vim.lsp.protocol.make_client_capabilities()
-local servers = { "rust_analyzer", "lua_ls", "nixd", "clangd", "nil_ls" }
+local servers = { "rust_analyzer", "lua_ls", "nixd", "nil_ls", "clangd", "jsonls" }
 for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-        -- after 150ms of no calls to lsp, send call
-        -- compare with throttling that is done by default in compe
-        -- flags = {
-        --   debounce_text_changes = 150,
-        -- }
-    })
+	lspconfig[lsp].setup({
+		on_attach = on_attach,
+		capabilities = capabilities,
+		-- after 150ms of no calls to lsp, send call
+		-- compare with throttling that is done by default in compe
+		-- flags = {
+		--   debounce_text_changes = 150,
+		-- }
+	})
 end
 
 
 local null_ls = require("null-ls")
 
 null_ls.setup({
-    on_attach = on_attach,
-    sources = {
-        null_ls.builtins.diagnostics.deadnix,   -- nix
-        null_ls.builtins.diagnostics.statix,    -- nix
-        null_ls.builtins.diagnostics.checkmake, -- make
-        null_ls.builtins.diagnostics.cppcheck,  -- cpp
-        null_ls.builtins.diagnostics.cpplint,   -- cpp
+	on_attach = on_attach,
+	sources = {
+		null_ls.builtins.diagnostics.deadnix, -- nix
+		null_ls.builtins.diagnostics.statix, -- nix
+		null_ls.builtins.diagnostics.checkmake, -- make
+		null_ls.builtins.diagnostics.cppcheck, -- cpp
+		null_ls.builtins.diagnostics.cpplint, -- cpp
 
-        null_ls.builtins.formatting.alejandra, -- nix
-    },
+		null_ls.builtins.formatting.alejandra, -- nix
+	},
 })
 
 -- luasnip setup
@@ -156,42 +142,51 @@ local luasnip = require 'luasnip'
 -- nvim-cmp setup
 local cmp = require 'cmp'
 cmp.setup {
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-        ['<C-d>'] = cmp.mapping.scroll_docs(4),  -- Down
-        -- C-b (back) C-f (forward) for snippet placeholder navigation.
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        },
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { 'i', 's' }),
-    }),
-    sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-    },
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	window = {
+		documentation = {
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+		},
+	},
+	experimental = {
+		ghost_text = false,
+		native_menu = false,
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+		['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+		-- C-b (back) C-f (forward) for snippet placeholder navigation.
+		["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+		["<CR>"] = cmp.mapping.confirm { select = false },
+		['<Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
+		['<S-Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { 'i', 's' }),
+	}),
+	sources = {
+		{ name = 'nvim_lsp', keyword_length = 1 },
+		{ name = 'luasnip' },
+		{ name = 'path',     keyword_length = 3 },
+		{ name = 'buffer',   keyword_length = 4 },
+		{ name = 'calc' },
+		{ name = 'emoji' }
+	},
 }
