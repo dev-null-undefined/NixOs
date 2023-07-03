@@ -6,8 +6,8 @@
   visualSorting = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "VisualSorting";
-    rev = "2fdedd6bab68384536ece120ec940fde7b8a024a";
-    sha256 = "sha256-2ZeHGvGSrbyuppjzIsnkZTKi7mPXlJuLy9ksOnqeFrs=";
+    rev = "2b36d720ea0bb944ddb8352cc1c1b125a399bcc0";
+    sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
 in {
   services.nginx.virtualHosts."${config.domain}" = {
