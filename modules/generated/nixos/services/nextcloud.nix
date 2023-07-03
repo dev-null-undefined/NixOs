@@ -20,6 +20,7 @@ in {
       hostName = lib.mkDefault nextcloud-domain;
       https = true;
       home = "/nextcloud";
+      maxUploadSize = "32G";
       config = {
         dbtype = "mysql";
         dbport = 3306;
