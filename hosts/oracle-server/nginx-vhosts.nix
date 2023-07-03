@@ -28,4 +28,10 @@ in {
       return 301 /en;
     '';
   };
+  services.nginx.virtualHosts."nixos.${config.domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    http3 = true;
+    root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
+  };
 }
