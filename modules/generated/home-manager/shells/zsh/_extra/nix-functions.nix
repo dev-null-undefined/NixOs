@@ -6,16 +6,27 @@ in ''
   export NIXOS_CONFIG_DIR="$(realpath '${NIXOS_CONFIG_DIR}')"
   export NIXOS_CURRENT_CONFIG="${NIXOS_CURRENT_CONFIG}"
 
-  sudo-nom-rebuild-fallback() {
-    if ! command -v nom-rebuild &>/dev/null; then
-      if ! command -v nomos-rebuild &>/dev/null; then
-         sudo nixos-rebuild "$@"
-      else
-         sudo nomos-rebuild "$@"
-      fi
-    else
-      sudo nom-rebuild "$@"
-    fi
+  center-text() {
+    text="''${@}"
+    width=$(tput cols)
+
+    # Calculate the number of dashes needed
+    dashes=$(printf '%.s─' $(seq 1 ''${width}))
+
+    # Calculate the number of spaces needed to center the text
+    spaces=$(((''${width} - ''${#text}) / 2))
+
+    # Add spaces before and after the text to center it
+    centered_text=$(printf "%''${spaces}s%s%''${spaces}s" " " "''${text}" " ")
+
+    # Display the horizontal line with text in the center
+    echo "''${dashes}"
+    echo "''${centered_text}"
+    echo "''${dashes}"
+  }
+
+  nix-tre() {
+    nix-tree "''${NIXOS_CONFIG_DIR}#$1"
   }
 
   nix-update() {
@@ -28,16 +39,24 @@ in ''
     fi
   }
 
-  nix-tre() {
-    nix-tree "''${NIXOS_CONFIG_DIR}#$1"
-  }
-
   nix-rebuild() {
     sudo-nom-rebuild-fallback switch --flake "''${NIXOS_CONFIG_DIR}#" "$@"
   }
 
   nix-rebuild-boot() {
     sudo-nom-rebuild-fallback boot --flake "''${NIXOS_CONFIG_DIR}#" "$@"
+  }
+
+  sudo-nom-rebuild-fallback() {
+    if ! command -v nom-rebuild &>/dev/null; then
+      if ! command -v nomos-rebuild &>/dev/null; then
+         sudo nixos-rebuild "$@"
+      else
+         sudo nomos-rebuild "$@"
+      fi
+    else
+      sudo nom-rebuild "$@"
+    fi
   }
 
   nix-find() {
@@ -100,25 +119,6 @@ in ''
   compdef nix-find=nix-pkg
   compdef nix-tre=nix-pkg
 
-  center-text() {
-    text="''${@}"
-    width=$(tput cols)
-
-    # Calculate the number of dashes needed
-    dashes=$(printf '%.s─' $(seq 1 ''${width}))
-
-    # Calculate the number of spaces needed to center the text
-    spaces=$(((''${width} - ''${#text}) / 2))
-
-    # Add spaces before and after the text to center it
-    centered_text=$(printf "%''${spaces}s%s%''${spaces}s" " " "''${text}" " ")
-
-    # Display the horizontal line with text in the center
-    echo "''${dashes}"
-    echo "''${centered_text}"
-    echo "''${dashes}"
-  }
-
   nix-eval() {
     hostname=$(hostname)
 
@@ -158,6 +158,56 @@ in ''
   }
 
   compdef _nix-custom-eval nix-eval
+
+  home-rebuild() {
+      hostname=$(hostname)
+      username=$(whoami)
+      nom build --no-link "''${NIXOS_CONFIG_DIR}#homeConfigurations.''${username}@''${hostname}.activationPackage" "$@"
+      home-manager switch
+  }
+
+  home-eval() {
+    hostname=$(hostname)
+    username=$(whoami)
+
+    while (($#)); do
+      option="$1"
+
+      shift
+
+      center-text nix eval ''${NIXOS_CONFIG_DIR}#homeConfigurations."''${username}@''${hostname}".''${option}
+      nix eval ''${NIXOS_CONFIG_DIR}#homeConfigurations."''${username}@''${hostname}".''${option}
+
+    done
+  }
+
+  function _home-custom-eval() {
+    hostname=$(hostname)
+    username=$(whoami)
+
+    local ifs_bk="$IFS"
+    local input=("''${(Q)words[-1]}")
+    IFS=$'\n'
+    local res=($(NIX_GET_COMPLETIONS=2 nix eval ''${NIXOS_CONFIG_DIR}"#homeConfigurations."''${username}@''${hostname}".$input[@]" 2>/dev/null))
+    IFS="$ifs_bk"
+    local tpe="''${''${res[1]}%%>	*}"
+    local -a suggestions
+    declare -a suggestions
+    for suggestion in ''${res:1}; do
+      # Remove the common path
+      option=''${''${''${(@s/#/)suggestion}:1}##homeConfigurations."''${username}@''${hostname}".}
+      suggestions+=("''${option%%	*}")
+    done
+    local -a args
+    if [[ "$tpe" == filenames ]]; then
+      args+=('-f')
+    elif [[ "$tpe" == attrs ]]; then
+      args+=('-S' ''')
+    fi
+    compadd -J nix "''${args[@]}" -a suggestions
+  }
+
+  compdef _home-custom-eval home-eval
 
   ngrep() {
     ${aliases.sgrep} "$*" "${NIXOS_CONFIG_DIR}"
