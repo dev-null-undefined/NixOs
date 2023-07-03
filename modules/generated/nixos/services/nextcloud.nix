@@ -16,7 +16,7 @@ in {
   services = {
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud25;
+      package = pkgs.nextcloud27;
       hostName = lib.mkDefault nextcloud-domain;
       https = true;
       home = "/nextcloud";
