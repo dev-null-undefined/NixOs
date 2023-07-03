@@ -4,7 +4,7 @@
   ...
 }:
 with lib; {
-    home.file.".config/nvim/settings.lua".source = ./init.lua;
+  home.file.".config/nvim/settings.lua".source = ./init.lua;
 
   home.packages = with pkgs; [
     nixd
