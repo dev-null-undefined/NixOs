@@ -107,6 +107,10 @@
           path = ./templates/c++/clion-project;
           description = "C++ clion project with flake support";
         };
+        python-shell = {
+          path = ./templates/python/shell;
+          description = "Simple python dev shell flake.nix file";
+        };
       };
     };
 }
