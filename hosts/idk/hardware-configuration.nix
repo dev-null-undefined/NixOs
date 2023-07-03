@@ -43,6 +43,6 @@
 
   # Default number of cores to use for building nix derivations
   nix.settings = {
-    max-jobs = 1;
+    max-jobs = 6;
   };
 }
