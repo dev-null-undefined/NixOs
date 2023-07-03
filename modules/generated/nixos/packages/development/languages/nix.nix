@@ -31,8 +31,13 @@ in {
       nixfmt
       alejandra
 
+      # Find unused variables
+      deadnix
+
       # nix tools
       nix-diff
+      # package version diff tool
+      nvd
 
       # Fast searching for lib or package
       nix-index
