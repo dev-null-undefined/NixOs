@@ -19,4 +19,13 @@ in {
       deny all;
     '';
   };
+  services.nginx.virtualHosts."cpp.${config.domain}" = {
+    enableACME = true;
+    forceSSL = true;
+    http3 = true;
+    root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
+    locations."= /".extraConfig = ''
+      return 301 /en;
+    '';
+  };
 }
