@@ -8,6 +8,7 @@
     tui.enable = lib.mkDefault true;
     zsh.enable = lib.mkDefault true;
     development.enable = lib.mkDefault true;
+    networking.enable = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -38,7 +39,6 @@
     onionshare
 
     usbutils
-    dhcp
 
     # Commands
     delta # diff

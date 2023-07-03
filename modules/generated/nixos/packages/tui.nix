@@ -31,19 +31,9 @@
     atop
     bottom
 
-    # Network monitors
-    iftop
-    nload
-    nethogs
-    gping # TUI ping with graph
-
     mutt # email client
 
     hyperfine # terminal benchmark
-
-    wavemon
-    wirelesstools
-    iw
 
     # Commands
     home-manager
