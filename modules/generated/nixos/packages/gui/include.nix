@@ -35,7 +35,7 @@
     element-desktop # Matrix desctop client
     gomuks # Matrix terminal client
 
-    stable.libreoffice
+    libreoffice
     onlyoffice-bin
 
     copyq

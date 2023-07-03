@@ -16,7 +16,7 @@
     ardour
     audacity
 
-    blender
+    stable.blender
     krita
     gimp-with-plugins
 
@@ -25,7 +25,7 @@
     rnote
 
     # Audio
-    stable.spotifywm
+    spotifywm
     #spotify
 
     # Video

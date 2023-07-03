@@ -33,7 +33,7 @@
     #}))
     glxinfo
 
-    stable.prismlauncher
+    prismlauncher
 
     wineWowPackages.stable
     wine
