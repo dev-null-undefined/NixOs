@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  modulesPath,
-  ...
-}: {
+{modulesPath, ...}: {
   imports = [(modulesPath + "/virtualisation/qemu-vm.nix")];
 
   isVM = true;

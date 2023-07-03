@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   generated.de.enable = true;
   generated.nvidia.nvidia-sync.enable = true;
 

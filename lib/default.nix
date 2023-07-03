@@ -37,7 +37,7 @@ in
           input ? inputs."nixpkgs-${name}",
           name,
           overlays ? [],
-        }: (final: prev: {"${name}" = mkPkgs (import input) overlays prev.pkgs.system;});
+        }: (_final: prev: {"${name}" = mkPkgs (import input) overlays prev.pkgs.system;});
 
         mkPkgsWithOverlays = system:
           mkPkgs (import inputs.nixpkgs)

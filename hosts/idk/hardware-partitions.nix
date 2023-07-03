@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: {
+{...}: {
   imports = [./windows-mount.nix];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod"];

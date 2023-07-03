@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: {
+{...}: {
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/cc0038f9-46f9-47d9-a9b8-90e3a0f08536";
     fsType = "btrfs";

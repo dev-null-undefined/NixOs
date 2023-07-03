@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: {
+{...}: {
   generated.home = {
     enable = true;
     desktop.hyprland.enable = true;

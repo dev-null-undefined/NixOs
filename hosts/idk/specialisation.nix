@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{...}: {
   specialisation = {
     dwm.configuration = {
       system.nixos.tags = ["dwm"];

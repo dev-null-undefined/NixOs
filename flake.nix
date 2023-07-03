@@ -35,17 +35,9 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-stable,
-    nixpkgs-master,
-    nixos-hardware,
-    nixpkgs-dev-null,
-    nixpkgs-webcord,
-    nixpkgs-testing,
     flake-utils,
     home-manager,
-    nix-alien,
-    hyprland,
-    hyprland-contrib,
+    ...
   } @ inputs: let
     hostConfigs = [
       {

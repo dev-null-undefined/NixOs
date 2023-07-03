@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   # Dependencies
   htop = "${pkgs.htop}/bin/htop";
   ikhal = "${pkgs.stable.khal}/bin/ikhal";

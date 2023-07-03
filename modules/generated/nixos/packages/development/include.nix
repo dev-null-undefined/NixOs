@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     cloc # line counter
     pv # pipe monitor

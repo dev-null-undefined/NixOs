@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{...}: let
   username = "martin";
 in {
   # default port is 8384

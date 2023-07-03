@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   boot.kernel.sysctl = {"abi.vsyscall32" = 0;};
 
   programs = {

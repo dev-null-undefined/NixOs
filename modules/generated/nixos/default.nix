@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
+{lib, ...}: {
   generated = {
     users.enable = lib.mkDefault true;
     packages.enable = lib.mkDefault true;

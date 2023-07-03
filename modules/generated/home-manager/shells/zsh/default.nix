@@ -2,7 +2,6 @@
   pkgs,
   self,
   lib,
-  config,
   ...
 }: {
   generated.home.shells.enable = lib.mkDefault true;

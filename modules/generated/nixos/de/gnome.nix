@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   generated = {
     de.enable = true;
     nvidia.nvidia-offload.enable = true;

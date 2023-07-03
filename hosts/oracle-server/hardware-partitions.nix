@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  modulesPath,
-  ...
-}: {
+{...}: {
   fileSystems."/" = {
     device = "/dev/sda2";
     fsType = "btrfs";

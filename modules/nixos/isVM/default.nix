@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}: {
+{lib, ...}: {
   options.isVM = lib.mkOption {
     type = lib.types.bool;
     default = false;

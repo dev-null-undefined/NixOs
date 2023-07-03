@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   security.wrappers."mount.ntfs3g-suid" = {
     setuid = true;
     owner = "root";

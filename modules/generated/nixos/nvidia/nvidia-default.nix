@@ -1,8 +1,4 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [nvitop];
 
   hardware = {

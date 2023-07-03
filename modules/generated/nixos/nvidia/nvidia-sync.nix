@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   generated.nvidia.nvidia-default.enable = true;
 
   services.xserver.screenSection = ''

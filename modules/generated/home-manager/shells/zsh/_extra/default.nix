@@ -1,4 +1,4 @@
-{lib} @ input: let
+input: let
   aliases = import ../_aliases.nix input;
 in
   (import ./functions.nix)

@@ -1,7 +1,3 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   generated.services.acme.enable = lib.mkDefault true;
 }

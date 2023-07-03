@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     # Python
     python39Packages.ueberzug

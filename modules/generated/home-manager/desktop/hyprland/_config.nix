@@ -1,7 +1,4 @@
-{
-  config,
-  lib,
-}: ''
+{lib}: ''
 
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more

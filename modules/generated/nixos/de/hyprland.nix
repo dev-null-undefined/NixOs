@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{pkgs, ...}: let
   hyprland-pkg = pkgs.hyprland-nvidia;
 in {
   generated = {
