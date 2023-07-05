@@ -1,4 +1,6 @@
-{...}: {
+{...}: let
+  lvmRoot = "aafcdb75-314b-4332-87ad-391bde3d2091";
+in {
   imports = [./windows-mount.nix];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod"];
@@ -6,45 +8,44 @@
   boot.supportedFilesystems = ["btrfs"];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/e30bc2fa-9659-48fa-b2cd-63aed5f21d0b";
+    device = "/dev/disk/by-uuid/${lvmRoot}";
     fsType = "btrfs";
     options = ["subvol=/root" "compress=zstd"];
   };
 
   fileSystems."/root/btrfs-top-lvl" = {
-    device = "/dev/disk/by-uuid/e30bc2fa-9659-48fa-b2cd-63aed5f21d0b";
+    device = "/dev/disk/by-uuid/${lvmRoot}";
     fsType = "btrfs";
     options = ["subvol=/" "compress=zstd"];
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/e30bc2fa-9659-48fa-b2cd-63aed5f21d0b";
+    device = "/dev/disk/by-uuid/${lvmRoot}";
     fsType = "btrfs";
     options = ["subvol=/home" "compress=zstd"];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/e30bc2fa-9659-48fa-b2cd-63aed5f21d0b";
+    device = "/dev/disk/by-uuid/${lvmRoot}";
     fsType = "btrfs";
     options = ["subvol=/nix" "compress=zstd" "noatime"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/2361-D986";
+    device = "/dev/disk/by-uuid/D5CD-12F4";
     fsType = "vfat";
   };
 
-  swapDevices = [{device = "/dev/disk/by-uuid/7d756693-f6f4-49d4-8498-125df0c61821";}];
+  swapDevices = [{device = "/dev/disk/by-uuid/8cb7bcbe-38c1-447d-a30e-93cb24875bbf";}];
 
   boot.initrd.luks.devices.root = {
-    device = "/dev/disk/by-uuid/03bb5db4-798c-4931-9ceb-c1628dbdb6a4";
+    device = "/dev/disk/by-uuid/2e0eeb5d-bd42-471b-93c0-768b12d9b66e";
     preLVM = true;
   };
 
   boot.loader = {
     grub = {
       enable = true;
-      version = 2;
       efiSupport = true;
       device = "nodev";
       useOSProber = true;
@@ -53,4 +54,6 @@
     };
     efi.canTouchEfiVariables = true;
   };
+
+  hardware.cpu.intel.updateMicrocode = true;
 }
