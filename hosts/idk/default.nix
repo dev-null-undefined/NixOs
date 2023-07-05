@@ -21,7 +21,10 @@
       syncthing.enable = true;
       mariadb.enable = true;
     };
-    packages.gui.virtual-box.enable = lib.mkForce false;
+    packages.gui = {
+      virtual-box.enable = lib.mkForce false;
+      mathematica.enable = lib.mkForce false;
+    };
   };
 
   #networking.firewall.enable = false;
