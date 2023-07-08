@@ -10,28 +10,39 @@
     sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
 in {
-  services.nginx.virtualHosts."${config.domain}" = {
-    enableACME = true;
-    forceSSL = true;
-    http3 = true;
-    root = visualSorting;
-    locations."~ /\\.git".extraConfig = ''
-      deny all;
-    '';
-  };
-  services.nginx.virtualHosts."cpp.${config.domain}" = {
-    enableACME = true;
-    forceSSL = true;
-    http3 = true;
-    root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
-    locations."= /".extraConfig = ''
-      return 301 /en;
-    '';
-  };
-  services.nginx.virtualHosts."nixos.${config.domain}" = {
-    enableACME = true;
-    forceSSL = true;
-    http3 = true;
-    root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
+  services.nginx.virtualHosts = {
+    "${config.domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      http3 = true;
+      root = visualSorting;
+      locations."~ /\\.git".extraConfig = ''
+        deny all;
+      '';
+    };
+    "cpp.${config.domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      http3 = true;
+      root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
+      locations."= /".extraConfig = ''
+        return 301 /en;
+      '';
+    };
+    "nixos.${config.domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      http3 = true;
+      root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
+    };
+    "dynmap.${config.domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      http3 = true;
+      locations."/" = {
+        proxyPass = "http://135.125.16.193:8034";
+        proxyWebsockets = true;
+      };
+    };
   };
 }
