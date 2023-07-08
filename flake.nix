@@ -8,8 +8,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixpkgs-dev-null.url = "github:dev-null-undefined/nixpkgs/master";
-    nixpkgs-webcord.url = "github:dev-null-undefined/nixpkgs/webcord";
-    nixpkgs-testing.url = "github:dev-null-undefined/nixpkgs/master";
 
     flake-utils.url = "github:numtide/flake-utils";
 

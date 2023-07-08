@@ -9,9 +9,6 @@ with self.lib.internal; {
   dev-null = mkOverlay {
     name = "dev-null";
   };
-  testing = mkOverlay {
-    name = "testing";
-  };
   master = mkOverlay {
     name = "master";
   };
