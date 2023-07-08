@@ -1,4 +1,4 @@
-{...}: let
+{pkgs, ...}: let
   username = "martin";
 in {
   # default port is 8384
@@ -8,4 +8,5 @@ in {
     dataDir = "/home/${username}/Documents"; # Default folder for new synced folders
     configDir = "/home/${username}/Documents/.config/syncthing"; # Folder for Syncthing's settings and keys
   };
+  environment.systemPackages = with pkgs; [syncthingtray];
 }

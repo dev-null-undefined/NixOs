@@ -4,6 +4,7 @@
     jdk
     jdk8
     jdk11
+    jdk17
     jprofiler
     visualvm
   ];

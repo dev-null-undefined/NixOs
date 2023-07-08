@@ -20,6 +20,8 @@
     krita
     gimp-with-plugins
 
+    darktable
+
     # Hand written notes
     xournalpp
     rnote
