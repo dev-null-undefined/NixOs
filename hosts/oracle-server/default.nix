@@ -4,6 +4,7 @@
   imports = [
     ./nginx-vhosts.nix
     ./openvpn-server.nix
+    ./minecraft-forwarding.nix
   ];
 
   generated = {
