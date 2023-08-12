@@ -11,6 +11,7 @@ in {
     xdg-utils
     qt6.qtwayland
     libsForQt5.qt5.qtwayland
+    libsForQt5.polkit-kde-agent
   ];
 
   services = {
@@ -18,7 +19,10 @@ in {
     pipewire.wireplumber.enable = true;
   };
 
-  security.pam.services.swaylock.u2fAuth = true;
+  security = {
+    pam.services.swaylock.u2fAuth = true;
+    polkit.enable = true;
+  };
 
   programs = {
     hyprland = {
@@ -48,6 +52,7 @@ in {
   };
 
   environment.sessionVariables = {
+    "MOZ_ENABLE_WAYLAND" = "1";
     "_JAVA_AWT_WM_NONREPARENTING" = "1";
     "SDL_VIDEODRIVER" = "wayland";
     "QT_QPA_PLATFORM" = "wayland";
