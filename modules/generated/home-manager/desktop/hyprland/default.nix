@@ -58,7 +58,7 @@ in {
         inherit (config) monitors;
       })
       + (import ./_config.nix {
-        inherit lib;
+        inherit lib pkgs;
       });
 
     nvidiaPatches.enable = true;
