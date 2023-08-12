@@ -1,4 +1,7 @@
-{lib}: ''
+{
+  lib,
+  pkgs,
+}: ''
 
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
@@ -12,6 +15,9 @@
   exec-once = configure-gtk
   exec-once = systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
   exec-once = blueman-applet
+  exec-once = sleep 1 && syncthingtray
+  exec-once = ${pkgs.libsForQt5.polkit-kde-agent.outPath}/libexec/polkit-kde-authentication-agent-1
+
   # exec-once = swaylock --grace -1 # Enable this if you autostart hyprland without window manager
 
   # For all categories, see https://wiki.hyprland.org/Configuring/Variables/
@@ -48,10 +54,10 @@
       # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
       rounding = 5
-      blur = yes
-      blur_size = 3
-      blur_passes = 1
-      blur_new_optimizations = on
+      blur {
+        size = 3
+        passes = 1
+      }
 
       drop_shadow = yes
       shadow_range = 4

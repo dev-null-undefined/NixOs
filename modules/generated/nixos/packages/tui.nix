@@ -37,7 +37,7 @@
 
     # Commands
     home-manager
-    youtube-dl
+    yt-dlp
     asciinema
 
     # Utilities

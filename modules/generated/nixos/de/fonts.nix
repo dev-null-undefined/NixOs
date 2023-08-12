@@ -3,7 +3,7 @@
     gnome.adwaita-icon-theme
   ];
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       material-symbols
 
       ubuntu_font_family

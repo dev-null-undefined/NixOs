@@ -1,5 +1,5 @@
 {pkgs, ...}:
-with pkgs.master.jetbrains; let
+with pkgs.jetbrains; let
   ides' = [
     idea-ultimate
     phpstorm
@@ -14,5 +14,6 @@ with pkgs.master.jetbrains; let
   ];
   ides-with-plugins' = builtins.map (ide: plugins.addPlugins ide plugins') ides';
 in {
-  environment.systemPackages = ides-with-plugins' ++ [jdk gateway];
+  #environment.systemPackages = ides-with-plugins' ++ [jdk gateway];
+  environment.systemPackages = ides' ++ [jdk gateway];
 }
