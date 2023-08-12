@@ -13,15 +13,31 @@
 
   generated = {
     network-manager.enable = true;
-    #de.sway.enable = true;
-    #de.gnome.enable = true;
-    de.hyprland.enable = true;
     plymouth.enable = true;
+    de.hyprland.enable = lib.mkDefault true;
     services = {
       syncthing.enable = true;
       mariadb.enable = true;
     };
     packages.gui.virtual-box.enable = lib.mkForce false;
+  };
+
+  specialisation = {
+    gnome.configuration = {
+      generated.de = {
+        gnome.enable = true;
+        hyprland.enable = false;
+      };
+    };
+    dwm.configuration = {
+      generated.de = {
+        dwm.enable = true;
+        hyprland.enable = false;
+      };
+    };
+    hyprland.configuration = {
+      generated.de.hyprland.enable = true;
+    };
   };
 
   #networking.firewall.enable = false;
