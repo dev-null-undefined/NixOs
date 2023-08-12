@@ -122,9 +122,17 @@
     keyPath,
     configPath ? keyPath.parts,
   }: {config, ...}: {
-    config =
+    config = let
+      configFile = keyPath.path;
+      configContent = import configFile;
+      isFunction = lib.isFunction configContent;
+    in
       lib.mkIf (lib.attrsets.attrByPath (configPath ++ ["enable"]) false config)
-      ((import (keyPath.path)) outerArgs);
+      (
+        if isFunction
+        then configContent outerArgs
+        else configContent
+      );
   };
 
   enableOption = keyPath:

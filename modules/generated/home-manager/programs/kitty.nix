@@ -1,4 +1,4 @@
-{...}: {
+{
   programs.kitty = {
     enable = true;
     keybindings = {"ctrl+c" = "copy_or_interrupt";};
