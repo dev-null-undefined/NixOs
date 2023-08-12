@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  system.nixos.tags = ["dwm"];
   generated = {
     nvidia.nvidia-sync.enable = true;
     de = {

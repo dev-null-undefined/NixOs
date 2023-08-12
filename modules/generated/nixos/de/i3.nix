@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  system.nixos.tags = ["i3"];
   generated = {
     de.enable = true;
     nvidia.nvidia-sync.enable = true;

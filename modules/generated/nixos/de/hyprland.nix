@@ -1,6 +1,7 @@
 {pkgs, ...}: let
   hyprland-pkg = pkgs.hyprland-nvidia;
 in {
+  system.nixos.tags = ["hyprland"];
   generated = {
     de.enable = true;
     nvidia.nvidia-sync.enable = true;
