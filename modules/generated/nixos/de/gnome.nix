@@ -1,3 +1,8 @@
+{
+  pkgs,
+  lib,
+  ...
+}: {
   system.nixos.tags = ["gnome"];
   generated = {
     de.enable = true;
@@ -6,32 +11,20 @@
 
   hardware.pulseaudio.enable = false;
 
-  environment.systemPackages =
-    (with pkgs; [
-      gnome.gnome-tweaks
-
-      # A app-indicator for GNOME desktops wireless headsets
-      headset-charge-indicator
-
-      # Xorg like screen share
-      xdg-desktop-portal-gnome
-
-      # vitals extension dependencies
-      libgtop
-      lm_sensors
-    ])
-    ++ (with pkgs.gnomeExtensions; [
-      sound-output-device-chooser
-      vitals
-      dash-to-panel
-      removable-drive-menu
-      gsconnect
-      appindicator
-      unite
-      custom-hot-corners-extended
-      #animation-tweaks
-      #paperwm
-    ]);
+  networking.firewall = {
+    allowedTCPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+    allowedUDPPortRanges = [
+      {
+        from = 1714;
+        to = 1764;
+      } # KDE Connect
+    ];
+  };
 
   xdg.portal.wlr.enable = true;
 
@@ -49,5 +42,46 @@
 
     udev.packages = with pkgs; [gnome.gnome-settings-daemon];
     dbus.packages = with pkgs; [gnome2.GConf];
+  };
+  environment = {
+    systemPackages =
+      (with pkgs; [
+        gnome.gnome-tweaks
+
+        # A app-indicator for GNOME desktops wireless headsets
+        headset-charge-indicator
+
+        # Xorg like screen share
+        xdg-desktop-portal-gnome
+
+        # vitals extension dependencies
+        libgtop
+        lm_sensors
+
+        valent
+      ])
+      ++ (with pkgs.gnomeExtensions; [
+        sound-output-device-chooser
+        vitals
+        dash-to-panel
+        removable-drive-menu
+        gsconnect
+        appindicator
+        unite
+        custom-hot-corners-extended
+        valent # kde implementation for gnome
+        #animation-tweaks
+        #paperwm
+      ]);
+
+    sessionVariables = {
+      GST_PLUGIN_SYSTEM_PATH_1_0 = lib.makeSearchPathOutput "lib" "lib/gstreamer-1.0" (with pkgs.gst_all_1; [
+        gst-plugins-good
+        gst-plugins-bad
+        gst-plugins-ugly
+        gst-libav
+      ]);
+      QT_QPA_PLATFORM = "xcb";
+    };
   };
 }
