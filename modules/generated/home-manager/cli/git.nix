@@ -12,7 +12,7 @@
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-        editor = "${pkgs.neovim}/bin/nvim";
+        editor = "nvim";
         autocrlf = "input";
       };
       commit.verbose = true;
