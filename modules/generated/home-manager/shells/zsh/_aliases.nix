@@ -1,5 +1,5 @@
-{lib}: let
-  repeateString = lib.internal.repeateString;
+{lib'}: let
+  repeateString = lib'.internal.repeateString;
 in
   {
     gen-pass = "date +%s | sha256sum | base64 | head -c 32 ; echo";
@@ -43,4 +43,4 @@ in
       "${key}" = "cd " + repeateString "../" (value - 1);
     }
     // acc) {}
-  (lib.lists.range 2 10))
+  (lib'.lists.range 2 10))

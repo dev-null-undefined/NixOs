@@ -10,6 +10,13 @@
   ];
 in {
   programs.nix-ld.enable = true;
+
+  programs = {
+    nix-index.enable = true;
+    # Mutually exclusive with command-not-found
+    command-not-found.enable = false;
+  };
+
   environment.systemPackages = with pkgs;
     [
       # nix documentation
@@ -38,9 +45,6 @@ in {
       nix-diff
       # package version diff tool
       nvd
-
-      # Fast searching for lib or package
-      nix-index
 
       nix-direnv
 

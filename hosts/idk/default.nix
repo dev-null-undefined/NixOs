@@ -1,6 +1,7 @@
 # Help is available in the default.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  self,
   lib,
   inputs,
   ...
@@ -17,9 +18,9 @@
     de.hyprland.enable = lib.mkDefault true;
     services = {
       syncthing.enable = true;
-      mariadb.enable = true;
+      #mariadb.enable = true;
     };
-    packages.gui.virtual-box.enable = lib.mkForce false;
+    packages.gui.virtual-box.enable = false;
   };
 
   specialisation = {
@@ -38,7 +39,15 @@
     hyprland.configuration = {
       generated.de.hyprland.enable = true;
     };
+    sway.configuration = {
+      generated.de = {
+        sway.enable = true;
+        hyprland.enable = false;
+      };
+    };
   };
+
+  home-manager.users = self.lib.internal.homeUser "martin";
 
   #networking.firewall.enable = false;
 

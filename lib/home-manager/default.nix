@@ -6,9 +6,17 @@
   mkHomeModules = {
     username,
     hostname,
-  }:
+    ...
+  }: let
+    standAlonePath = ../../home + "/${username}/${hostname}.nix";
+  in
     [
-      (../../home + "/${username}/${hostname}.nix")
+      (
+        if builtins.pathExists standAlonePath
+        then standAlonePath
+        else {}
+      )
+      (../../home + "/${username}/default.nix")
       rec {
         home.stateVersion = "22.11";
         home.username = username;

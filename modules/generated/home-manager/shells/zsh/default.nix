@@ -1,10 +1,9 @@
 {
   pkgs,
-  self,
-  lib,
+  lib',
   ...
 }: {
-  generated.home.shells.enable = lib.mkDefault true;
+  generated.home.shells.enable = lib'.mkDefault true;
 
   home.packages = with pkgs; [
     nomos-rebuild
@@ -32,9 +31,9 @@
       setopt interactivecomments
     '';
 
-    initExtra = import ./_extra {inherit (self) lib;};
+    initExtra = import ./_extra {inherit lib';};
 
-    shellAliases = import ./_aliases.nix {inherit (self) lib;};
+    shellAliases = import ./_aliases.nix {inherit lib';};
 
     localVariables = {
       TERM = "xterm-256color";
@@ -79,12 +78,12 @@
       }
       {
         name = "powerlevel10k-config";
-        src = lib.cleanSource ./p10k-config;
+        src = lib'.cleanSource ./p10k-config;
         file = "p10k.zsh";
       }
       {
         name = "insulter";
-        src = lib.cleanSource ./insulter;
+        src = lib'.cleanSource ./insulter;
         file = "insulter.sh";
       }
     ];

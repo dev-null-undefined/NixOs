@@ -1,0 +1,5 @@
+{
+  generated.home = {
+    enable = true;
+  };
+}

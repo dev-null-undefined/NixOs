@@ -1,12 +1,4 @@
-{...}: {
-  generated.home = {
-    enable = true;
-    desktop.hyprland.enable = true;
-  };
-
-  # -----   ------
-  #| DP-4| |eDP-1 |
-  # -----   ------
+{
   monitors = [
     {
       name = "DP-4";

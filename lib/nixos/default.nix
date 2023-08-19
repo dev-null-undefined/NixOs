@@ -49,6 +49,16 @@
         })
         inputs.hyprland.nixosModules.default
 
+        # Home manager
+        inputs.home-manager.nixosModule
+        {
+          home-manager = {
+            useUserPackages = true;
+            useGlobalPkgs = true;
+            extraSpecialArgs = {inherit self inputs;};
+          };
+        }
+
         # Host config
         (../../hosts + "/${hostname}/hardware-configuration.nix")
         (../../hosts + "/${hostname}/hardware-partitions.nix")
@@ -56,5 +66,28 @@
       ]
       ++ modules
       ++ (builtins.attrValues self.nixosModules);
+  };
+
+  homeUser = username: {
+    ${username} = {nixosConfig, ...}: let
+      nixosSpecific = ../../home/${username}/nixos.nix;
+      hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
+    in {
+      home.stateVersion = nixosConfig.system.stateVersion;
+      imports = [
+        ../../home/nixosDefaults.nix
+        ../../home/${username}/default.nix
+        (
+          if builtins.pathExists hostSpecific
+          then hostSpecific
+          else {}
+        )
+        (
+          if builtins.pathExists nixosSpecific
+          then nixosSpecific
+          else {}
+        )
+      ];
+    };
   };
 }

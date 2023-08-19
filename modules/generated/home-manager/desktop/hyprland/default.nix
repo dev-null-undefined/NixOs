@@ -62,6 +62,5 @@ in {
       });
 
     enableNvidiaPatches = true;
-    recommendedEnvironment = true;
   };
 }

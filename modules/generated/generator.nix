@@ -130,7 +130,7 @@
     isFunction = lib.isFunction configContent;
   in
     if isFunction
-    then configContent outerArgs
+    then configContent (outerArgs // {lib' = self.lib;})
     else configContent;
 
   generateConfig = {

@@ -271,6 +271,18 @@ else
     }
 fi
 
+if function_exists command_not_found_handle; then
+    if ! function_exists orig_command_not_found_handle; then
+        eval "orig_$(declare -f command_not_found_handle)"
+    fi
+else
+    orig_command_not_found_handle () {
+        printf "zsh: command not found: %s\n" "$1" >&2
+        return 127
+    }
+fi
+
+
 command_not_found_handler () {
     print_message
     orig_command_not_found_handler "$@"
