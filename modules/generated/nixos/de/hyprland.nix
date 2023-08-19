@@ -28,7 +28,7 @@ in {
     hyprland = {
       package = hyprland-pkg;
       enable = true;
-      nvidiaPatches.enable = true;
+      enableNvidiaPatches = true;
       xwayland = {
         enable = true;
       };

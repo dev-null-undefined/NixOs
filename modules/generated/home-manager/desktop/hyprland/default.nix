@@ -61,7 +61,7 @@ in {
         inherit lib pkgs;
       });
 
-    nvidiaPatches.enable = true;
+    enableNvidiaPatches = true;
     recommendedEnvironment = true;
   };
 }
