@@ -9,5 +9,6 @@
       hyprland.enable = lib.mkDefault nixosConfig.generated.de.hyprland.enable;
       sway.enable = lib.mkDefault nixosConfig.generated.de.sway.enable;
     };
+    programs.enable = lib.mkDefault nixosConfig.generated.de.enable;
   };
 }
