@@ -39,7 +39,6 @@ in {
 
     grimblast
     wofi
-    waybar-hyprland
     slurp
 
     swaylock-effects

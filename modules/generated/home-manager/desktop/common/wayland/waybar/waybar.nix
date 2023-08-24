@@ -1,4 +1,9 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   # Dependencies
   htop = "${pkgs.htop}/bin/htop";
   ikhal = "${pkgs.stable.khal}/bin/ikhal";
@@ -11,27 +16,32 @@
   calendar = terminal-spawn ikhal;
   systemMonitor = terminal-spawn htop;
   networkManager = terminal-spawn nm-tui;
+
+  isSway = config.generated.home.desktop.sway.enable;
+  isHyprland = config.generated.home.desktop.hyprland.enable;
 in {
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar-hyprland;
     settings = {
       primary = {
         layer = "top";
         margin = "3";
         position = "bottom";
         exclusive = true;
-        modules-left = [
-          "clock"
-          "cpu"
-          "memory"
-          "wlr/workspaces" # TODO: better way of switching between hyprland and sway
-          "sway/workspaces"
-        ];
-        modules-center = [
-          "hyprland/window"
-          "sway/window"
-        ];
+        modules-left =
+          [
+            "clock"
+            "cpu"
+            "memory"
+          ]
+          ++ (lib.lists.optionals isSway ["sway/workspaces"])
+          ++ (lib.lists.optionals isHyprland ["hyprland/workspaces"]);
+        modules-center =
+          [
+          ]
+          ++ (lib.lists.optionals isSway ["sway/window"])
+          ++ (lib.lists.optionals isHyprland ["hyprland/window"]);
+
         modules-right = [
           "tray"
           "battery"
@@ -57,7 +67,7 @@ in {
             "martin@idk:(.*)" = " [$1]";
           };
         };
-        "wlr/workspaces" = {
+        "hyprland/workspaces" = {
           format = "{name} {icon}";
           on-click = "activate";
           format-icons = {
@@ -66,6 +76,14 @@ in {
             "default" = "";
           };
           sort-by-number = true;
+        };
+        "hyprland/window" = {
+          format = "{title}";
+          rewrite = {
+            "(.*) \\S+ Mozilla Firefox" = "🌎 $1";
+            "n?vim (.*)" = " $1";
+          };
+          separate-outputs = true;
         };
         clock = {
           format = "{: %R   %d/%m}";

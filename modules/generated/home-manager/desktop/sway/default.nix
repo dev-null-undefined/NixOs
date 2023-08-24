@@ -46,7 +46,6 @@ in {
 
     grimblast
     fuzzel
-    waybar-hyprland
 
     swaylock-effects
 
