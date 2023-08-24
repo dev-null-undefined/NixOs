@@ -2,7 +2,7 @@
   inputs,
   self,
 }:
-with self.lib.internal; {
+with self.lib'.internal; {
   stable = mkOverlay {
     name = "stable";
   };

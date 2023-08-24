@@ -58,10 +58,10 @@
       )
       hostConfigs;
 
-    lib = import ./lib {inherit inputs self;};
+    lib' = import ./lib {inherit inputs self;};
   in
     {
-      inherit lib;
+      inherit lib';
       nixosModules = import ./modules/nixos;
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
@@ -70,8 +70,8 @@
         builtins.foldl' (
           acc: config:
             {
-              "${config.hostname}" = nixpkgs.lib.nixosSystem (lib.internal.mkHost config);
-              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib.internal.mkHost (config
+              "${config.hostname}" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
+              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost (config
                 // {
                   modules =
                     (config.modules or [])
@@ -89,14 +89,14 @@
             {
               "${config.username}@${config.hostname}" =
                 home-manager.lib.homeManagerConfiguration
-                (lib.internal.mkHome config);
+                (lib'.internal.mkHome config);
             }
             // acc
         ) {}
         homeConfigs;
     }
     // (flake-utils.lib.eachDefaultSystem (system: {
-      packages = lib.internal.mkPkgsWithOverlays system;
+      packages = lib'.internal.mkPkgsWithOverlays system;
       formatter = nixpkgs.legacyPackages.${system}.alejandra;
     }))
     // {

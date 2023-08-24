@@ -8,9 +8,10 @@
 }: {
   self,
   pkgs,
+  lib,
   ...
 } @ outerArgs: let
-  lib = self.lib;
+  lib' = self.lib';
 
   filtered = [moduleSettings];
 
@@ -109,7 +110,7 @@
         let
           enabled = lib.attrsets.filterAttrsRecursive (n: _v: n != "enable") (generateFolderEnableAttrs keyPath.path);
         in
-          lib.strings.concatMapStrings (option: " - " + option + "\n") (lib.internal.getAttrsPaths enabled)
+          lib.strings.concatMapStrings (option: " - " + option + "\n") (lib'.internal.getAttrsPaths enabled)
       }";
     };
   };
@@ -130,7 +131,7 @@
     isFunction = lib.isFunction configContent;
   in
     if isFunction
-    then configContent (outerArgs // {lib' = self.lib;})
+    then configContent (outerArgs // {inherit lib';})
     else configContent;
 
   generateConfig = {

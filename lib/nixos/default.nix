@@ -9,7 +9,7 @@
     modules ? [],
   }: {
     inherit system;
-    pkgs = self.lib.internal.mkPkgsWithOverlays system;
+    pkgs = self.lib'.internal.mkPkgsWithOverlays system;
     specialArgs = {inherit inputs self;};
     modules =
       [
@@ -68,7 +68,7 @@
       ++ (builtins.attrValues self.nixosModules);
   };
 
-  homeUser = username: {
+  mkHomeNixOsUser = username: {
     ${username} = {nixosConfig, ...}: let
       nixosSpecific = ../../home/${username}/nixos.nix;
       hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
