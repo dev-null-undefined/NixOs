@@ -12,6 +12,8 @@ in {
     qt6.qtwayland
     libsForQt5.qt5.qtwayland
     libsForQt5.polkit-kde-agent
+
+    wl-clipboard
   ];
 
   services = {
