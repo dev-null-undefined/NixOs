@@ -11,5 +11,7 @@
     (master.armcord.override {
       nss = nss_latest;
     })
+
+    discordchatexporter-cli
   ];
 }
