@@ -38,7 +38,7 @@
             registry =
               inputs.nixpkgs.lib.mapAttrs (_: value: {flake = value;}) inputs;
             # Make use of latest `nix` to allow usage of `nix flake`s.
-            package = pkgs.nix;
+            # package = pkgs.nix;
           };
           nixpkgs = {
             config.allowUnfree = true;
