@@ -8,6 +8,7 @@ with pkgs.jetbrains; let
     clion
     rider
     datagrip
+    rust-rover
   ];
   plugins' = [
     "github-copilot"

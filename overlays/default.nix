@@ -15,4 +15,6 @@ with self.lib'.internal; {
   custom-packages = import ../pkgs;
   hyprland = inputs.hyprland.overlays.default;
   hyprland-contrib = inputs.hyprland-contrib.overlays.default;
+
+  rust-overlay = inputs.rust-overlay.overlays.default;
 }

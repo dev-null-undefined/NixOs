@@ -28,6 +28,8 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
     hyprland-contrib.url = "github:hyprwm/contrib";
+
+    rust-overlay.url = "github:oxalica/rust-overlay";
   };
 
   outputs = {
