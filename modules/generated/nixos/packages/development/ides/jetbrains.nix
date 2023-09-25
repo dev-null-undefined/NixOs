@@ -1,5 +1,5 @@
 {pkgs, ...}:
-with pkgs.jetbrains; let
+with pkgs.master.jetbrains; let
   ides' = [
     idea-ultimate
     phpstorm
