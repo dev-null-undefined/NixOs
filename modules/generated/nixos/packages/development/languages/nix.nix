@@ -29,7 +29,7 @@ in {
       nurl
 
       # Automated PR testing and building
-      nix-review
+      nixpkgs-review
 
       # Linter
       statix
