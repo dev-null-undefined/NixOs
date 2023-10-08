@@ -289,6 +289,5 @@ command_not_found_handler () {
 }
 
 command_not_found_handle () {
-    print_message
     orig_command_not_found_handle "$@"
 }
