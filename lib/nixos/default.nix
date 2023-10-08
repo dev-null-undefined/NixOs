@@ -56,6 +56,9 @@
             useUserPackages = true;
             useGlobalPkgs = true;
             extraSpecialArgs = {inherit self inputs;};
+            sharedModules = [
+              ../../home/nixosDefaults.nix
+            ];
           };
         }
 
@@ -75,7 +78,6 @@
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
       imports = [
-        ../../home/nixosDefaults.nix
         ../../home/${username}/default.nix
         (
           if builtins.pathExists hostSpecific
