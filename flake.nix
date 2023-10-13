@@ -47,6 +47,10 @@
         hostname = "oracle-server";
         system = "aarch64-linux";
       }
+      {
+        hostname = "brnikov";
+        system = "aarch64-linux";
+      }
       {hostname = "homie";}
     ];
 
