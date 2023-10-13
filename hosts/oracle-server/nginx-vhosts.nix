@@ -44,5 +44,15 @@ in {
         proxyWebsockets = true;
       };
     };
+    "brnikov.${config.domain}" = {
+      enableACME = true;
+      forceSSL = true;
+      http3 = true;
+      locations."/" = {
+        proxyPass = "http://10.100.0.2:8123";
+        proxyWebsockets = true;
+      };
+    };
+
   };
 }
