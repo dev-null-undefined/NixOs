@@ -16,6 +16,7 @@
         autocrlf = "input";
       };
       commit.verbose = true;
+      safe.directory = "/etc/nixos";
     };
     lfs = {enable = true;};
     ignores = [".direnv" "result*" ".ccls-cache" "a.out"];
