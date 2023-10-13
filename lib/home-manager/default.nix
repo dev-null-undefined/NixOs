@@ -17,7 +17,7 @@
         else {}
       )
       (../../home + "/${username}/default.nix")
-      rec {
+      ({pkgs, ...}: rec {
         home.stateVersion = "22.11";
         home.username = username;
 
@@ -26,7 +26,14 @@
 
         imports = [inputs.hyprland.homeManagerModules.default];
         home.homeDirectory = "/home/${home.username}";
-      }
+
+        nix = {
+          package = pkgs.nixFlakes;
+          extraOptions = ''
+            experimental-features = nix-command flakes
+          '';
+        };
+      })
     ]
     ++ (builtins.attrValues self.home-managerModules);
 
