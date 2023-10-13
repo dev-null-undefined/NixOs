@@ -16,6 +16,8 @@ with lib; {
     cpplint
     nil
     vscode-langservers-extracted
+    deadnix
+    statix
   ];
 
   programs.zsh = {
