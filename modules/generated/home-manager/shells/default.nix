@@ -6,6 +6,10 @@
     options = ["enhanced" "once" "fzf"];
   };
 
+  programs.navi.enable = true;
+
+  programs.lsd.enable = true;
+
   programs.broot = {
     enable = true;
   };

@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     nomos-rebuild
+    nix-output-monitor
   ];
 
   programs.zsh = {
