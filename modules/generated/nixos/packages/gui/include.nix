@@ -14,7 +14,7 @@
 
     thunderbird
 
-    teams
+    # teams unmaintained
 
     anki # anky
 

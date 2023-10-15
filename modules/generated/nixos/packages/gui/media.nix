@@ -11,7 +11,6 @@
     pavucontrol
 
     # Editing
-    shotcut
 
     ardour
     audacity
