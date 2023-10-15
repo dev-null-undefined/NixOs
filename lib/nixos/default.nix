@@ -40,10 +40,8 @@
             # Make use of latest `nix` to allow usage of `nix flake`s.
             # package = pkgs.nix;
           };
-          nixpkgs = {
-            config.allowUnfree = true;
-            hostPlatform = lib.mkDefault system;
-          };
+
+          nixpkgs.hostPlatform = lib.mkDefault system;
 
           generated.enable = lib.mkDefault true;
         })
