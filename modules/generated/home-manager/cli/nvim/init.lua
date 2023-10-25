@@ -106,7 +106,7 @@ local lspconfig = require("lspconfig")
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities = vim.lsp.protocol.make_client_capabilities()
-local servers = { "rust_analyzer", "lua_ls", "nixd", "nil_ls", "clangd", "jsonls" }
+local servers = { "rust_analyzer", "lua_ls", "nixd", "nil_ls", "clangd", "jsonls", "html" }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
