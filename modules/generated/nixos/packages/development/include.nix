@@ -27,6 +27,8 @@
     file
     fd
 
+    graphviz # generating graphs dot
+
     # Hacking tools
     aircrack-ng
     hashcat
