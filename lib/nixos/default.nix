@@ -2,7 +2,12 @@
   self,
   inputs,
   ...
-}: {
+}: let
+  ifExists = file:
+    if builtins.pathExists file
+    then file
+    else {};
+in {
   mkHost = {
     hostname,
     system ? "x86_64-linux",
@@ -61,9 +66,9 @@
         }
 
         # Host config
-        (../../hosts + "/${hostname}/hardware-configuration.nix")
-        (../../hosts + "/${hostname}/hardware-partitions.nix")
-        (../../hosts + "/${hostname}/default.nix")
+        (ifExists (../../hosts + "/${hostname}/hardware-configuration.nix"))
+        (ifExists (../../hosts + "/${hostname}/hardware-partitions.nix"))
+        (ifExists (../../hosts + "/${hostname}/default.nix"))
       ]
       ++ modules
       ++ (builtins.attrValues self.nixosModules);
@@ -75,10 +80,6 @@
       hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
       userSpecific = ../../home/${username}/default.nix;
       default = ../../home/default.nix;
-      ifExists = file:
-        if builtins.pathExists file
-        then file
-        else {};
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
       imports =
