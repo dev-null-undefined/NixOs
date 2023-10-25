@@ -8,6 +8,8 @@
 
     cores = 4;
 
+    graphics = false;
+
     forwardPorts = [
       {
         host.port = 9022;
