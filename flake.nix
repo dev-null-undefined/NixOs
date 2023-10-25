@@ -48,6 +48,10 @@
         system = "aarch64-linux";
       }
       {
+        hostname = "oracle-server-presentation";
+        system = "aarch64-linux";
+      }
+      {
         hostname = "brnikov";
         system = "aarch64-linux";
       }
