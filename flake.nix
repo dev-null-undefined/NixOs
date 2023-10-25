@@ -21,7 +21,7 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
     };
