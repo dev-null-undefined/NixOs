@@ -120,6 +120,10 @@ home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin";
 
 Contains the home-manager configuration.
 
+### `home/default.nix`
+
+Included every single time for every user (stand alone or as nixos module).
+
 ### `home/{username}/default.nix`
 
 Included every single time (stand alone or as nixos module).

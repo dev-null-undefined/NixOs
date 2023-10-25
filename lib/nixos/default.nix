@@ -73,20 +73,19 @@
     ${username} = {nixosConfig, ...}: let
       nixosSpecific = ../../home/${username}/nixos.nix;
       hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
+      userSpecific = ../../home/${username}/default.nix;
+      default = ../../home/default.nix;
+      ifExists = file:
+        if builtins.pathExists file
+        then file
+        else {};
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
       imports = [
-        ../../home/${username}/default.nix
-        (
-          if builtins.pathExists hostSpecific
-          then hostSpecific
-          else {}
-        )
-        (
-          if builtins.pathExists nixosSpecific
-          then nixosSpecific
-          else {}
-        )
+        (ifExists userSpecific)
+        (ifExists hostSpecific)
+        (ifExists nixosSpecific)
+	(default)
       ];
     };
   };
