@@ -82,7 +82,7 @@
                   modules =
                     (config.modules or [])
                     ++ [
-                      ./modules/isVM/implementation.nix
+                      ./modules/nixos/isVM/implementation.nix
                     ];
                 }));
             }
