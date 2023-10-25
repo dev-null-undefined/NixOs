@@ -15,5 +15,4 @@
       }
     ];
   };
-  users.users.martin.initialPassword = "1234";
 }
