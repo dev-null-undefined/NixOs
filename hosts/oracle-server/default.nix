@@ -23,7 +23,7 @@
 
   domain = "dev-null.me";
 
-  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin";
+  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

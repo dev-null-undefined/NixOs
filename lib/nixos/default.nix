@@ -69,7 +69,7 @@
       ++ (builtins.attrValues self.nixosModules);
   };
 
-  mkHomeNixOsUser = username: {
+  mkHomeNixOsUser = username: modules: {
     ${username} = {nixosConfig, ...}: let
       nixosSpecific = ../../home/${username}/nixos.nix;
       hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
@@ -81,12 +81,14 @@
         else {};
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
-      imports = [
-        (ifExists userSpecific)
-        (ifExists hostSpecific)
-        (ifExists nixosSpecific)
-	(default)
-      ];
+      imports =
+        [
+          (ifExists userSpecific)
+          (ifExists hostSpecific)
+          (ifExists nixosSpecific)
+          default
+        ]
+        ++ modules;
     };
   };
 }

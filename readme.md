@@ -99,6 +99,9 @@ Generates nixosConfigurations.${hostname} config, this will:
 
 <span id="mkHomeNixOsUser" ></span>
 `mkHomeNixOsUser`:
+Takes 2 arguments:
+- username
+- additional modules
 Generates a home-manager user when home-manager is used as a nixos module.
 This will:
 - Import the default home-manager modules [`modules/home-manager/default.nix`](#modules-home-manager).
@@ -107,7 +110,7 @@ This will:
 
 Usage example:
 ```nix
-home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin";
+home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];
 ```
 
 ### Home-manager:

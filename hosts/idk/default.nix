@@ -47,7 +47,7 @@
     #    };
   };
 
-  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin";
+  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];
 
   #networking.firewall.enable = false;
 
