@@ -21,7 +21,6 @@ in {
         ({
           config,
           lib,
-          pkgs,
           ...
         }: {
           inherit hostname;
@@ -41,9 +40,7 @@ in {
               lib.mapAttrsToList (k: v: "${k}=${v.to.path}")
               config.nix.registry;
             registry =
-              inputs.nixpkgs.lib.mapAttrs (_: value: {flake = value;}) inputs;
-            # Make use of latest `nix` to allow usage of `nix flake`s.
-            # package = pkgs.nix;
+              lib.mapAttrs (_: value: {flake = value;}) inputs;
           };
 
           nixpkgs.hostPlatform = lib.mkDefault system;
@@ -68,7 +65,7 @@ in {
         # Host config
         (ifExists (../../hosts + "/${hostname}/hardware-configuration.nix"))
         (ifExists (../../hosts + "/${hostname}/hardware-partitions.nix"))
-        (ifExists (../../hosts + "/${hostname}/default.nix"))
+        (../../hosts + "/${hostname}/default.nix")
       ]
       ++ modules
       ++ (builtins.attrValues self.nixosModules);
