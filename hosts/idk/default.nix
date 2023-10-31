@@ -1,7 +1,6 @@
 # Help is available in the default.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
-  self,
   lib,
   inputs,
   ...
@@ -47,9 +46,7 @@
     #    };
   };
 
-  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];
-
-  #networking.firewall.enable = false;
+  # networking.firewall.enable = false;
 
   documentation.man.generateCaches = false;
   #documentation.nixos.includeAllModules = false;

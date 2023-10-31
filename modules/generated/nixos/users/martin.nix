@@ -1,4 +1,5 @@
 {
+  self,
   pkgs,
   config,
   ...
@@ -25,6 +26,8 @@ in {
     shell = pkgs.zsh;
     useDefaultShell = false;
   };
+
+  home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];
 
   # No sudo password
   security.sudo.extraRules = [
