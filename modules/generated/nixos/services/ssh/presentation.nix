@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  users = builtins.map (x: "presentation-" + builtins.toString x) (lib.lists.range 0 20);
+  users = builtins.map (x: "presentation-" + builtins.toString x) (lib.lists.range 0 50);
   createUser = userName: {
     ${userName} = {
       isNormalUser = true;
@@ -17,8 +17,8 @@
   presentation = pkgs.fetchFromGitHub {
     owner = "nix-clan";
     repo = "intro-presentation";
-    rev = "6f547024dfa8fd1bc4d0596a3b7791cbadd5e431";
-    hash = "sha256-ZpfEWznmgz7F+dyG09oQGq2mwhUqTZgyRSFNBiHPzkw=";
+    rev = "fc87c8c1e99db4607df4b8a61e08d6557afa3b07";
+    hash = "sha256-gL3I50obx/6LnBc9oH6JZTKi51N3/KuAldDqoO5W3/0=";
   };
 
   createHome = user:
