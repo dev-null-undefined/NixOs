@@ -16,13 +16,13 @@
       nginx.enable = true;
       ssh.enable = true;
       syncthing.enable = true;
-      wireguard.enable = true;
     };
     users.lomohov.enable = true;
   };
 
   domain = "dev-null.me";
 
+  custom.wireguard.ips = ["10.100.0.1/24"];
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

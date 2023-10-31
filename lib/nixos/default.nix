@@ -67,6 +67,7 @@ in {
         (ifExists (../../hosts + "/${hostname}/hardware-partitions.nix"))
         (../../hosts + "/${hostname}/default.nix")
       ]
+      ++ (self.lib'.filesystem.listFilesRecursive ../../hosts/shared)
       ++ modules
       ++ (builtins.attrValues self.nixosModules);
   };

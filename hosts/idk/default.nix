@@ -22,6 +22,8 @@
     packages.gui.virtual-box.enable = false;
   };
 
+  custom.wireguard.ips = ["10.100.0.3/24"];
+
   specialisation = {
     #    gnome.configuration = {
     #      generated.de = {
