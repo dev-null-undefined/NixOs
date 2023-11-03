@@ -37,6 +37,6 @@
     feh
 
     # CAD editor
-    freecad
+    stable.freecad
   ];
 }
