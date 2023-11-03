@@ -1,5 +1,9 @@
 {pkgs, ...}: {
-  programs.wireshark.enable = true;
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
+
   environment.systemPackages = with pkgs; [
     gnome.gnome-nettool
 
