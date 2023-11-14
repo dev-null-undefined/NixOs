@@ -1,6 +1,5 @@
-{pkgs, ...}:
-with pkgs.master.jetbrains; let
-  ides' = [
+{pkgs, ...}: let
+  ides' = with pkgs.master.jetbrains; [
     idea-ultimate
     phpstorm
     pycharm-professional
@@ -13,8 +12,11 @@ with pkgs.master.jetbrains; let
   plugins' = [
     "github-copilot"
   ];
-  ides-with-plugins' = builtins.map (ide: plugins.addPlugins ide plugins') ides';
+  ides-with-plugins' = builtins.map (ide: pkgs.master.jetbrains.plugins.addPlugins ide plugins') ides';
 in {
   #environment.systemPackages = ides-with-plugins' ++ [jdk gateway];
-  environment.systemPackages = ides' ++ [jdk gateway];
+  environment.systemPackages =
+    ides'
+    ++ (with pkgs.master;
+        (with jetbrains; [jdk gateway]) ++ [android-studio]);
 }
