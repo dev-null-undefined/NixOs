@@ -2,6 +2,12 @@
 
 ## Installation
 
+You may need to enable flakes since they are still experimental
+```sh
+export NIX_CONFIG="experimental-features = nix-command flakes"
+```
+
+
 Clone the configuration into `/etc/nixos`.
 
 ```sh
