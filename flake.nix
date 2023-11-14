@@ -30,6 +30,8 @@
     hyprland-contrib.url = "github:hyprwm/contrib";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
+
+    nixos-wsl.url = "github:dev-null-undefined/NixOS-WSL/patch-1";
   };
 
   outputs = {
@@ -42,6 +44,9 @@
     hostConfigs = [
       {
         hostname = "idk";
+      }
+      {
+        hostname = "idk-wsl";
       }
       {
         hostname = "oracle-server";
