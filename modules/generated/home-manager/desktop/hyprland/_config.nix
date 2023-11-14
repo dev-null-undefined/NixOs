@@ -269,9 +269,21 @@
   windowrule = move 75 44%, title:^(Volume Control)$
 
   # Jetbrains products
+
+  # Attempt to make jetbrains work number 1
   # windowrulev2 = float,floating:0,class:^(jetbrains-.*),title:^(win.*)
-  windowrulev2 = float,class:^(jetbrains-.*),title:^(Welcome to.*)
-  windowrulev2 = center,class:^(jetbrains-.*)
+  #windowrulev2 = float,class:^(jetbrains-.*),title:^(Welcome to.*)
+  #windowrulev2 = center,class:^(jetbrains-.*)
   # windowrulev2 = forceinput,class:^(jetbrains-.*)
   # windowrulev2 = windowdance,class:^(jetbrains-.*) # allows IDE to move child windows
+
+  # Attempt to make jetbrains work number 2
+  windowrulev2=windowdance,class:^(jetbrains-.*)$
+  # search dialog
+  windowrulev2=dimaround,class:^(jetbrains-.*)$,floating:1,title:^(?!win)
+  windowrulev2=center,class:^(jetbrains-.*)$,floating:1,title:^(?!win)
+  # autocomplete & menus
+  windowrulev2=noanim,class:^(jetbrains-.*)$,title:^(win.*)$
+  windowrulev2=noinitialfocus,class:^(jetbrains-.*)$,title:^(win.*)$
+  windowrulev2=rounding 0,class:^(jetbrains-.*)$,title:^(win.*)$
 ''
