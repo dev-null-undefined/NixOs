@@ -16,4 +16,7 @@ in
     # Default promt settings if .p10k failes to load
     PROMPT='%F{green}%n%f@%F{magenta}%m%f %F{blue}%B%~%b%f %# '
     RPROMPT='[%F{yellow}%?%f]'
+
+    # https://github.com/eth-p/bat-extras/blob/master/doc/batpipe.md
+    eval `batpipe`
   ''

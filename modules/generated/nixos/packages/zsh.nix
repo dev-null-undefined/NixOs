@@ -10,9 +10,6 @@
     zsh-syntax-highlighting
     zsh-completions
 
-    # Cat with syntax highlight
-    bat
-
     # fuzzy finders
     fzf
     broot

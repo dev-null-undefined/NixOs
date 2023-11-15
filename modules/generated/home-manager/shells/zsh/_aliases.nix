@@ -35,6 +35,7 @@ in
     vim = "nvim";
 
     svim = "sudoedit";
+    man = "batman";
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
