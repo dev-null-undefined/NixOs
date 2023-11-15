@@ -6,6 +6,7 @@ in
   + (import ./nix-functions.nix aliases)
   + (import ./keybindings.nix)
   + (import ./edit-command-line.nix)
+  + (import ./fzf-settings.nix)
   + ''
     # Immediately report changes in background job status.
     setopt notify
