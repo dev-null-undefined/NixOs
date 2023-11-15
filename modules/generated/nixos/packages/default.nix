@@ -33,7 +33,6 @@
     lrzip
     unrar-wrapper
 
-    direnv
     ripgrep
     jq # json
     bc # calculator

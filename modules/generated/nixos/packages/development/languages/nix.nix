@@ -46,8 +46,6 @@ in {
       # package version diff tool
       nvd
 
-      nix-direnv
-
       # Build monitoring tool
       nix-output-monitor
 
