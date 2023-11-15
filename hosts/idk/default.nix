@@ -25,27 +25,12 @@
   custom.wireguard.ips = ["10.100.0.3/24"];
 
   specialisation = {
-    #    gnome.configuration = {
-    #      generated.de = {
-    #        gnome.enable = true;
-    #        hyprland.enable = false;
-    #      };
-    #    };
-    #    dwm.configuration = {
-    #      generated.de = {
-    #        dwm.enable = true;
-    #        hyprland.enable = false;
-    #      };
-    #    };
-    #    hyprland.configuration = {
-    #      generated.de.hyprland.enable = true;
-    #    };
-    #    sway.configuration = {
-    #      generated.de = {
-    #        sway.enable = true;
-    #        hyprland.enable = false;
-    #      };
-    #    };
+    gnome.configuration = {
+      generated.de = {
+        gnome.enable = true;
+        hyprland.enable = false;
+      };
+    };
   };
 
   # networking.firewall.enable = false;
