@@ -39,6 +39,9 @@ in
           overlays ? [],
         }: (_final: prev: {"${name}" = mkPkgs (import input) overlays prev.pkgs.system;});
 
+        groupIfExist = config: groups:
+          builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+
         mkPkgsWithOverlays = system:
           mkPkgs (import inputs.nixpkgs)
           (lib.attrsets.mapAttrsToList (_: value: value) self.overlays)
