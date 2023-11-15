@@ -16,12 +16,13 @@
         inherit system;
         overlays = [devshell.overlays.default];
       };
-      libs = with pkgs; [
+      libraries = with pkgs; [
         libjpeg_original
         ncurses
         libpng12
         zlib
       ];
+      compiler = pkgs.gcc;
       dev-deps = with pkgs; [glibc libcxx doxygen graphviz];
       package-config = rec {
         pname = "PROJECT-NAME";
@@ -34,7 +35,7 @@
           inherit (package-config) pname version src;
 
           nativeBuildInputs = with pkgs; [cmake];
-          buildInputs = libs;
+          buildInputs = libraries;
 
           cmakeFlags = [
             "-DENABLE_INSTALL=ON"
@@ -61,9 +62,8 @@
         packages = dev-deps;
 
         language.c = {
-          libraries = libs;
-          includes = libs;
-          compiler = pkgs.gcc;
+          inherit compiler libraries;
+          includes = libraries;
         };
         commands = [
           {
@@ -77,7 +77,6 @@
           }
         ];
         bash = {
-          interactive = "zsh";
           extra = ''
             export CPLUS_INCLUDE_PATH="$C_INCLUDE_PATH"
             export LIBRARY_PATH="$LD_LIBRARY_PATH"
@@ -88,5 +87,16 @@
       defaultPackage = self.packages.${system}.default;
 
       inherit packages;
+
+      formatter = pkgs.alejandra;
+
+      cmake-helper = rec {
+        libs = builtins.map builtins.toString (builtins.map pkgs.lib.getLib libraries);
+        includes = builtins.map builtins.toString (builtins.map pkgs.lib.getDev libraries);
+        cmake-file = pkgs.writeText "CMakeList.txt" (pkgs.lib.strings.concatLines (
+          (builtins.map (lib: ''target_link_directories(''${CMAKE_PROJECT_NAME} PUBLIC ${lib}/lib)'') libs)
+          ++ (builtins.map (include: ''include_directories(${include}/include)'') includes)
+        ));
+      };
     });
 }

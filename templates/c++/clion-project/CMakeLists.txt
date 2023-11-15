@@ -24,6 +24,19 @@ file(GLOB_RECURSE "${PROJECT_NAME}_SRC_FILES" CONFIGURE_DEPENDS
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SRC_FILES})
 
 ############################
+## Include and link deps  ##
+############################
+
+# If project has link and include dependecies and you want to be able to work on it on nixos
+# While having clion clangd support you may need to uncoment this
+#execute_process(COMMAND nix build .\#cmake-helper.x86_64-linux.cmake-file --no-link --print-out-paths
+#       OUTPUT_STRIP_TRAILING_WHITESPACE
+#       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+#       OUTPUT_VARIABLE cmake-flake-include)
+#
+#include(${cmake-flake-include})
+
+############################
 ##  Modules and scripts   ##
 ############################
 
