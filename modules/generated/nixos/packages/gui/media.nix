@@ -15,7 +15,7 @@
     ardour
     audacity
 
-    stable.blender
+    blender
     krita
     gimp-with-plugins
 
@@ -37,6 +37,6 @@
     feh
 
     # CAD editor
-    stable.freecad
+    freecad
   ];
 }
