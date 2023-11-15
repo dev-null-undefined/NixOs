@@ -3,9 +3,6 @@
     v4l-utils
     droidcam
 
-    # Recording and streaming
-    obs-studio
-
     # Audio control
     easyeffects
     pavucontrol
