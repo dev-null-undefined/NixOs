@@ -18,6 +18,7 @@
   exec-once = sleep 1 && syncthingtray
   exec-once = ${pkgs.libsForQt5.polkit-kde-agent.outPath}/libexec/polkit-kde-authentication-agent-1
   exec-once = ${pkgs.galaxy-buds-client.outPath}/bin/GalaxyBudsClient
+  exec-once = ${pkgs.xorg.xhost.outPath}/bin/xhost +
 
   # exec-once = swaylock --grace -1 # Enable this if you autostart hyprland without window manager
 
