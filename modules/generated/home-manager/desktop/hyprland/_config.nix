@@ -127,7 +127,8 @@
   bind = $mainMod, Return, exec, kitty
   bind = $mainMod,      M, exit,
   bind = $mainMod,      E, exec, nemo
-  bind = $mainMod,      C, exec, wofi --show drun
+  # bind = $mainMod,      C, exec, wofi --show drun
+  bind = $mainMod,      C, exec, fuzzel
   bind = CTRL SHIFT,    A, exec, copyq toggle
   bind = CTRL SHIFT,    N, exec, swaync-client -t -sw
 
