@@ -31,7 +31,7 @@
 
     rust-overlay.url = "github:oxalica/rust-overlay";
 
-    nixos-wsl.url = "github:dev-null-undefined/NixOS-WSL/patch-1";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
   };
 
   outputs = {
