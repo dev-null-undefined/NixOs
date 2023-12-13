@@ -6,7 +6,7 @@
   system.nixos.tags = ["gnome"];
   generated = {
     de.enable = true;
-    nvidia.nvidia-offload.enable = true;
+    nvidia.nvidia-offload.enable = lib.mkDefault true;
   };
 
   hardware.pulseaudio.enable = false;

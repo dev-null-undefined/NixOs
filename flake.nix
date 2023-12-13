@@ -42,23 +42,18 @@
     ...
   } @ inputs: let
     hostConfigs = [
-      {
-        hostname = "idk";
-      }
-      {
-        hostname = "idk-wsl";
-      }
+      {hostname = "idk";}
+      {hostname = "idk-wsl";}
       {
         hostname = "oracle-server";
         system = "aarch64-linux";
       }
-      {
-        hostname = "presentation";
-      }
+      {hostname = "presentation";}
       {
         hostname = "brnikov";
         system = "aarch64-linux";
       }
+      {hostname = "installer";}
       {hostname = "homie";}
     ];
 
