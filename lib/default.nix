@@ -10,9 +10,10 @@
       overlays = overlays;
       config.allowUnfree = true;
       #config.allowBroken = true;
-      #config.permittedInsecurePackages = [
-      #  "electron-21.4.0"
-      #];
+      config.permittedInsecurePackages = [
+        "electron-19.1.9"
+        "electron-25.9.0"
+      ];
     };
 in
   lib

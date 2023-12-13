@@ -26,10 +26,10 @@
               sha256 = "sha256-JbO9MZDnd4olODFwoWDHdxsJKIHOb1VhUpAk4g7I1y4=";
             }
             {
-              name = "vscode-code-review";
-              publisher = "d-koppenhagen";
-              version = "1.33.1";
-              sha256 = "sha256-PqFfNom0KaZPBdWTWqZDf4IzzMLG32N/MwbpmcZ7rkg=";
+              name = "systemverilog";
+              publisher = "eirikpre";
+              version = "0.13.4";
+              sha256 = "sha256-SaBhZv+9gox+lkXUTNWptrOZ74sc95S4AEgrICrSRG0=";
             }
             {
               name = "cpptools-extension-pack";

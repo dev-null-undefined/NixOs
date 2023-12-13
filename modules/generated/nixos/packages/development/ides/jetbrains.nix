@@ -18,5 +18,5 @@ in {
   environment.systemPackages =
     ides'
     ++ (with pkgs.master;
-        (with jetbrains; [jdk gateway]) ++ [android-studio]);
+        (with jetbrains; [pkgs.stable.jetbrains.jdk gateway]) ++ [android-studio]);
 }
