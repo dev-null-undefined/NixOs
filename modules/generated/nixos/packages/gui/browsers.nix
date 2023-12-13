@@ -7,5 +7,10 @@
     brave
     chromium
     google-chrome
+
+    midori
+    epiphany
+
+    tor-browser-bundle-bin
   ];
 }
