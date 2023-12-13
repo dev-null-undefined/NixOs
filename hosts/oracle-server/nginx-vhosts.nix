@@ -38,6 +38,11 @@
         proxyWebsockets = true;
       };
     };
+    "ny.${config.domain}" = {
+      extraConfig = ''
+        rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
+      '';
+    };
   };
   defaultOptions = {
     enableACME = true;
@@ -47,8 +52,30 @@
       access_log  /var/log/nginx/access.log  main;
     '';
   };
-  addDefaults = _: value:
-    value // defaultOptions;
+  mergeAttrs = a: b: let
+    type = builtins.typeOf a;
+  in
+    if type != builtins.typeOf b
+    then throw "Types do not match!"
+    else
+      (
+        if type == "string"
+        then a + b
+        else throw "I can not merge this type ${type}."
+      );
+
+  addDefaults = _: options: let
+    defaultAttrs = builtins.attrNames defaultOptions;
+    defaultMerged =
+      lib.attrsets.mapAttrs (
+        name: value:
+          if builtins.elem name defaultAttrs
+          then (mergeAttrs value defaultOptions.${name})
+          else value
+      )
+      options;
+  in
+    (builtins.removeAttrs options defaultAttrs) // (defaultOptions // defaultMerged);
 in {
   services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;
 }
