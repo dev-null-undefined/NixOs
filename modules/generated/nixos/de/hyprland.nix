@@ -30,9 +30,7 @@
 
   programs = {
     hyprland = {
-      package = hyprland-pkg;
       enable = true;
-      enableNvidiaPatches = true;
       xwayland = {
         enable = true;
       };
@@ -47,7 +45,7 @@
 
   services.xserver = {
     displayManager = {
-      sessionPackages = [hyprland-pkg];
+      sessionPackages = [pkgs.hyprland];
       gdm = {
         enable = true;
         wayland = true;

@@ -50,7 +50,6 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland-nvidia;
     extraConfig =
       (import ./_monitors.nix {
         inherit lib;
@@ -59,7 +58,5 @@ in {
       + (import ./_config.nix {
         inherit lib pkgs;
       });
-
-    enableNvidiaPatches = true;
   };
 }
