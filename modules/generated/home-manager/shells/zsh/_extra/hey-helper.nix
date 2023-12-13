@@ -28,9 +28,19 @@ in ''
     sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | fzf --tac
   }
 
+  hey-gen-id() {
+    hey-gen | cut -d " " -f2
+  }
+
+  hey-gen-path() {
+    echo /nix/var/nix/profiles/system-`hey-gen-id`-link
+  }
+
+  hey-nvd() {
+    nvd diff `hey-gen-path` `hey-gen-path`
+  }
+
   hey-diff() {
-    from=$(hey-gen | cut -d " " -f2)
-    to=$(hey-gen | cut -d " " -f2)
-    nix-diff /nix/var/nix/profiles/system-''${from}-link /nix/var/nix/profiles/system-''${to}-link "$@"
+    nix-diff `hey-gen-path` `hey-gen-path` "$@"
   }
 ''
