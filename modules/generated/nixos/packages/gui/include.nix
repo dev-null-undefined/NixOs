@@ -14,6 +14,8 @@
 
     thunderbird
 
+    etcher # ISO etcher
+
     # teams unmaintained
 
     anki # anky

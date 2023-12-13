@@ -27,8 +27,6 @@
     file
     fd
 
-    etcher # ISO etcher
-
     rng-tools # testing and generating random numbers
 
     graphviz # generating graphs dot
