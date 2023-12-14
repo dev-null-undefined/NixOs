@@ -4,9 +4,9 @@ let
   NIXOS_CONFIG_DIR = "/etc/nixos";
 in ''
   hey-repl() {
-    DIR=${NIXOS_CURRENT_CONFIG}
-    if [[ "$1" == *-cur* ]]; then
-      DIR=$(readlink ${NIXOS_CONFIG_DIR})
+    DIR=$(readlink -f ${NIXOS_CONFIG_DIR})
+    if [[ "$1" == *-git* ]]; then
+      DIR=${NIXOS_CURRENT_CONFIG}
       shift
     fi
     tmp="$(mktemp)"
