@@ -11,7 +11,5 @@
     cinnamon.nemo-python
     cinnamon.folder-color-switcher
     nemo-qml-plugin-dbus
-
-    dropbox
   ];
 }
