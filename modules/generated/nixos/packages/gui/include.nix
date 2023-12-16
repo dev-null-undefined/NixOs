@@ -3,9 +3,11 @@
   lib,
   ...
 }: {
-  generated.packages.development.ides.jetbrains.enable = lib.mkDefault true;
-  generated.packages.development.ides.vscode.enable = lib.mkDefault true;
-  generated.packages.development.ides.emacs.enable = lib.mkDefault true;
+  generated.packages.development.ides = {
+    jetbrains.enable = lib.mkDefault true;
+    vscode.enable = lib.mkDefault true;
+    emacs.enable = lib.mkDefault true;
+  };
 
   services.gnome.sushi.enable = true;
 
