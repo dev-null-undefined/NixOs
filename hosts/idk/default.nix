@@ -20,6 +20,7 @@
       #mariadb.enable = true;
     };
     packages.gui.virtual-box.enable = false;
+    packages.gui.browsers.all.enable = true;
   };
 
   custom.wireguard.ips = ["10.100.0.3/24"];
