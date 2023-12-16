@@ -41,31 +41,36 @@
     home-manager,
     ...
   } @ inputs: let
-    hostConfigs = [
-      {hostname = "idk";}
-      {hostname = "idk-wsl";}
-      {
-        hostname = "oracle-server";
-        system = "aarch64-linux";
-      }
-      {hostname = "presentation";}
-      {
-        hostname = "brnikov";
-        system = "aarch64-linux";
-      }
-      {hostname = "installer";}
-      {hostname = "homie";}
-    ];
+    autoDetectedHosts =
+      builtins.listToAttrs
+      (builtins.map (hostname: {
+          name = hostname;
+          value = {};
+        })
+        (builtins.attrNames (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
+            (builtins.readDir ./hosts))));
 
-    homeConfigs =
-      builtins.map (
-        config:
-          config
-          // {
-            username = "martin";
-          }
-      )
-      hostConfigs;
+    autoDetectedUsers =
+      builtins.attrNames (lib'.attrsets.filterAttrs (_: v: v == "directory")
+        (builtins.readDir ./home));
+
+    hostConfigs =
+      autoDetectedHosts
+      // {
+        "oracle-server" = {
+          system = "aarch64-linux";
+        };
+        "brnikov" = {
+          system = "aarch64-linux";
+        };
+      };
+
+    homeConfigs = (f: f 1) (builtins.foldl' (ac: cur:
+      ac
+      ++ (builtins.map (
+          username: {hostname = cur.name;} // cur.value // {inherit username;}
+        )
+        autoDetectedUsers)) [] (lib'.attrsets.attrsToList hostConfigs));
 
     lib' = import ./lib {inherit inputs self;};
   in
@@ -75,23 +80,23 @@
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
 
-      nixosConfigurations =
-        builtins.foldl' (
-          acc: config:
-            {
-              "${config.hostname}" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
-              "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost (config
-                // {
-                  modules =
-                    (config.modules or [])
-                    ++ [
-                      ./modules/nixos/isVM/implementation.nix
-                    ];
-                }));
-            }
-            // acc
-        ) {}
-        hostConfigs;
+      nixosConfigurations = builtins.foldl' (
+        acc: record: let
+          config = {hostname = record.name;} // record.value;
+        in
+          {
+            "${config.hostname}" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
+            "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost (config
+              // {
+                modules =
+                  (config.modules or [])
+                  ++ [
+                    ./modules/nixos/isVM/implementation.nix
+                  ];
+              }));
+          }
+          // acc
+      ) {} (lib'.attrsets.attrsToList hostConfigs);
       homeConfigurations =
         builtins.foldl' (
           acc: config:
