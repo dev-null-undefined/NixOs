@@ -1,4 +1,3 @@
-# and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   lib,
   inputs,
@@ -9,10 +8,10 @@
     ./gpg-guide.nix
   ];
 
-  generated = {
-    secure.enable = true;
-    airgapped.enable = true;
+  # speed up image creation time by using lower compression level
+  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 
+  generated = {
     services.ssh.enable = true;
 
     packages = {
@@ -27,9 +26,13 @@
       };
     };
 
-    de.gnome.enable = lib.mkDefault true;
-    nvidia.nvidia-sync.enable = false;
-    nvidia.nvidia-offload.enable = false;
+    de.hyprland.enable = lib.mkDefault true;
+    nvidia = {
+      nvidia-default.enable = true;
+
+      nvidia-sync.enable = false;
+      nvidia-offload.enable = false;
+    };
   };
 
   documentation.man.generateCaches = false;
