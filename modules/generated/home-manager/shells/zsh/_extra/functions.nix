@@ -1,6 +1,6 @@
 ''
   btrfs-tree() {
-      sudo btrfs subvol list / | cut -f9 -d' ' | sed -e 's/^/ROOT\//' | ~/scripts/paths2indent | ~/scripts/indent2tree
+      sudo btrfs subvol list / | cut -f9 -d' ' | sed -e 's/^/ROOT\//' | ~/user-tools/paths2indent | ~/user-tools/indent2tree
   }
 
   nvidia-offload() {

@@ -3,8 +3,6 @@
   lib',
   ...
 }: {
-  generated.home.shells.enable = lib'.mkDefault true;
-
   home.packages = with pkgs; [
     nomos-rebuild
     nix-output-monitor
