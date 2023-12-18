@@ -11,6 +11,11 @@
       encryptedPass = ./. + "/pass-phrase.gpg";
       publicKey = ./. + "/public-yubikey.asc";
     };
+    devices.home.gpgCard = {
+      gracePeriod = 5;
+      encryptedPass = ./. + "/pass-phrase.gpg";
+      publicKey = ./. + "/public-yubikey.asc";
+    };
   };
 
   environment.systemPackages = with pkgs; [
