@@ -65,12 +65,12 @@
         };
       };
 
-    homeConfigs = (f: f 1) (builtins.foldl' (ac: cur:
+    homeConfigs = builtins.foldl' (ac: cur:
       ac
       ++ (builtins.map (
           username: {hostname = cur.name;} // cur.value // {inherit username;}
         )
-        autoDetectedUsers)) [] (lib'.attrsets.attrsToList hostConfigs));
+        autoDetectedUsers)) [] (lib'.attrsets.attrsToList hostConfigs);
 
     lib' = import ./lib {inherit inputs self;};
   in
