@@ -83,7 +83,7 @@ The `default.nix` will also be included when using home-manager as nixos module.
 
 ### `modules/generated/`
 
-Contains the MODULE GENERATOR, the heart of this config. This is where all the magic happens. That's why it has it's own [readme](modules/generated/readme.md).
+Contains the MODULE GENERATOR, **the heart of this config**. This is where all the magic happens. That's why it has it's own [readme](modules/generated/readme.md).
 
 ## `lib/`
 
