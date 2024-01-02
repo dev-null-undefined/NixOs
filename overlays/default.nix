@@ -13,6 +13,7 @@ with self.lib'.internal; {
     name = "master";
   };
   custom-packages = import ../pkgs;
+  wep_wpa_supplicant_fix = import ./wep_wpa_supplicant_fix.nix;
   hyprland = inputs.hyprland.overlays.default;
   hyprland-contrib = inputs.hyprland-contrib.overlays.default;
 
