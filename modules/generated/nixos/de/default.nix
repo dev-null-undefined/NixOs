@@ -59,12 +59,18 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryFlavor = "gtk2";
+      pinentryFlavor = "gnome3";
     };
   };
+  # To fix gnome3 pintentry on non gnome systems
+  services.dbus.packages = [pkgs.gcr];
 
   xdg = {
-    portal.enable = true;
+    portal = {
+      enable = true;
+      config.common.default = "*";
+    };
+
     mime = {
       enable = true;
       defaultApplications = {
