@@ -17,6 +17,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fsanitize=undefined 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fstack-clash-protection -fstack-protector-all")
 
 project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES CXX)
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
+set_target_properties(${PROJECT_NAME} PROPERTIES SOVERSION ${PROJECT_VERSION_MAJOR})
 file(GLOB_RECURSE "${PROJECT_NAME}_SRC_FILES" CONFIGURE_DEPENDS
         "src/*.h"
         "src/*.cpp")
