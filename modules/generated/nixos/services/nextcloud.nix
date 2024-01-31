@@ -23,7 +23,6 @@ in {
       maxUploadSize = "32G";
       config = {
         dbtype = "mysql";
-        dbport = 3306;
         dbpassFile = "/var/nextcloud-db-pass";
         adminpassFile = "/var/nextcloud-admin-pass";
         extraTrustedDomains = [service.hostName];
