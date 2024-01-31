@@ -10,6 +10,12 @@
     rev = "2b36d720ea0bb944ddb8352cc1c1b125a399bcc0";
     sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
+  catImages = pkgs.fetchFromGitHub {
+    owner = "isbendiyarovanezrin";
+    repo = "Perla";
+    rev = "94d69f20b3f84544e5910cda919ab4692fec89b1";
+    hash = "sha256-P71AfuAOMx6d6ue6+ZuZDZiFaooUxcugtI4lYfGSvQg=";
+  };
   hosts = {
     "${config.domain}" = {
       root = visualSorting;
@@ -42,6 +48,9 @@
       extraConfig = ''
         rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
       '';
+    };
+    "kufinka.lol" = {
+      root = catImages;
     };
   };
   defaultOptions = {
