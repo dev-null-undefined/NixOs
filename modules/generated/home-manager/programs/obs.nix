@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   programs.obs-studio = {
     enable = true;
-    plugins = with pkgs.obs-studio-plugins; [
+    plugins = with pkgs.stable.obs-studio-plugins; [
       wlrobs
       obs-3d-effect
       droidcam-obs

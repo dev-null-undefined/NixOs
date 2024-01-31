@@ -9,7 +9,7 @@
     tcpdump # packet analyzer
     netdiscover # quick LAN scanner
     traceroute
-    mitmproxy # https proxy
+    stable.mitmproxy # https proxy
     whois # domain lookup
     dnsutils # dig, nslookup, etc.
     dogdns
@@ -35,5 +35,7 @@
     aircrack-ng
     hashcat
     john
+
+    rpi-imager # Raspberry pi imaging utility
   ];
 }
