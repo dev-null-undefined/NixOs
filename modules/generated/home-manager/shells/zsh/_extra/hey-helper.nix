@@ -43,4 +43,9 @@ in ''
   hey-diff() {
     nix-diff `hey-gen-path` `hey-gen-path` "$@"
   }
+
+  hey-port() {
+    echo "Use nixos-firewall-tool lol"
+  }
+
 ''
