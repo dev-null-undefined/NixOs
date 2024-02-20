@@ -36,6 +36,8 @@ in
 
     svim = "sudoedit";
     man = "batman";
+
+    cd = "z";
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
