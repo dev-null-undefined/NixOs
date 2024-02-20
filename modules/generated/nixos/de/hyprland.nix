@@ -53,6 +53,11 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
+
   environment.sessionVariables = {
     "MOZ_ENABLE_WAYLAND" = "1";
     "_JAVA_AWT_WM_NONREPARENTING" = "1";
