@@ -37,7 +37,7 @@
     jq # json
     bc # calculator
     mat2 # meta data stripper
-    onionshare
+    # onionshare
 
     usbutils
 
