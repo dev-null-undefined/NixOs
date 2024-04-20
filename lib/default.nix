@@ -9,6 +9,8 @@
       inherit system;
       overlays = overlays;
       config.allowUnfree = true;
+      config.nvidia.acceptLicense = true;
+
       #config.allowBroken = true;
       config.permittedInsecurePackages = [
         "electron-19.1.9"

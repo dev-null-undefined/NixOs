@@ -58,7 +58,7 @@
         libgtop
         lm_sensors
 
-        valent
+        #valent
       ])
       ++ (with pkgs.gnomeExtensions; [
         sound-output-device-chooser

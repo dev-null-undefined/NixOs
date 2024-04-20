@@ -16,7 +16,7 @@
 
     thunderbird
 
-    etcher # ISO etcher
+    # etcher # ISO etcher
 
     # teams unmaintained
 

@@ -214,31 +214,31 @@ in {
       options = {
         ip = lib.mkOption {
           type = lib.types.str;
-          description = lib.mdDoc "The IP address of the wireguard interface.";
+          description = "The IP address of the wireguard interface.";
         };
         interfaceName = lib.mkOption {
           default = "wg0"; # TODO generate interface name based on all the unique networks
           type = lib.types.str;
-          description = lib.mdDoc "Interface name";
+          description = "Interface name";
         };
         forwardAll = lib.mkOption {
           default = false;
           type = lib.types.bool;
-          description = lib.mdDoc "Forward all trafic through the server must be set on the server and the client as well!!.";
+          description = "Forward all trafic through the server must be set on the server and the client as well!!.";
         };
         isServer = lib.mkOption {
           default = false;
           type = lib.types.bool;
-          description = lib.mdDoc "Is server."; # TODO better docs
+          description = "Is server."; # TODO better docs
         };
         endpoint = lib.mkOption {
           default = null;
           type = lib.types.nullOr lib.types.str;
-          description = lib.mdDoc "Public IP for servers only.";
+          description = "Public IP for servers only.";
         };
         publicKey = lib.mkOption {
           type = lib.types.singleLineStr;
-          description = lib.mdDoc "Public key of the peer";
+          description = "Public key of the peer";
         };
         name = lib.mkOption {
           default =
@@ -248,7 +248,7 @@ in {
             self.config.publicKey;
           defaultText = lib.options.literalExpression "publicKey";
           type = lib.types.str;
-          description = lib.mdDoc "Optional name of the peer used for unit name";
+          description = "Optional name of the peer used for unit name";
         };
       };
     };
@@ -256,7 +256,7 @@ in {
     allConfigs = lib.mkOption {
       default = [];
       type = with lib.types; listOf (submodule configOptions);
-      description = lib.mdDoc ''
+      description = ''
         List of all configs across all the host.
         Should be defined in the special folder hosts/shared,
         as it is used to chose which peer to allow.
@@ -265,7 +265,7 @@ in {
     ips = lib.mkOption {
       default = [];
       type = lib.types.listOf lib.types.str;
-      description = lib.mdDoc ''
+      description = ''
         List of IPs that should be enabled on this device
         Each IP must have matching config in the configs option with all details specified.
         This will also automatically connect to all the peers and servers that are in the same subnet.

@@ -9,9 +9,7 @@
     path =
       (lib.makeBinPath [
         nix-output-monitor
-      ])
-      + ":"
-      + prev.path;
+      ]);
   });
 in
   stdenvNoCC.mkDerivation {
