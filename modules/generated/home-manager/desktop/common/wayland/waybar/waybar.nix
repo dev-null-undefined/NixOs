@@ -103,7 +103,7 @@ in {
           on-click = systemMonitor;
         };
         battery = {
-          bat = "BAT1";
+          bat = "BAT0";
           interval = 10;
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{icon} {capacity}%";
