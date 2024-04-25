@@ -23,7 +23,7 @@
     delta = {enable = true;};
     signing = {
       signByDefault = true;
-      key = "47230B659BA8E169";
+      key = "CCE15DDC";
     };
   };
 }
