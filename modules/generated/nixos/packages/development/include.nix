@@ -22,7 +22,6 @@
     gh
     lazygit # tui git client
 
-    gnupg
     lsof
     file
     fd
