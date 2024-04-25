@@ -29,7 +29,7 @@ in ''
   }
 
   hey-gen-id() {
-    hey-gen | cut -d " " -f2
+    hey-gen | cut -d " " -f3
   }
 
   hey-gen-path() {
