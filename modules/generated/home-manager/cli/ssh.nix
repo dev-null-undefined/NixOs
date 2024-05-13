@@ -13,6 +13,9 @@
       "brnikov" = {
         hostname = "10.100.0.2";
         user = "martin";
+        extraOptions = {
+          "ProxyJump" = "oracle";
+        };
       };
       "NAT" = {
         hostname = "192.168.0.1";
