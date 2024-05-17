@@ -24,11 +24,12 @@
         editor = "nvim";
         autocrlf = "input";
       };
+      push = {autoSetupRemote = true;};
       commit.verbose = true;
       safe.directory = "/etc/nixos";
     };
     lfs = {enable = true;};
-    ignores = [".direnv" "result*" ".ccls-cache" "a.out"];
+    ignores = [".direnv" "result*" ".ccls-cache" "a.out" ".idea"];
     delta = {enable = true;};
     signing = {
       signByDefault = true;
