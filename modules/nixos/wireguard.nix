@@ -34,6 +34,13 @@
     then 1
     else throw "undefined";
 
+  addPortIfMissing = str: defaultPort: let
+    splited = builtins.split ":" str;
+  in
+    if builtins.length splited == 1
+    then str + ":" + defaultPort
+    else str;
+
   # TODO test
   parseIp = ip: let
     splitRemoveEmpty = delim: string: builtins.filter builtins.isString (builtins.split delim string);
@@ -120,7 +127,7 @@
       }
       // (
         lib.attrsets.optionalAttrs peer.isServer {
-          endpoint = "${peer.endpoint}:51820";
+          endpoint = addPortIfMissing peer.endpoint "51820";
         }
       ))
     peersConfs;
@@ -128,8 +135,7 @@ in {
   config = lib.mkIf isEnabled {
     networking = {
       firewall = {
-        # Clients and peers can use the same port, see listenport
-        allowedUDPPorts = [51820];
+        allowedUDPPorts = builtins.map (interfaceConfig: interfaceConfig.listenPort) hostConfigs;
       };
       nat = lib.attrsets.optionalAttrs isServer serverConfig;
 
@@ -142,8 +148,7 @@ in {
             {
               ips = [interfaceConfig.ip];
 
-              # to match firewall allowedUDPPorts (without this wg uses random port numbers)
-              listenPort = 51820;
+              inherit (interfaceConfig) listenPort fwMark;
 
               privateKeyFile = "/wireguard-keys/private-${interfaceConfig.interfaceName}";
               generatePrivateKeyFile = true;
@@ -249,6 +254,28 @@ in {
           defaultText = lib.options.literalExpression "publicKey";
           type = lib.types.str;
           description = "Optional name of the peer used for unit name";
+        };
+        listenPort = lib.mkOption {
+          default = 51820;
+          type = with lib.types; nullOr int;
+          example = 51820;
+          description = lib.mdDoc ''
+            16-bit port for listening. Optional; if not specified,
+            automatically generated based on interface name.
+          '';
+        };
+        fwMark = lib.mkOption {
+          default = null;
+          type = with lib.types; nullOr str;
+          example = "0x6e6978";
+          description = lib.mdDoc ''
+            Mark all wireguard packets originating from
+            this interface with the given firewall mark. The firewall mark can be
+            used in firewalls or policy routing to filter the wireguard packets.
+            This can be useful for setup where all traffic goes through the
+            wireguard tunnel, because the wireguard packets need to be routed
+            differently.
+          '';
         };
       };
     };
