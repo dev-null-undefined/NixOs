@@ -4,18 +4,17 @@
   hardware = {
     opengl = {
       enable = true;
-      extraPackages = [pkgs.vaapiIntel];
+      extraPackages = with pkgs; [vaapiIntel nvidia-vaapi-driver];
       driSupport = true;
       driSupport32Bit = true;
     };
     nvidia = {
       nvidiaSettings = true;
-      modesetting.enable = true;
     };
   };
 
   services.xserver = {
-    videoDrivers = ["nvidia"];
+    videoDrivers = ["nvidia" "intel"];
     dpi = 96;
   };
 }
