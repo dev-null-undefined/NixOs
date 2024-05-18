@@ -6,15 +6,19 @@
 }: let
   # Dependencies
   htop = "${pkgs.htop}/bin/htop";
-  ikhal = "${pkgs.stable.khal}/bin/ikhal";
+  btop = "${pkgs.btop}/bin/btop";
+  iptraf-ng = "'/run/wrappers/bin/sudo ${pkgs.iptraf-ng}/bin/iptraf-ng'";
+  powertop = "'/run/wrappers/bin/sudo ${pkgs.powertop}/bin/powertop'";
   nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
   nm-tui = ''"${pkgs.networkmanager}/bin/nmtui connect"'';
 
   terminal = "${pkgs.kitty}/bin/kitty";
   terminal-spawn = cmd: "${terminal} $SHELL -i -c ${cmd}";
 
-  calendar = terminal-spawn ikhal;
   systemMonitor = terminal-spawn htop;
+  systemMonitor2 = terminal-spawn btop;
+  networkMonitor = terminal-spawn iptraf-ng;
+  powerMonitor = terminal-spawn powertop;
   networkManager = terminal-spawn nm-tui;
 
   isSway = config.generated.home.desktop.sway.enable;
@@ -45,7 +49,7 @@ in {
         modules-right = [
           "tray"
           "battery"
-          "network#wlo"
+          "network#wl"
           "network#enp"
           "pulseaudio"
           "pulseaudio#microphone"
@@ -106,7 +110,6 @@ in {
           actions = {
             on-click-right = "mode";
           };
-          on-click = calendar;
         };
         cpu = {
           format = " {usage}%";
@@ -116,7 +119,7 @@ in {
           format = " {}%";
           format-alt = " {used:0.1f}G";
           interval = 5;
-          on-click = systemMonitor;
+          on-click = systemMonitor2;
         };
         battery = {
           bat = "BAT0";
@@ -124,7 +127,7 @@ in {
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
-          onclick = "";
+          onclick = powerMonitor;
         };
         "network#enp" = {
           interface = "enp*";
@@ -137,11 +140,11 @@ in {
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
           tooltip-format-disconnected = "Disconnected";
-          on-click = networkManager;
+          on-click = networkMonitor;
           on-click-right = nm-connection-editor;
         };
-        "network#wlo" = {
-          interface = "wlo*";
+        "network#wl" = {
+          interface = "wl*";
           interval = 3;
           format = "{ifname}";
           format-wifi = " {essid}";
@@ -152,7 +155,7 @@ in {
             Up: {bandwidthUpBits}
             Down: {bandwidthDownBits}'';
           tooltip-format-disconnected = "Disconnected";
-          on-click = networkManager;
+          on-click = networkMonitor;
           on-click-right = nm-connection-editor;
         };
         "pulseaudio#microphone" = {
