@@ -5,6 +5,10 @@
 
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
+  monitor=eDP-1,3840x2400@90.0,0x0,2.0
+  monitor=DP-3,1920x1080@144.0,1920x0,1.0
+  monitor=Unknown-1,1920x1080@60.0,3840x0,1.0
+  monitor=Unknown-1,disable
 
   # Execute favorite apps at launch
   exec-once = copyq
