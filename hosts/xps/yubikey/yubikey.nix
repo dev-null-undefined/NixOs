@@ -4,15 +4,6 @@
 
   services.yubikey-agent.enable = true;
 
-  boot.initrd.luks = {
-    gpgSupport = true;
-    devices.root.gpgCard = {
-      gracePeriod = 5;
-      encryptedPass = ./. + "/pass-phrase.gpg";
-      publicKey = ./. + "/public-yubikey.asc";
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     yubikey-manager
     #yubikey-manager-qt
