@@ -7,6 +7,7 @@
   generated = {
     de.enable = true;
     nvidia.nvidia-offload.enable = lib.mkDefault true;
+    # nvidia.nvidia-sync.enable = lib.mkDefault true;
   };
 
   hardware.pulseaudio.enable = false;
@@ -29,8 +30,6 @@
   xdg.portal.wlr.enable = true;
 
   services = {
-    switcherooControl.enable = true;
-
     xserver = {
       desktopManager.gnome.enable = true;
 

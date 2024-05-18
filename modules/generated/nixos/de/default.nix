@@ -59,7 +59,7 @@
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
-      pinentryPackage = pkgs.pinentry-gnome3;
+      #pinentryPackage = pkgs.pinentry-gnome;
     };
   };
   # To fix gnome3 pintentry on non gnome systems
