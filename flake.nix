@@ -64,6 +64,7 @@
         "brnikov" = {
           system = "aarch64-linux";
         };
+        "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
       };
 
     homeConfigs = builtins.foldl' (ac: cur:
