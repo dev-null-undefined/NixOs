@@ -8,7 +8,7 @@ in
 
     du = "ncdu";
     df = "duf";
-    ps = "procs";
+    pss = "procs";
     grep = "grep --color";
     sgrep = "grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS}";
 
