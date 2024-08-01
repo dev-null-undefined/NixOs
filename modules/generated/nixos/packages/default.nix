@@ -9,7 +9,6 @@
     zsh.enable = lib.mkDefault true;
     development.enable = lib.mkDefault true;
     networking.enable = lib.mkDefault true;
-    work.enable = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [

@@ -51,6 +51,7 @@
       browsers.all.enable = true;
       mathematica.enable = false;
     };
+    packages.work.enable = true;
   };
 
   documentation.man.generateCaches = false;
@@ -227,7 +228,7 @@
         persistencedSha256 = "";
       };
     in {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      # package = config.boot.kernelPackages.nvidiaPackages.beta;
       # package = nv-pack-555;
 
       # Modesetting is required.
