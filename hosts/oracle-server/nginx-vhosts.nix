@@ -70,7 +70,12 @@
       (
         if type == "string"
         then a + b
-        else throw "I can not merge this type ${type}."
+        else
+          (
+            if type == "bool"
+            then a
+            else throw "I can not merge this type ${type}."
+          )
       );
 
   addDefaults = _: options: let
