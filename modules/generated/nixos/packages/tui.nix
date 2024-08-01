@@ -24,7 +24,7 @@
     hydra-check # check for sucessfull build or failiure on hydra
 
     # Usage monitors
-    btop
+    (btop.override {cudaSupport = true;})
     glances
     gotop
     htop
