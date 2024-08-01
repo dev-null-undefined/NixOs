@@ -70,6 +70,9 @@
       "cdn-dev-prg-8" = {
         hostname = "edge-mc-prg-dev-8-45-136-152-18.cdn77.com";
       };
+      "cdn-dev-me" = {
+        hostname = "others-mc-dev-martinkos-45-136-152-121.cdn77.eu";
+      };
     };
   };
 }
