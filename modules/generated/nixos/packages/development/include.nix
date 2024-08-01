@@ -14,6 +14,8 @@
     dnsutils # dig, nslookup, etc.
     dogdns
 
+    apacheHttpd # appache benchmark tool ab
+
     android-tools # adb
 
     # Git utils
