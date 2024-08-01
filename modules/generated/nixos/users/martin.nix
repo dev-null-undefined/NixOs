@@ -12,6 +12,7 @@
       ++ (self.lib'.internal.groupIfExist config [
         "network"
         "video"
+        "render"
         "networkmanager"
         "wireshark"
         "mysql"
