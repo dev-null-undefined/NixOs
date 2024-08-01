@@ -38,6 +38,8 @@ in
     man = "batman";
 
     cd = "z";
+
+    ping = "trip";
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
