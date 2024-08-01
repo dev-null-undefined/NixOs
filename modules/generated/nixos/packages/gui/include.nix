@@ -12,6 +12,8 @@
   services.gnome.sushi.enable = true;
 
   environment.systemPackages = with pkgs; [
+    nextcloud-client
+
     headsetcontrol # Logitech headphones controll
 
     thunderbird
