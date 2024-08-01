@@ -20,6 +20,8 @@
     users.lomohov.enable = true;
   };
 
+  documentation.man.generateCaches = false;
+
   domain = "dev-null.me";
 
   custom.wireguard.ips = ["10.100.0.1/24"];
