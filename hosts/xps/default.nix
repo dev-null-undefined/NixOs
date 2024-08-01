@@ -19,16 +19,24 @@
     ./hardware-configuration.nix
   ];
 
-  # Allows for updating firmware via `fwupdmgr`.
-  services.fwupd.enable = true;
+  services = {
+    # Allows for updating firmware via `fwupdmgr`.
+    fwupd.enable = true;
 
-  # Touchpad goes over i2c, and the psmouse module interferes with it
+    fprintd.enable = true;
 
-  services.fprintd.enable = true;
-  #  services.fprintd.tod.enable = true;
-  # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+    xserver = {
+      videoDrivers = ["nvidia" "intel"];
+      synaptics.enable = lib.mkForce false;
+      libinput = {
+        enable = true;
+        tapping = true;
+        tappingDragLock = true;
+      };
+    };
+    thermald.enable = true;
+  };
 
-  # Required to allow the touchpad to work
   generated = {
     network-manager.enable = true;
     plymouth.enable = true;
@@ -44,29 +52,35 @@
       mathematica.enable = false;
     };
   };
-  services = {
-    xserver = {
-      videoDrivers = ["nvidia" "intel"];
-      synaptics.enable = lib.mkForce false;
-      libinput = {
-        enable = true;
-        tapping = false;
-        tappingDragLock = false;
-      };
-    };
-    thermald.enable = true;
-  };
 
   documentation.man.generateCaches = false;
 
-  specialisation = {
-    gnome.configuration = {
-      generated.de = {
-        gnome.enable = true;
-        hyprland.enable = false;
-      };
-    };
-  };
+  #  specialisation = {
+  #    gnome.configuration = {
+  #      generated.de = {
+  #        gnome.enable = true;
+  #        hyprland.enable = false;
+  #      };
+  #    };
+  #    dwm.configuration = {
+  #      generated.de = {
+  #        dwm.enable = true;
+  #        hyprland.enable = false;
+  #      };
+  #    };
+  #    i3.configuration = {
+  #      generated.de = {
+  #        i3.enable = true;
+  #        hyprland.enable = false;
+  #      };
+  #    };
+  #    plasma.configuration = {
+  #      generated.de = {
+  #        plasma.enable = true;
+  #        hyprland.enable = false;
+  #      };
+  #    };
+  #  };
 
   #  boot.extraModprobeConfig =
   #    "options nvidia "
@@ -114,20 +128,28 @@
 
   networking.hostId = "69faa161";
 
+  networking.firewall.checkReversePath = "loose";
+
   system.stateVersion = "23.11"; # Did you read the comment?
 
   boot = {
+    blacklistedKernelModules = ["i2c_hid"];
     # blacklistedKernelModules = ["i2c_hid" "i2c_hid_acpi" "psmouse"];
     # blacklistedKernelModules = ["psmouse"];
-    kernelModules = ["synaptics_i2c"];
+    # kernelModules = ["synaptics_i2c"];
 
-    kernelPackages = pkgs.linuxPackages; #latest kernel doesn't work with nvidia proprietery driver
+    kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
     kernelParams = [
       "acpi_osi=!"
       ''acpi_osi="Windows 2020"''
+      "nvidia-drm.fbdev=1"
       "acpi_backlight=native"
+      # "i8042.reset"
+      # "i8042.nomux"
+      #"i8042.nopnp"
+      #"i8042.noloop"
       # "i8042.nopnp=1"
 
       # Force S3 sleep mode. See README.wiki for details.
@@ -168,31 +190,45 @@
   };
 
   hardware = {
-    nvidia = {
-      package = let
-        rcu_patch = pkgs.fetchpatch {
-          url = "https://github.com/gentoo/gentoo/raw/c64caf53/x11-drivers/nvidia-drivers/files/nvidia-drivers-470.223.02-gpl-pfn_valid.patch";
-          hash = "sha256-eZiQQp2S/asE7MfGvfe6dA/kdCvek9SYa/FFGp24dVg=";
-        };
-      in
-        config.boot.kernelPackages.nvidiaPackages.mkDriver {
-          version = "535.154.05";
-          sha256_64bit = "sha256-fpUGXKprgt6SYRDxSCemGXLrEsIA6GOinp+0eGbqqJg=";
-          sha256_aarch64 = "sha256-G0/GiObf/BZMkzzET8HQjdIcvCSqB1uhsinro2HLK9k=";
-          openSha256 = "sha256-wvRdHguGLxS0mR06P5Qi++pDJBCF8pJ8hr4T8O6TJIo=";
-          settingsSha256 = "sha256-9wqoDEWY4I7weWW05F4igj1Gj9wjHsREFMztfEmqm10=";
-          persistencedSha256 = "sha256-d0Q3Lk80JqkS1B54Mahu2yY/WocOqFFbZVBh+ToGhaE=";
-          #
-          # version = "550.40.07";
-          # sha256_64bit = "sha256-KYk2xye37v7ZW7h+uNJM/u8fNf7KyGTZjiaU03dJpK0=";
-          # sha256_aarch64 = "sha256-AV7KgRXYaQGBFl7zuRcfnTGr8rS5n13nGUIe3mJTXb4=";
-          # openSha256 = "sha256-mRUTEWVsbjq+psVe+kAT6MjyZuLkG2yRDxCMvDJRL1I=";
-          # settingsSha256 = "sha256-c30AQa4g4a1EHmaEu1yc05oqY01y+IusbBuq+P6rMCs=";
-          # persistencedSha256 = "sha256-11tLSY8uUIl4X/roNnxf5yS2PQvHvoNjnd2CB67e870=";
+    nvidia = let
+      rcu_patch = pkgs.fetchpatch {
+        url = "https://github.com/gentoo/gentoo/raw/c64caf53/x11-drivers/nvidia-drivers/files/nvidia-drivers-470.223.02-gpl-pfn_valid.patch";
+        hash = "sha256-eZiQQp2S/asE7MfGvfe6dA/kdCvek9SYa/FFGp24dVg=";
+      };
 
-          patches = [rcu_patch];
-        };
-      #package = config.boot.kernelPackages.nvidiaPackages.stable;
+      nv-pack-535 = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "535.154.05";
+        sha256_64bit = "sha256-fpUGXKprgt6SYRDxSCemGXLrEsIA6GOinp+0eGbqqJg=";
+        sha256_aarch64 = "sha256-G0/GiObf/BZMkzzET8HQjdIcvCSqB1uhsinro2HLK9k=";
+        openSha256 = "sha256-wvRdHguGLxS0mR06P5Qi++pDJBCF8pJ8hr4T8O6TJIo=";
+        settingsSha256 = "sha256-9wqoDEWY4I7weWW05F4igj1Gj9wjHsREFMztfEmqm10=";
+        persistencedSha256 = "sha256-d0Q3Lk80JqkS1B54Mahu2yY/WocOqFFbZVBh+ToGhaE=";
+
+        patches = [rcu_patch];
+      };
+
+      nv-pack-550 = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "550.40.07";
+        sha256_64bit = "sha256-KYk2xye37v7ZW7h+uNJM/u8fNf7KyGTZjiaU03dJpK0=";
+        sha256_aarch64 = "sha256-AV7KgRXYaQGBFl7zuRcfnTGr8rS5n13nGUIe3mJTXb4=";
+        openSha256 = "sha256-mRUTEWVsbjq+psVe+kAT6MjyZuLkG2yRDxCMvDJRL1I=";
+        settingsSha256 = "sha256-c30AQa4g4a1EHmaEu1yc05oqY01y+IusbBuq+P6rMCs=";
+        persistencedSha256 = "sha256-11tLSY8uUIl4X/roNnxf5yS2PQvHvoNjnd2CB67e870=";
+
+        patches = [rcu_patch];
+      };
+
+      nv-pack-555 = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+        version = "555.42.02";
+        sha256_64bit = "sha256-k7cI3ZDlKp4mT46jMkLaIrc2YUx1lh1wj/J4SVSHWyk=";
+        sha256_aarch64 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
+        openSha256 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
+        settingsSha256 = "sha256-rtDxQjClJ+gyrCLvdZlT56YyHQ4sbaL+d5tL4L4VfkA=";
+        persistencedSha256 = "";
+      };
+    in {
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      # package = nv-pack-555;
 
       # Modesetting is required.
       modesetting.enable = true;
