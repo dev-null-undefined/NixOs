@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   programs = {
     bandwhich.enable = true;
+    trippy.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
