@@ -13,7 +13,7 @@ with lib; {
     stylua # Lua
     clang-tools
     checkmake
-    cpplint
+    stable.cpplint
     nil
     vscode-langservers-extracted
     deadnix

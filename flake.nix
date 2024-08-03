@@ -2,8 +2,8 @@
   inputs = {
     #nixpkgs.url = "github:dev-null-undefined/nixpkgs?ref=nixos-unstable";
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
-    # nixpkgs.url = "github:NixOs/nixpkgs/nixos-23.11";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-23.11";
+    #nixpkgs.url = "github:NixOs/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -27,7 +27,13 @@
       };
     };
 
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      submodules = true;
+    };
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=main&rev=121d3a72137d4780602cf245704615f63357ea22&submodules=1";
+    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=main&rev=fe7b748eb668136dd0558b7c8279bfcd7ab4d759&submodules=1";
     hyprland-contrib.url = "github:hyprwm/contrib";
 
     rust-overlay.url = "github:oxalica/rust-overlay";

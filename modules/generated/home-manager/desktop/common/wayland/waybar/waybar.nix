@@ -6,7 +6,7 @@
 }: let
   # Dependencies
   htop = "${pkgs.htop}/bin/htop";
-  btop = "${pkgs.btop}/bin/btop";
+  btop = "${(pkgs.btop.override {cudaSupport = true;})}/bin/btop";
   iptraf-ng = "'/run/wrappers/bin/sudo ${pkgs.iptraf-ng}/bin/iptraf-ng'";
   powertop = "'/run/wrappers/bin/sudo ${pkgs.powertop}/bin/powertop'";
   nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
@@ -90,8 +90,8 @@ in {
           separate-outputs = true;
         };
         clock = {
-          format = "{:%H:%M}  ";
-          format-alt = "{:%d-%m-%Y (%R)}  ";
+          format = "{:%d-%m-%Y (%R)}  ";
+          format-alt = "{:%H:%M}  ";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
           calendar = {
             mode = "year";
@@ -127,7 +127,7 @@ in {
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{icon} {capacity}%";
           format-charging = " {capacity}%";
-          onclick = powerMonitor;
+          on-click = powerMonitor;
         };
         "network#enp" = {
           interface = "enp*";

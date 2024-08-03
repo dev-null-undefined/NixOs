@@ -5,9 +5,10 @@
 
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
-  monitor=eDP-1,3840x2400@90.0,0x0,2.0
-  monitor=DP-3,1920x1080@144.0,1920x0,1.0
-  monitor=Unknown-1,1920x1080@60.0,3840x0,1.0
+  monitor=eDP-1,3840x2400@90.0,0x0,2
+  monitor=DP-3,1920x1080@144.0,1920x0,1
+  monitor=DP-2,3840x2160@60.0,1920x0,1
+  monitor=Unknown-1,1920x1080@60.0,3840x0,1
   monitor=Unknown-1,disable
 
   # Execute favorite apps at launch
@@ -93,7 +94,7 @@
 
   master {
       # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      new_is_master = true
+      new_status = master
   }
 
   gestures {
@@ -284,7 +285,6 @@
   # windowrulev2 = windowdance,class:^(jetbrains-.*) # allows IDE to move child windows
 
   # Attempt to make jetbrains work number 2
-  windowrulev2=windowdance,class:^(jetbrains-.*)$
   # search dialog
   windowrulev2=dimaround,class:^(jetbrains-.*)$,floating:1,title:^(?!win)
   windowrulev2=center,class:^(jetbrains-.*)$,floating:1,title:^(?!win)

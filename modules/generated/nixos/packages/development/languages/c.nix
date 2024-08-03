@@ -65,7 +65,7 @@
 
       # static analysis tool
       cppcheck
-      cpplint
+      stable.cpplint
 
       # makefile checker
       checkmake

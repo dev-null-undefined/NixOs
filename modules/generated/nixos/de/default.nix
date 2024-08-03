@@ -54,7 +54,7 @@
 
     ssh.startAgent = false;
 
-    seahorse.enable = true;
+    # seahorse.enable = true;
     noisetorch.enable = true;
     gnupg.agent = {
       enable = true;
@@ -85,10 +85,10 @@
     enable = true;
     xkb.layout = "us";
     # Enable touchpad support (enabled default in most desktopManager).
-    libinput = {
-      enable = true;
-      touchpad.naturalScrolling = true;
-    };
+    # libinput = {
+    #   enable = true;
+    #   touchpad.naturalScrolling = true;
+    # };
   };
 
   hardware.enableAllFirmware = true;

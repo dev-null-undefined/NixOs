@@ -5,7 +5,6 @@
     opengl = {
       enable = true;
       extraPackages = with pkgs; [vaapiIntel nvidia-vaapi-driver];
-      driSupport = true;
       driSupport32Bit = true;
     };
     nvidia = {

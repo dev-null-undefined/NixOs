@@ -16,7 +16,7 @@
     krita
     gimp-with-plugins
 
-    darktable
+    stable.darktable
 
     # Hand written notes
     xournalpp
