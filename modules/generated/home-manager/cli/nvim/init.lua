@@ -64,6 +64,10 @@ o.splitright = true
 o.splitbelow = true
 o.completeopt = "menuone,noselect"
 
+o.expandtab = true
+o.tabstop = 4
+o.shiftwidth = 4
+
 require('telescope').setup()
 
 local telescope_builtin = require('telescope.builtin')
@@ -73,30 +77,24 @@ end
 
 local wk = require("which-key")
 
-wk.register({
-	f = {
-		name = "file",
-		f = { "<cmd>Telescope find_files<cr>", "Find File" },
-		g = { "<cmd>Telescope live_grep<cr>", "Live file grep" },
-		b = { "<cmd>Telescope buffers<cr>", "Chose buffer" },
-		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-	},
-	c = {
-		name = "code",
-		f = { vim.lsp.buf.format, "Format document" },
-		a = { vim.lsp.buf.code_action, "Format document" },
-		e = { vim.diagnostic.open_float, "Open floating error message" },
-		l = { vim.lsp.codelens.run, "Run code lens" },
-	},
-	g = {
-		name = "Move",
-		d = { telescope_builtin.lsp_definitions, "Go to definitions" },
-		D = { vim.lsp.buf.declaration, "Go to declaration" },
-		i = { telescope_builtin.lsp_implementations, "Go to implementation" },
-		y = { telescope_builtin.lsp_type_definitions, "Go to type defintion" },
-		r = { telescope_builtin.lsp_references, "Go to references" },
-	}
-}, { prefix = "<leader>" })
+wk.add({
+    { "<leader>c", group = "code" },
+    { "<leader>ca", vim.lsp.buf.code_action, desc = "Code action" },
+    { "<leader>ce", vim.diagnostic.open_float, desc = "Open floating error message" },
+    { "<leader>cf", vim.lsp.buf.format, desc = "Format document" },
+    { "<leader>cl", vim.lsp.codelens.run, desc = "Run code lens" },
+    { "<leader>f", group = "file" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Chose buffer" },
+    { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find File" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Live file grep" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
+    { "<leader>g", group = "Move" },
+    { "<leader>gD", vim.lsp.buf.declaration, desc = "Go to declaration" },
+    { "<leader>gd", telescope_builtin.lsp_defintions, desc = "Go to definitions" },
+    { "<leader>gi", telescope_builtin.lsp_implementations, desc = "Go to implementation" },
+    { "<leader>gt", telescope_builtin.lsp_type_definitions, desc = "Go to references" },
+    { "<leader>gr", telescope_builtin.lsp_references, desc = "Go to type defintion" },
+})
 
 -- lsp
 local lspconfig = require("lspconfig")
