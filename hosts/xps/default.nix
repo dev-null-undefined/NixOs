@@ -19,7 +19,7 @@
     ./hardware-configuration.nix
   ];
 
-  nix.settings.max-jobs = 6;
+  nix.settings.max-jobs = 1;
 
   services = {
     # Allows for updating firmware via `fwupdmgr`.
