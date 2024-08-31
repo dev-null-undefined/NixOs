@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  programs = {
-    bandwhich.enable = true;
-  };
-
   environment.systemPackages = with pkgs; [
     # ----- Terminal tools -----
     # TUI
