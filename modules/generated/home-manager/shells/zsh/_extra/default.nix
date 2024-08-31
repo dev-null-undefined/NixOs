@@ -1,8 +1,8 @@
-input: let
-  aliases = import ../_aliases.nix input;
+inputs: let
+  aliases = import ../_aliases.nix inputs;
 in
   (import ./functions.nix)
-  + (import ./gdb-gcc-functions.nix)
+  + (import ./gdb-gcc-functions.nix inputs)
   + (import ./nix-functions.nix aliases)
   + (import ./keybindings.nix)
   + (import ./edit-command-line.nix)

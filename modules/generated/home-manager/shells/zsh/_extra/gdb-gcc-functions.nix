@@ -1,35 +1,37 @@
-''
+{pkgs, ...}: let
+  peda = pkgs.fetchFromGitHub {
+    owner = "longld";
+    repo = "peda";
+    rev = "84d38bda505941ba823db7f6c1bcca1e485a2d43";
+    hash = "sha256-vtNJ9WHCUtZmIn/IXwwtKrZx1i/az+gMmW6fLd67QYQ=";
+  };
+  dashboard = pkgs.fetchFromGitHub {
+    owner = "cyrus-and";
+    repo = "gdb-dashboard";
+    rev = "05b31885798f16b1c1da9cb78f8c78746dd3557e";
+    hash = "sha256-x3XcAJdj2Q8s+ZkIBHpGZvCroedPzBmqt5W9Hc1FL7s=";
+  };
+in ''
   alias gppo='g++ --std=c++17 -Wall -pedantic -Wno-long-long -g -fno-omit-frame-pointer -Wunused-variable -Wtrigraphs -trigraphs -O0'
   alias gpp='g++ --std=c++17 -Wall -pedantic -Wno-long-long -g -fno-omit-frame-pointer -Wunused-variable -Wtrigraphs -trigraphs -O2'
 
-  gdb-clear() {
-    rm -rf ~/.gdbinit
-  }
-
   gdb-peda() {
-    gdb-clear
-    ln -s /home/martin/.gdb-configs/peda/pedainit /home/martin/.gdbinit
-    gdb "$@"
+    gdb "$@" -ex "source ${peda}/peda.py"
   }
 
   gdb-dash() {
-    gdb-clear
-    ln -s /home/martin/.gdb-configs/dashboard.py /home/martin/.gdbinit
-    gdb "$@"
+    gdb "$@" -ex "source ${dashboard}/.gdbinit"
   }
 
   gdb-gef() {
-    gdb-clear
     gef "$@"
   }
 
   gdb-pwn() {
-    gdb-clear
     pwndbg "$@"
   }
 
   gdb-c() {
-    gdb-clear
     cgdb "$@"
   }
 

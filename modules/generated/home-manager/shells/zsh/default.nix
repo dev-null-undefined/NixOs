@@ -32,9 +32,9 @@
       setopt interactivecomments
     '';
 
-    initExtra = import ./_extra {inherit lib';};
+    initExtra = import ./_extra {inherit lib' pkgs;};
 
-    shellAliases = import ./_aliases.nix {inherit lib';};
+    shellAliases = import ./_aliases.nix {inherit lib' pkgs;};
 
     localVariables = {
       TERM = "xterm-256color";

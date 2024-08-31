@@ -1,4 +1,4 @@
-{lib'}: let
+{lib', ...}: let
   repeateString = lib'.internal.repeateString;
 in
   {
