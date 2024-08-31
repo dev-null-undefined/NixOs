@@ -38,5 +38,7 @@
     john
 
     rpi-imager # Raspberry pi imaging utility
+
+    dpkg
   ];
 }
