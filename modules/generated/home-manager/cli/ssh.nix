@@ -43,7 +43,7 @@
         };
       };
 
-      "cdn-dev-*" = {
+      "cdn-*" = {
         user = "martin.kos";
       };
       "cdn-dev-ams-1" = {
@@ -72,6 +72,9 @@
       };
       "cdn-dev-me" = {
         hostname = "others-mc-dev-martinkos-45-136-152-121.cdn77.eu";
+      };
+      "cdn-http3-testing" = {
+        hostname = "edge-mc-prg-84-17-61-108.cdn77.com";
       };
     };
   };
