@@ -38,8 +38,8 @@
     gnuplot
 
     tdesktop # Telegram desctop client
-    element-desktop # Matrix desctop client
-    gomuks # Matrix terminal client
+    # element-desktop # Matrix desctop client
+    # gomuks # Matrix terminal client
 
     libreoffice
     onlyoffice-bin

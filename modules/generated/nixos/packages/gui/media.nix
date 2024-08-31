@@ -4,10 +4,11 @@
     droidcam
 
     # Audio control
-    easyeffects
+    stable.easyeffects
     pavucontrol
 
     # Editing
+    shotcut
 
     ardour
     audacity
@@ -29,6 +30,8 @@
     # Video
     vlc
     mpv
+
+    kodi
 
     # Images
     feh
