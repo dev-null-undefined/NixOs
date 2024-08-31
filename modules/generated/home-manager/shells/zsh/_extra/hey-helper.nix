@@ -48,4 +48,18 @@ in ''
     echo "Use nixos-firewall-tool lol"
   }
 
+  hey-factura() {
+    home_l=`wc -c <<< ".$HOME"`
+    faktura=`echo ~/Downloads/martinkos1-20??-??-??.pdf`
+    report=`echo ~/Downloads/Clockify_Time_Report_Detailed_??_??_20??-??_??_20??.csv`
+    faktura=`tail -c +$home_l <<< "$faktura"`
+    report=`tail -c +$home_l <<< "$report"`
+    fin_report=`tail -c +20 <<< "$report"`
+    month=`sed -E 's/Downloads\/martinkos1-....-(..)-..\.pdf/\1/' <<< $faktura`
+    fin_dir="$HOME/Nextcloud/Work/CDN77/Faktury/$month"
+    mkdir $fin_dir
+    mv ~/$faktura $fin_dir/
+    mv ~/$report $fin_dir/$fin_report
+  }
+
 ''
