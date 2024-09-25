@@ -7,6 +7,7 @@ in
   + (import ./keybindings.nix)
   + (import ./edit-command-line.nix)
   + (import ./fzf-settings.nix)
+  + (import ./nala.nix)
   + ''
     # Immediately report changes in background job status.
     setopt notify
