@@ -5,6 +5,6 @@
     # advanced hex editor
     imhex
 
-    gnome.ghex
+    ghex
   ];
 }

@@ -8,7 +8,7 @@ with lib; {
 
   home.packages = with pkgs; [
     nixd
-    nixfmt # Nix
+    nixfmt-classic # Nix
     sumneko-lua-language-server
     stylua # Lua
     clang-tools

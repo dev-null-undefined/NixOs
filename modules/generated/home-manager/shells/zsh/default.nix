@@ -3,19 +3,14 @@
   lib',
   ...
 }: {
-  home.packages = with pkgs; [
-    nomos-rebuild
-    nix-output-monitor
-    zoxide
-    lsd
-  ];
+  home.packages = with pkgs; [nomos-rebuild nix-output-monitor zoxide lsd];
 
   programs.zsh = {
     enable = true;
 
     dotDir = ".config/zsh";
 
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     #enableSyntaxHighlighting = true;
 
     autocd = true;
@@ -47,13 +42,7 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [
-        "git"
-        "sudo"
-        "common-aliases"
-        "docker"
-        "docker-compose"
-      ];
+      plugins = ["git" "sudo" "common-aliases" "docker" "docker-compose"];
     };
 
     plugins = [

@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
   ];
   fonts = {
     packages = with pkgs; [

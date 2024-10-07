@@ -6,6 +6,5 @@
     };
   };
   programs.dconf.enable = true;
-  hardware.opengl.enable = true;
   environment.systemPackages = with pkgs; [virt-manager];
 }

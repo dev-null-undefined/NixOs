@@ -42,7 +42,7 @@
     vitetris
 
     lutris
-    gnome.zenity
+    zenity
     vulkan-tools
     vulkan-headers
     vulkan-loader

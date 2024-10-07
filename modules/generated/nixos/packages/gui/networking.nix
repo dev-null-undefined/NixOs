@@ -5,7 +5,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    gnome.gnome-nettool
+    gnome-nettool
 
     networkmanagerapplet
 

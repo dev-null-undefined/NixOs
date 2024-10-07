@@ -35,7 +35,7 @@ in {
       statix
 
       # Nix formatters
-      nixfmt
+      nixfmt-classic
       alejandra
 
       # Find unused variables

@@ -259,7 +259,7 @@ in {
           default = 51820;
           type = with lib.types; nullOr int;
           example = 51820;
-          description = lib.mdDoc ''
+          description = ''
             16-bit port for listening. Optional; if not specified,
             automatically generated based on interface name.
           '';
@@ -268,7 +268,7 @@ in {
           default = null;
           type = with lib.types; nullOr str;
           example = "0x6e6978";
-          description = lib.mdDoc ''
+          description = ''
             Mark all wireguard packets originating from
             this interface with the given firewall mark. The firewall mark can be
             used in firewalls or policy routing to filter the wireguard packets.

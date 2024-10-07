@@ -31,9 +31,7 @@
   programs = {
     hyprland = {
       enable = true;
-      xwayland = {
-        enable = true;
-      };
+      xwayland = {enable = true;};
     };
 
     wshowkeys.enable = true;
@@ -43,14 +41,11 @@
 
   #services.getty.autologinUser = "martin";
 
-  services.xserver = {
-    displayManager = {
-      sessionPackages = [pkgs.hyprland];
-      gdm = {
-        enable = true;
-        wayland = true;
-      };
-    };
+  services.displayManager.sessionPackages = [pkgs.hyprland];
+
+  services.xserver.displayManager.gdm = {
+    enable = true;
+    wayland = true;
   };
 
   xdg.portal = {
@@ -64,8 +59,6 @@
     "SDL_VIDEODRIVER" = "wayland";
     "QT_QPA_PLATFORM" = "wayland";
     "NIXOS_OZONE_WL" = "1";
-    "XDG_CURRENT_DESKTOP" = "sway";
-    "XDG_SESSION_DESKTOP" = "sway";
     "WLR_NO_HARDWARE_CURSORS" = "1"; # https://wiki.hyprland.org/FAQ/#me-cursor-no-render
   };
 

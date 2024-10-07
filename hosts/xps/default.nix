@@ -30,13 +30,15 @@
     xserver = {
       videoDrivers = ["nvidia" "intel"];
       synaptics.enable = lib.mkForce false;
-      libinput = {
-        enable = true;
+    };
+    thermald.enable = true;
+    libinput = {
+      enable = true;
+      touchpad = {
         tapping = true;
         tappingDragLock = true;
       };
     };
-    thermald.enable = true;
   };
 
   generated = {
@@ -141,7 +143,7 @@
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
 
-    kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
+    # kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
     kernelParams = [
@@ -253,7 +255,7 @@
       # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
       # Only available from driver 515.43.04+
       # Currently alpha-quality/buggy, so false is currently the recommended setting.
-      open = false;
+      open = true;
 
       # Enable the Nvidia settings menu,
       # accessible via `nvidia-settings`.

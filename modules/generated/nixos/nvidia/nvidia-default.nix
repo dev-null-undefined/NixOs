@@ -2,14 +2,16 @@
   environment.systemPackages = with pkgs; [nvitop];
 
   hardware = {
-    opengl = {
+    opengl.enable = true;
+    graphics = {
       enable = true;
-      extraPackages = with pkgs; [vaapiIntel nvidia-vaapi-driver];
-      driSupport32Bit = true;
+      enable32Bit = true;
+      extraPackages = with pkgs; [
+        # vaapiIntel
+        nvidia-vaapi-driver
+      ];
     };
-    nvidia = {
-      nvidiaSettings = true;
-    };
+    nvidia = {nvidiaSettings = true;};
   };
 
   services.xserver = {

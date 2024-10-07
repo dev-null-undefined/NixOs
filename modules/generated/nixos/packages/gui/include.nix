@@ -28,12 +28,12 @@
 
     tesseract # OCR engine
 
-    gnome.gnome-screenshot
+    gnome-screenshot
     flameshot
 
     gnome-usage
-    gnome.gnome-terminal
-    gnome.gnome-power-manager
+    gnome-terminal
+    gnome-power-manager
 
     gnuplot
 

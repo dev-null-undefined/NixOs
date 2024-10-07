@@ -17,7 +17,7 @@
     krita
     gimp-with-plugins
 
-    stable.darktable
+    darktable
 
     # Hand written notes
     xournalpp
@@ -31,7 +31,7 @@
     vlc
     mpv
 
-    kodi
+    master.kodi
 
     # Images
     feh
