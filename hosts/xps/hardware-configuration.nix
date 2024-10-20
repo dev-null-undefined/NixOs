@@ -37,6 +37,10 @@
 
   swapDevices = [{device = "/dev/disk/by-uuid/74ae1745-5dbd-4f6c-ac22-7c1add60c88f";}];
 
+  #hardware.ipu6 = {
+  #  enable = true;
+  #  platform = "ipu6epmtl";
+  #};
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
