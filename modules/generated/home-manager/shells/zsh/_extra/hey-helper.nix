@@ -62,4 +62,14 @@ in ''
     mv ~/$report $fin_dir/$fin_report
   }
 
+  hey-kitty() {
+      PORT=''${1:=2222}
+      COMMON='export TERM=xterm-256color;sleep 0.1;cd /sources;clear'
+      BASH=' bash -i'
+      kitty ssh root@localhost -p $PORT -o StrictHostKeyChecking=no -t "$COMMON;less -S +F /var/log/nginx/error.log" &
+      kitty ssh root@localhost -p $PORT -o StrictHostKeyChecking=no -t "$COMMON;$BASH" &
+      kitty ssh root@localhost -p $PORT -o StrictHostKeyChecking=no -t "$COMMON;$BASH" &
+      ssh root@localhost -p $PORT -o StrictHostKeyChecking=no -t "$COMMON;less -S +F /var/log/nginx/access.shlog"
+  }
+
 ''
