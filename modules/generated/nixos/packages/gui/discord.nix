@@ -11,7 +11,7 @@
     #(master.armcord.override {
     #  nss = nss_latest;
     #})
-    armcord
+    legcord
 
     discordchatexporter-cli
   ];

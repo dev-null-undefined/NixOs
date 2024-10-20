@@ -13,7 +13,7 @@
     ardour
     audacity
 
-    blender
+    stable.blender
     krita
     gimp-with-plugins
 

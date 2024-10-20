@@ -87,7 +87,6 @@
 
   dwindle {
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-      no_gaps_when_only = true
       pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
       preserve_split = yes # you probably want this
   }
@@ -111,8 +110,6 @@
 
   misc {
     disable_hyprland_logo = true
-    enable_swallow = true
-    swallow_regex = ^(kitty)$
   }
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
@@ -292,4 +289,11 @@
   windowrulev2=noanim,class:^(jetbrains-.*)$,title:^(win.*)$
   windowrulev2=noinitialfocus,class:^(jetbrains-.*)$,title:^(win.*)$
   windowrulev2=rounding 0,class:^(jetbrains-.*)$,title:^(win.*)$
+
+
+  # Workspace rules
+  # To replicate “smart gaps” / “no gaps when only” from other WMs/Compositors, use
+  workspace = w[t1], gapsout:0, gapsin:0, border: 0, rounding:0
+  workspace = w[tg1], gapsout:0, gapsin:0, border: 0, rounding:0
+
 ''

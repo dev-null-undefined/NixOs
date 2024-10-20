@@ -47,8 +47,6 @@ in {
     grimblast
     fuzzel
 
-    swaylock-effects
-
     showmethekey
 
     swaynotificationcenter

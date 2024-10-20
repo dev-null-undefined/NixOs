@@ -41,8 +41,6 @@ in {
     wofi
     slurp
 
-    swaylock-effects
-
     showmethekey
 
     swaynotificationcenter
