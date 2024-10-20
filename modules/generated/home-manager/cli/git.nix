@@ -33,7 +33,7 @@
     delta = {enable = true;};
     signing = {
       signByDefault = true;
-      key = "CCE15DDC";
+      key = "B1C4FAB94F0F1443";
     };
   };
 }
