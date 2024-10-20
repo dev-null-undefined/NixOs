@@ -59,6 +59,8 @@
     "SDL_VIDEODRIVER" = "wayland";
     "QT_QPA_PLATFORM" = "wayland";
     "NIXOS_OZONE_WL" = "1";
+    "XDG_CURRENT_DESKTOP" = "sway";
+    "XDG_SESSION_DESKTOP" = "sway";
     "WLR_NO_HARDWARE_CURSORS" = "1"; # https://wiki.hyprland.org/FAQ/#me-cursor-no-render
   };
 
