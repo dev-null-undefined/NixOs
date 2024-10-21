@@ -44,6 +44,12 @@
         proxyWebsockets = true;
       };
     };
+    "home.${config.domain}" = {
+      locations."/" = {
+        proxyPass = "http://10.100.0.4:8123";
+        proxyWebsockets = true;
+      };
+    };
     "ny.${config.domain}" = {
       extraConfig = ''
         rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
