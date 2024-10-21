@@ -17,6 +17,13 @@
           "ProxyJump" = "oracle";
         };
       };
+      "ha-home" = {
+        hostname = "10.100.0.4";
+        user = "martin";
+        extraOptions = {
+          "ProxyJump" = "oracle";
+        };
+      };
       "NAT" = {
         hostname = "192.168.0.1";
         user = "kolobozka6b";
