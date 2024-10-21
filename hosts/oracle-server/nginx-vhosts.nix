@@ -55,9 +55,7 @@
         rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
       '';
     };
-    "kufinka.lol" = {
-      root = catImages;
-    };
+    "kufinka.lol" = {root = catImages;};
   };
   defaultOptions = {
     enableACME = true;
