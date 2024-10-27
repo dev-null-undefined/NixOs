@@ -32,7 +32,7 @@ in
     }
 
     nix-update() {
-      nix flake update "''${NIXOS_CONFIG_DIR}"
+      nix flake update --flake "''${NIXOS_CONFIG_DIR}"
       if [ $? -eq 0 ]; then
         nix-rebuild "$@"
         if [ $? -eq 0 ]; then
