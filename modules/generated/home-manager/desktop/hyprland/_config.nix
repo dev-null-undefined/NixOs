@@ -6,7 +6,7 @@
 
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
   monitor=eDP-1,3840x2400@90.0,0x0,2
-  monitor=,highrr,auto,1
+  monitor=,preferred,auto,1
 
   # Execute favorite apps at launch
   exec-once = copyq
