@@ -31,14 +31,33 @@
       type = "git";
       url = "https://github.com/hyprwm/Hyprland";
       submodules = true;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=main&rev=121d3a72137d4780602cf245704615f63357ea22&submodules=1";
-    # hyprland.url = "git+https://github.com/hyprwm/Hyprland?ref=main&rev=fe7b748eb668136dd0558b7c8279bfcd7ab4d759&submodules=1";
-    hyprland-contrib.url = "github:hyprwm/contrib";
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "hyprland/nixpkgs";
+    };
 
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
+    nix-software-center = {
+      url = "github:snowfallorg/nix-software-center";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = {
