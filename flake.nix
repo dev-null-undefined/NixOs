@@ -67,37 +67,37 @@
     home-manager,
     ...
   } @ inputs: let
-    autoDetectedHosts =
-      builtins.listToAttrs
-      (builtins.map (hostname: {
-          name = hostname;
-          value = {};
-        })
-        (builtins.attrNames (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
-            (builtins.readDir ./hosts))));
+    autoDetectedHosts = builtins.listToAttrs (builtins.map (hostname: {
+        name = hostname;
+        value = {};
+      }) (builtins.attrNames
+        (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
+          (builtins.readDir ./hosts))));
 
     autoDetectedUsers =
-      builtins.attrNames (lib'.attrsets.filterAttrs (_: v: v == "directory")
+      builtins.attrNames
+      (lib'.attrsets.filterAttrs (_: v: v == "directory")
         (builtins.readDir ./home));
 
     hostConfigs =
       autoDetectedHosts
       // {
-        "oracle-server" = {
-          system = "aarch64-linux";
-        };
-        "brnikov" = {
-          system = "aarch64-linux";
-        };
+        "oracle-server" = {system = "aarch64-linux";};
+        "brnikov" = {system = "aarch64-linux";};
         "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
       };
 
     homeConfigs = builtins.foldl' (ac: cur:
       ac
-      ++ (builtins.map (
-          username: {hostname = cur.name;} // cur.value // {inherit username;}
-        )
-        autoDetectedUsers)) [] (lib'.attrsets.attrsToList hostConfigs);
+      ++ (builtins.map (username:
+        {
+          hostname = cur.name;
+        }
+        // cur.value
+        // {
+          inherit username;
+        })
+      autoDetectedUsers)) [] (lib'.attrsets.attrsToList hostConfigs);
 
     lib' = import ./lib {inherit inputs self;};
   in
@@ -107,34 +107,30 @@
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
 
-      nixosConfigurations = builtins.foldl' (
-        acc: record: let
-          config = {hostname = record.name;} // record.value;
-        in
-          {
-            "${config.hostname}" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
-            "${config.hostname}-vm" = nixpkgs.lib.nixosSystem (lib'.internal.mkHost (config
+      nixosConfigurations = builtins.foldl' (acc: record: let
+        config = {hostname = record.name;} // record.value;
+      in
+        {
+          "${config.hostname}" =
+            nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
+          "${config.hostname}-vm" =
+            nixpkgs.lib.nixosSystem
+            (lib'.internal.mkHost (config
               // {
                 modules =
                   (config.modules or [])
-                  ++ [
-                    ./modules/nixos/isVM/implementation.nix
-                  ];
+                  ++ [./modules/nixos/isVM/implementation.nix];
               }));
-          }
-          // acc
-      ) {} (lib'.attrsets.attrsToList hostConfigs);
-      homeConfigurations =
-        builtins.foldl' (
-          acc: config:
-            {
-              "${config.username}@${config.hostname}" =
-                home-manager.lib.homeManagerConfiguration
-                (lib'.internal.mkHome config);
-            }
-            // acc
-        ) {}
-        homeConfigs;
+        }
+        // acc) {} (lib'.attrsets.attrsToList hostConfigs);
+      homeConfigurations = builtins.foldl' (acc: config:
+        {
+          "${config.username}@${config.hostname}" =
+            home-manager.lib.homeManagerConfiguration
+            (lib'.internal.mkHome config);
+        }
+        // acc) {}
+      homeConfigs;
     }
     // (flake-utils.lib.eachDefaultSystem (system: {
       packages = lib'.internal.mkPkgsWithOverlays system;
