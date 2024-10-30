@@ -19,6 +19,9 @@ in {
 
   environment.systemPackages = with pkgs;
     [
+      # A ranger-like flake.lock viewer
+      nix-melt
+
       # nix documentation
       manix
 
