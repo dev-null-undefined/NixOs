@@ -7,6 +7,7 @@
   # See https://wiki.hyprland.org/Configuring/Keywords/ for more
   monitor=eDP-1,3840x2400@90.0,0x0,2
   monitor=,preferred,auto,1
+  monitor=desc:HP Inc. HP X34 6CM14806T6,highrr,auto,1
 
   # Execute favorite apps at launch
   exec-once = copyq
