@@ -12,5 +12,7 @@
     wasm-pack
     wasm-bindgen-cli
     cargo-wasi
+
+    wabt
   ];
 }
