@@ -19,8 +19,6 @@ in {
 
   environment.systemPackages = with pkgs;
     [
-      inputs.nix-software-center.packages.${system}.nix-software-center
-
       # A ranger-like flake.lock viewer
       nix-melt
 
@@ -60,5 +58,8 @@ in {
       # Run packages without installing them (test drive)
       comma
     ]
-    ++ alien-pkgs;
+    ++ alien-pkgs
+    ++ (lib.lists.optionals
+      (config.services.xserver.enable || config.generated.de.enable)
+      [inputs.nix-software-center.packages.${system}.nix-software-center]);
 }
