@@ -15,6 +15,7 @@ in {
     nix-index.enable = true;
     # Mutually exclusive with command-not-found
     command-not-found.enable = false;
+    nh.enable = true;
   };
 
   environment.systemPackages = with pkgs;

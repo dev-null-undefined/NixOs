@@ -3,7 +3,7 @@
   lib',
   ...
 }: {
-  home.packages = with pkgs; [nomos-rebuild nix-output-monitor zoxide lsd];
+  home.packages = with pkgs; [nix-output-monitor zoxide lsd];
 
   programs.zsh = {
     enable = true;
