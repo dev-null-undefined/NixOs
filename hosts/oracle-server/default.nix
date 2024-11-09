@@ -17,7 +17,10 @@
       ssh.enable = true;
       syncthing.enable = true;
     };
-    users.lomohov.enable = true;
+    users = {
+      lomohov.enable = true;
+      samirka.enable = true;
+    };
   };
 
   documentation.man.generateCaches = false;
