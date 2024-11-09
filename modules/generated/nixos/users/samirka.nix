@@ -23,4 +23,6 @@ in {
     useDefaultShell = false;
     openssh.authorizedKeys.keys = [sshKey];
   };
+
+  home-manager.users = self.lib'.internal.mkHomeNixOsUser "samirka" [];
 }
