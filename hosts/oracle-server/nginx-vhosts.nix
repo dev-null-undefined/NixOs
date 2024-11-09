@@ -19,9 +19,6 @@
   hosts = {
     "${config.domain}" = {
       root = visualSorting;
-      locations."~ /\\.git".extraConfig = ''
-        deny all;
-      '';
     };
     "cpp.${config.domain}" = {
       root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
