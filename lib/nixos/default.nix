@@ -30,17 +30,17 @@ in {
 
               # TODO: move to special folder
               substituters = ["https://hyprland.cachix.org"];
-              trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+              trusted-public-keys = [
+                "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+              ];
 
               auto-optimise-store = true;
               keep-outputs = true;
               keep-derivations = true;
             };
             nixPath =
-              lib.mapAttrsToList (k: v: "${k}=${v.to.path}")
-              config.nix.registry;
-            registry =
-              lib.mapAttrs (_: value: {flake = value;}) inputs;
+              lib.mapAttrsToList (k: v: "${k}=${v.to.path}") config.nix.registry;
+            registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
           };
 
           nixpkgs.hostPlatform = lib.mkDefault system;
@@ -56,9 +56,7 @@ in {
             useUserPackages = true;
             useGlobalPkgs = true;
             extraSpecialArgs = {inherit self inputs;};
-            sharedModules = [
-              ../../home/nixosDefaults.nix
-            ];
+            sharedModules = [../../home/nixosDefaults.nix];
           };
         }
 

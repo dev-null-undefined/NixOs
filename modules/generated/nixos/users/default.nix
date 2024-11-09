@@ -1,5 +1,5 @@
 {lib, ...}: {
-  generated = {
-    users.martin.enable = lib.mkDefault true;
+  generated.users = {
+    martin.enable = lib.mkDefault true;
   };
 }

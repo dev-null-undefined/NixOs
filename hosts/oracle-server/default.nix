@@ -1,11 +1,7 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {...}: {
-  imports = [
-    ./nginx-vhosts.nix
-    ./openvpn-server.nix
-    ./minecraft-forwarding.nix
-  ];
+  imports = [./nginx-vhosts.nix ./openvpn-server.nix ./minecraft-forwarding.nix];
 
   generated = {
     enable = true;
