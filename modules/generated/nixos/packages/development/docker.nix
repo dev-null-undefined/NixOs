@@ -11,5 +11,6 @@
   environment.systemPackages = with pkgs; [
     docker-compose
     lazydocker # tui for managing dockers
+    oxker
   ];
 }
