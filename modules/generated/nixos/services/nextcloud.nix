@@ -18,8 +18,8 @@ in {
       enable = true;
       package = pkgs.nextcloud30;
       hostName = lib.mkDefault nextcloud-domain;
-      https = true;
-      home = "/nextcloud";
+      https = lib.mkDefault true;
+      home = lib.mkDefault "/nextcloud";
       maxUploadSize = "32G";
       config = {
         dbtype = "mysql";
@@ -42,10 +42,10 @@ in {
       virtualHosts = {
         "${service.hostName}" = {
           ## Force HTTP redirect to HTTPS
-          forceSSL = true;
+          forceSSL = lib.mkDefault true;
           ## LetsEncrypt
-          enableACME = true;
-          http3 = true;
+          enableACME = lib.mkDefault true;
+          http3 = lib.mkDefault true;
         };
       };
     };
