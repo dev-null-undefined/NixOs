@@ -37,10 +37,18 @@
 
   swapDevices = [{device = "/dev/disk/by-uuid/74ae1745-5dbd-4f6c-ac22-7c1add60c88f";}];
 
-  #hardware.ipu6 = {
-  #  enable = true;
-  #  platform = "ipu6epmtl";
-  #};
+  hardware = {
+    ipu6 = {
+      enable = true;
+      platform = "ipu6epmtl";
+    };
+    enableAllFirmware = true;
+    enableRedistributableFirmware = true;
+    cpu.intel.updateMicrocode =
+      lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -50,6 +58,4 @@
   # networking.interfaces.enp0s20f0u2.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
