@@ -42,10 +42,10 @@ in {
       virtualHosts = {
         "${service.hostName}" = {
           ## Force HTTP redirect to HTTPS
-          forceSSL = lib.mkDefault true;
+          forceSSL = lib.mkDefault service.https;
           ## LetsEncrypt
-          enableACME = lib.mkDefault true;
-          http3 = lib.mkDefault true;
+          enableACME = lib.mkDefault service.https;
+          http3 = lib.mkDefault service.https;
         };
       };
     };
