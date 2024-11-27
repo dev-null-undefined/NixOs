@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   # currently, there is some friction between sway and gtk:
@@ -48,6 +49,10 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [
+      inputs.hyprspace.packages.${pkgs.system}.Hyprspace
+      inputs.hyprgrass.packages.${pkgs.system}.default
+    ];
     extraConfig =
       (import ./_monitors.nix {
         inherit lib;

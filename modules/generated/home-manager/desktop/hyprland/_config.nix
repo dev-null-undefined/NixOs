@@ -150,9 +150,20 @@
   bind = $mainMod, tab,        workspace, previous
 
   # Change to next window
-  bind = ALT, Tab,             cyclenext,          # change focus to another window
-  bind = ALT, Tab,             bringactivetotop,   # bring it to the top
+  bind = ALT      , Tab,             cyclenext,          # change focus to another window
+  bind = ALT      , Tab,             bringactivetotop,   # bring it to the top
+  bind = ALT SHIFT, Tab,             cyclenext,    prev
+  bind = ALT SHIFT, Tab,             bringactivetotop,   # bring it to the top
 
+  # Hyprspace
+  bind = CTRL, Tab,   overview:toggle, 
+
+  plugin {
+      overview {
+          exitOnSwitch = true
+          exitOnClick = true
+      }
+  }
 
   # Scroll through existing workspaces with mainMod + scroll
   bind = $mainMod, mouse_down, workspace, m+1
