@@ -15,8 +15,7 @@
     schema = pkgs.gsettings-desktop-schemas;
     datadir = "${schema}/share/gsettings-schemas/${schema.name}";
   in
-    pkgs.writeShellScriptBin "configure-gtk"
-    ''
+    pkgs.writeShellScriptBin "configure-gtk" ''
       export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
       gnome_schema=org.gnome.desktop.interface
       export GTK_THEME=Orchis-Dark
@@ -58,8 +57,6 @@ in {
         inherit lib;
         inherit (config) monitors;
       })
-      + (import ./_config.nix {
-        inherit lib pkgs;
-      });
+      + (import ./_config.nix {inherit lib pkgs;});
   };
 }

@@ -14,7 +14,7 @@
 
   wsl.wslConf.network.generateResolvConf = false;
 
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   documentation.man.generateCaches = false;
 

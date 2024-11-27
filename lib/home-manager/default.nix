@@ -19,7 +19,7 @@
     [
       (ifExists standAlonePath)
       (ifExists userSpecific)
-      (default)
+      default
       ({pkgs, ...}: rec {
         home.stateVersion = "22.11";
         home.username = username;

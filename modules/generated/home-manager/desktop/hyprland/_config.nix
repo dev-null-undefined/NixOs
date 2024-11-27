@@ -156,7 +156,7 @@
   bind = ALT SHIFT, Tab,             bringactivetotop,   # bring it to the top
 
   # Hyprspace
-  bind = CTRL, Tab,   overview:toggle, 
+  bind = CTRL, Tab,   overview:toggle,
 
   plugin {
       overview {

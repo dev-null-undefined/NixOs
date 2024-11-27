@@ -1,4 +1,4 @@
-{ lib, ... } : {
+{lib, ...}: {
   generated.nvidia.nvidia-default.enable = lib.mkDefault true;
 
   services.xserver.screenSection = ''

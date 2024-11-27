@@ -1,4 +1,8 @@
-{pkgs, lib, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   generated.nvidia.nvidia-default.enable = lib.mkDefault true;
 
   hardware.nvidia.prime = {

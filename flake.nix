@@ -103,13 +103,11 @@
         // {
           inherit username;
         })
-      autoDetectedUsers)) [] (lib'.attrsets.attrsToList (
-      hostConfigs
+      autoDetectedUsers)) [] (lib'.attrsets.attrsToList (hostConfigs
       // {
         "brnikov" = {system = "aarch64-linux";};
         "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
-      }
-    ));
+      }));
 
     lib' = import ./lib {inherit inputs self;};
   in

@@ -1,5 +1,5 @@
 {
   programs.gnupg.agent = {
-      enable = true;
+    enable = true;
   };
 }
