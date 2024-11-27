@@ -17,9 +17,7 @@
     hash = "sha256-P71AfuAOMx6d6ue6+ZuZDZiFaooUxcugtI4lYfGSvQg=";
   };
   hosts = {
-    "${config.domain}" = {
-      root = visualSorting;
-    };
+    "${config.domain}" = {root = visualSorting;};
     "cpp.${config.domain}" = {
       root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
       locations."= /".extraConfig = ''
@@ -32,6 +30,12 @@
     "dynmap.${config.domain}" = {
       locations."/" = {
         proxyPass = "http://135.125.16.193:8034";
+        proxyWebsockets = true;
+      };
+    };
+    "cloud.${config.domain}" = {
+      locations."/" = {
+        proxyPass = "https://homie.rat-python.ts.net";
         proxyWebsockets = true;
       };
     };

@@ -45,7 +45,6 @@ in {
           forceSSL = lib.mkDefault service.https;
           ## LetsEncrypt
           enableACME = lib.mkDefault service.https;
-          http3 = lib.mkDefault service.https;
         };
       };
     };

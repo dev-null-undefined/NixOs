@@ -8,7 +8,6 @@
 
     services = {
       mariadb.enable = true;
-      nextcloud.enable = true;
       nginx.enable = true;
       ssh.enable = true;
       syncthing.enable = true;
