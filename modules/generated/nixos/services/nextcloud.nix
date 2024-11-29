@@ -16,6 +16,7 @@ in {
   services = {
     nextcloud = {
       enable = true;
+      configureRedis = true;
       package = pkgs.nextcloud30;
       hostName = lib.mkDefault nextcloud-domain;
       https = lib.mkDefault true;
@@ -25,7 +26,33 @@ in {
         dbtype = "mysql";
         dbpassFile = "/var/nextcloud-db-pass";
         adminpassFile = "/var/nextcloud-admin-pass";
-        extraTrustedDomains = [service.hostName];
+      };
+      settings = {
+        enabledPreviewProviders = [
+          "OC\\Preview\\BMP"
+          "OC\\Preview\\GIF"
+          "OC\\Preview\\JPEG"
+          "OC\\Preview\\Krita"
+          "OC\\Preview\\MarkDown"
+          "OC\\Preview\\MP3"
+          "OC\\Preview\\OpenDocument"
+          "OC\\Preview\\PNG"
+          "OC\\Preview\\TXT"
+          "OC\\Preview\\XBitmap"
+          # Additional
+          "OC\\Preview\\HEIC"
+          "OC\\Preview\\SVG"
+          "OC\\Preview\\TIFF"
+          "OC\\Preview\\PDF"
+          "OC\\Preview\\Movie"
+          "OC\\Preview\\MSOffice2003"
+          "OC\\Preview\\MSOffice2007"
+          "OC\\Preview\\MSOfficeDoc"
+          "OC\\Preview\\Photoshop"
+        ];
+        "memories.exiftool" = "${lib.getExe pkgs.exiftool}";
+        "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
+        "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
       };
     };
     mysql = {
@@ -48,5 +75,12 @@ in {
         };
       };
     };
+  };
+
+  systemd.services.nextcloud-cron = {
+    path = [
+      # deps for memories app
+      pkgs.perl
+    ];
   };
 }
