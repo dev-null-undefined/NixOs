@@ -1,7 +1,7 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {config, ...}: {
-  imports = [./router.nix];
+  imports = [./router.nix ./grafana.nix];
   generated.services = {
     ssh.enable = true;
     nextcloud.enable = true;
