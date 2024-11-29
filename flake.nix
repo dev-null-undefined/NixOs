@@ -62,7 +62,7 @@
     nix-software-center = {
       url = "github:snowfallorg/nix-software-center";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-stable";
         utils.follows = "flake-utils";
       };
     };

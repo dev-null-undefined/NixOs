@@ -12,10 +12,7 @@
       config.nvidia.acceptLicense = true;
 
       #config.allowBroken = true;
-      config.permittedInsecurePackages = [
-        "electron-19.1.9"
-        "electron-25.9.0"
-      ];
+      config.permittedInsecurePackages = ["electron-19.1.9" "electron-25.9.0" "dotnet-sdk-wrapped-7.0.410" "dotnet-sdk-7.0.410"];
     };
 in
   lib
@@ -31,7 +28,8 @@ in
                 if paths != ""
                 then sep + paths
                 else ""
-              )) (getAttrsPathsSep value sep))
+              ))
+            (getAttrsPathsSep value sep))
           attrset)
         else [""];
     in
@@ -40,10 +38,13 @@ in
           input ? inputs."nixpkgs-${name}",
           name,
           overlays ? [],
-        }: (_final: prev: {"${name}" = mkPkgs (import input) overlays prev.pkgs.system;});
+        }: (_final: prev: {
+          "${name}" = mkPkgs (import input) overlays prev.pkgs.system;
+        });
 
         groupIfExist = config: groups:
-          builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+          builtins.filter (group: builtins.hasAttr group config.users.groups)
+          groups;
 
         mkPkgsWithOverlays = system:
           mkPkgs (import inputs.nixpkgs)
@@ -51,9 +52,7 @@ in
           system;
 
         repeateString = string: count:
-          lib.strings.concatMapStrings
-          (_: string)
-          (lib.lists.range 0 count);
+          lib.strings.concatMapStrings (_: string) (lib.lists.range 0 count);
 
         inherit getAttrsPathsSep;
 

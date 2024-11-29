@@ -297,7 +297,12 @@
 
   # Workspace rules
   # To replicate “smart gaps” / “no gaps when only” from other WMs/Compositors, use
-  workspace = w[t1], gapsout:0, gapsin:0, border: 0, rounding:0
-  workspace = w[tg1], gapsout:0, gapsin:0, border: 0, rounding:0
-
+  # Ref https://wiki.hyprland.org/Configuring/Workspace-Rules/
+  # "Smart gaps" / "No gaps when only"
+  workspace = w[tv1], gapsout:0, gapsin:0
+  workspace = f[1], gapsout:0, gapsin:0
+  windowrulev2 = bordersize 0, floating:0, onworkspace:w[tv1]
+  windowrulev2 = rounding 0, floating:0, onworkspace:w[tv1]
+  windowrulev2 = bordersize 0, floating:0, onworkspace:f[1]
+  windowrulev2 = rounding 0, floating:0, onworkspace:f[1]
 ''
