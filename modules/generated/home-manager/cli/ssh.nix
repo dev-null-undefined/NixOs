@@ -49,10 +49,8 @@
           "PubkeyAcceptedKeyTypes" = "+ssh-rsa";
         };
       };
-
-      "cdn-*" = {
-        user = "martin.kos";
-      };
+      "*.cdn77.eu" = {user = "martin.kos";};
+      "*.cdn77.com" = {user = "martin.kos";};
       "cdn-dev-ams-1" = {
         hostname = "edge-mc-ams-dev-1-185-152-65-89.cdn77.com";
       };
