@@ -24,7 +24,6 @@ in {
       maxUploadSize = "32G";
       config = {
         dbtype = "mysql";
-        dbpassFile = "/var/nextcloud-db-pass";
         adminpassFile = "/var/nextcloud-admin-pass";
       };
       settings = {
