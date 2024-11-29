@@ -1,19 +1,31 @@
-{
+let
+  ports = {
+    allowedTCPPorts = [
+      8080 # Port for UAP to inform controller.
+      8443 # UAP inform controller https
+      8880 # Port for HTTP portal redirect, if guest portal is enabled.
+      8843 # Port for HTTPS portal redirect, ditto.
+      6789 # Port for UniFi mobile speed test.
+    ];
+    allowedUDPPorts = [
+      3478 # UDP port used for STUN.
+      10001 # UDP port used for device discovery.
+      1900 # Required for Make controller discoverable on L2 network option
+    ];
+  };
+in {
   virtualisation.oci-containers = {
     backend = "docker";
     containers = {
       unifi = {
         image = "lscr.io/linuxserver/unifi-controller:latest";
-        ports = [
-          "8443:8443"
-          "3478:3478/udp"
-          "10001:10001/udp"
-          "8080:8080"
-          "1900:1900/udp"
-          "8843:8843"
-          "8880:8880"
-          "6789:6789"
-        ];
+        ports =
+          (builtins.map
+            (port: let str = builtins.toString port; in "${str}:${str}/udp")
+            ports.allowedUDPPorts)
+          ++ (builtins.map
+            (port: let str = builtins.toString port; in "${str}:${str}")
+            ports.allowedTCPPorts);
         environment = {
           PUID = "1000";
           PGID = "1000";
@@ -25,4 +37,5 @@
       };
     };
   };
+  networking.firewall = {inherit (ports) allowedTCPPorts allowedUDPPorts;};
 }

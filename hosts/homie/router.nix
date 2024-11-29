@@ -13,13 +13,14 @@ in {
   };
 
   networking = {
-    firewall.enable = false;
+    firewall.allowPing = true;
+    firewall.allowedUDPPorts = [53 67];
+    firewall.allowedTCPPorts = [53];
     nat = {
       enable = true;
       inherit externalInterface;
       internalInterfaces = [internalInterface];
     };
-    # firewall.allowPing = true;
 
     # networking.enableIPv6 = true;
     useDHCP = false;
