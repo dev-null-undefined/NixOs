@@ -6,6 +6,7 @@
     ssh.enable = true;
     nextcloud.enable = true;
     unifi-docker.enable = true;
+    prometheus.enable = true;
   };
 
   documentation.man.generateCaches = false;
