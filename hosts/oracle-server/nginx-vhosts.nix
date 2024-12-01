@@ -39,6 +39,21 @@
         proxyWebsockets = true;
       };
     };
+    "grafana.${config.domain}" = {
+      locations."/" = {
+        proxyPass = "http://10.100.0.4";
+        proxyWebsockets = true;
+      };
+    };
+    "unifi.${config.domain}" = {
+      locations."/" = {
+        proxyPass = "https://10.100.0.4:8443";
+        extraConfig = ''
+          proxy_ssl_verify off;
+        '';
+        proxyWebsockets = true;
+      };
+    };
     "brnikov.${config.domain}" = {
       locations."/" = {
         proxyPass = "http://10.100.0.2:8123";
