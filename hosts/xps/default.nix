@@ -123,7 +123,7 @@
   #    })
   #  ];
 
-  #custom.wireguard.ips = ["10.100.0.3/24"];
+  custom.wireguard.ips = ["10.100.0.5/24"];
 
   # networking.firewall.enable = false;
 

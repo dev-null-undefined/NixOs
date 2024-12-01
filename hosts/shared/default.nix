@@ -17,6 +17,11 @@
       ip = "10.100.0.4/24";
     }
     {
+      name = "xps";
+      publicKey = "VVAbtPv32KyBJR5LoZyxBhhvPTmJRpgL8glAILN65Fc=";
+      ip = "10.100.0.5/24";
+    }
+    {
       name = "oracle-server";
       publicKey = "8JrfiB+8IBk4RxA4DR+hFnrOACwVylUjW3pIRch5UTg=";
       ip = "10.100.0.1/24";
