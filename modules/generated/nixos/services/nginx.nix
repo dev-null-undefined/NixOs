@@ -3,7 +3,10 @@
   config,
   ...
 }: let
-  ports = with config.services.nginx; [defaultSSLListenPort defaultHTTPListenPort];
+  ports = with config.services.nginx; [
+    defaultSSLListenPort
+    defaultHTTPListenPort
+  ];
 in {
   # Enable http and https ports
   networking.firewall.allowedTCPPorts = ports;
