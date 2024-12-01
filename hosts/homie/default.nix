@@ -26,6 +26,10 @@
     };
 
     nginx = {
+      commonHttpConfig = ''
+        set_real_ip_from 10.100.0.1;
+      '';
+
       # Setup Nextcloud virtual host to listen on ports
       virtualHosts = {
         "${config.services.nextcloud.hostName}" = {
