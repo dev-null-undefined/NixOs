@@ -14,6 +14,9 @@
       proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${
         toString config.services.grafana.settings.server.http_port
       }";
+      extraConfig = ''
+        access_log  /var/log/nginx/access.log  main;
+      '';
       proxyWebsockets = true;
     };
   };
