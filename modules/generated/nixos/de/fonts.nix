@@ -34,7 +34,7 @@
       overpass
       monocraft
 
-      (nerdfonts.override {fonts = ["Meslo"];})
+      nerd-fonts.meslo-lg
     ];
 
     fontDir.enable = true;

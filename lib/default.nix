@@ -12,7 +12,15 @@
       config.nvidia.acceptLicense = true;
 
       #config.allowBroken = true;
-      config.permittedInsecurePackages = ["electron-19.1.9" "electron-25.9.0" "dotnet-sdk-wrapped-7.0.410" "dotnet-sdk-7.0.410"];
+      config.permittedInsecurePackages = [
+        "electron-19.1.9"
+        "electron-25.9.0"
+        "dotnet-sdk-7.0.410"
+        "dotnet-sdk-wrapped-7.0.410"
+        "dotnet-sdk-6.0.428"
+        "dotnet-runtime-6.0.36"
+        "dotnet-sdk-wrapped-6.0.428"
+      ];
     };
 in
   lib
