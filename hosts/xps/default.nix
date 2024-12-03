@@ -55,6 +55,7 @@
       browsers.all.enable = true;
       mathematica.enable = false;
     };
+    network-profiles.enable = true;
     packages.work.enable = true;
   };
 
@@ -134,6 +135,8 @@
   networking.hostId = "69faa161";
 
   networking.firewall.checkReversePath = "loose";
+
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   system.stateVersion = "23.11"; # Did you read the comment?
 
