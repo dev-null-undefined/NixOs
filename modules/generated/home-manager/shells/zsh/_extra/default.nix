@@ -3,7 +3,7 @@ inputs: let
 in
   (import ./functions.nix)
   + (import ./gdb-gcc-functions.nix inputs)
-  + (import ./nix-functions.nix aliases)
+  + (import ./nix-functions.nix aliases inputs)
   + (import ./keybindings.nix)
   + (import ./edit-command-line.nix)
   + (import ./fzf-settings.nix)

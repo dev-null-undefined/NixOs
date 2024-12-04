@@ -1,12 +1,9 @@
 # heavily inspired by https://github.com/hlissner/dotfiles hey command
-let
-  NIXOS_CURRENT_CONFIG = ../../../../../..;
-  NIXOS_CONFIG_DIR = "/etc/nixos";
-in ''
+''
   hey-repl() {
-    DIR=$(readlink -f ${NIXOS_CONFIG_DIR})
+    DIR=$(readlink -f "''${NIXOS_CONFIG_DIR}")
     if [[ "$1" == *-git* ]]; then
-      DIR=${NIXOS_CURRENT_CONFIG}
+      DIR="''${NIXOS_CURRENT_CONFIG}"
       shift
     fi
     tmp="$(mktemp)"
