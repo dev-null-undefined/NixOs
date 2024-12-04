@@ -4,32 +4,49 @@
   ...
 }: let
   data = import ./_normal.nix;
-  generate = cfg: let
-    inherit (cfg) name;
-    key = lib.toUpper (builtins.replaceStrings ["@" "-"] ["" "_"] name);
+  generate = {
+    name,
+    security ? "wpa-psk",
+    ...
+  }: let
+    secret_prefix = "$WIFI_${
+      lib.toUpper (builtins.replaceStrings ["@" "-"] ["" "_"] name)
+    }";
   in {
-    "wifi-${name}" = {
-      connection = {
-        id = name;
-        type = "wifi";
+    "wifi-${name}" =
+      {
+        connection = {
+          id = name;
+          type = "wifi";
+        };
+        wifi = {
+          mode = "infrastructure";
+          ssid = name;
+        };
+        wifi-security =
+          {
+            key-mgmt = security;
+          }
+          // lib.optionalAttrs (security == "wpa-psk") {
+            psk = "${secret_prefix}_PSK";
+          };
+        ipv4 = {
+          dns = "${builtins.concatStringsSep ";" config.networking.nameservers};";
+          method = "auto";
+        };
+        ipv6 = {
+          addr-gen-mode = "stable-privacy";
+          method = "auto";
+        };
+      }
+      // lib.optionalAttrs (security == "wpa-eap") {
+        "802-1x" = {
+          eap = "ttls;";
+          identity = "${secret_prefix}_NAME";
+          password = "${secret_prefix}_PASSWORD";
+          phase2-auth = "mschapv2";
+        };
       };
-      wifi = {
-        mode = "infrastructure";
-        ssid = name;
-      };
-      wifi-security = {
-        key-mgmt = "wpa-psk";
-        psk = "$WIFI_${key}_PSK";
-      };
-      ipv4 = {
-        dns = "${builtins.concatStringsSep ";" config.networking.nameservers};";
-        method = "auto";
-      };
-      ipv6 = {
-        addr-gen-mode = "stable-privacy";
-        method = "auto";
-      };
-    };
   };
 in {
   networking.networkmanager.ensureProfiles.profiles =
