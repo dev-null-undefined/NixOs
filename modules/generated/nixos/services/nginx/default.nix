@@ -28,9 +28,19 @@ in {
 
     commonHttpConfig = ''
       real_ip_header X-Real-IP;
-      log_format main '$remote_addr $host $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$request_body"';
+      log_format main escape=json
+              '{"time_local":"$time_local",'
+               '"remote_user":"$remote_user",'
+               '"http_user_agent":"$http_user_agent",'
+               '"http_referer":"$http_referer",'
+               '"remote_addr":"$remote_addr",'
+               '"request_length":$request_length,'
+               '"request_time":$request_time,'
+               '"body_bytes_sent":$body_bytes_sent,'
+               '"request":"$request",'
+               '"status":$status,'
+               '"server_name":"$server_name"'
+              '}';
     '';
   };
 }
