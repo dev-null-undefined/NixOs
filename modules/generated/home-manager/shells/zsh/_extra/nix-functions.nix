@@ -1,5 +1,5 @@
-aliases: let
-  NIXOS_CURRENT_CONFIG = ../../../../../..;
+aliases: inputs: let
+  NIXOS_CURRENT_CONFIG = inputs.inputs.self;
   NIXOS_CONFIG_DIR = "/etc/nixos";
 in
   ''

@@ -1,6 +1,7 @@
 {
   pkgs,
   lib',
+  inputs,
   ...
 }: {
   home.packages = with pkgs; [nix-output-monitor zoxide lsd];
@@ -27,7 +28,7 @@
       setopt interactivecomments
     '';
 
-    initExtra = import ./_extra {inherit lib' pkgs;};
+    initExtra = import ./_extra {inherit lib' pkgs inputs;};
 
     shellAliases = import ./_aliases.nix {inherit lib' pkgs;};
 
