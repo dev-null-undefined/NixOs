@@ -9,8 +9,11 @@
     defaultHTTPListenPort
   ];
 in {
+  generated.services.nginx.catch_all.enable = lib.mkDefault true;
+
   generated.services.nginx.elastic.enable =
     lib.mkDefault config.generated.services.elastic.enable;
+
   # Enable http and https ports
   networking.firewall.allowedTCPPorts = ports;
   networking.firewall.allowedUDPPorts = ports;
