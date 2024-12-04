@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   ports = with config.services.nginx; [
@@ -22,6 +23,8 @@ in {
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
+
+    statusPage = lib.mkDefault true;
 
     commonHttpConfig = ''
       real_ip_header X-Real-IP;
