@@ -7,6 +7,7 @@
     nextcloud.enable = true;
     unifi-docker.enable = true;
     prometheus.enable = true;
+    elastic.enable = true;
   };
 
   documentation.man.generateCaches = false;
