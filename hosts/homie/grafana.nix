@@ -8,8 +8,7 @@
       };
     };
   };
-  services.nginx.virtualHosts."_" = {
-    default = true;
+  services.nginx.virtualHosts."grafana.dev-null.me" = {
     locations."/" = {
       proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${
         toString config.services.grafana.settings.server.http_port
