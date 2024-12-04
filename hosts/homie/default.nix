@@ -27,7 +27,10 @@
 
     nginx = {
       commonHttpConfig = ''
+        # Wireguard
         set_real_ip_from 10.100.0.1;
+        # TailScale
+        set_real_ip_from 100.105.178.96;
       '';
 
       # Setup Nextcloud virtual host to listen on ports
