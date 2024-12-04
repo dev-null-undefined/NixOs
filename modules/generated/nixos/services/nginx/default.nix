@@ -30,6 +30,9 @@ in {
     recommendedTlsSettings = true;
 
     statusPage = lib.mkDefault true;
+    virtualHosts.localhost.extraConfig = ''
+      access_log  /var/log/nginx/access.log  main;
+    '';
 
     commonHttpConfig = ''
       real_ip_header X-Real-IP;

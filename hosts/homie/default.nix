@@ -40,9 +40,6 @@
           enableACME = false;
           forceSSL = false;
           addSSL = true;
-          extraConfig = ''
-            access_log  /var/log/nginx/access.log  main;
-          '';
           sslCertificateKey = "/var/lib/${config.services.nextcloud.hostName}.key";
           sslCertificate = "/var/lib/${config.services.nextcloud.hostName}.crt";
         };

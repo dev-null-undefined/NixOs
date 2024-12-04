@@ -71,6 +71,10 @@ in {
           forceSSL = lib.mkDefault service.https;
           ## LetsEncrypt
           enableACME = lib.mkDefault service.https;
+
+          extraConfig = ''
+            access_log  /var/log/nginx/access.log  main;
+          '';
         };
       };
     };
