@@ -8,6 +8,7 @@
 }: {
   self,
   pkgs,
+  utils,
   lib,
   ...
 } @ outerArgs: let
