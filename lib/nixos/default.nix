@@ -3,10 +3,7 @@
   inputs,
   ...
 }: let
-  ifExists = file:
-    if builtins.pathExists file
-    then file
-    else {};
+  inherit (self.lib'.internal) mkPkgsWithOverlays ifExists;
 in {
   mkHost = {
     hostname,
@@ -14,7 +11,7 @@ in {
     modules ? [],
   }: {
     inherit system;
-    pkgs = self.lib'.internal.mkPkgsWithOverlays system;
+    pkgs = mkPkgsWithOverlays system;
     specialArgs = {inherit inputs self;};
     modules =
       [

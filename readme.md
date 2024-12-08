@@ -50,7 +50,13 @@ sudo nomos-rebuild switch
 
 Contains the configuration for each host. The hostname of the machine must match the name of the folder.
 
-It must contain these files: [`default.nix` `hardware-configuration.nix` `hardware-partitions.nix` ] that are imported by the flake.nix. [See here](#mkHostFiles)
+It must contain these files: [`default.nix` ] that are imported by the flake.nix. [See here](#mkHostFiles)
+
+### `hosts/{hostname}/overrides.nix`
+
+Overrides for the mkHost nixos configuration generator
+Example:
+{system = "aarch64-linux";}
 
 ### `hosts/{hostname}/default.nix`
 

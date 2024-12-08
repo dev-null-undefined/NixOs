@@ -64,6 +64,11 @@ in
 
         inherit getAttrsPathsSep;
 
+        ifExists = file:
+          if builtins.pathExists file
+          then (import file)
+          else {};
+
         getAttrsPaths = attrset: getAttrsPathsSep attrset ".";
       }
       // (import ./home-manager args)

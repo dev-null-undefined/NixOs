@@ -77,7 +77,8 @@
   } @ inputs: let
     autoDetectedHosts = builtins.listToAttrs (builtins.map (hostname: {
         name = hostname;
-        value = {};
+        value =
+          lib'.internal.ifExists (./hosts/${hostname} + "/overrides.nix");
       }) (builtins.attrNames
         (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
           (builtins.readDir ./hosts))));
@@ -87,11 +88,7 @@
       (lib'.attrsets.filterAttrs (_: v: v == "directory")
         (builtins.readDir ./home));
 
-    hostConfigs =
-      autoDetectedHosts
-      // {
-        "oracle-server" = {system = "aarch64-linux";};
-      };
+    hostConfigs = autoDetectedHosts;
 
     homeConfigs = builtins.foldl' (ac: cur:
       ac
