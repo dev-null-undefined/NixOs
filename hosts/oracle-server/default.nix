@@ -11,6 +11,8 @@
       nginx.enable = true;
       ssh.enable = true;
       syncthing.enable = true;
+      elastic.enable = true;
+      prometheus.enable = true;
     };
     users = {
       lomohov.enable = true;
