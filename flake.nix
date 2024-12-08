@@ -147,15 +147,6 @@
       formatter = nixpkgs.legacyPackages.${system}.alejandra;
     }))
     // {
-      templates = {
-        clion-cpp = {
-          path = ./templates/c++/clion-project;
-          description = "C++ clion project with flake support";
-        };
-        python-shell = {
-          path = ./templates/python/shell;
-          description = "Simple python dev shell flake.nix file";
-        };
-      };
+      templates = import ./templates;
     };
 }
