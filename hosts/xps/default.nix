@@ -39,6 +39,8 @@
 
   nix.settings.max-jobs = 5;
 
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
   services = {
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
