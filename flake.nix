@@ -77,8 +77,7 @@
   } @ inputs: let
     autoDetectedHosts = builtins.listToAttrs (builtins.map (hostname: {
         name = hostname;
-        value =
-          lib'.internal.ifExists (./hosts/${hostname} + "/overrides.nix");
+        value = lib'.internal.ifExists (./hosts/${hostname} + "/overrides.nix");
       }) (builtins.attrNames
         (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
           (builtins.readDir ./hosts))));
@@ -114,22 +113,11 @@
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
 
-      nixosConfigurations = builtins.foldl' (acc: record: let
-        config = {hostname = record.name;} // record.value;
+      nixosConfigurations = builtins.mapAttrs (name: value: let
+        config = {hostname = name;} // value;
       in
-        {
-          "${config.hostname}" =
-            nixpkgs.lib.nixosSystem (lib'.internal.mkHost config);
-          "${config.hostname}-vm" =
-            nixpkgs.lib.nixosSystem
-            (lib'.internal.mkHost (config
-              // {
-                modules =
-                  (config.modules or [])
-                  ++ [./modules/nixos/isVM/implementation.nix];
-              }));
-        }
-        // acc) {} (lib'.attrsets.attrsToList hostConfigs);
+        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config)) hostConfigs;
+
       homeConfigurations = builtins.foldl' (acc: config:
         {
           "${config.username}@${config.hostname}" =
