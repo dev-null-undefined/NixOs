@@ -25,6 +25,8 @@ in {
             settings = {
               experimental-features = ["nix-command" "flakes"];
 
+              trusted-users = ["root" "@wheel"];
+
               # TODO: move to special folder
               substituters = ["https://hyprland.cachix.org"];
               trusted-public-keys = [
