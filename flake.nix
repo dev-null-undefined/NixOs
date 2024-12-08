@@ -66,6 +66,14 @@
         utils.follows = "flake-utils";
       };
     };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+        utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = {
@@ -73,6 +81,7 @@
     nixpkgs,
     flake-utils,
     home-manager,
+    deploy-rs,
     ...
   } @ inputs: let
     autoDetectedHosts = builtins.listToAttrs (builtins.map (hostname: {
@@ -126,6 +135,27 @@
         }
         // acc) {}
       homeConfigs;
+
+      deploy = {
+        remoteBuild = true;
+        user = "root";
+        nodes =
+          builtins.mapAttrs (hostname: config: {
+            inherit hostname;
+            profiles.system = {
+              path =
+                deploy-rs
+                .lib
+                .${
+                  config.system or "x86_64-linux"
+                }
+                .activate
+                .nixos
+                self.nixosConfigurations.${hostname};
+            };
+          })
+          hostConfigs;
+      };
     }
     // (flake-utils.lib.eachDefaultSystem (system: {
       packages = lib'.internal.mkPkgsWithOverlays system;

@@ -58,6 +58,9 @@ in {
 
       # Run packages without installing them (test drive)
       comma
+
+      # Deployment tool
+      deploy-rs
     ]
     ++ alien-pkgs
     ++ (lib.lists.optionals
