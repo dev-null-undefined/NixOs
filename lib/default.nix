@@ -3,24 +3,25 @@
   self,
   ...
 } @ args: let
-  lib = inputs.nixpkgs.lib;
+  inherit (inputs.nixpkgs) lib;
   mkPkgs = pkgs: overlays: system:
     pkgs {
-      inherit system;
-      overlays = overlays;
-      config.allowUnfree = true;
-      config.nvidia.acceptLicense = true;
+      inherit system overlays;
+      config = {
+        allowUnfree = true;
+        nvidia.acceptLicense = true;
 
-      #config.allowBroken = true;
-      config.permittedInsecurePackages = [
-        "electron-19.1.9"
-        "electron-25.9.0"
-        "dotnet-sdk-7.0.410"
-        "dotnet-sdk-wrapped-7.0.410"
-        "dotnet-sdk-6.0.428"
-        "dotnet-runtime-6.0.36"
-        "dotnet-sdk-wrapped-6.0.428"
-      ];
+        #config.allowBroken = true;
+        permittedInsecurePackages = [
+          "electron-19.1.9"
+          "electron-25.9.0"
+          "dotnet-sdk-7.0.410"
+          "dotnet-sdk-wrapped-7.0.410"
+          "dotnet-sdk-6.0.428"
+          "dotnet-runtime-6.0.36"
+          "dotnet-sdk-wrapped-6.0.428"
+        ];
+      };
     };
 in
   lib
