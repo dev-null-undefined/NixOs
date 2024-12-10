@@ -50,7 +50,7 @@ in {
     enable = true;
     plugins = [
       inputs.hyprspace.packages.${pkgs.system}.Hyprspace
-      inputs.hyprgrass.packages.${pkgs.system}.default
+      # inputs.hyprgrass.packages.${pkgs.system}.default
     ];
     extraConfig =
       (import ./_monitors.nix {
