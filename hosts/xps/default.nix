@@ -66,7 +66,6 @@
   networking = {
     hostId = "69faa161";
     firewall.checkReversePath = "loose";
-    nameservers = ["1.1.1.1" "8.8.8.8"];
   };
 
   boot = {
