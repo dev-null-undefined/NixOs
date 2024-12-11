@@ -41,7 +41,7 @@
     };
     "grafana.${config.domain}" = {
       locations."/" = {
-        proxyPass = "http://10.100.0.4";
+        proxyPass = "http://homie";
         proxyWebsockets = true;
       };
     };
