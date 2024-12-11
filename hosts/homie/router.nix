@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   internalInterface = "enp3s0";
   externalInterface = "enp5s0";
 in {
@@ -8,19 +8,24 @@ in {
     settings = {
       interface = internalInterface;
       dhcp-range = "192.168.2.2,192.168.2.254";
-      dhcp-option = "3,192.168.2.1";
+      dhcp-option = ["3,192.168.2.1" "6,192.168.2.1"];
+      server = config.networking.nameservers;
     };
   };
 
   networking = {
-    firewall.allowPing = true;
-    firewall.allowedUDPPorts = [53 67];
-    firewall.allowedTCPPorts = [53];
+    firewall = {
+      allowPing = true;
+      allowedUDPPorts = [53 67];
+      allowedTCPPorts = [53];
+    };
     nat = {
       enable = true;
       inherit externalInterface;
       internalInterfaces = [internalInterface];
     };
+
+    nameservers = ["1.1.1.1" "8.8.8.8"];
 
     # networking.enableIPv6 = true;
     useDHCP = false;

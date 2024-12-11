@@ -13,6 +13,7 @@
     whois # domain lookup
     dnsutils # dig, nslookup, etc.
     dogdns
+    ldns # drill for testing how fast the dns is
 
     apacheHttpd # appache benchmark tool ab
 
