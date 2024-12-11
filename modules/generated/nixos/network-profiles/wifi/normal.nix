@@ -36,7 +36,7 @@
         };
         ipv6 = {
           addr-gen-mode = "stable-privacy";
-          method = "auto";
+          method = "disabled";
         };
       }
       // lib.optionalAttrs (security == "wpa-eap") {
