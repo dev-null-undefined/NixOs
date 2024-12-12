@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
+  generated.home.desktop.common.enable = lib.mkDefault true;
+
   home.packages = with pkgs; [
     grim
     imv
