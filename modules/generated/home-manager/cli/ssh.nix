@@ -6,20 +6,6 @@
       VisualHostKey yes
     '';
     matchBlocks = {
-      "oracle" = {
-        hostname = "130.61.112.64";
-        user = "martin";
-      };
-      "brnikov" = {
-        hostname = "10.100.0.2";
-        user = "martin";
-        extraOptions = {"ProxyJump" = "oracle";};
-      };
-      "ha-home" = {
-        hostname = "10.100.0.4";
-        user = "martin";
-        extraOptions = {"ProxyJump" = "oracle";};
-      };
       "NAT" = {
         hostname = "192.168.0.1";
         user = "kolobozka6b";
@@ -27,10 +13,6 @@
           "HostKeyAlgorithms" = "+ssh-rsa";
           "PubkeyAcceptedKeyTypes" = "+ssh-rsa";
         };
-      };
-      "idk" = {
-        hostname = "10.100.0.3";
-        user = "martin";
       };
       "fray1" = {hostname = "fray1.fit.cvut.cz";};
       "fray2" = {hostname = "fray2.fit.cvut.cz";};
