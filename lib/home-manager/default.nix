@@ -8,17 +8,19 @@
     hostname,
     ...
   }: let
-    standAlonePath = ../../home + "/${username}/${hostname}.nix";
-    userSpecific = ../../home + "/${username}/default.nix";
     default = ../../home/default.nix;
+    hostSpecific = ../../home/default/${hostname}.nix;
+    userSpecific = ../../home/${username}/default.nix;
+    userHostSpecific = ../../home/${username}/${hostname}.nix;
     ifExists = file:
       if builtins.pathExists file
       then file
       else {};
   in
     [
-      (ifExists standAlonePath)
       (ifExists userSpecific)
+      (ifExists hostSpecific)
+      (ifExists userHostSpecific)
       default
       ({pkgs, ...}: rec {
         home.stateVersion = "22.11";

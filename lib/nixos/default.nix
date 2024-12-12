@@ -72,8 +72,9 @@ in {
   mkHomeNixOsUser = username: modules: {
     ${username} = {nixosConfig, ...}: let
       nixosSpecific = ../../home/${username}/nixos.nix;
-      hostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
       userSpecific = ../../home/${username}/default.nix;
+      hostSpecific = ../../home/default/${nixosConfig.hostname}.nix;
+      userHostSpecific = ../../home/${username}/${nixosConfig.hostname}.nix;
       default = ../../home/default.nix;
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
@@ -82,6 +83,7 @@ in {
           (ifExists userSpecific)
           (ifExists hostSpecific)
           (ifExists nixosSpecific)
+          (ifExists userHostSpecific)
           default
         ]
         ++ modules;
