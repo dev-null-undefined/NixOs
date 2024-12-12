@@ -4,6 +4,7 @@
       id = "CDN77 VPN";
       type = "wireguard";
       interface-name = "wg-cdn77";
+      autoconnect = false;
     };
     wireguard = {
       listen-port = 51821;
