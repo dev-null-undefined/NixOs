@@ -35,30 +35,30 @@ in {
     '';
 
     commonHttpConfig = ''
-        real_ip_header X-Real-IP;
+      real_ip_header X-Real-IP;
 
-        log_format main escape=json
-         '{"@timestamp":"$time_iso8601",'
-           '"host":"$hostname",'
-           '"server_ip":"$server_addr",'
-           '"client_ip":"$remote_addr",'
-           '"xff":"$http_x_forwarded_for",'
-           '"domain":"$host",'
-           '"url":"$uri",'
-           '"referer":"$http_referer",'
-           '"args":"$args",'
-           '"upstreamtime":"$upstream_response_time",'
-           '"responsetime":"$request_time",'
-           '"request_method":"$request_method",'
-           '"status":"$status",'
-           '"size":"$body_bytes_sent",'
-           '"request_body":"$request_body",'
-           '"request_length":"$request_length",'
-           '"protocol":"$server_protocol",'
-           '"upstreamhost":"$upstream_addr",'
-           '"file_dir":"$request_filename",'
-           '"http_user_agent":"$http_user_agent"'
-         '}';
+      log_format main escape=json
+       '{"@timestamp":"$time_iso8601",'
+         '"host":"$hostname",'
+         '"server_ip":"$server_addr",'
+         '"client_ip":"$remote_addr",'
+         '"xff":"$http_x_forwarded_for",'
+         '"domain":"$host",'
+         '"url":"$uri",'
+         '"referer":"$http_referer",'
+         '"args":"$args",'
+         '"upstreamtime":"$upstream_response_time",'
+         '"responsetime":"$request_time",'
+         '"request_method":"$request_method",'
+         '"status":"$status",'
+         '"size":"$body_bytes_sent",'
+         '"request_body":"$request_body",'
+         '"request_length":"$request_length",'
+         '"protocol":"$server_protocol",'
+         '"upstreamhost":"$upstream_addr",'
+         '"file_dir":"$request_filename",'
+         '"http_user_agent":"$http_user_agent"'
+       '}';
     '';
   };
 }
