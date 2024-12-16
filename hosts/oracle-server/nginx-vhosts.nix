@@ -62,7 +62,7 @@
     };
     "home.${config.domain}" = {
       locations."/" = {
-        proxyPass = "http://10.100.0.4:8123";
+        proxyPass = "http://homie:8123";
         proxyWebsockets = true;
       };
     };
