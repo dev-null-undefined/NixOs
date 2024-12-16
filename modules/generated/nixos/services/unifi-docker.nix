@@ -16,25 +16,23 @@ let
 in {
   virtualisation.oci-containers = {
     backend = "docker";
-    containers = {
-      unifi = {
-        image = "lscr.io/linuxserver/unifi-controller:latest";
-        ports =
-          (builtins.map
-            (port: let str = builtins.toString port; in "${str}:${str}/udp")
-            ports.allowedUDPPorts)
-          ++ (builtins.map
-            (port: let str = builtins.toString port; in "${str}:${str}")
-            ports.allowedTCPPorts);
-        environment = {
-          PUID = "1000";
-          PGID = "1000";
-          TZ = "Etc/UTC";
-          MEM_LIMIT = "1024";
-          MEM_STARTUP = "1024";
-        };
-        volumes = ["/unifi:/config"];
+    containers.unifi = {
+      image = "lscr.io/linuxserver/unifi-controller:latest";
+      ports =
+        (builtins.map
+          (port: let str = builtins.toString port; in "${str}:${str}/udp")
+          ports.allowedUDPPorts)
+        ++ (builtins.map
+          (port: let str = builtins.toString port; in "${str}:${str}")
+          ports.allowedTCPPorts);
+      environment = {
+        PUID = "1000";
+        PGID = "1000";
+        TZ = "Etc/UTC";
+        MEM_LIMIT = "1024";
+        MEM_STARTUP = "1024";
       };
+      volumes = ["/unifi:/config"];
     };
   };
   networking.firewall = {inherit (ports) allowedTCPPorts allowedUDPPorts;};
