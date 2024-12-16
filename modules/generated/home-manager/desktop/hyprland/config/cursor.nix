@@ -8,6 +8,7 @@ in {
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "HYPRCURSOR_THEME,${pointer.name}"
         "HYPRCURSOR_SIZE,${toString pointer.size}"
+        "XCURSOR_SIZE,${toString pointer.size}"
       ];
       exec-once = [
         # set cursor for HL itself
