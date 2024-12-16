@@ -47,7 +47,7 @@
     };
     "unifi.${config.domain}" = {
       locations."/" = {
-        proxyPass = "https://10.100.0.4:8443";
+        proxyPass = "https://homie:8443";
         extraConfig = ''
           proxy_ssl_verify off;
         '';
@@ -56,7 +56,7 @@
     };
     "brnikov.${config.domain}" = {
       locations."/" = {
-        proxyPass = "http://10.100.0.2:8123";
+        proxyPass = "http://brnikov:8123";
         proxyWebsockets = true;
       };
     };
