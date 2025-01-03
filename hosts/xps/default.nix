@@ -3,6 +3,7 @@
 {
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   imports = [
@@ -48,7 +49,7 @@
     fprintd.enable = true;
 
     xserver = {
-      videoDrivers = ["nvidia" "intel"];
+      videoDrivers = ["nvidia" "modesetting"];
       synaptics.enable = lib.mkForce false;
     };
     thermald.enable = true;
@@ -74,7 +75,7 @@
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
 
-    # kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
+    kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
     kernelParams = [

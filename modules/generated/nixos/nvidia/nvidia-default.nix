@@ -15,7 +15,7 @@
   };
 
   services.xserver = {
-    videoDrivers = ["nvidia" "intel"];
+    videoDrivers = ["nvidia" "modesetting"];
     dpi = 96;
   };
 }
