@@ -8,14 +8,14 @@
     pavucontrol
 
     # Editing
-    shotcut
+    stable.shotcut
 
     ardour
     audacity
 
     stable.blender
     krita
-    gimp-with-plugins
+    stable.gimp-with-plugins
 
     darktable
 
