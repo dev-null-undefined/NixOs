@@ -53,8 +53,9 @@
     report=`tail -c +$home_l <<< "$report"`
     fin_report=`tail -c +20 <<< "$report"`
     month=`sed -E 's/Downloads\/martinkos1-....-(..)-..\.pdf/\1/' <<< $faktura`
-    fin_dir="$HOME/Nextcloud/Work/CDN77/Faktury/$month"
-    mkdir $fin_dir
+    year=`sed -E 's/Downloads\/martinkos1-(....)-..-..\.pdf/\1/' <<< $faktura`
+    fin_dir="$HOME/Nextcloud/Work/CDN77/Faktury/$year/$month"
+    mkdir -p $fin_dir
     mv ~/$faktura $fin_dir/
     mv ~/$report $fin_dir/$fin_report
   }
