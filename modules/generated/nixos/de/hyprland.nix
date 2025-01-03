@@ -16,6 +16,22 @@
     libsForQt5.polkit-kde-agent
 
     wl-clipboard
+
+    (stdenv.mkDerivation {
+      pname = "minesddm";
+      version = "3f6d2c";
+      dontBuild = true;
+      installPhase = ''
+        mkdir -p $out/share/sddm/themes
+        cp -aR $src/$pname $out/share/sddm/themes/$pname
+      '';
+      src = pkgs.fetchFromGitHub {
+        owner = "Davi-S";
+        repo = "sddm-theme-minesddm";
+        rev = "3f6d2c82b181719d95f27366fd7ebc43185b0088";
+        hash = "sha256-lkNUGmWe+R75IFbI/VX4j8c9DJk/QELxCg1D/CIsaAc=";
+      };
+    })
   ];
 
   services = {
@@ -39,19 +55,22 @@
     kdeconnect.enable = true;
   };
 
-  #services.getty.autologinUser = "martin";
-
-  services.displayManager.sessionPackages = [pkgs.hyprland];
-
-  services.xserver.displayManager.gdm = {
-    enable = true;
-    wayland = true;
+  services.displayManager = {
+    defaultSession = "hyprland";
+    sddm = {
+      enable = true;
+      theme = "minesddm";
+      wayland.enable = true;
+      autoLogin.relogin = true;
+    };
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
+  #services.xserver.displayManager.gdm = {
+  #  enable = true;
+  #  wayland = true;
+  #};
+
+  xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk];
 
   environment.sessionVariables = {
     "MOZ_ENABLE_WAYLAND" = "1";
