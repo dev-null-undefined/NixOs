@@ -3,7 +3,7 @@
     #nixpkgs.url = "github:dev-null-undefined/nixpkgs?ref=nixos-unstable";
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
     #nixpkgs.url = "github:NixOs/nixpkgs/nixos-24.05";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
