@@ -59,6 +59,8 @@ in {
           };
         }
 
+        inputs.yt-dlp-web-ui.nixosModules.default
+
         # Host config
         (ifExists (../../hosts + "/${hostname}/hardware-configuration.nix"))
         (ifExists (../../hosts + "/${hostname}/hardware-partitions.nix"))

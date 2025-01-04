@@ -11,6 +11,7 @@
       nginx.enable = true;
       ssh.enable = true;
       syncthing.enable = true;
+      yt-dlp-web-ui.enable = true;
       prometheus.enable = true;
     };
     users = {

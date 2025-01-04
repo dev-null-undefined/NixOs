@@ -74,6 +74,11 @@
         utils.follows = "flake-utils";
       };
     };
+
+    yt-dlp-web-ui = {
+      url = "github:dev-null-undefined/yt-dlp-web-ui";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
