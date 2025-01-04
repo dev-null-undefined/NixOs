@@ -150,13 +150,7 @@
             inherit hostname;
             profiles.system = {
               path =
-                deploy-rs
-                .lib
-                .${
-                  config.system or "x86_64-linux"
-                }
-                .activate
-                .nixos
+                deploy-rs.lib.${config.system or "x86_64-linux"}.activate.nixos
                 self.nixosConfigurations.${hostname};
             };
           })
