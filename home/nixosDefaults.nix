@@ -10,6 +10,6 @@
       sway.enable = lib.mkDefault nixosConfig.generated.de.sway.enable;
     };
     programs.enable = lib.mkDefault nixosConfig.generated.de.enable;
-    programs.opensnitch.enable = lib.mkDefault nixosConfig.generated.services.opensnitch.enable;
+    programs.opensnitch.enable = nixosConfig.generated.services.opensnitch.enable;
   };
 }

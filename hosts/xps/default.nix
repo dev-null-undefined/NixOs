@@ -21,9 +21,9 @@
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
     services = {
-      syncthing.enable = true;
-      opensnitch.enable = true;
-      #mariadb.enable = true;
+      # syncthing.enable = true;
+      # opensnitch.enable = true;
+      # mariadb.enable = true;
     };
     packages.gui = {
       virtual-box.enable = false;

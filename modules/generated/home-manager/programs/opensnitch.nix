@@ -1,3 +1,1 @@
-{
-  services.opensnitch-ui.enable = true;
-}
+{lib, ...}: {services.opensnitch-ui.enable = lib.mkDefault true;}
