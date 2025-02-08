@@ -7,7 +7,7 @@
     # rustup
 
     (rust-bin.stable.latest.complete.override {
-      targets = ["wasm32-wasi"];
+      targets = ["wasm32-wasip2" "wasm32-wasip1"];
     })
     wasm-pack
     wasm-bindgen-cli

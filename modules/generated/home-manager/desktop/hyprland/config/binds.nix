@@ -89,7 +89,7 @@ in {
         ", Print, exec, grimblast copy area"
 
         # Hyprspace overview plugin
-        "CTRL, Tab,   overview:toggle,"
+        # "CTRL, Tab,   overview:toggle,"
       ]
       ++ workspace_control;
 

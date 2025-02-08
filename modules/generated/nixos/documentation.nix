@@ -13,6 +13,6 @@
       generateCaches = lib.mkDefault true;
     };
 
-    nixos.includeAllModules = lib.mkDefault true;
+    # nixos.includeAllModules = lib.mkDefault true;
   };
 }
