@@ -68,5 +68,8 @@
     hunspellDicts.cs-cz
 
     proselint
+
+    # FPV PooooG!
+    betaflight-configurator
   ];
 }

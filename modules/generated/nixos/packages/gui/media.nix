@@ -9,6 +9,7 @@
 
     # Editing
     stable.shotcut
+    davinci-resolve
 
     ardour
     audacity
