@@ -4,6 +4,7 @@
   lib,
   inputs,
   pkgs,
+  config,
   ...
 }: {
   imports = [
@@ -75,7 +76,8 @@
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
 
-    kernelPackages = pkgs.linuxPackages_latest; #latest kernel doesn't work with nvidia proprietery driver
+    kernelPackages =
+      pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
     kernelParams = [
@@ -85,6 +87,9 @@
       "acpi_backlight=native"
       # Force S3 sleep mode
       "mem_sleep_default=deep"
+
+      # https://wiki.hyprland.org/Nvidia/
+      "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
     ];
 
     loader = {
@@ -116,6 +121,7 @@
 
   hardware = {
     nvidia = {
+      package = config.boot.kernelPackages.nvidiaPackages.beta;
       # Modesetting is required.
       modesetting.enable = true;
 
@@ -128,7 +134,7 @@
       # Fine-grained power management. Turns off GPU when not in use.
       # Experimental and only works on modern Nvidia GPUs (Turing or newer).
       powerManagement.finegrained = false;
-      open = true;
+      open = false;
       nvidiaSettings = true;
 
       # Optionally, you may need to select the appropriate driver version for your specific GPU.

@@ -5,5 +5,6 @@
       ",preferred,auto,1"
       "desc:HP Inc. HP X34 6CM14806T6,highrr,auto,1"
     ];
+    "render:explicit_sync" = 0;
   };
 }
