@@ -10,6 +10,10 @@
     prometheus.enable = true;
   };
 
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   documentation.man.generateCaches = false;
 
   custom.wireguard.ips = ["10.100.0.4/24"];

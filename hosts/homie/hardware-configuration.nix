@@ -19,7 +19,7 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-intel"];
+  boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
   # boot.initrd.includeDefaultModules = false; # Fix for missing i915 module
@@ -40,6 +40,5 @@
     "net.ipv6.conf.all.use_tempaddr" = 0;
   };
 
-  hardware.cpu.intel.updateMicrocode =
-    lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

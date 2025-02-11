@@ -1,6 +1,6 @@
 {config, ...}: let
-  internalInterface = "enp3s0";
-  externalInterface = "enp5s0";
+  internalInterface = "enp1s0";
+  externalInterface = "enp6s0";
 in {
   services.dnsmasq = {
     enable = true;
