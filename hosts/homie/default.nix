@@ -10,6 +10,13 @@
     prometheus.enable = true;
   };
 
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "mc-server";
+      static_configs = [{targets = ["127.0.0.1:19565"];}];
+    }
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
