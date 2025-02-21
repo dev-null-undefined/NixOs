@@ -27,9 +27,9 @@
     "nixos.${config.domain}" = {
       root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
     };
-    "dynmap.${config.domain}" = {
+    "mc.${config.domain}" = {
       locations."/" = {
-        proxyPass = "http://135.125.16.193:8034";
+        proxyPass = "http://homie:8100";
         proxyWebsockets = true;
       };
     };
