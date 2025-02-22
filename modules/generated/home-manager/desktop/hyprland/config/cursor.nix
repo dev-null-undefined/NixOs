@@ -14,6 +14,7 @@ in {
         # set cursor for HL itself
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       ];
+      cursor.no_hardware_cursors = true;
     };
   };
 }
