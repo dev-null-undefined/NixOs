@@ -4,6 +4,7 @@
   ...
 }: {
   generated.home.desktop.common.wayland.enable = lib.mkDefault true;
+  generated.home.desktop.hyprland.config.hdr.enable = lib.mkForce false;
 
   home.packages = with pkgs; [
     # Low battery notification daemon
