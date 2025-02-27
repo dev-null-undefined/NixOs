@@ -12,8 +12,12 @@
 
   services.prometheus.scrapeConfigs = [
     {
-      job_name = "mc-server";
+      job_name = "self-mc-server";
       static_configs = [{targets = ["127.0.0.1:19565"];}];
+    }
+    {
+      job_name = "ntk";
+      static_configs = [{targets = ["130.61.232.56:8000"];}];
     }
   ];
 
