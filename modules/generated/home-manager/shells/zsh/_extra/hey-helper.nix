@@ -52,12 +52,19 @@
     faktura=`tail -c +$home_l <<< "$faktura"`
     report=`tail -c +$home_l <<< "$report"`
     fin_report=`tail -c +20 <<< "$report"`
+    fin_faktura=`tail -c +10 <<< "$faktura"`
     month=`sed -E 's/Downloads\/martinkos1-....-(..)-..\.pdf/\1/' <<< $faktura`
     year=`sed -E 's/Downloads\/martinkos1-(....)-..-..\.pdf/\1/' <<< $faktura`
     fin_dir="$HOME/Nextcloud/Work/CDN77/Faktury/$year/$month"
     mkdir -p $fin_dir
     mv ~/$faktura $fin_dir/
     mv ~/$report $fin_dir/$fin_report
+    thunderbird -compose "\
+to='devnull@cdn77.com',\
+from='martin.kos@cdn77.com',\
+subject='Faktura $month/$year - Martin Kos',\
+body='Faktura $month/$year - Martin Kos',\
+attachment='file://$fin_dir/$fin_faktura,file://$fin_dir/$fin_report'"
   }
 
   hey-kitty() {
