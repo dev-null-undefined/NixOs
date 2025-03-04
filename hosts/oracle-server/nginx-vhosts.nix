@@ -54,6 +54,12 @@
         proxyWebsockets = true;
       };
     };
+    "prosek.${config.domain}" = {
+      locations."/" = {
+        proxyPass = "http://prosek-wagner:8123";
+        proxyWebsockets = true;
+      };
+    };
     "home.${config.domain}" = {
       locations."/" = {
         proxyPass = "http://homie:8123";
