@@ -5,7 +5,7 @@
         vscodeExtensions =
           (with vscode-extensions; [
             bbenoist.nix
-            ms-python.python
+            stable.vscode-extensions.ms-python.python
             ms-azuretools.vscode-docker
             ms-vscode-remote.remote-ssh
             ms-vscode.cpptools

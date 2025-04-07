@@ -49,7 +49,7 @@ in {
         inputs.hyprland.nixosModules.default
 
         # Home manager
-        inputs.home-manager.nixosModule
+        inputs.home-manager.nixosModules.default
         {
           home-manager = {
             useUserPackages = true;

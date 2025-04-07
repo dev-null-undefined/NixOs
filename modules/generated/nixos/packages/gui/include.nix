@@ -49,8 +49,8 @@
     lxappearance
     font-manager
 
-    ark # archive manager
-    partition-manager
+    kdePackages.ark # archive manager
+    kdePackages.partitionmanager
 
     gitg
     git-open

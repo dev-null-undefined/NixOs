@@ -48,7 +48,7 @@
       # C++ debugger
       gdb
       gef
-      pwndbg
+      stable.pwndbg
       cgdb
 
       rr
