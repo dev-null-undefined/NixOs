@@ -7,6 +7,7 @@
   generate = {
     name,
     security ? "wpa-psk",
+    band ? "",
     ...
   }: let
     secret_prefix = "$WIFI_${
@@ -22,7 +23,7 @@
         wifi = {
           mode = "infrastructure";
           ssid = name;
-        };
+        } // (lib.optionalAttrs (band != "") { inherit band; });
         wifi-security =
           {
             key-mgmt = security;

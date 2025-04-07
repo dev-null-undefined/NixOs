@@ -7,5 +7,6 @@
   {
     name = "CDN77";
     security = "wpa-eap";
+    band = "a";
   }
 ]
