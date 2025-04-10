@@ -41,7 +41,7 @@
 
     vitetris
 
-    lutris
+    stable.lutris
     zenity
     vulkan-tools
     vulkan-headers

@@ -62,7 +62,7 @@ in {
       # Deployment tool
       deploy-rs
     ]
-    ++ alien-pkgs
+    # ++ alien-pkgs
     ++ (lib.lists.optionals
       (config.services.xserver.enable || config.generated.de.enable)
       [inputs.nix-software-center.packages.${system}.nix-software-center]);

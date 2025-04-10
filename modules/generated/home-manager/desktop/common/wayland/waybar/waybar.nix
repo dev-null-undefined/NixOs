@@ -33,16 +33,11 @@ in {
         position = "bottom";
         exclusive = true;
         modules-left =
-          [
-            "clock"
-            "cpu"
-            "memory"
-          ]
+          ["clock" "cpu" "memory"]
           ++ (lib.lists.optionals isSway ["sway/workspaces"])
           ++ (lib.lists.optionals isHyprland ["hyprland/workspaces"]);
         modules-center =
-          [
-          ]
+          []
           ++ (lib.lists.optionals isSway ["sway/window"])
           ++ (lib.lists.optionals isHyprland ["hyprland/window"]);
 
@@ -50,7 +45,7 @@ in {
           "tray"
           "battery"
           "network#wl"
-          "network#enp"
+          "network#en"
           "pulseaudio"
           "pulseaudio#microphone"
         ];
@@ -107,9 +102,7 @@ in {
               today = "<span color='#ff6699'><b><u>{}</u></b></span>";
             };
           };
-          actions = {
-            on-click-right = "mode";
-          };
+          actions = {on-click-right = "mode";};
         };
         cpu = {
           format = " {usage}%";
@@ -129,8 +122,8 @@ in {
           format-charging = " {capacity}%";
           on-click = powerMonitor;
         };
-        "network#enp" = {
-          interface = "enp*";
+        "network#en" = {
+          interface = "en*";
           interval = 3;
           format = "{ifname}";
           format-ethernet = " {ipaddr}/{cidr}";

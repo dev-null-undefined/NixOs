@@ -57,7 +57,7 @@ with lib; {
 
       nvim-lspconfig
 
-      pkgs.vimPlugins.null-ls-nvim
+      none-ls-nvim
 
       # completion
       nvim-cmp
