@@ -25,7 +25,6 @@ in {
     options = ["subvol=swap"];
   };
 
-
   fileSystems."/var/data" = {
     device = "/dev/disk/by-uuid/640bd80d-0c99-447d-81b9-8ec168ea43f8";
     fsType = "btrfs";
@@ -33,5 +32,4 @@ in {
   };
 
   swapDevices = [{device = "/swap/swapfile";}];
-
 }
