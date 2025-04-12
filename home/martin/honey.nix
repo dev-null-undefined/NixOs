@@ -1,4 +1,5 @@
 {lib, ...}: {
+  p10k.colors.DIR_BACKGROUND = 141;
   wayland.windowManager.hyprland.settings = {
     monitor = lib.mkForce [
       ",preferred,auto,1"

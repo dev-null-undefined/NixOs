@@ -20,10 +20,12 @@
           id = name;
           type = "wifi";
         };
-        wifi = {
-          mode = "infrastructure";
-          ssid = name;
-        } // (lib.optionalAttrs (band != "") { inherit band; });
+        wifi =
+          {
+            mode = "infrastructure";
+            ssid = name;
+          }
+          // (lib.optionalAttrs (band != "") {inherit band;});
         wifi-security =
           {
             key-mgmt = security;
