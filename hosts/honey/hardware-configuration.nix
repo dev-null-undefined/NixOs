@@ -50,7 +50,7 @@ in {
   swapDevices = [{device = "/swap/swapfile";}];
 
   boot.kernelParams = [
-    "usbcore.initial_descriptor_timeout=100" 
+    "usbcore.initial_descriptor_timeout=100"
   ];
 
   hardware = {
