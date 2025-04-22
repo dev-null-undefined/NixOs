@@ -1,9 +1,5 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: let
+{ pkgs, config, lib, ... }:
+let
   visualSorting = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "VisualSorting";
@@ -17,10 +13,10 @@
     hash = "sha256-HK51MDe8Orsog1vDnaNvyj6rV9YVWd+hXsLeruINAuI=";
   };
   hosts = {
-    "${config.domain}" = {root = visualSorting;};
-    "bc.${config.domain}" = {root = bakule;};
-    "bc.gde.${config.domain}" = {root = bakule;};
-    "bc.kde.${config.domain}" = {root = bakule;};
+    "${config.domain}" = { root = visualSorting; };
+    "bc.${config.domain}" = { root = bakule; };
+    "bc.gde.${config.domain}" = { root = bakule; };
+    "bc.kde.${config.domain}" = { root = bakule; };
     "cpp.${config.domain}" = {
       root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
       locations."= /".extraConfig = ''
@@ -96,31 +92,27 @@
       access_log  /var/log/nginx/access.log  main;
     '';
   };
-  mergeAttrs = a: b: let
-    type = builtins.typeOf a;
-  in
-    if type != builtins.typeOf b
-    then throw "Types do not match!"
+  mergeAttrs = a: b:
+    let type = builtins.typeOf a;
+    in if type != builtins.typeOf b then
+      throw "Types do not match!"
     else
-      (
-        if type == "string"
-        then a + b
+      (if type == "string" then
+        a + b
+      else
+        (if type == "bool" then
+          a
         else
-          (
-            if type == "bool"
-            then a
-            else throw "I can not merge this type ${type}."
-          )
-      );
+          throw "I can not merge this type ${type}."));
 
-  addDefaults = _: options: let
-    defaultAttrs = builtins.attrNames defaultOptions;
-    defaultMerged = lib.attrsets.mapAttrs (name: value:
-      if builtins.elem name defaultAttrs
-      then (mergeAttrs value defaultOptions.${name})
-      else value)
-    options;
-  in
-    (builtins.removeAttrs options defaultAttrs)
+  addDefaults = _: options:
+    let
+      defaultAttrs = builtins.attrNames defaultOptions;
+      defaultMerged = lib.attrsets.mapAttrs (name: value:
+        if builtins.elem name defaultAttrs then
+          (mergeAttrs value defaultOptions.${name})
+        else
+          value) options;
+    in (builtins.removeAttrs options defaultAttrs)
     // (defaultOptions // defaultMerged);
-in {services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;}
+in { services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts; }
