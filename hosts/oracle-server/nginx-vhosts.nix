@@ -6,17 +6,8 @@ let
     rev = "2b36d720ea0bb944ddb8352cc1c1b125a399bcc0";
     sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
-  bakule = pkgs.fetchFromGitHub {
-    owner = "dev-null-undefined";
-    repo = "bakule-timer";
-    rev = "8e11361857b22b19007f3c3cdbd27ab4090a356d";
-    hash = "sha256-HK51MDe8Orsog1vDnaNvyj6rV9YVWd+hXsLeruINAuI=";
-  };
   hosts = {
     "${config.domain}" = { root = visualSorting; };
-    "bc.${config.domain}" = { root = bakule; };
-    "bc.gde.${config.domain}" = { root = bakule; };
-    "bc.kde.${config.domain}" = { root = bakule; };
     "cpp.${config.domain}" = {
       root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
       locations."= /".extraConfig = ''
