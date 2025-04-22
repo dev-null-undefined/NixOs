@@ -13,8 +13,8 @@
   bakule = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "bakule-timer";
-    rev = "0c3510371f8826fba91bdb66feedd4ea155d99b1";
-    hash = "sha256-/Kvvwz+ZGyazg8r5HSAnmY826iyoQRLbQlleSvsJAcY=";
+    rev = "8e11361857b22b19007f3c3cdbd27ab4090a356d";
+    hash = "sha256-HK51MDe8Orsog1vDnaNvyj6rV9YVWd+hXsLeruINAuI=";
   };
   hosts = {
     "${config.domain}" = {root = visualSorting;};
