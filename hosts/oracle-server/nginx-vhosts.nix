@@ -1,5 +1,9 @@
-{ pkgs, config, lib, ... }:
-let
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
   visualSorting = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "VisualSorting";
@@ -7,7 +11,7 @@ let
     sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
   hosts = {
-    "${config.domain}" = { root = visualSorting; };
+    "${config.domain}" = {root = visualSorting;};
     "cpp.${config.domain}" = {
       root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
       locations."= /".extraConfig = ''
@@ -83,27 +87,31 @@ let
       access_log  /var/log/nginx/access.log  main;
     '';
   };
-  mergeAttrs = a: b:
-    let type = builtins.typeOf a;
-    in if type != builtins.typeOf b then
-      throw "Types do not match!"
+  mergeAttrs = a: b: let
+    type = builtins.typeOf a;
+  in
+    if type != builtins.typeOf b
+    then throw "Types do not match!"
     else
-      (if type == "string" then
-        a + b
-      else
-        (if type == "bool" then
-          a
+      (
+        if type == "string"
+        then a + b
         else
-          throw "I can not merge this type ${type}."));
+          (
+            if type == "bool"
+            then a
+            else throw "I can not merge this type ${type}."
+          )
+      );
 
-  addDefaults = _: options:
-    let
-      defaultAttrs = builtins.attrNames defaultOptions;
-      defaultMerged = lib.attrsets.mapAttrs (name: value:
-        if builtins.elem name defaultAttrs then
-          (mergeAttrs value defaultOptions.${name})
-        else
-          value) options;
-    in (builtins.removeAttrs options defaultAttrs)
+  addDefaults = _: options: let
+    defaultAttrs = builtins.attrNames defaultOptions;
+    defaultMerged = lib.attrsets.mapAttrs (name: value:
+      if builtins.elem name defaultAttrs
+      then (mergeAttrs value defaultOptions.${name})
+      else value)
+    options;
+  in
+    (builtins.removeAttrs options defaultAttrs)
     // (defaultOptions // defaultMerged);
-in { services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts; }
+in {services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;}

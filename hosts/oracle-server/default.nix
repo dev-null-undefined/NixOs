@@ -1,6 +1,6 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ ... }: {
+{...}: {
   imports = [
     ./nginx-vhosts.nix
     ./openvpn-server.nix
@@ -28,7 +28,7 @@
 
   domain = "dev-null.me";
 
-  custom.wireguard.ips = [ "10.100.0.1/24" ];
+  custom.wireguard.ips = ["10.100.0.1/24"];
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

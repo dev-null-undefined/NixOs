@@ -1,10 +1,10 @@
-{ config, ... }:
-let
-  bakule-timer = builtins.getFlake
+{config, ...}: let
+  bakule-timer =
+    builtins.getFlake
     "github:dev-null-undefined/bakule-timer/143e4f8ee5c0c486843c5862742ec20063e34efe";
   bakule-path = "${
-      bakule-timer.packages.${config.nixpkgs.system}.bakule-timer
-    }/share/bakule-timer";
+    bakule-timer.packages.${config.nixpkgs.system}.bakule-timer
+  }/share/bakule-timer";
   conf = {
     root = bakule-path;
     enableACME = true;
