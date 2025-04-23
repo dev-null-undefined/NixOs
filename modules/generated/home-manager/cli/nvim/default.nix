@@ -20,21 +20,15 @@ with lib; {
     statix
   ];
 
-  programs.zsh = {
-    initExtra = ''
-      export EDITOR="nvim"
-    '';
-
-    shellAliases = {
-      v = "nvim";
-    };
-  };
+  programs.zsh.shellAliases = {v = "nvim";};
 
   programs.neovim = {
     enable = true;
 
     viAlias = true;
     vimAlias = true;
+
+    defaultEditor = true;
 
     plugins = with pkgs.vimPlugins; [
       {
