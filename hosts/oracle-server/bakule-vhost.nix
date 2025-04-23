@@ -14,10 +14,7 @@
       access_log  /var/log/nginx/access.log  main;
     '';
     locations = {
-      "/" = {
-        index = "index.html";
-        tryFiles = "$uri $uri/ $uri.php";
-      };
+      "/".tryFiles = "$uri $uri/ $uri.php";
       "~ \\.php$".extraConfig = ''
         fastcgi_pass  unix:${config.services.phpfpm.pools.bakule.socket};
       '';
