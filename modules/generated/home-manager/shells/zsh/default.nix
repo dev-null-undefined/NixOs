@@ -41,7 +41,7 @@ in {
       setopt interactivecomments
     '';
 
-    initExtra =
+    initContent =
       (import ./_extra {inherit lib' pkgs inputs;})
       + builtins.readFile p10k-config;
 
