@@ -1,7 +1,7 @@
 {config, ...}: let
   bakule-timer =
     builtins.getFlake
-    "github:dev-null-undefined/bakule-timer/e0b000e6c3ee9a048890baa1983a2207c673cc11";
+    "github:dev-null-undefined/bakule-timer/20548fb891e8821230236c3616e37f06cec3ee2f";
   bakule-path = "${
     bakule-timer.packages.${config.nixpkgs.system}.bakule-timer
   }/share/bakule-timer";
