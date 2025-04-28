@@ -50,6 +50,7 @@
     most
     sshfs
     openssh
+    pssh
     openssl
     killall
     thefuck
