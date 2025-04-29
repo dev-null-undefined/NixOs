@@ -4,7 +4,10 @@
 
     navi.enable = true;
 
-    lsd.enable = true;
+    lsd = {
+        enable = true;
+        enableZshIntegration = false;
+    };
 
     broot = {
       enable = true;
