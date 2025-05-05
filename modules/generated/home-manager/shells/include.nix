@@ -5,8 +5,8 @@
     navi.enable = true;
 
     lsd = {
-        enable = true;
-        enableZshIntegration = false;
+      enable = true;
+      enableZshIntegration = false;
     };
 
     broot = {
