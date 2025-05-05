@@ -24,7 +24,7 @@
 
   environment.systemPackages = with pkgs; [
     # Proccess monitor
-    stable.zenith
+    mission-center
     # bluetooth manager
     blueman
 
