@@ -39,6 +39,9 @@
         proxyPass = "https://homie.rat-python.ts.net";
         proxyWebsockets = true;
       };
+      extraConfig = ''
+        client_max_body_size 32G;
+      '';
     };
     "grafana.${config.domain}" = {
       locations."/" = {
