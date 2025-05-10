@@ -21,9 +21,7 @@
     # Run unpatched binaries on Nix/NixOS
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
-      };
+      inputs = {nixpkgs.follows = "nixpkgs-stable";};
     };
 
     hyprland = {
@@ -52,9 +50,7 @@
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs = {nixpkgs.follows = "nixpkgs";};
     };
 
     nix-software-center = {
@@ -125,8 +121,7 @@
       nixosConfigurations = builtins.mapAttrs (name: value: let
         config = {hostname = name;} // value;
       in
-        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config))
-      hostConfigs;
+        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config)) hostConfigs;
 
       homeConfigurations = builtins.foldl' (acc: config:
         {
