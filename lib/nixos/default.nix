@@ -48,6 +48,8 @@ in {
         })
         inputs.hyprland.nixosModules.default
 
+        inputs.spicetify-nix.nixosModules.default
+
         # Home manager
         inputs.home-manager.nixosModules.default
         {
@@ -58,8 +60,6 @@ in {
             sharedModules = [../../home/nixosDefaults.nix];
           };
         }
-
-        inputs.yt-dlp-web-ui.nixosModules.default
 
         # Host config
         (ifExists (../../hosts + "/${hostname}/hardware-configuration.nix"))

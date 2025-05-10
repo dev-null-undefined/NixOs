@@ -24,10 +24,6 @@
     xournalpp
     rnote
 
-    # Audio
-    spotifywm
-    #spotify
-
     # Video
     vlc
     mpv

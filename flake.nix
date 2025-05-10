@@ -73,10 +73,7 @@
       };
     };
 
-    yt-dlp-web-ui = {
-      url = "github:dev-null-undefined/yt-dlp-web-ui";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    spicetify-nix.url = "github:Gerg-L/spicetify-nix";
   };
 
   outputs = {
