@@ -3,17 +3,14 @@
   self,
 }:
 with self.lib'.internal; {
-  stable = mkOverlay {
-    name = "stable";
-  };
-  dev-null = mkOverlay {
-    name = "dev-null";
-  };
-  master = mkOverlay {
-    name = "master";
-  };
+  stable = mkOverlay {name = "stable";};
+  dev-null = mkOverlay {name = "dev-null";};
+  master = mkOverlay {name = "master";};
   custom-packages = import ../pkgs;
   wep_wpa_supplicant_fix = import ./wep_wpa_supplicant_fix.nix;
+
+  kitty-stable = super: final: {inherit (super.stable) kitty;};
+
   hyprland = inputs.hyprland.overlays.default;
   hyprland-contrib = inputs.hyprland-contrib.overlays.default;
 
