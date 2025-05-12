@@ -1,4 +1,12 @@
-{
+let
+  docker-config = {
+    hostname = "localhost";
+    user = "root";
+    extraOptions = {
+      StrictHostKeyChecking = "no";
+    };
+  };
+in {
   programs.ssh.matchBlocks = {
     "cdn77" = {
       user = "martin.kos";
@@ -32,5 +40,7 @@
       hostname = "others-mc-dev-martinkos-45-136-152-121.cdn77.eu";
     };
     "cdn-http3-testing" = {hostname = "edge-mc-prg-84-17-61-108.cdn77.com";};
+    "cdn-docker" = {port = 2222;} // docker-config;
+    "cdn-docker-test" = {port = 3333;} // docker-config;
   };
 }
