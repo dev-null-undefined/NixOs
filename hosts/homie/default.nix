@@ -21,7 +21,13 @@
     }
     {
       job_name = "bakule";
-      static_configs = [{targets = ["bc.dev-null.me:443"];}];
+      static_configs = [{
+        targets = [
+          "bc.dev-null.me:443"
+          "bc.kubik.dev-null.me:443"
+          "bc.posledni.dev-null.me:443"
+        ];
+      }];
       scheme = "https";
     }
   ];
