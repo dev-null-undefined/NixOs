@@ -1,33 +1,62 @@
-{config, ...}: let
-  bakule-timer =
-    builtins.getFlake
-    "github:dev-null-undefined/bakule-timer/20548fb891e8821230236c3616e37f06cec3ee2f";
-  bakule-path = "${
-    bakule-timer.packages.${config.nixpkgs.system}.bakule-timer
-  }/share/bakule-timer";
-  conf = {
-    root = bakule-path;
+{ config, ... }:
+let
+  kubik-source-domain = "source.kubik.${config.domain}";
+
+  bakule-timer-flake = builtins.getFlake
+    "github:dev-null-undefined/bakule-timer/96213dcca47c36eae632a560e496daa087643e4a";
+
+  bakule-uzdil-pkg =
+    bakule-timer-flake.packages.${config.nixpkgs.system}.bakule-timer-uzdil;
+
+  bakule-uzdil-path = "${bakule-uzdil-pkg}/share/bakule-timer";
+
+  bakule-kubik-path = "${
+      bakule-uzdil-pkg.override {
+        pdf_url = "https://${kubik-source-domain}";
+        domain = kubik-source-domain;
+        author = "jakub.charvat";
+      }
+    }/share/bakule-timer";
+
+  conf-common = {
     enableACME = true;
     forceSSL = true;
     http3 = true;
     extraConfig = ''
       access_log  /var/log/nginx/access.log  main;
     '';
+  };
+
+  conf-bakule = {
     locations = {
       "/".tryFiles = "$uri $uri/ $uri.php";
       "~ \\.php$".extraConfig = ''
         fastcgi_pass  unix:${config.services.phpfpm.pools.bakule.socket};
       '';
     };
-  };
+  } // conf-common;
+
+  conf-uzdil = { root = bakule-uzdil-path; } // conf-bakule;
+
+  conf-kubik = { root = bakule-kubik-path; } // conf-bakule;
+
+  conf-kubik-source = {
+    locations."/" = { proxyPass = "http://localhost:9989"; };
+  } // conf-common;
 in {
   services.nginx.virtualHosts = {
-    "bc.${config.domain}" = conf;
-    "bc.gde.${config.domain}" = conf;
-    "bc.kde.${config.domain}" = conf;
+    "bc.${config.domain}" = conf-uzdil;
+    "bc.gde.${config.domain}" = conf-uzdil;
+    "bc.kde.${config.domain}" = conf-uzdil;
+
+    "bc.kubik.${config.domain}" = conf-kubik;
+    "bc.kde.kubik.${config.domain}" = conf-kubik;
+    "bc.gde.kubik.${config.domain}" = conf-kubik;
+
+    "${kubik-source-domain}" = conf-kubik-source;
   };
   services.phpfpm.pools.bakule = {
-    user = "nobody";
+    user = "nginx";
     settings = {
       "pm" = "dynamic";
       "listen.owner" = config.services.nginx.user;
