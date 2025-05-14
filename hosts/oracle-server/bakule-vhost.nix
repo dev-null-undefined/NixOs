@@ -1,8 +1,8 @@
-{ config, ... }:
-let
+{config, ...}: let
   kubik-source-domain = "source.kubik.${config.domain}";
 
-  bakule-timer-flake = builtins.getFlake
+  bakule-timer-flake =
+    builtins.getFlake
     "github:dev-null-undefined/bakule-timer/96213dcca47c36eae632a560e496daa087643e4a";
 
   bakule-uzdil-pkg =
@@ -11,12 +11,20 @@ let
   bakule-uzdil-path = "${bakule-uzdil-pkg}/share/bakule-timer";
 
   bakule-kubik-path = "${
-      bakule-uzdil-pkg.override {
-        pdf_url = "https://${kubik-source-domain}";
-        domain = kubik-source-domain;
-        author = "jakub.charvat";
-      }
-    }/share/bakule-timer";
+    bakule-uzdil-pkg.override {
+      pdf_url = "https://${kubik-source-domain}";
+      domain = "bc.kubik.${config.domain}";
+      author = "jakub.charvat";
+    }
+  }/share/bakule-timer";
+
+  bakule-posledni-path = "${
+    bakule-uzdil-pkg.override {
+      pdf_url = "https://lastaapps.sh.cvut.cz/public.php/dav/files/MZkFk4LgFyGgfzc";
+      domain = "bc.posledni.${config.domain}";
+      author = "petr.lastovicka";
+    }
+  }/share/bakule-timer";
 
   conf-common = {
     enableACME = true;
@@ -27,22 +35,28 @@ let
     '';
   };
 
-  conf-bakule = {
-    locations = {
-      "/".tryFiles = "$uri $uri/ $uri.php";
-      "~ \\.php$".extraConfig = ''
-        fastcgi_pass  unix:${config.services.phpfpm.pools.bakule.socket};
-      '';
-    };
-  } // conf-common;
+  conf-bakule =
+    {
+      locations = {
+        "/".tryFiles = "$uri $uri/ $uri.php";
+        "~ \\.php$".extraConfig = ''
+          fastcgi_pass  unix:${config.services.phpfpm.pools.bakule.socket};
+        '';
+      };
+    }
+    // conf-common;
 
-  conf-uzdil = { root = bakule-uzdil-path; } // conf-bakule;
+  conf-uzdil = {root = bakule-uzdil-path;} // conf-bakule;
 
-  conf-kubik = { root = bakule-kubik-path; } // conf-bakule;
+  conf-kubik = {root = bakule-kubik-path;} // conf-bakule;
 
-  conf-kubik-source = {
-    locations."/" = { proxyPass = "http://localhost:9989"; };
-  } // conf-common;
+  conf-posledni = {root = bakule-posledni-path;} // conf-bakule;
+
+  conf-kubik-source =
+    {
+      locations."/" = {proxyPass = "http://localhost:9989";};
+    }
+    // conf-common;
 in {
   services.nginx.virtualHosts = {
     "bc.${config.domain}" = conf-uzdil;
@@ -50,8 +64,8 @@ in {
     "bc.kde.${config.domain}" = conf-uzdil;
 
     "bc.kubik.${config.domain}" = conf-kubik;
-    "bc.kde.kubik.${config.domain}" = conf-kubik;
-    "bc.gde.kubik.${config.domain}" = conf-kubik;
+
+    "bc.posledni.${config.domain}" = conf-posledni;
 
     "${kubik-source-domain}" = conf-kubik-source;
   };
