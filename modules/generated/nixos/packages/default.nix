@@ -66,5 +66,8 @@
 
     pkg-config
     dbus
+
+    age
+    sops
   ];
 }
