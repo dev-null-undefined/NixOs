@@ -1,7 +1,7 @@
 {
   wayland.windowManager.hyprland.settings = {
     windowrule = [
-     # Firefox stuff
+      # Firefox stuff
       # make Firefox PiP window floating and sticky
       "float, title:Picture-in-Picture"
       "pin, title:Picture-in-Picture"
