@@ -70,6 +70,11 @@
     };
 
     spicetify-nix.url = "github:Gerg-L/spicetify-nix";
+
+    sops = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
   };
 
   outputs = {
@@ -121,7 +126,8 @@
       nixosConfigurations = builtins.mapAttrs (name: value: let
         config = {hostname = name;} // value;
       in
-        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config)) hostConfigs;
+        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config))
+      hostConfigs;
 
       homeConfigurations = builtins.foldl' (acc: config:
         {

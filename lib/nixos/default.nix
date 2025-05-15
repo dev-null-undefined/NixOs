@@ -50,6 +50,8 @@ in {
 
         inputs.spicetify-nix.nixosModules.default
 
+        inputs.sops.nixosModules.default
+
         # Home manager
         inputs.home-manager.nixosModules.default
         {

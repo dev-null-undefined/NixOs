@@ -4,6 +4,7 @@
     packages.enable = lib.mkDefault true;
     services.enable = lib.mkDefault true;
     documentation.enable = lib.mkDefault true;
+    sops.enable = lib.mkDefault true;
   };
 
   # Change default time limit for unit stop
