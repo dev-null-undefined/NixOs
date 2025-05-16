@@ -2,8 +2,10 @@ keys:
   - &server_homie age1304fjupkh2dyulx3c9fr5kx8f0m49t70d9fafex4pwuh66xays9q42s45p
   - &server_oracle age1sekzjzamlj84cn2cejzu4cpskzn9adta2dfurnxhez90sxt7fgaqvlqcpr
   - &pc_honey age18qt9vk6gdkwdjg9a2jlvlzvj399qr8m2xpxfqvqz9fxad9rx8flqhm9n7m
+  - &pc_xps age15rgrjxrkkxglvmp46fk750le24c297xtvnqww7tnnqa9zz6sh9cqrpesy4
 creation_rules:
   - path_regex: secrets/network-manager.env
     key_groups:
       - age:
         - *pc_honey
+        - *pc_xps
