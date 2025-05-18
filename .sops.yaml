@@ -9,3 +9,7 @@ creation_rules:
       - age:
         - *pc_honey
         - *pc_xps
+  - path_regex: secrets/nord-vpn.txt
+    key_groups:
+      - age:
+        - *server_homie

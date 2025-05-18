@@ -2,12 +2,15 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {config, ...}: {
   imports = [./router.nix ./grafana.nix];
-  generated.services = {
-    ssh.enable = true;
-    nextcloud.enable = true;
-    unifi-docker.enable = true;
-    home-assistant.enable = true;
-    prometheus.enable = true;
+  generated = {
+    services = {
+      ssh.enable = true;
+      nextcloud.enable = true;
+      unifi-docker.enable = true;
+      home-assistant.enable = true;
+      prometheus.enable = true;
+    };
+    vpn.enable = true;
   };
 
   services.prometheus.scrapeConfigs = [
