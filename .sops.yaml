@@ -9,7 +9,11 @@ creation_rules:
       - age:
         - *pc_honey
         - *pc_xps
-  - path_regex: secrets/nord-vpn.txt
+  - path_regex: secrets/protonvpn-wireguard-pk
+    key_groups:
+      - age:
+        - *server_homie
+  - path_regex: secrets/transmission-auth
     key_groups:
       - age:
         - *server_homie
