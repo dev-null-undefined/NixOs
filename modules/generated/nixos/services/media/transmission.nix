@@ -13,7 +13,7 @@ in {
       {
         from = port;
         to = port;
-        protocol = "both";
+        protocol = "tcp";
       }
     ];
   };
