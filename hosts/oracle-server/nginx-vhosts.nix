@@ -27,13 +27,6 @@
         proxyWebsockets = true;
       };
     };
-    "ntk.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://130.61.232.56:8502";
-        proxyWebsockets = true;
-      };
-    };
-
     "cloud.${config.domain}" = {
       locations."/" = {
         proxyPass = "https://homie.rat-python.ts.net";
