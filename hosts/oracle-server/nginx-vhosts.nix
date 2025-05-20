@@ -74,6 +74,37 @@
         rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
       '';
     };
+    # Arr stack
+    "jellyfin.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:8096";
+      };
+    };
+    "jellyseerr.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:5055";
+      };
+    };
+    "prowlarr.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:9696";
+      };
+    };
+    "sonarr.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:8989";
+      };
+    };
+    "radarr.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:7878";
+      };
+    };
   };
   defaultOptions = {
     enableACME = true;
