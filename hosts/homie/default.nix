@@ -9,6 +9,7 @@
       unifi-docker.enable = true;
       home-assistant.enable = true;
       prometheus.enable = true;
+      media.enable = true;
     };
     vpn.enable = true;
   };
