@@ -23,19 +23,19 @@
       job_name = "ntk";
       static_configs = [{targets = ["130.61.232.56:8000"];}];
     }
-    {
-      job_name = "bakule";
-      static_configs = [
-        {
-          targets = [
-            "bc.dev-null.me:443"
-            "bc.kubik.dev-null.me:443"
-            "bc.posledni.dev-null.me:443"
-          ];
-        }
-      ];
-      scheme = "https";
-    }
+    #    {
+    #      job_name = "bakule";
+    #      static_configs = [
+    #        {
+    #          targets = [
+    #            "bc.dev-null.me:443"
+    #            "bc.kubik.dev-null.me:443"
+    #            "bc.posledni.dev-null.me:443"
+    #          ];
+    #        }
+    #      ];
+    #      scheme = "https";
+    #    }
   ];
 
   # Use the systemd-boot EFI boot loader.

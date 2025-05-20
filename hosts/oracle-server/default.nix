@@ -5,7 +5,7 @@
     ./nginx-vhosts.nix
     ./openvpn-server.nix
     ./minecraft-forwarding.nix
-    ./bakule-vhost.nix
+    # ./bakule-vhost.nix
   ];
 
   generated = {
