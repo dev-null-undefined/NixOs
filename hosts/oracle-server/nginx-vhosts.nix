@@ -105,6 +105,12 @@
         proxyPass = "http://homie:7878";
       };
     };
+    "transmission.${config.domain}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = "http://homie:9091";
+      };
+    };
   };
   defaultOptions = {
     enableACME = true;
