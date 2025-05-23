@@ -22,7 +22,7 @@
     #    fetchSubmodules = true;
     #  };
     #}))
-    #(master.polymc.overrideAttrs (old: rec {
+    #(polymc.overrideAttrs (old: rec {
     #  src = fetchFromGitHub {
     #    owner = "dev-null-undefined";
     #    repo = "PolyMC";
@@ -41,7 +41,7 @@
 
     vitetris
 
-    stable.lutris
+    lutris
     zenity
     vulkan-tools
     vulkan-headers

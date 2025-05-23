@@ -11,7 +11,7 @@
     mimeo
     slurp
     waypipe
-    stable.wf-recorder
+    wf-recorder
     wl-clipboard
     wl-mirror
     wlr-randr

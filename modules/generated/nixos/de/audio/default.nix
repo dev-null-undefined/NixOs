@@ -9,7 +9,7 @@
     playerctl
     pulseaudio
     patchage
-    stable.carla
+    carla
     qjackctl
     alsa-utils
     alsa-lib

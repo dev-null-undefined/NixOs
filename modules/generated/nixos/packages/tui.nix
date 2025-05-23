@@ -26,7 +26,7 @@
     htop
     atop
     bottom
-    stable.zenith
+    zenith
 
     mutt # email client
 

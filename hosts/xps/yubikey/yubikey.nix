@@ -7,8 +7,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    stable.yubikey-manager
-    #yubikey-manager-qt
+    yubikey-manager
     yubikey-touch-detector
     yubikey-personalization
     yubikey-personalization-gui

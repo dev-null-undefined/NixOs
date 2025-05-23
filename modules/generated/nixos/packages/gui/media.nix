@@ -4,19 +4,19 @@
     droidcam
 
     # Audio control
-    stable.easyeffects
+    easyeffects
     pavucontrol
 
     # Editing
-    stable.shotcut
+    shotcut
     davinci-resolve
 
     ardour
     audacity
 
-    stable.blender
+    blender
     krita
-    stable.gimp-with-plugins
+    gimp-with-plugins
 
     darktable
 
@@ -28,7 +28,7 @@
     vlc
     mpv
 
-    master.kodi
+    kodi
 
     # Images
     feh

@@ -48,7 +48,7 @@
       # C++ debugger
       gdb
       gef
-      stable.pwndbg
+      pwndbg
       cgdb
 
       rr
@@ -65,7 +65,7 @@
 
       # static analysis tool
       cppcheck
-      stable.cpplint
+      cpplint
 
       # makefile checker
       checkmake

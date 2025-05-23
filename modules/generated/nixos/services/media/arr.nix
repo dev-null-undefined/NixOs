@@ -29,7 +29,7 @@
 
     flaresolverr = {
       enable = true;
-      package = pkgs.master.flaresolverr;
+      package = pkgs.flaresolverr;
     };
 
     sonarr = {enable = true;};

@@ -9,7 +9,7 @@
     tcpdump # packet analyzer
     netdiscover # quick LAN scanner
     traceroute
-    stable.mitmproxy # https proxy
+    mitmproxy # https proxy
     whois # domain lookup
     dnsutils # dig, nslookup, etc.
     dogdns
