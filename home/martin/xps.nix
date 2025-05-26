@@ -7,9 +7,9 @@
       "desc:Samsung Display Corp. 0x4196,preferred,6000x2464,2"
     ];
     workspace = [
-      "4, monitor:desc:BNQ BenQ PD3205U 59P01340019, default:true"
+      "11, monitor:desc:BNQ BenQ PD3205U 59P01340019, default:true"
       "1, monitor:desc:BNQ BenQ PD3205U GBP00096019, default:true"
-      "11, monitor:desc:Samsung Display Corp. 0x4196, default:true"
+      "9, monitor:desc:Samsung Display Corp. 0x4196, default:true"
     ];
   };
 }
