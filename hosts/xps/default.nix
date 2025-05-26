@@ -121,7 +121,7 @@
 
   hardware = {
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.latest;
       # Modesetting is required.
       modesetting.enable = true;
 
