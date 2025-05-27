@@ -18,7 +18,7 @@
 
   defaultPrefix = netPrefix internalIp;
 in {
-  moduleSettings = {
+  options = {
     dhcp = {
       dns = lib.mkOption {
         type = lib.types.bool;

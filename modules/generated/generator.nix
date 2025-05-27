@@ -3,7 +3,7 @@
   mainDir,
   ignorePrefix ? ["_"],
   default ? "default",
-  moduleSettings ? "moduleSettings",
+  moduleOptions ? "options",
   ...
 }: {
   self,
@@ -14,7 +14,7 @@
 } @ outerArgs: let
   lib' = self.lib';
 
-  filtered = [moduleSettings];
+  filtered = [moduleOptions];
 
   # Recusivly return all files in given directory in a list
   # str -> [ str ]
@@ -91,7 +91,7 @@
   getNixKeyPaths = dir: mkNixKeyPaths (getNixFiles dir);
 
   mkFileOption = keyPath: let
-    settings = (getConfigFromFile keyPath.path)."${moduleSettings}" or {};
+    settings = (getConfigFromFile keyPath.path)."${moduleOptions}" or {};
   in (lib.attrsets.recursiveUpdate {
       enable = lib.mkOption {
         type = lib.types.bool;

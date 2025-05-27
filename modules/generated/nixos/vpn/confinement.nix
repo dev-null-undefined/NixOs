@@ -53,7 +53,7 @@
 
   mappingCmds = generatePortMapping cf.portMappings;
 in {
-  moduleSettings = {
+  options = {
     netnsName = lib.mkOption {
       type = lib.types.str;
       default = "protonvpn";
