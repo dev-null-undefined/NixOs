@@ -27,16 +27,13 @@
 
     prowlarr.enable = true;
 
-    flaresolverr = {
-      enable = true;
-      package = pkgs.flaresolverr;
-    };
+    flaresolverr.enable = true;
 
-    sonarr = {enable = true;};
-    radarr = {enable = true;};
+    sonarr.enable = true;
+    radarr.enable = true;
 
-    bazarr = {enable = true;};
+    bazarr.enable = true;
 
-    readarr = {enable = true;};
+    readarr.enable = true;
   };
 }
