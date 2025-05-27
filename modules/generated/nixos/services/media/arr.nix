@@ -16,9 +16,9 @@
     sonarr.group = "shared-media";
     immich.group = "shared-media";
     calibre-web.group = "shared-media";
-
-    transmission.group = "shared-media";
   };
+
+  generated.services.media.qbittorrent.group = "shared-media";
 
   services = {
     jellyfin.enable = true;
