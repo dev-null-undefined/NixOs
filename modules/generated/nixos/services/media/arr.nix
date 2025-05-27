@@ -18,7 +18,7 @@
     calibre-web.group = "shared-media";
   };
 
-  generated.services.media.qbittorrent.group = "shared-media";
+  generated.services.media.qbittorrent.include.group = "shared-media";
 
   services = {
     jellyfin.enable = true;

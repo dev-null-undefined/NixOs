@@ -4,7 +4,7 @@
   lib,
   ...
 }: let
-  cfg = config.generated.services.media.qbittorrent;
+  cfg = config.generated.services.media.qbittorrent.include;
 
   vpnNetns = config.generated.vpn.confinement.netnsName;
 in {

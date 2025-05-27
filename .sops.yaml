@@ -13,7 +13,7 @@ creation_rules:
     key_groups:
       - age:
         - *server_homie
-  - path_regex: secrets/transmission-auth
+  - path_regex: secrets/qbittorrent-pass
     key_groups:
       - age:
         - *server_homie
