@@ -17,6 +17,8 @@
 
     apacheHttpd # appache benchmark tool ab
 
+    wrk
+
     android-tools # adb
 
     # Git utils
