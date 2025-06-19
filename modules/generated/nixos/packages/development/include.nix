@@ -16,8 +16,10 @@
     ldns # drill for testing how fast the dns is
 
     apacheHttpd # appache benchmark tool ab
-
     wrk
+
+    openresty
+    groff
 
     android-tools # adb
 
