@@ -1,9 +1,8 @@
 {
   inputs = {
-    nixpkgs.url = "github:dev-null-undefined/nixpkgs/unstable-with-prowlarr-fix";
-    # nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
     #nixpkgs.url = "github:NixOs/nixpkgs/nixos-24.05";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -51,14 +50,6 @@
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs = {nixpkgs.follows = "nixpkgs";};
-    };
-
-    nix-software-center = {
-      url = "github:snowfallorg/nix-software-center";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
-        utils.follows = "flake-utils";
-      };
     };
 
     deploy-rs = {

@@ -19,14 +19,15 @@ with self.lib'.internal; {
       firefox
       libreoffice
       thunderbird
-      pwndbg
-      midori
       carla
       blender
       easyeffects
       shotcut
       gimp-with-plugins
-      davinci-resolve
+      # davinci-resolve
+      clisp
+      lldb
+      darktable
       ;
   };
 

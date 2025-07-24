@@ -53,7 +53,6 @@
     pssh
     openssl
     killall
-    thefuck
     pciutils
 
     # multimedia manipulation

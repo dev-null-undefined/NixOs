@@ -9,7 +9,7 @@
 
     # Editing
     shotcut
-    davinci-resolve
+    # davinci-resolve
 
     ardour
     audacity

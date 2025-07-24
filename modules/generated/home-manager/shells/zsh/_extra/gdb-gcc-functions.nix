@@ -27,10 +27,6 @@ in ''
     gef "$@"
   }
 
-  gdb-pwn() {
-    pwndbg "$@"
-  }
-
   gdb-c() {
     cgdb "$@"
   }

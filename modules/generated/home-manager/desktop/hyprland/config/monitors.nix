@@ -6,6 +6,5 @@
       "desc:HP Inc. HP X34 6CM14806T6,highrr,auto-up,1"
       "desc:Microstep MPG321UX OLED 0x01010101,highrr,auto,1"
     ];
-    "render:explicit_sync" = 0;
   };
 }

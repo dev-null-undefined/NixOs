@@ -10,7 +10,8 @@
     yubikey-manager
     yubikey-touch-detector
     yubikey-personalization
-    yubikey-personalization-gui
+
+    yubioath-flutter
 
     gnupg
     pinentry-curses

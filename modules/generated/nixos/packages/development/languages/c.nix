@@ -30,7 +30,7 @@
       cling
 
       # Clang
-      lldb_14
+      lldb
       clang-tools
       clang-manpages
       clang-analyzer
@@ -48,7 +48,6 @@
       # C++ debugger
       gdb
       gef
-      pwndbg
       cgdb
 
       rr

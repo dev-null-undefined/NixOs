@@ -71,7 +71,7 @@
   };
 
   boot = {
-    blacklistedKernelModules = ["i2c_hid"];
+    blacklistedKernelModules = ["i2c_hid" "hid_multitouch" "i2c-hid"];
     # blacklistedKernelModules = ["i2c_hid" "i2c_hid_acpi" "psmouse"];
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
