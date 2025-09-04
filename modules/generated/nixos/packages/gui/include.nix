@@ -7,6 +7,7 @@
     jetbrains.enable = lib.mkDefault true;
     vscode.enable = lib.mkDefault true;
     emacs.enable = lib.mkDefault true;
+    android.enable = lib.mkDefault true;
   };
 
   services.gnome.sushi.enable = true;

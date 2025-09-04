@@ -11,6 +11,8 @@
         allowUnfree = true;
         nvidia.acceptLicense = true;
 
+        android_sdk.accept_license = true;
+
         #config.allowBroken = true;
         permittedInsecurePackages = [
           "electron-19.1.9"

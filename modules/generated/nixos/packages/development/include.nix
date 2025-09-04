@@ -21,8 +21,6 @@
     openresty
     groff
 
-    android-tools # adb
-
     # Git utils
     git
     # github tui
