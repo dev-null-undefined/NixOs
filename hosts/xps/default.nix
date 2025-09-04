@@ -63,8 +63,6 @@
     };
   };
 
-  systemd.sleep.extraConfig = "HibernateDelaySec=1h";
-
   networking = {
     hostId = "69faa161";
     firewall.checkReversePath = "loose";
@@ -76,8 +74,8 @@
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
 
-    kernelPackages =
-      pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
+    # kernelPackages = pkgs.linuxPackages_latest;
+    # latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
     kernelParams = [
@@ -121,7 +119,7 @@
 
   hardware = {
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.latest;
+      # package = config.boot.kernelPackages.nvidiaPackages;
       # Modesetting is required.
       modesetting.enable = true;
 

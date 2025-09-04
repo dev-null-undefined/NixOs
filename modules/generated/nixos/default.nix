@@ -7,11 +7,6 @@
     sops.enable = lib.mkDefault true;
   };
 
-  # Change default time limit for unit stop
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=5s
-  '';
-
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";

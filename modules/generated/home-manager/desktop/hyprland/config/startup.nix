@@ -10,7 +10,7 @@
       "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
       "blueman-applet"
       "sleep 1 && syncthingtray"
-      "${pkgs.libsForQt5.polkit-kde-agent.outPath}/libexec/polkit-kde-authentication-agent-1"
+      "${pkgs.kdePackages.polkit-kde-agent-1.outPath}/libexec/polkit-kde-authentication-agent-1"
     ];
   };
 }

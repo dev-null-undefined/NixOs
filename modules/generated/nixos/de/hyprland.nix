@@ -13,7 +13,7 @@
     xdg-utils
     qt6.qtwayland
     libsForQt5.qt5.qtwayland
-    libsForQt5.polkit-kde-agent
+    kdePackages.polkit-kde-agent-1
 
     wl-clipboard
   ];

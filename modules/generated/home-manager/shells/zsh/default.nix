@@ -55,6 +55,7 @@ in {
       # Using GPG agent for SSH authentication
       SSH_AUTH_SOCK = "/run/user/$UID/gnupg/S.gpg-agent.ssh";
       # History sync variables
+      ZSH_HISTORY_FILE_NAME = ".config/zsh/.zsh_history";
       ZSH_HISTORY_GIT_REMOTE = "https://github.com/dev-null-undefined/history-sync-zsh.git";
       ZSH_HISTORY_COMMIT_MSG = "`hostname`[$USER]: `date -u '+%H:%M %d-%m-%Y'`";
       ZSH_HISTORY_DEFAULT_RECIPIENT = "Martin Kos";
