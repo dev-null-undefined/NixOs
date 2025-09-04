@@ -25,6 +25,7 @@ with self.lib'.internal; {
       shotcut
       gimp-with-plugins
       # davinci-resolve
+      audacity
       clisp
       lldb
       darktable
