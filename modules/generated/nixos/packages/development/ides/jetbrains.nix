@@ -10,6 +10,7 @@
     rider
     datagrip
     rust-rover
+    gateway
   ];
   plugins' = [
     "github-copilot"
