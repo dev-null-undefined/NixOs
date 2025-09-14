@@ -5,5 +5,6 @@
   };
   generated.network-manager = {
     network-profiles.enable = true;
+    dont-wait.enable = true;
   };
 }
