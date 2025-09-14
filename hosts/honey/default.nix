@@ -23,7 +23,6 @@
       browsers.all.enable = true;
       mathematica.enable = false;
     };
-    network-profiles.enable = true;
     packages.work.enable = true;
 
     nvidia.nvidia-sync.enable = false;
