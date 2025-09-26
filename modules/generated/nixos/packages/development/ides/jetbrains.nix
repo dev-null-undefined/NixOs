@@ -1,12 +1,12 @@
 {pkgs, ...}: let
-  inherit (pkgs.stable) jetbrains;
+  inherit (pkgs.master) jetbrains;
 
   ides' = with jetbrains; [
     idea-ultimate
     phpstorm
     pycharm-professional
     webstorm
-    clion
+    pkgs.stable.jetbrains.clion
     rider
     datagrip
     rust-rover
