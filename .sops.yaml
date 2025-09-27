@@ -3,12 +3,14 @@ keys:
   - &server_oracle age1sekzjzamlj84cn2cejzu4cpskzn9adta2dfurnxhez90sxt7fgaqvlqcpr
   - &pc_honey age18qt9vk6gdkwdjg9a2jlvlzvj399qr8m2xpxfqvqz9fxad9rx8flqhm9n7m
   - &pc_xps age15rgrjxrkkxglvmp46fk750le24c297xtvnqww7tnnqa9zz6sh9cqrpesy4
+  - &pc_x1 age19564e6pfuud8qanqvkygnt48vt84jsuazxkj8c3x55r2n90qqffsrxnawd
 creation_rules:
   - path_regex: secrets/network-manager.env
     key_groups:
       - age:
         - *pc_honey
         - *pc_xps
+        - *pc_x1
   - path_regex: secrets/protonvpn-wireguard-pk
     key_groups:
       - age:
