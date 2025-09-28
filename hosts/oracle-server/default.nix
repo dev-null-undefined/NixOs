@@ -20,7 +20,6 @@
     };
     users = {
       lomohov.enable = true;
-      samirka.enable = true;
     };
   };
 
