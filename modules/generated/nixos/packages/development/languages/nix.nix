@@ -18,48 +18,49 @@ in {
     nh.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    # A ranger-like flake.lock viewer
-    nix-melt
+  environment.systemPackages = with pkgs;
+    [
+      # A ranger-like flake.lock viewer
+      nix-melt
 
-    # nix documentation
-    manix
+      # nix documentation
+      manix
 
-    # lsp server for nix
-    nil
+      # lsp server for nix
+      nil
 
-    # Prefetcher for sha256
-    nurl
+      # Prefetcher for sha256
+      nurl
 
-    # Automated PR testing and building
-    nixpkgs-review
+      # Automated PR testing and building
+      nixpkgs-review
 
-    # Linter
-    statix
+      # Linter
+      statix
 
-    # Nix formatters
-    nixfmt-classic
-    alejandra
+      # Nix formatters
+      nixfmt-classic
+      alejandra
 
-    # Find unused variables
-    deadnix
+      # Find unused variables
+      deadnix
 
-    # nix tools
-    nix-diff
-    # package version diff tool
-    nvd
+      # nix tools
+      nix-diff
+      # package version diff tool
+      nvd
 
-    # Build monitoring tool
-    nix-output-monitor
+      # Build monitoring tool
+      nix-output-monitor
 
-    # dependency graphs in ranger like view
-    nix-tree
+      # dependency graphs in ranger like view
+      nix-tree
 
-    # Run packages without installing them (test drive)
-    comma
+      # Run packages without installing them (test drive)
+      comma
 
-    # Deployment tool
-    deploy-rs
-  ];
-  # ++ alien-pkgs;
+      # Deployment tool
+      deploy-rs
+    ]
+    ++ alien-pkgs;
 }
