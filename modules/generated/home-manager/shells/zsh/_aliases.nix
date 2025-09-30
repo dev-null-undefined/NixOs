@@ -39,7 +39,7 @@ in
 
     cd = "z";
 
-    ping = "trip";
+    pping = "trip";
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
