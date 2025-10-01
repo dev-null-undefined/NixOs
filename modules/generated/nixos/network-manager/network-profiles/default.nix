@@ -5,7 +5,6 @@
   ...
 }: {
   generated.network-manager.network-profiles = {
-    vpn.enable = lib.mkDefault true;
     wifi.enable = lib.mkDefault true;
   };
 
