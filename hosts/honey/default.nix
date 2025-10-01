@@ -24,8 +24,6 @@
       mathematica.enable = false;
     };
     packages.work.enable = true;
-
-    nvidia.nvidia-sync.enable = false;
   };
 
   services.hardware.openrgb = {
