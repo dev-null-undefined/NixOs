@@ -6,7 +6,6 @@
   system.nixos.tags = ["hyprland"];
   generated = {
     de.enable = true;
-    nvidia.nvidia-sync.enable = lib.mkDefault true;
   };
 
   environment.systemPackages = with pkgs; [
