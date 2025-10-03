@@ -110,8 +110,12 @@ in {
       ", XF86AudioMicMute,     exec, wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle"
 
       # backlight
-      ", XF86MonBrightnessUp,   exec, light -A 1.6"
+      ", XF86MonBrightnessUp,   exec, light -A 2.5"
       ", XF86MonBrightnessDown, exec, light -T 0.6"
+      
+      # brightness shortcuts with Ctrl for max/min
+      "CTRL, XF86MonBrightnessUp,   exec, light -S 100"
+      "CTRL, XF86MonBrightnessDown, exec, light -r -S 1"
     ];
 
     bindl = [
