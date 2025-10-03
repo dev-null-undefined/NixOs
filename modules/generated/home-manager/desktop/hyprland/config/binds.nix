@@ -15,6 +15,11 @@
       number = toString (10 + n);
     }) (range 1 12));
 
+  # Command for opening application launcher
+  launcherCommand = "fuzzel";
+
+  gestureScale = "1.5";
+
   workspace_control =
     lib.lists.concatMap (bind: [
       # Switch workspaces with mainMod + [0-9] and move the workspace to current focused monitor
@@ -80,7 +85,7 @@ in {
         "$mainMod, Return, exec, kitty"
         "$mainMod,      M, exit,"
         "$mainMod,      E, exec, nemo"
-        "$mainMod,      C, exec, fuzzel"
+        "$mainMod,      C, exec, ${launcherCommand}"
         "CTRL SHIFT,    A, exec, copyq toggle"
         "CTRL SHIFT,    N, exec, swaync-client -t -sw"
 
@@ -129,5 +134,21 @@ in {
       workspace_back_and_forth = true;
       allow_workspace_cycles = true;
     };
+
+    # Custom gesture bindings
+    gesture = [
+      # 3-finger horizontal swipe for workspace switching
+      "3, horizontal, scale: ${gestureScale}, workspace"
+      
+      "3, right, scale: ${gestureScale}, mod: SHIFT, dispatcher, movetoworkspace, m+1"
+      "3, left, scale: ${gestureScale}, mod: SHIFT, dispatcher, movetoworkspace, m-1"
+
+      "3, down, scale: ${gestureScale}, fullscreen"
+      "3, up, scale: ${gestureScale}, fullscreen"
+
+      "3, down, scale: ${gestureScale}, mod: ALT, close"
+
+      "3, down, scale: ${gestureScale}, mod: $mainMod, close"
+    ];
   };
 }
