@@ -1,8 +1,10 @@
-{ lib, config, ... }:
-let
-  cf = config.generated.network-manager.network-profiles.vpn.cdn77;
-in
 {
+  lib,
+  config,
+  ...
+}: let
+  cf = config.generated.network-manager.network-profiles.vpn.cdn77;
+in {
   options = {
     address = lib.mkOption {
       type = lib.types.str;

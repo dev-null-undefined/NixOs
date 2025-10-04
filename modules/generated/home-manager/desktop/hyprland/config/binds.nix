@@ -117,7 +117,7 @@ in {
       # backlight
       ", XF86MonBrightnessUp,   exec, light -A 2.5"
       ", XF86MonBrightnessDown, exec, light -T 0.6"
-      
+
       # brightness shortcuts with Ctrl for max/min
       "CTRL, XF86MonBrightnessUp,   exec, light -S 100"
       "CTRL, XF86MonBrightnessDown, exec, light -r -S 1"
@@ -139,7 +139,7 @@ in {
     gesture = [
       # 3-finger horizontal swipe for workspace switching
       "3, horizontal, scale: ${gestureScale}, workspace"
-      
+
       "3, right, scale: ${gestureScale}, mod: SHIFT, dispatcher, movetoworkspace, m+1"
       "3, left, scale: ${gestureScale}, mod: SHIFT, dispatcher, movetoworkspace, m-1"
 
