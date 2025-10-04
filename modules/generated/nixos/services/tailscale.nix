@@ -1,16 +1,14 @@
 {config, ...}: {
   services.tailscale.enable = true;
 
-  # Systemd service to restart Tailscale after waking up from suspend
+  # Systemd service to restart Tailscale around suspend
   systemd.services.tailscale-restart-after-suspend = {
-    description = "Restart Tailscale after waking up";
+    description = "Restart Tailscale service";
     after = ["suspend.target"];
     wantedBy = ["suspend.target"];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = ''
-        ${config.services.tailscale.package}/bin/tailscale down && sleep 0.1 && ${config.services.tailscale.package}/bin/tailscale up
-      '';
+      ExecStart = "/run/current-system/sw/bin/systemctl restart tailscaled.service";
       User = "root";
     };
   };
