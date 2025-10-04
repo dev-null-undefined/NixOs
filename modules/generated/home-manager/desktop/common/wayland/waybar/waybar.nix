@@ -119,7 +119,7 @@ in {
           interval = 10;
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{icon} {capacity}%";
-          format-charging = " {capacity}%";
+          tooltip-format = "{power}w {time}";
           on-click = powerMonitor;
         };
         "network#en" = {
