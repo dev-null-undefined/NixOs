@@ -17,6 +17,7 @@
     network-manager.enable = true;
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
+    hardware.thinkpad.enable = true;
     services = {
       # syncthing.enable = true;
       # opensnitch.enable = true;
