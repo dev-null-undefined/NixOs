@@ -120,6 +120,7 @@ in {
           format-icons = ["" "" "" "" "" "" "" "" "" ""];
           format = "{icon} {capacity}% (-{power:.1f}w)";
           format-charging = " {capacity}% ({power:.1f}w)";
+          format-plugged = "🔌︎{capacity}%";
           on-click = powerMonitor;
         };
         "network#en" = {
