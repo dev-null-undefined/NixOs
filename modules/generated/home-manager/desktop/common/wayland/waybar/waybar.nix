@@ -15,6 +15,27 @@
   terminal = "${pkgs.kitty}/bin/kitty";
   terminal-spawn = cmd: "${terminal} $SHELL -i -c ${cmd}";
 
+  # Script to toggle battery charging behavior and print a message
+  toggleCharge = pkgs.writeShellScriptBin "toggle-battery-charging" ''
+    #!${pkgs.bash}/bin/bash
+    set -euo pipefail
+
+    BAT_PATH="/sys/class/power_supply/BAT0/charge_control_end_threshold"
+    current="$(cat "$BAT_PATH" 2>/dev/null || true)"
+
+    if [ "''${current}" = "100" ]; then
+      action="setcharge"
+      message="Resetting to default charging thresholds"
+    else
+      action="fullcharge"
+      message="Full charging now"
+    fi
+
+    /run/wrappers/bin/sudo ${pkgs.tlp}/bin/tlp "''${action}"
+    echo "''${message}"
+    ${pkgs.libnotify}/bin/notify-send "Battery" "''${message}"
+  '';
+
   systemMonitor = terminal-spawn htop;
   systemMonitor2 = terminal-spawn btop;
   networkMonitor = terminal-spawn iptraf-ng;
@@ -122,6 +143,7 @@ in {
           format-charging = " {capacity}% ({power:.1f}w)";
           format-plugged = "🔌︎{capacity}%";
           on-click = powerMonitor;
+          on-click-right = "${toggleCharge}/bin/toggle-battery-charging";
         };
         "network#en" = {
           interface = "en*";
