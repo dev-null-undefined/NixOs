@@ -9,10 +9,10 @@ python3.pkgs.buildPythonApplication {
   pyproject = true;
 
   src = fetchFromGitHub {
-    owner = "esanchezm";
+    owner = "dev-null-undefined";
     repo = "prometheus-qbittorrent-exporter";
-    rev = "2b64a91f8d3c3a3b9b80c0e620460b333aa2f84c";
-    hash = "sha256-tPt/iS3TroHga6zGdWI4VL9HrZ2s0BSGvV+Wam4cwZo=";
+    rev = "b1642dc2a9adbe50827d7e4d43970b7bc4e027e4";
+    hash = "sha256-hBsSI36njlYDFsPj8xjj8VIwYd475A7MaPhz9aHqXtU=";
   };
 
   nativeBuildInputs = [python3.pkgs.pdm-backend];
