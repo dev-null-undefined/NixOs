@@ -31,6 +31,12 @@
     motherboard = "amd";
   };
 
+  generated.network-manager.network-profiles.vpn.cdn77 = {
+    enable = true;
+    address = "10.0.3.248";
+    privateKeySuffix = "_PC";
+  };
+
   # custom.wireguard.ips = ["10.100.0.5/24"];
 
   documentation.man.generateCaches = false;
