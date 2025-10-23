@@ -52,6 +52,8 @@ in {
 
         inputs.sops.nixosModules.default
 
+        inputs.lanzaboote.nixosModules.lanzaboote
+
         # Home manager
         inputs.home-manager.nixosModules.default
         {

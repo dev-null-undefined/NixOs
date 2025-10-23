@@ -60,18 +60,18 @@
   };
 
   boot = {
-    kernelPackages =
-      pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
+    kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
+
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
 
     loader = {
-      grub = {
-        # Bootloader.
-        enable = true;
-        efiSupport = true;
-        device = "nodev";
-        useOSProber = true;
-        saveDefault = true;
+      systemd-boot = {
+        enable = false;
       };
+
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot";
     };
