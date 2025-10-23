@@ -69,6 +69,11 @@ tooltip {
     border: 1px solid #181825;
 }
 
+#network.wg-cdn77 {
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
 #tray {
     border-radius: 10px;
     margin-right: 10px;
