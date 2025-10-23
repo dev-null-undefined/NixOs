@@ -49,7 +49,12 @@
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
 
-    xserver = {videoDrivers = ["nvidia" "modesetting"];};
+    xserver = {
+      videoDrivers = [
+        "nvidia"
+        "modesetting"
+      ];
+    };
   };
 
   systemd.sleep.extraConfig = "HibernateDelaySec=1h";

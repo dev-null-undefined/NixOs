@@ -70,7 +70,7 @@
       CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
       CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
-      RESTORE_THRESHOLDS_ON_BAT=1; # Restore tresh holds on AC disconect
+      RESTORE_THRESHOLDS_ON_BAT = 1; # Restore tresh holds on AC disconect
 
       #Optional helps save long term battery health
       START_CHARGE_THRESH_BAT0 = 50; # 40 and bellow it starts to charge
