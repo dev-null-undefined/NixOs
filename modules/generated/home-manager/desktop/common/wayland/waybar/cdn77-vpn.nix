@@ -10,8 +10,8 @@ in {
         "network#wg-cdn77" = {
           interface = "wg-cdn77";
           interval = 3;
-          format = " {ifname}";
-          format-disconnected = " VPN";
+          format = " CDN77";
+          format-disconnected = " CDN77";
           tooltip-format = ''
             {ifname} ({ipaddr}/{cidr})
             Up: {bandwidthUpBits}
