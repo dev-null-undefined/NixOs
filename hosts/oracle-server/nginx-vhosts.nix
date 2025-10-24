@@ -10,108 +10,119 @@
     rev = "2b36d720ea0bb944ddb8352cc1c1b125a399bcc0";
     sha256 = "sha256-H/qSpJglOE1DhVfxSbM0Sac774erNhSoxCr7QRnvU0U=";
   };
-  hosts = {
-    "${config.domain}" = {root = visualSorting;};
-    "cpp.${config.domain}" = {
-      root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
-      locations."= /".extraConfig = ''
-        return 301 /en;
-      '';
-    };
-    "nixos.${config.domain}" = {
-      root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
-    };
-    "mc.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://homie:8100";
-        proxyWebsockets = true;
+  hosts =
+    {
+      "${config.domain}" = {
+        root = visualSorting;
       };
-    };
-    "cloud.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "https://homie.rat-python.ts.net";
-        proxyWebsockets = true;
-      };
-      extraConfig = ''
-        client_max_body_size 32G;
-      '';
-    };
-    "grafana.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://homie";
-        proxyWebsockets = true;
-      };
-    };
-    "unifi.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "https://homie:8443";
-        extraConfig = ''
-          proxy_ssl_verify off;
+      "cpp.${config.domain}" = {
+        root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
+        locations."= /".extraConfig = ''
+          return 301 /en;
         '';
-        proxyWebsockets = true;
       };
-    };
-    "brnikov.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://brnikov:8123";
-        proxyWebsockets = true;
+      "nixos.${config.domain}" = {
+        root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
       };
-    };
-    "prosek.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://prosek-wagner:8123";
-        proxyWebsockets = true;
+      "mc.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "http://homie:8100";
+          proxyWebsockets = true;
+        };
       };
-    };
-    "home.${config.domain}" = {
-      locations."/" = {
-        proxyPass = "http://homie:8123";
-        proxyWebsockets = true;
+      "cloud.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "https://homie.rat-python.ts.net";
+          proxyWebsockets = true;
+        };
+        extraConfig = ''
+          client_max_body_size 32G;
+        '';
       };
-    };
-    "ny.${config.domain}" = {
-      extraConfig = ''
-        rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
-      '';
-    };
-    # Arr stack
-    "jellyfin.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:8096";
+      "grafana.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "http://homie";
+          proxyWebsockets = true;
+        };
       };
-    };
-    "jellyseerr.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:5055";
+      "unifi.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "https://homie:8443";
+          extraConfig = ''
+            proxy_ssl_verify off;
+          '';
+          proxyWebsockets = true;
+        };
       };
-    };
-    "prowlarr.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:9696";
+      "brnikov.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "http://brnikov:8123";
+          proxyWebsockets = true;
+        };
       };
-    };
-    "sonarr.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:8989";
+      "prosek.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "http://prosek-wagner:8123";
+          proxyWebsockets = true;
+        };
       };
-    };
-    "radarr.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:7878";
+      "home.${config.domain}" = {
+        locations."/" = {
+          proxyPass = "http://homie:8123";
+          proxyWebsockets = true;
+        };
       };
-    };
-    "transmission.${config.domain}" = {
-      locations."/" = {
-        proxyWebsockets = true;
-        proxyPass = "http://homie:9091";
+      "ny.${config.domain}" = {
+        extraConfig = ''
+          rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
+        '';
       };
-    };
-  };
+      # Arr stack
+      "jellyfin.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:8096";
+        };
+      };
+      "jellyseerr.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:5055";
+        };
+      };
+      "prowlarr.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:9696";
+        };
+      };
+      "sonarr.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:8989";
+        };
+      };
+      "radarr.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:7878";
+        };
+      };
+      "transmission.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://homie:9091";
+        };
+      };
+    }
+    // (lib.attrsets.optionalAttrs config.generated.services.atuin.enable {
+      "atuin.${config.domain}" = {
+        locations."/" = {
+          proxyWebsockets = true;
+          proxyPass = "http://localhost:${toString config.services.atuin.port}";
+        };
+      };
+    });
   defaultOptions = {
     enableACME = true;
     forceSSL = true;
@@ -139,12 +150,16 @@
 
   addDefaults = _: options: let
     defaultAttrs = builtins.attrNames defaultOptions;
-    defaultMerged = lib.attrsets.mapAttrs (name: value:
-      if builtins.elem name defaultAttrs
-      then (mergeAttrs value defaultOptions.${name})
-      else value)
-    options;
+    defaultMerged =
+      lib.attrsets.mapAttrs (
+        name: value:
+          if builtins.elem name defaultAttrs
+          then (mergeAttrs value defaultOptions.${name})
+          else value
+      )
+      options;
   in
-    (builtins.removeAttrs options defaultAttrs)
-    // (defaultOptions // defaultMerged);
-in {services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;}
+    (builtins.removeAttrs options defaultAttrs) // (defaultOptions // defaultMerged);
+in {
+  services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;
+}

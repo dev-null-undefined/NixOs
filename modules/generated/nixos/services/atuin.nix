@@ -1,0 +1,3 @@
+{
+  services.atuin.enable = true;
+}

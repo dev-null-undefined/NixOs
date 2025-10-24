@@ -17,6 +17,7 @@
       ssh.enable = true;
       syncthing.enable = true;
       prometheus.enable = true;
+      atuin.enable = true;
     };
     users = {
       lomohov.enable = true;
