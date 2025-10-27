@@ -5,6 +5,7 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/lPlb+q+FMf1o/oQg4S+9xscvXoB1zUSmoZUA4MFQt martin@x1"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKp+3o03aaozSpWfjP+/ivQQxKpanR242QL5vadF9kN2 martin@honey"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH60p2f6pQ92kILoLI962PLZcFiTgNb/TxU7vs6rkzoR marti@bee"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIBUNcxn0s/dQ7ZPNQVWKyNwHkxIlpbqUiVleIcco5Ar martin@xps"
   ];
 in {
   services.openssh = {
