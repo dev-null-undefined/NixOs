@@ -21,4 +21,8 @@ in
 
     # https://github.com/eth-p/bat-extras/blob/master/doc/batpipe.md
     eval `batpipe`
+
+    # Bind ctrl + [up,down] to history up and down since atuin rewrites that
+    bindkey "^[[1;5A" history-beginning-search-backward
+    bindkey "^[[1;5B" history-beginning-search-forward
   ''
