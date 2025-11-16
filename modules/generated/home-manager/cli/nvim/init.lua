@@ -96,27 +96,22 @@ wk.add({
     { "<leader>gr", telescope_builtin.lsp_references, desc = "Go to type defintion" },
 })
 
--- lsp
-local lspconfig = require("lspconfig")
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- LSP capabilities
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities = vim.lsp.protocol.make_client_capabilities()
-local servers = { "rust_analyzer", "lua_ls", "nixd", "nil_ls", "clangd", "jsonls", "html" }
-for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup({
-		on_attach = on_attach,
-		capabilities = capabilities,
-		-- after 150ms of no calls to lsp, send call
-		-- compare with throttling that is done by default in compe
-		-- flags = {
-		--   debounce_text_changes = 150,
-		-- }
-	})
-end
 
+-- LSP servers to load
+local servers = { "rust_analyzer", "lua_ls", "nixd", "nil_ls", "clangd", "jsonls", "html" }
+
+for _, server in ipairs(servers) do
+    vim.lsp.config[server] = {
+        on_attach = on_attach,
+        capabilities = capabilities,
+    }
+
+    -- start the server for the current buffer if applicable
+    vim.lsp.start(vim.lsp.config[server])
+end
 
 local null_ls = require("null-ls")
 

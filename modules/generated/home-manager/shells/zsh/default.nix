@@ -75,7 +75,7 @@ in {
       rec {
         name = "fast-syntax-highlighting";
         src = pkgs."zsh-${name}";
-        file = "share/zsh/site-functions/${name}.plugin.zsh";
+        file = "share/zsh/plugins/${name}/${name}.plugin.zsh";
       }
       rec {
         name = "powerlevel10k";
