@@ -262,11 +262,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762351818,
-        "narHash": "sha256-0ptUDbYwxv1kk/uzEX4+NJjY2e16MaAhtzAOJ6K0TG0=",
+        "lastModified": 1762964643,
+        "narHash": "sha256-RYHN8O/Aja59XDji6WSJZPkJpYVUfpSkyH+PEupBJqM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b959c67241cae17fc9e4ee7eaf13dfa8512477ea",
+        "rev": "827f2a23373a774a8805f84ca5344654c31f354b",
         "type": "github"
       },
       "original": {
@@ -662,7 +662,7 @@
         "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts",
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ],
         "pre-commit-hooks-nix": "pre-commit-hooks-nix",
         "rust-overlay": "rust-overlay"
@@ -1120,11 +1120,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762540107,
-        "narHash": "sha256-PmXMNdrrNhv3jXVzNk6OGbuWj/gkfzzy4FwfRY6Erew=",
+        "lastModified": 1763291754,
+        "narHash": "sha256-SbiRtAX4Ir+RJH3SMYmaAh5e9t8rrem32neU04IMO+Q=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "40598467cab52d10f5b8ab4a5126ac9503ea9383",
+        "rev": "b9930dc4336afb58ea318566d7a59d9c6aca5b83",
         "type": "github"
       },
       "original": {
