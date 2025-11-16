@@ -29,11 +29,23 @@ with self.lib'.internal; {
       clisp
       lldb
       darktable
+      batgrep
+      bat-extras
+      copyq
+      nextcloud-client
+      lutris
       ;
+    inherit (super.dev-null) rpi-imager;
   };
 
   master-pkgs = super: final: {
-    inherit (super.master) flaresolverr kodi discord jetbrains;
+    inherit
+      (super.master)
+      flaresolverr
+      kodi
+      discord
+      jetbrains
+      ;
   };
 
   rust-overlay = inputs.rust-overlay.overlays.default;

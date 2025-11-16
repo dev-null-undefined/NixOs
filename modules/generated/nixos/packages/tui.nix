@@ -3,7 +3,7 @@
     # ----- Terminal tools -----
     # TUI
     procs # better ps
-    du-dust # better du
+    dust # better du
     duf # better df
     ncdu # TUI windirstat
     termdown # timer/stopwatch
@@ -11,7 +11,7 @@
 
     mc # file manager
     ranger # file manager
-    aria # download utility
+    aria2 # download utility
     lynx # web browser
     browsh # better web browser
 

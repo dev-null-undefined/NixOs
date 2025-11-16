@@ -1,7 +1,6 @@
 {pkgs, ...}: {
   programs.git = {
     enable = true;
-    package = pkgs.gitAndTools.gitFull;
     aliases = {
       graph = "log --decorate --oneline --graph";
       l = "log --color --pretty=format:'%Cred%h%Creset -%C(bold yellow)%d%Creset %s %Cgreen(%cr) %Cblue%an %C(bold blue)<%ae>%Creset %C(dim cyan)%G?' --abbrev-commit --reverse";

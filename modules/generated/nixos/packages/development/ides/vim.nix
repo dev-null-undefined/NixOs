@@ -1,3 +1,3 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [vim_configurable neovim];
+  environment.systemPackages = with pkgs; [vim-full neovim];
 }

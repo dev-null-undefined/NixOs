@@ -5,7 +5,7 @@
     steam = {
       enable = true;
       package = pkgs.steam.override {
-        extraPkgs = pkgs: [pkgs.glxinfo];
+        extraPkgs = pkgs: [pkgs.mesa-demos];
       };
     };
     gamemode.enable = true;
@@ -31,7 +31,7 @@
     #    fetchSubmodules = true;
     #  };
     #}))
-    glxinfo
+    mesa-demos
 
     prismlauncher
 

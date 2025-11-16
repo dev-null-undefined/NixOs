@@ -6,11 +6,11 @@
     packages = with pkgs; [
       material-symbols
 
-      ubuntu_font_family
+      ubuntu-classic
 
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
 
       twemoji-color-font
       twitter-color-emoji
