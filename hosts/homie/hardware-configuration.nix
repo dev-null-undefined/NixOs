@@ -26,7 +26,7 @@
 
   # boot.initrd.includeDefaultModules = false; # Fix for missing i915 module
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernel.sysctl = {
     # if you use ipv4, this is all you need

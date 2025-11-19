@@ -10,6 +10,7 @@
       home-assistant.enable = true;
       prometheus.enable = true;
       media.enable = true;
+      smartd.enable = true;
     };
     vpn.enable = true;
   };

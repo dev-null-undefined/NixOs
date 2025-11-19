@@ -1,0 +1,3 @@
+{
+  services.smartd.enable = true;
+}
