@@ -22,7 +22,7 @@ in {
   services.prometheus = {
     enable = true;
     port = 9001;
-    retentionTime = "1y";
+    retentionTime = "2y";
     scrapeConfigs = lib.lists.concatMap targetIf (builtins.attrNames
       (builtins.head
         (builtins.head
