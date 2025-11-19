@@ -4,19 +4,31 @@ in {
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = ["subvol=root" "noatime" "compress=zstd"];
+    options = [
+      "subvol=root"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = ["subvol=home" "noatime" "compress=zstd"];
+    options = [
+      "subvol=home"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = ["subvol=nix" "noatime" "compress=zstd"];
+    options = [
+      "subvol=nix"
+      "noatime"
+      "compress=zstd"
+    ];
   };
 
   fileSystems."/swap" = {
@@ -26,10 +38,11 @@ in {
   };
 
   fileSystems."/var/data" = {
-    device = "/dev/disk/by-uuid/640bd80d-0c99-447d-81b9-8ec168ea43f8";
-    fsType = "btrfs";
-    options = ["subvol=data" "noatime" "compress=zstd"];
+    device = "rpool/data";
+    fsType = "zfs";
   };
+
+  services.zfs.autoScrub.enable = true;
 
   swapDevices = [{device = "/swap/swapfile";}];
 }

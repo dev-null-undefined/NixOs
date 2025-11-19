@@ -22,6 +22,8 @@
   boot.kernelModules = ["kvm-amd"];
   boot.extraModulePackages = [];
 
+  networking.hostId = "1c3638ea";
+
   # boot.initrd.includeDefaultModules = false; # Fix for missing i915 module
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
