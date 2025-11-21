@@ -95,4 +95,8 @@ in {
       }
     ];
   };
+
+  services.http-services.qbittorrent = {
+    inherit (cfg) port;
+  };
 }

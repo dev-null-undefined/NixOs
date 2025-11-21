@@ -2,7 +2,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {...}: {
   imports = [
-    ./nginx-vhosts.nix
+    #    ./nginx-vhosts.nix
     ./openvpn-server.nix
     ./minecraft-forwarding.nix
     # ./bakule-vhost.nix
@@ -13,7 +13,13 @@
 
     services = {
       mariadb.enable = true;
-      nginx.enable = true;
+      nginx = {
+        enable = true;
+        expose = {
+          enable = true;
+          hosts.homie = {};
+        };
+      };
       ssh.enable = true;
       syncthing.enable = true;
       prometheus.enable = true;
