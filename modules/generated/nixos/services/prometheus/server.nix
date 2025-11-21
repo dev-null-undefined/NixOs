@@ -19,15 +19,18 @@
       ];
     };
 in {
-  services.prometheus = {
-    enable = true;
-    port = 9001;
-    retentionTime = "2y";
-    scrapeConfigs = lib.lists.concatMap targetIf (builtins.attrNames
-      (builtins.head
+  services = {
+    prometheus = {
+      enable = true;
+      port = 9001;
+      retentionTime = "2y";
+      scrapeConfigs = lib.lists.concatMap targetIf (builtins.attrNames
         (builtins.head
-          options.services.prometheus.exporters.type.getSubModules)
+          (builtins.head
+            options.services.prometheus.exporters.type.getSubModules)
         .imports)
       .options);
+    };
+    http-services.prometheus = {};
   };
 }
