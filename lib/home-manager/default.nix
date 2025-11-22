@@ -29,7 +29,10 @@
         #Let Home Manager install and manage itself.
         programs.home-manager.enable = true;
 
-        imports = [inputs.hyprland.homeManagerModules.default];
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          inputs.nixvim.homeModules.nixvim
+        ];
         home.homeDirectory = "/home/${home.username}";
 
         nix = {

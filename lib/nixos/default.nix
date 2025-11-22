@@ -61,7 +61,7 @@ in {
             useUserPackages = true;
             useGlobalPkgs = true;
             extraSpecialArgs = {inherit self inputs;};
-            sharedModules = [../../home/nixosDefaults.nix];
+            sharedModules = [../../home/nixosDefaults.nix inputs.nixvim.homeModules.nixvim];
           };
         }
 
