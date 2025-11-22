@@ -1,12 +1,11 @@
 {osConfig, ...}: let
-  suffix = osConfig.generated.network-manager.network-profiles.vpn.cdn77.privateKeySuffix;
+  suffix =
+    osConfig.generated.network-manager.network-profiles.vpn.cdn77.privateKeySuffix;
 in {
   programs.waybar = {
     settings = {
       primary = {
-        modules-right = [
-          "network#wg-cdn77"
-        ];
+        modules-right = ["network#wg-cdn77"];
         "network#wg-cdn77" = {
           interface = "wg-cdn77";
           interval = 3;

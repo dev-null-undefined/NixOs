@@ -5,6 +5,13 @@
       theme = "Monokai Extended";
       style = "grid,numbers,changes";
     };
-    extraPackages = with pkgs.bat-extras; [batman batpipe batgrep batdiff batwatch prettybat];
+    extraPackages = with pkgs.bat-extras; [
+      batman
+      batpipe
+      batgrep
+      batdiff
+      batwatch
+      prettybat
+    ];
   };
 }

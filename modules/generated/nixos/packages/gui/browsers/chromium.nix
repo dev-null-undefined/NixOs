@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    chromium
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [chromium];}

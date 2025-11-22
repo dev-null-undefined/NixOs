@@ -39,13 +39,7 @@ with self.lib'.internal; {
   };
 
   master-pkgs = super: final: {
-    inherit
-      (super.master)
-      flaresolverr
-      kodi
-      discord
-      jetbrains
-      ;
+    inherit (super.master) flaresolverr kodi discord jetbrains;
   };
 
   rust-overlay = inputs.rust-overlay.overlays.default;

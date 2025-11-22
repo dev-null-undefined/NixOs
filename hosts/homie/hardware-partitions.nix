@@ -4,31 +4,19 @@ in {
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = [
-      "subvol=root"
-      "noatime"
-      "compress=zstd"
-    ];
+    options = ["subvol=root" "noatime" "compress=zstd"];
   };
 
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = [
-      "subvol=home"
-      "noatime"
-      "compress=zstd"
-    ];
+    options = ["subvol=home" "noatime" "compress=zstd"];
   };
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-uuid/${root}";
     fsType = "btrfs";
-    options = [
-      "subvol=nix"
-      "noatime"
-      "compress=zstd"
-    ];
+    options = ["subvol=nix" "noatime" "compress=zstd"];
   };
 
   fileSystems."/swap" = {

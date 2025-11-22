@@ -42,5 +42,6 @@
     "net.ipv6.conf.all.use_tempaddr" = 0;
   };
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

@@ -54,10 +54,7 @@
 
   systemd.services.ModemManager = {
     enable = true;
-    wantedBy = [
-      "multi-user.target"
-      "network.target"
-    ];
+    wantedBy = ["multi-user.target" "network.target"];
   };
 
   networking.modemmanager.enable = true;

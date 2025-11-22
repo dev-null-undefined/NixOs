@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    tor-browser
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [tor-browser];}

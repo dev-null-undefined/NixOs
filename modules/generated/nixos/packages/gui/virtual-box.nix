@@ -1,9 +1,7 @@
 {
   virtualisation = {
     virtualbox = {
-      guest = {
-        enable = true;
-      };
+      guest = {enable = true;};
       host = {
         enable = true;
         enableHardening = false;

@@ -74,5 +74,7 @@
       #gcc_multi
       clang_multi
     ])
-    ++ (lib.lists.optionals (config.services.xserver.enable || config.generated.de.enable) [ghidra]);
+    ++ (lib.lists.optionals
+      (config.services.xserver.enable || config.generated.de.enable)
+      [ghidra]);
 }

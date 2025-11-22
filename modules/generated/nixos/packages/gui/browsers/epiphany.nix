@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    epiphany
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [epiphany];}

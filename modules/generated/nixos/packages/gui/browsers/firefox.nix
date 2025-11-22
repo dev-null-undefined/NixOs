@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    firefox
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [firefox];}

@@ -13,10 +13,10 @@ in
     sgrep = "grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS}";
 
     ls = "lsd";
-    l = "lsd -Fh"; #size,show type,human readable
-    la = "lsd -AFh"; #long list,show almost all,show type,human readable
-    lla = "lsd -lAFh"; #long list,show almost all,show type,human readable
-    ll = "lsd -lh"; #long list
+    l = "lsd -Fh"; # size,show type,human readable
+    la = "lsd -AFh"; # long list,show almost all,show type,human readable
+    lla = "lsd -lAFh"; # long list,show almost all,show type,human readable
+    ll = "lsd -lh"; # long list
     ldot = "lsd -hld .*";
 
     cat = "bat -p";
@@ -44,8 +44,5 @@ in
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
   in
-    {
-      "${key}" = "cd " + repeateString "../" (value - 1);
-    }
-    // acc) {}
+    {"${key}" = "cd " + repeateString "../" (value - 1);} // acc) {}
   (lib'.lists.range 2 10))

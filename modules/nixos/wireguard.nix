@@ -9,8 +9,7 @@
       index = lib.lists.findFirstIndex (pred current) (-1) acc;
       alreadyIn = index != -1;
     in
-      acc ++ (lib.lists.optional (!alreadyIn) current)) []
-    list;
+      acc ++ (lib.lists.optional (!alreadyIn) current)) [] list;
 
   hasDuplicates = list: pred: let
     uniques = uniqueListPred list pred;
@@ -43,32 +42,34 @@
 
   # TODO test
   parseIp = ip: let
-    splitRemoveEmpty = delim: string: builtins.filter builtins.isString (builtins.split delim string);
+    splitRemoveEmpty = delim: string:
+      builtins.filter builtins.isString (builtins.split delim string);
 
     prefix = builtins.elemAt (splitRemoveEmpty "/" ip) 1;
     prefixLenght = lib.strings.toInt prefix;
     ipOnly = builtins.head (splitRemoveEmpty "/" ip);
     ipParts = builtins.map lib.strings.toInt (splitRemoveEmpty "\\." ipOnly);
 
-    bitsToMask = bits: builtins.foldl' (acc: current: builtins.bitOr acc (pow 2 (7 - current))) 0 (lib.lists.range 0 (bits - 1)); # TODO
+    bitsToMask = bits:
+      builtins.foldl' (acc: current: builtins.bitOr acc (pow 2 (7 - current)))
+      0 (lib.lists.range 0 (bits - 1)); # TODO
 
     indexToMask = index:
       bitsToMask
-      (lib.trivial.min 8
-        (lib.trivial.max 0
-          (prefixLenght - (8 * index))));
+      (lib.trivial.min 8 (lib.trivial.max 0 (prefixLenght - (8 * index))));
 
     netmaskParts = builtins.map indexToMask (lib.lists.range 0 3);
 
-    networkParts = builtins.map (
-      index:
-        builtins.bitAnd
-        (builtins.elemAt ipParts index)
-        (builtins.elemAt netmaskParts index)
-    ) (lib.lists.range 0 3);
+    networkParts = builtins.map (index:
+      builtins.bitAnd (builtins.elemAt ipParts index)
+      (builtins.elemAt netmaskParts index)) (lib.lists.range 0 3);
 
-    network = builtins.concatStringsSep "." (builtins.map builtins.toString networkParts);
-    netmask = builtins.concatStringsSep "." (builtins.map builtins.toString netmaskParts);
+    network =
+      builtins.concatStringsSep "."
+      (builtins.map builtins.toString networkParts);
+    netmask =
+      builtins.concatStringsSep "."
+      (builtins.map builtins.toString netmaskParts);
   in {
     ip = ipOnly;
     ipWithPrefix = ip;
@@ -79,7 +80,9 @@
   allConfigs = config.custom.wireguard.allConfigs;
   hostIps = config.custom.wireguard.ips;
 
-  hostConfigs = builtins.filter (config: builtins.any (hostIp: hostIp == config.ip) hostIps) allConfigs;
+  hostConfigs =
+    builtins.filter (config: builtins.any (hostIp: hostIp == config.ip) hostIps)
+    allConfigs;
 
   hostServerConfigs = builtins.filter (config: config.isServer) hostConfigs;
   isServer = (builtins.length hostServerConfigs) != 0;
@@ -89,7 +92,8 @@
   serverConfig = {
     # enable NAT
     enable = true;
-    internalInterfaces = builtins.map (config: config.interfaceName) hostServerConfigs;
+    internalInterfaces =
+      builtins.map (config: config.interfaceName) hostServerConfigs;
   };
 
   relevantPeersConfigs = config: let
@@ -125,17 +129,16 @@
             );
         persistentKeepalive = 25;
       }
-      // (
-        lib.attrsets.optionalAttrs peer.isServer {
-          endpoint = addPortIfMissing peer.endpoint "51820";
-        }
-      ))
-    peersConfs;
+      // (lib.attrsets.optionalAttrs peer.isServer {
+        endpoint = addPortIfMissing peer.endpoint "51820";
+      })) peersConfs;
 in {
   config = lib.mkIf isEnabled {
     networking = {
       firewall = {
-        allowedUDPPorts = builtins.map (interfaceConfig: interfaceConfig.listenPort) hostConfigs;
+        allowedUDPPorts =
+          builtins.map (interfaceConfig: interfaceConfig.listenPort)
+          hostConfigs;
       };
       nat = lib.attrsets.optionalAttrs isServer serverConfig;
 
@@ -155,31 +158,34 @@ in {
 
               peers = genPeers interfaceConfig;
             }
-            // (
-              lib.attrsets.optionalAttrs interfaceConfig.isServer {
-                # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-                # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
-                postSetup = ''
-                  ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
-                '';
+            // (lib.attrsets.optionalAttrs interfaceConfig.isServer {
+              # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+              # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+              postSetup = ''
+                ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
+              '';
 
-                # This undoes the above command
-                postShutdown = ''
-                  ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
-                '';
-              }
-            );
-        }) {}
-      hostConfigs;
+              # This undoes the above command
+              postShutdown = ''
+                ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
+              '';
+            });
+        }) {} hostConfigs;
     };
 
     assertions = [
       {
-        assertion = !(builtins.any (config: config.isServer && (builtins.isNull config.endpoint)) allConfigs);
+        assertion =
+          !(builtins.any
+            (config: config.isServer && (builtins.isNull config.endpoint))
+            allConfigs);
         message = "server peer must have endpoint option set";
       }
       {
-        assertion = !(builtins.any (config: (!config.isServer) && (!(builtins.isNull config.endpoint))) allConfigs);
+        assertion =
+          !(builtins.any
+            (config: (!config.isServer) && (!(builtins.isNull config.endpoint)))
+            allConfigs);
         message = "client peers must have endpoint set to null";
       }
       {
@@ -188,9 +194,9 @@ in {
       }
       {
         assertion =
-          (builtins.length (builtins.filter (
-            peer: peer.allowedIPs == ["0.0.0.0/0"]
-          ) (builtins.concatMap genPeers hostConfigs)))
+          (builtins.length
+            (builtins.filter (peer: peer.allowedIPs == ["0.0.0.0/0"])
+              (builtins.concatMap genPeers hostConfigs)))
           <= 1;
         message = "there should be at most one VPN like connection with forwardAll set";
       }
@@ -199,16 +205,17 @@ in {
         message = "multiple configs with the same IP";
       }
       {
-        assertion = (!isServer) || (!(builtins.isNull config.networking.nat.externalInterface));
+        assertion =
+          (!isServer)
+          || (!(builtins.isNull config.networking.nat.externalInterface));
         message = "external NAT interface must be set manualy";
       }
       {
-        assertion =
-          !(hasDuplicates hostIps (a: b: let
-            aParsed = parseIp a;
-            bParsed = parseIp b;
-          in
-            aParsed.networkWithPrefix == bParsed.networkWithPrefix));
+        assertion = !(hasDuplicates hostIps (a: b: let
+          aParsed = parseIp a;
+          bParsed = parseIp b;
+        in
+          aParsed.networkWithPrefix == bParsed.networkWithPrefix));
         message = "host should have only one IP from the same network";
       }
     ];
@@ -247,9 +254,13 @@ in {
         };
         name = lib.mkOption {
           default =
-            builtins.replaceStrings
-            ["/" "-" " " "+" "="]
-            ["-" "\\x2d" "\\x20" "\\x2b" "\\x3d"]
+            builtins.replaceStrings ["/" "-" " " "+" "="] [
+              "-"
+              "\\x2d"
+              "\\x20"
+              "\\x2b"
+              "\\x3d"
+            ]
             self.config.publicKey;
           defaultText = lib.options.literalExpression "publicKey";
           type = lib.types.str;

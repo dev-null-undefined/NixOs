@@ -1,1 +1,3 @@
-{pkgs, ...}: {environment.systemPackages = with pkgs; [dev-null.mathematica];}
+{pkgs, ...}: {
+  environment.systemPackages = with pkgs; [dev-null.mathematica];
+}

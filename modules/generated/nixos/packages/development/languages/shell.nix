@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    shfmt
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [shfmt];}

@@ -1,3 +1,1 @@
-{
-  services.prometheus.exporters.nginx.enable = true;
-}
+{services.prometheus.exporters.nginx.enable = true;}

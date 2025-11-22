@@ -1,6 +1,3 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    rbw
-    bitwarden-cli
-  ];
+  environment.systemPackages = with pkgs; [rbw bitwarden-cli];
 }

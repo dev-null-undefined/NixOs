@@ -1,3 +1,1 @@
-{
-  p10k.colors.DIR_BACKGROUND = 141;
-}
+{p10k.colors.DIR_BACKGROUND = 141;}

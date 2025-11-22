@@ -4,7 +4,9 @@
   pkgs,
   ...
 }: let
-  users = builtins.map (x: "presentation-" + builtins.toString x) (lib.lists.range 0 50);
+  users =
+    builtins.map (x: "presentation-" + builtins.toString x)
+    (lib.lists.range 0 50);
   createUser = userName: {
     ${userName} = {
       isNormalUser = true;
@@ -34,7 +36,8 @@
         };
       })
     ];
-  createUsers = users: creator: builtins.foldl' (acc: user: acc // user) {} (builtins.map creator users);
+  createUsers = users: creator:
+    builtins.foldl' (acc: user: acc // user) {} (builtins.map creator users);
 in {
   services.openssh.settings.PasswordAuthentication = lib.mkForce true;
   users.users = createUsers users createUser;

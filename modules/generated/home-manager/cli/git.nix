@@ -10,9 +10,7 @@
       {
         condition = "gitdir:~/Work/CDN77/";
         #path = "~/.config/git/config-work";
-        contents = {
-          user.name = "Martin Kos";
-        };
+        contents = {user.name = "Martin Kos";};
       }
     ];
     userName = "dev-null-undefined";

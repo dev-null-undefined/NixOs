@@ -23,7 +23,8 @@
       ]);
     shell = pkgs.zsh;
     useDefaultShell = false;
-    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
+    openssh.authorizedKeys.keys =
+      config.users.users.root.openssh.authorizedKeys.keys;
   };
 
   home-manager.users = self.lib'.internal.mkHomeNixOsUser "martin" [];

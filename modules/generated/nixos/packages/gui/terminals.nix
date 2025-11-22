@@ -1,6 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    alacritty
-    kitty
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [alacritty kitty];}

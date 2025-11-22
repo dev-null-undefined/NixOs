@@ -12,9 +12,7 @@
   };
   hosts =
     {
-      "${config.domain}" = {
-        root = visualSorting;
-      };
+      "${config.domain}" = {root = visualSorting;};
       "cpp.${config.domain}" = {
         root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
         locations."= /".extraConfig = ''
@@ -150,16 +148,12 @@
 
   addDefaults = _: options: let
     defaultAttrs = builtins.attrNames defaultOptions;
-    defaultMerged =
-      lib.attrsets.mapAttrs (
-        name: value:
-          if builtins.elem name defaultAttrs
-          then (mergeAttrs value defaultOptions.${name})
-          else value
-      )
-      options;
+    defaultMerged = lib.attrsets.mapAttrs (name: value:
+      if builtins.elem name defaultAttrs
+      then (mergeAttrs value defaultOptions.${name})
+      else value)
+    options;
   in
-    (builtins.removeAttrs options defaultAttrs) // (defaultOptions // defaultMerged);
-in {
-  services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;
-}
+    (builtins.removeAttrs options defaultAttrs)
+    // (defaultOptions // defaultMerged);
+in {services.nginx.virtualHosts = lib.attrsets.mapAttrs addDefaults hosts;}

@@ -19,9 +19,7 @@ with lib; {
     statix
   ];
 
-  programs.zsh.shellAliases = {
-    v = "nvim";
-  };
+  programs.zsh.shellAliases = {v = "nvim";};
 
   programs.nixvim = {
     enable = true;
@@ -35,9 +33,7 @@ with lib; {
     withPerl = true;
     withRuby = true;
 
-    globals = {
-      mapleader = " ";
-    };
+    globals = {mapleader = " ";};
 
     clipboard.register = "unnamedplus";
 
@@ -112,12 +108,8 @@ with lib; {
         enable = true;
 
         settings = {
-          highlight = {
-            enable = true;
-          };
-          indent = {
-            enable = true;
-          };
+          highlight = {enable = true;};
+          indent = {enable = true;};
         };
       };
 
@@ -133,9 +125,7 @@ with lib; {
                 expr = ''import (builtins.getFlake "${self}").inputs.nixpkgs { }'';
               };
 
-              formatting = {
-                command = ["alejadra"];
-              };
+              formatting = {command = ["alejadra"];};
               options = {
                 nixos = {
                   expr = ''
@@ -252,9 +242,7 @@ with lib; {
         keymaps = {
           "<C-p>" = {
             action = "git_files";
-            options = {
-              desc = "Telescope Git Files";
-            };
+            options = {desc = "Telescope Git Files";};
           };
           "<leader>fg" = "live_grep";
         };
@@ -299,18 +287,7 @@ with lib; {
           '';
 
           window = {
-            documentation = {
-              border = [
-                "╭"
-                "─"
-                "╮"
-                "│"
-                "╯"
-                "─"
-                "╰"
-                "│"
-              ];
-            };
+            documentation = {border = ["╭" "─" "╮" "│" "╯" "─" "╰" "│"];};
           };
         };
       };

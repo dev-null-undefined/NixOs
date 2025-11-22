@@ -96,7 +96,5 @@ in {
     ];
   };
 
-  services.http-services.qbittorrent = {
-    inherit (cfg) port;
-  };
+  services.http-services.qbittorrent = {inherit (cfg) port;};
 }

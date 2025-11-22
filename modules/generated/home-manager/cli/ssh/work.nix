@@ -2,9 +2,7 @@ let
   docker-config = {
     hostname = "localhost";
     user = "root";
-    extraOptions = {
-      StrictHostKeyChecking = "no";
-    };
+    extraOptions = {StrictHostKeyChecking = "no";};
   };
 in {
   programs.ssh.matchBlocks = {

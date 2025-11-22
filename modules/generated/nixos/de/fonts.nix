@@ -1,7 +1,5 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    adwaita-icon-theme
-  ];
+  environment.systemPackages = with pkgs; [adwaita-icon-theme];
   fonts = {
     packages = with pkgs; [
       material-symbols

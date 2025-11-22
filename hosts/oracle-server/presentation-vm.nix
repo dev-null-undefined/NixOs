@@ -1,3 +1,1 @@
-{
-  networking.firewall.allowedTCPPorts = [9022];
-}
+{networking.firewall.allowedTCPPorts = [9022];}

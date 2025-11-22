@@ -1,5 +1,1 @@
-{
-  generated.home = {
-    enable = true;
-  };
-}
+{generated.home = {enable = true;};}

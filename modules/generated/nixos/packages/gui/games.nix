@@ -4,9 +4,7 @@
   programs = {
     steam = {
       enable = true;
-      package = pkgs.steam.override {
-        extraPkgs = pkgs: [pkgs.mesa-demos];
-      };
+      package = pkgs.steam.override {extraPkgs = pkgs: [pkgs.mesa-demos];};
     };
     gamemode.enable = true;
   };

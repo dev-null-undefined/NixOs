@@ -36,7 +36,9 @@
           if config.ssl
           then "https"
           else "http"
-        }://${config.hostname}:${toString config.port}";
+        }://${config.hostname}:${
+          toString config.port
+        }";
         description = "Full URL to access the HTTP service.";
       };
       public = lib.mkOption {

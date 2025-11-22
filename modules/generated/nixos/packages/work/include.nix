@@ -1,5 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    slack
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [slack];}

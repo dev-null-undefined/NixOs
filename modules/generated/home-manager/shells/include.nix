@@ -9,8 +9,6 @@
       enableZshIntegration = false;
     };
 
-    broot = {
-      enable = true;
-    };
+    broot = {enable = true;};
   };
 }

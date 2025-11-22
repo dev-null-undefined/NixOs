@@ -17,7 +17,5 @@ in {
     };
   };
 
-  users.users = {
-    root.openssh.authorizedKeys.keys = sshKeys;
-  };
+  users.users = {root.openssh.authorizedKeys.keys = sshKeys;};
 }

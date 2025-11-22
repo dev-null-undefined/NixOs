@@ -1,7 +1,5 @@
 {
-  imports = [
-    ../installer/default.nix
-  ];
+  imports = [../installer/default.nix];
 
   generated = {
     secure.enable = true;

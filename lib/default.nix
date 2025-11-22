@@ -75,6 +75,5 @@ in
 
         getAttrsPaths = attrset: getAttrsPathsSep attrset ".";
       }
-      // (import ./home-manager args)
-      // (import ./nixos args);
+      // (import ./home-manager args) // (import ./nixos args);
   }

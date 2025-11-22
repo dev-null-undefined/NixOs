@@ -1,6 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [
-    iverilog
-    verible
-  ];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [iverilog verible];}

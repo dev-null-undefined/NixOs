@@ -16,12 +16,7 @@
         inherit system;
         overlays = [devshell.overlays.default];
       };
-      libraries = with pkgs; [
-        libjpeg_original
-        ncurses
-        libpng12
-        zlib
-      ];
+      libraries = with pkgs; [libjpeg_original ncurses libpng12 zlib];
       compiler = pkgs.gcc;
       dev-deps = with pkgs; [glibc libcxx doxygen graphviz];
       package-config = rec {
@@ -37,9 +32,7 @@
           nativeBuildInputs = with pkgs; [cmake];
           buildInputs = libraries;
 
-          cmakeFlags = [
-            "-DENABLE_INSTALL=ON"
-          ];
+          cmakeFlags = ["-DENABLE_INSTALL=ON"];
 
           meta = with pkgs.lib; {
             homepage = "";
@@ -52,7 +45,9 @@
       };
       default-app = {
         type = "app";
-        program = self.packages.${system}.default + "/bin/${package-config.pname}";
+        program =
+          self.packages.${system}.default
+          + "/bin/${package-config.pname}";
       };
     in {
       apps.default = default-app;
@@ -91,12 +86,19 @@
       formatter = pkgs.alejandra;
 
       cmake-helper = rec {
-        libs = builtins.map builtins.toString (builtins.map pkgs.lib.getLib libraries);
-        includes = builtins.map builtins.toString (builtins.map pkgs.lib.getDev libraries);
-        cmake-file = pkgs.writeText "CMakeList.txt" (pkgs.lib.strings.concatLines (
-          (builtins.map (lib: ''target_link_directories(''${CMAKE_PROJECT_NAME} PUBLIC ${lib}/lib)'') libs)
-          ++ (builtins.map (include: ''include_directories(${include}/include)'') includes)
-        ));
+        libs =
+          builtins.map builtins.toString
+          (builtins.map pkgs.lib.getLib libraries);
+        includes =
+          builtins.map builtins.toString
+          (builtins.map pkgs.lib.getDev libraries);
+        cmake-file =
+          pkgs.writeText "CMakeList.txt"
+          (pkgs.lib.strings.concatLines ((builtins.map (lib: "target_link_directories(\${CMAKE_PROJECT_NAME} PUBLIC ${lib}/lib)")
+              libs)
+            ++ (builtins.map
+              (include: "include_directories(${include}/include)")
+              includes)));
       };
     });
 }

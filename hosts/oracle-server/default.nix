@@ -25,9 +25,7 @@
       prometheus.enable = true;
       atuin.enable = true;
     };
-    users = {
-      lomohov.enable = true;
-    };
+    users = {lomohov.enable = true;};
   };
 
   documentation.man.generateCaches = false;

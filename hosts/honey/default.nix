@@ -49,12 +49,7 @@
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
 
-    xserver = {
-      videoDrivers = [
-        "nvidia"
-        "modesetting"
-      ];
-    };
+    xserver = {videoDrivers = ["nvidia" "modesetting"];};
   };
 
   systemd.sleep.extraConfig = "HibernateDelaySec=1h";
@@ -65,7 +60,8 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
+    kernelPackages =
+      pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
 
     lanzaboote = {
       enable = true;
@@ -73,9 +69,7 @@
     };
 
     loader = {
-      systemd-boot = {
-        enable = false;
-      };
+      systemd-boot = {enable = false;};
 
       efi.canTouchEfiVariables = true;
       efi.efiSysMountPoint = "/boot";

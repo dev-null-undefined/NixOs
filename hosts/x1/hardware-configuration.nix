@@ -10,9 +10,7 @@
 }: let
   root = "35c59977-c8d6-46e3-90d1-fa2692da7b58";
 in {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
 
   boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
@@ -43,9 +41,7 @@ in {
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/a2ac4f11-cef2-411d-92af-1911aa165d32";}
-  ];
+  swapDevices = [{device = "/dev/disk/by-uuid/a2ac4f11-cef2-411d-92af-1911aa165d32";}];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -56,5 +52,6 @@ in {
   # networking.interfaces.wwan0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.intel.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

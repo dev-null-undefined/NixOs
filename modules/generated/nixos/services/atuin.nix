@@ -1,3 +1,1 @@
-{
-  services.atuin.enable = true;
-}
+{services.atuin.enable = true;}

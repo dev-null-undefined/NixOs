@@ -20,9 +20,7 @@
     # Run unpatched binaries on Nix/NixOS
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
-      };
+      inputs = {nixpkgs.follows = "nixpkgs-stable";};
     };
 
     hyprland = {
@@ -51,9 +49,7 @@
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+      inputs = {nixpkgs.follows = "nixpkgs";};
     };
 
     deploy-rs = {
@@ -95,54 +91,35 @@
     deploy-rs,
     ...
   } @ inputs: let
-    autoDetectedHosts = builtins.listToAttrs (
-      builtins.map
-      (hostname: {
+    autoDetectedHosts = builtins.listToAttrs (builtins.map (hostname: {
         name = hostname;
         value = lib'.internal.ifExists (./hosts/${hostname} + "/overrides.nix");
-      })
-      (
-        builtins.attrNames (
-          lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared") (builtins.readDir ./hosts)
-        )
-      )
-    );
+      }) (builtins.attrNames
+        (lib'.attrsets.filterAttrs (n: v: v == "directory" && n != "shared")
+          (builtins.readDir ./hosts))));
 
-    autoDetectedUsers = builtins.attrNames (
-      lib'.attrsets.filterAttrs (_: v: v == "directory") (builtins.readDir ./home)
-    );
+    autoDetectedUsers =
+      builtins.attrNames
+      (lib'.attrsets.filterAttrs (_: v: v == "directory")
+        (builtins.readDir ./home));
 
     hostConfigs = autoDetectedHosts;
 
-    homeConfigs =
-      builtins.foldl'
-      (
-        ac: cur:
-          ac
-          ++ (builtins.map (
-              username:
-                {
-                  hostname = cur.name;
-                }
-                // cur.value
-                // {
-                  inherit username;
-                }
-            )
-            autoDetectedUsers)
-      )
-      []
-      (
-        lib'.attrsets.attrsToList (
-          hostConfigs
-          // {
-            "brnikov" = {
-              system = "aarch64-linux";
-            };
-            "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
-          }
-        )
-      );
+    homeConfigs = builtins.foldl' (ac: cur:
+      ac
+      ++ (builtins.map (username:
+        {
+          hostname = cur.name;
+        }
+        // cur.value
+        // {
+          inherit username;
+        })
+      autoDetectedUsers)) [] (lib'.attrsets.attrsToList (hostConfigs
+      // {
+        "brnikov" = {system = "aarch64-linux";};
+        "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
+      }));
 
     lib' = import ./lib {inherit inputs self;};
   in
@@ -152,30 +129,19 @@
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
 
-      nixosConfigurations =
-        builtins.mapAttrs (
-          name: value: let
-            config =
-              {
-                hostname = name;
-              }
-              // value;
-          in
-            nixpkgs.lib.nixosSystem (lib'.internal.mkHost config)
-        )
-        hostConfigs;
+      nixosConfigurations = builtins.mapAttrs (name: value: let
+        config = {hostname = name;} // value;
+      in
+        nixpkgs.lib.nixosSystem (lib'.internal.mkHost config)) hostConfigs;
 
-      homeConfigurations =
-        builtins.foldl' (
-          acc: config:
-            {
-              "${config.username}@${config.hostname}" = home-manager.lib.homeManagerConfiguration (
-                lib'.internal.mkHome config
-              );
-            }
-            // acc
-        ) {}
-        homeConfigs;
+      homeConfigurations = builtins.foldl' (acc: config:
+        {
+          "${config.username}@${config.hostname}" =
+            home-manager.lib.homeManagerConfiguration
+            (lib'.internal.mkHome config);
+        }
+        // acc) {}
+      homeConfigs;
 
       deploy = {
         remoteBuild = true;

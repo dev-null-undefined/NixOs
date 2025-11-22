@@ -1,3 +1,1 @@
-{pkgs, ...}: {
-  environment.systemPackages = with pkgs; [wasistlos];
-}
+{pkgs, ...}: {environment.systemPackages = with pkgs; [wasistlos];}

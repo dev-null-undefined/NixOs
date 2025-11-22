@@ -27,9 +27,7 @@ in {
       scrapeConfigs = lib.lists.concatMap targetIf (builtins.attrNames
         (builtins.head
           (builtins.head
-            options.services.prometheus.exporters.type.getSubModules)
-        .imports)
-      .options);
+            options.services.prometheus.exporters.type.getSubModules).imports).options);
     };
     http-services.prometheus = {};
   };
