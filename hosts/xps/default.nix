@@ -35,6 +35,8 @@
     packages.work.enable = true;
   };
 
+  services.postgresql.enable = true;
+
   custom.wireguard.ips = ["10.100.0.5/24"];
 
   documentation.man.generateCaches = false;
