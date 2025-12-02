@@ -43,5 +43,15 @@
     rpi-imager # Raspberry pi imaging utility
 
     dpkg
+
+    postman
+
+    libqalculate # qalc
+
+    lnav
+
+    kcat
+
+    sqlite
   ];
 }
