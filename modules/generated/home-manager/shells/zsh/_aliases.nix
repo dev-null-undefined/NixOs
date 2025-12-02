@@ -10,7 +10,7 @@ in
     df = "duf";
     pss = "procs";
     grep = "grep --color";
-    sgrep = "grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS,.direnv,result}";
+    sgrep = "grep -R -n -H -C 5 --exclude-dir={.git,.svn,CVS,.direnv,result,.venv,venv}";
 
     ls = "lsd";
     l = "lsd -Fh"; #size,show type,human readable
