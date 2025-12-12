@@ -6,7 +6,7 @@
     phpstorm
     pycharm-professional
     webstorm
-    pkgs.stable.jetbrains.clion
+    clion
     rider
     datagrip
     rust-rover
