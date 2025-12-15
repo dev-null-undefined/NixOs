@@ -157,7 +157,14 @@ with lib; {
           lua_ls.enable = true;
           clangd.enable = true;
           jsonls.enable = true;
+          ruff.enable = true;
           html.enable = true;
+          yamlls.enable = true;
+          ansiblels = {
+            enable = true;
+            package = pkgs.stable.ansible-language-server;
+          };
+          ts_ls.enable = true;
         };
 
         keymaps = {
@@ -242,6 +249,7 @@ with lib; {
           deadnix.enable = true;
           statix.enable = true;
           cppcheck.enable = true;
+          ansiblelint.enable = true;
         };
       };
 
