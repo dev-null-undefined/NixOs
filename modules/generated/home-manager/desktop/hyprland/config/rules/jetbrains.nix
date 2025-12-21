@@ -1,8 +1,8 @@
 {
   wayland.windowManager.hyprland.settings = {
-    windowrulev2 = [
-      "tag +jb, class:^jetbrains-.+$,floating:1"
-      # "noinitialfocus, tag:jb"
+    windowrule = [
+      "tag +jb, match:class ^jetbrains-.+$, match:float 1"
+      #      "no_initial_focus on, match:tag jb"
     ];
   };
 }

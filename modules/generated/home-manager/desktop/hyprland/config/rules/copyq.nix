@@ -1,7 +1,7 @@
 {
   wayland.windowManager.hyprland.settings = {
     windowrule = [
-      "float, class:com.github.hluk.copyq, title:.* — CopyQ"
+      "float on, match:class com.github.hluk.copyq, match:title .* — CopyQ"
     ];
   };
 }

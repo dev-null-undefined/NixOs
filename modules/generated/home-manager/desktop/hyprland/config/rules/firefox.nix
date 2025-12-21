@@ -3,12 +3,12 @@
     windowrule = [
       # Firefox stuff
       # make Firefox PiP window floating and sticky
-      "float, title:Picture-in-Picture"
-      "pin, title:Picture-in-Picture"
+      "float on, match:title Picture-in-Picture"
+      "pin on, match:title Picture-in-Picture"
 
       # throw sharing indicators away
-      "workspace special silent, title:Firefox — Sharing Indicator"
-      "workspace special silent, title:.*is sharing (your screen|a window)."
+      "workspace special silent, match:title Firefox — Sharing Indicator"
+      "workspace special silent, match:title .*is sharing (your screen|a window)."
     ];
   };
 }
