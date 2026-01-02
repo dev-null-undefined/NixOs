@@ -2,15 +2,15 @@
   inherit (pkgs.master) jetbrains;
 
   ides' = with jetbrains; [
-    idea-ultimate
-    phpstorm
-    pycharm-professional
-    webstorm
+    # idea-ultimate
+    # phpstorm
+    # pycharm-professional
+    # webstorm
     clion
-    rider
-    datagrip
-    rust-rover
-    gateway
+    # rider
+    # datagrip
+    # rust-rover
+    # gateway
   ];
   plugins' = [
     "github-copilot"
