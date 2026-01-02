@@ -35,6 +35,7 @@
 
     ripgrep
     jq # json
+    fx # better json
     bc # calculator
     mat2 # meta data stripper
     # onionshare
