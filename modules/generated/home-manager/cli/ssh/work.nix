@@ -10,7 +10,7 @@ in {
   programs.ssh.matchBlocks = {
     "cdn77" = {
       user = "martin.kos";
-      match = "host *.cdn77.eu,*.cdn77.com";
+      match = "host *.cdn77.eu,*.cdn77.com,*.cdn77.dev";
     };
     "cdn-dev-ams-1" = {
       hostname = "edge-mc-ams-dev-1-185-152-65-89.cdn77.com";
