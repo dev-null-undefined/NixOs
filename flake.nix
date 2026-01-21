@@ -139,6 +139,9 @@
             "brnikov" = {
               system = "aarch64-linux";
             };
+            "prosek-wagner" = {
+              system = "aarch64-linux";
+            };
             "others-mc-dev-martinkos-45-136-152-121.cdn77.eu" = {};
           }
         )
