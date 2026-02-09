@@ -3,102 +3,170 @@
   lib,
   ...
 }: let
-  cf = config.generated.router;
+  cfg = config.generated.router;
 
-  internalIp = cf.dhcp.gateway;
-  inherit (cf.dhcp) hosts prefix;
-
-  internalInterface = cf.interfaces.internal;
-  externalInterface = cf.interfaces.external;
-
-  netPrefix = ip:
-    builtins.concatStringsSep "." (lib.lists.dropEnd 1
-      (builtins.filter (x: builtins.typeOf x == "string")
-        (builtins.split "\\." ip)));
-
-  defaultPrefix = netPrefix internalIp;
-in {
-  options = {
-    dhcp = {
-      dns = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Whether to use this server as DNS cache.";
-      };
-      gateway = lib.mkOption {
+  ipConfig = lib.types.submodule {
+    options = {
+      ip = lib.mkOption {
         type = lib.types.str;
-        description = "Gateway IP as list of four integers.";
-        default = "192.168.0.1";
+        description = "IPv4 address.";
+        example = "192.168.1.1";
+        default = "192.168.1.1";
       };
       prefix = lib.mkOption {
         type = lib.types.int;
-        description = "Prefix used for the internal IP.";
         default = 24;
+        description = "Subnet prefix length (e.g., 24 for /24).";
       };
-      hosts = {
-        min = lib.mkOption {
-          type = lib.types.str;
-          description = "Minimum host IP as list of four integers.";
-          default = "${defaultPrefix}.2";
-        };
-        max = lib.mkOption {
-          type = lib.types.str;
-          description = "Maximum host IP as string.";
-          default = "${defaultPrefix}.254";
-        };
-      };
-    };
-    interfaces = {
-      internal = lib.mkOption {
-        type = lib.types.str;
-        example = "enp1s0";
-        description = "Internal interface used as DHCP server NAT-ing through the external interface.";
-      };
-      external = lib.mkOption {
-        type = lib.types.str;
-        example = "enp1s0";
-        description = "External interface with 'public' IP and internet access.";
+      gateway = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Gateway IP address.";
       };
     };
   };
 
-  services.dnsmasq = {
+  netPrefix = ip:
+    builtins.concatStringsSep "." (
+      lib.lists.dropEnd 1 (builtins.filter (x: builtins.typeOf x == "string") (builtins.split "\\." ip))
+    );
+in {
+  options = {
+    internal = {
+      interface = lib.mkOption {
+        type = lib.types.str;
+        description = "Name of the internal interface (LAN).";
+        example = "eth1";
+      };
+
+      dhcpd = let
+        defaultPrefix = netPrefix cfg.internal.static.ip;
+      in {
+        enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Internal DHCP server";
+        };
+        start = lib.mkOption {
+          type = lib.types.str;
+          description = "Start of the DHCP address range.";
+          example = "192.168.1.100";
+          default = "${defaultPrefix}.2";
+        };
+        end = lib.mkOption {
+          type = lib.types.str;
+          description = "End of the DHCP address range.";
+          example = "192.168.1.200";
+          default = "${defaultPrefix}.254";
+        };
+        dns = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to advertise this server as the DNS resolver.";
+        };
+      };
+
+      static = lib.mkOption {
+        type = ipConfig;
+        default = {};
+        description = "Static IP configuration for the internal interface.";
+      };
+    };
+
+    external = {
+      interface = lib.mkOption {
+        type = lib.types.str;
+        description = "Name of the external interface (WAN).";
+        example = "eth0";
+      };
+
+      dhcp = lib.mkOption {
+        type = lib.types.bool;
+        default = cfg.external.static == null;
+        description = "Whether to acquire an external IP via DHCP.";
+      };
+
+      static = lib.mkOption {
+        type = lib.types.nullOr ipConfig;
+        default = null;
+        description = "Static IP configuration for the external interface (if DHCP is disabled).";
+      };
+    };
+  };
+
+  services.dnsmasq = lib.mkIf cfg.internal.dhcpd.enable {
     enable = true;
     alwaysKeepRunning = true;
     settings = {
-      interface = internalInterface;
-      dhcp-range = "${hosts.min},${hosts.max}";
+      inherit (cfg.internal) interface;
+      dhcp-range = "${cfg.internal.dhcpd.start},${cfg.internal.dhcpd.end},${toString cfg.internal.static.prefix}";
+
       dhcp-option =
-        ["3,${internalIp}"]
-        ++ (lib.lists.optional cf.dhcp.dns "6,${internalIp}");
+        [
+          "3,${
+            if cfg.internal.static.gateway != null
+            then cfg.internal.static.gateway
+            else cfg.internal.static.ip
+          }"
+        ]
+        ++ (lib.lists.optional cfg.internal.dhcpd.dns "6,${cfg.internal.static.ip}");
+
       server = config.networking.nameservers;
     };
   };
 
-  networking = {
-    firewall = {
-      allowPing = true;
-      allowedUDPPorts = [53 67];
+  networking.firewall = {
+    allowPing = true;
+    interfaces.${cfg.internal.interface} = {
+      allowedUDPPorts = [
+        53
+        67
+      ];
       allowedTCPPorts = [53];
     };
-    nat = {
-      enable = true;
-      inherit externalInterface;
-      internalInterfaces = [internalInterface];
-    };
+  };
 
-    nameservers = ["1.1.1.1" "8.8.8.8"];
+  networking.nat = {
+    enable = true;
+    externalInterface = cfg.external.interface;
+    internalInterfaces = [cfg.internal.interface];
+  };
 
-    # networking.enableIPv6 = true;
-    useDHCP = false;
-    interfaces = {
-      ${externalInterface}.useDHCP = true;
-      ${internalInterface}.ipv4.addresses = [
+  networking.nameservers = [
+    "1.1.1.1"
+    "8.8.8.8"
+  ];
+
+  networking.interfaces = {
+    ${cfg.internal.interface} = {
+      useDHCP = false;
+      ipv4.addresses = [
         {
-          address = internalIp;
-          prefixLength = prefix;
+          address = cfg.internal.static.ip;
+          prefixLength = cfg.internal.static.prefix;
         }
       ];
     };
+
+    ${cfg.external.interface} =
+      if cfg.external.dhcp
+      then {
+        useDHCP = true;
+      }
+      else {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = cfg.external.static.ip;
+            prefixLength = cfg.external.static.prefix;
+          }
+        ];
+      };
   };
+
+  networking.defaultGateway =
+    lib.mkIf (
+      !cfg.external.dhcp && cfg.external.static.gateway != null
+    )
+    cfg.external.static.gateway;
 }

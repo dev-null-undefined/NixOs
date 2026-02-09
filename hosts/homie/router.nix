@@ -1,10 +1,17 @@
 {
   generated.router = {
     enable = true;
-    dhcp.gateway = "192.168.2.1";
-    interfaces = {
-      internal = "enp1s0";
-      external = "enp6s0";
+    internal = {
+      interface = "enp1s0";
+    };
+
+    external = {
+      interface = "enp6s0";
+      static = {
+        ip = "10.52.102.19";
+        prefix = 29;
+        gateway = "10.52.102.17";
+      };
     };
   };
 }

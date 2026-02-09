@@ -61,7 +61,7 @@ in {
     };
     outIface = lib.mkOption {
       type = lib.types.str;
-      default = config.generated.router.interfaces.external;
+      default = config.generated.router.external.interface;
       description = "Interface use for NAT ing the namespace through.";
     };
     openPorts = lib.mkOption {
