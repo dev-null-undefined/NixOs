@@ -8,9 +8,9 @@
     external = {
       interface = "enp6s0";
       static = {
-        ip = "10.52.102.19";
-        prefix = 29;
-        gateway = "10.52.102.17";
+        ip = "94.230.159.2";
+        prefix = 30;
+        gateway = "94.230.159.1";
       };
     };
   };
