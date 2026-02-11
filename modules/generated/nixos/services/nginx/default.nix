@@ -21,8 +21,6 @@ in {
   services.nginx = {
     enable = true;
 
-    package = pkgs.nginxQuic;
-
     # Use recommended settings
     recommendedGzipSettings = true;
     recommendedOptimisation = true;
