@@ -1,8 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
-    #nixpkgs.url = "github:NixOs/nixpkgs/nixos-24.05";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -77,7 +76,7 @@
     };
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
+      url = "github:nix-community/lanzaboote/v0.4.3";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 

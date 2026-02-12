@@ -160,10 +160,6 @@ with lib; {
           ruff.enable = true;
           html.enable = true;
           yamlls.enable = true;
-          ansiblels = {
-            enable = true;
-            package = pkgs.stable.ansible-language-server;
-          };
           ts_ls.enable = true;
         };
 
