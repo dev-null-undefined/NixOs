@@ -4,7 +4,8 @@
   self,
   ...
 }:
-with lib; {
+with lib;
+{
   home.packages = with pkgs; [
     nixd
     nixfmt-classic # Nix
@@ -58,6 +59,15 @@ with lib; {
       signcolumn = "yes";
       updatetime = 50;
       foldlevelstart = 99;
+
+      listchars = {
+        eol = "¬";
+        tab = ">·";
+        trail = "~";
+        extends = ">";
+        precedes = "<";
+        space = "␣";
+      };
     };
 
     #============================================================
@@ -104,6 +114,17 @@ with lib; {
         key = ";";
         action = ":";
       }
+
+      # Toggle Invisible Characters (listchars)
+      {
+        mode = "n";
+        key = "<leader>l";
+        action = "<cmd>set list!<CR>";
+        options = {
+          silent = true;
+          desc = "Toggle invisible characters";
+        };
+      }
     ];
 
     plugins = {
@@ -134,7 +155,7 @@ with lib; {
               };
 
               formatting = {
-                command = ["alejadra"];
+                command = [ "alejadra" ];
               };
               options = {
                 nixos = {
@@ -281,9 +302,9 @@ with lib; {
               name = "buffer";
               keyword_lenght = 4;
             }
-            {name = "calc";}
-            {name = "emoji";}
-            {name = "luasnip";}
+            { name = "calc"; }
+            { name = "emoji"; }
+            { name = "luasnip"; }
           ];
           mapping = {
             "<Down>" = "cmp.mapping.select_next_item()";
