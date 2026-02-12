@@ -14,6 +14,7 @@
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
     services = {
+      ssh.enable = true;
       # syncthing.enable = true;
       # opensnitch.enable = true;
       # mariadb.enable = true;
