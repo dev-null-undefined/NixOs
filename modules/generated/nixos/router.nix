@@ -30,6 +30,21 @@
     builtins.concatStringsSep "." (
       lib.lists.dropEnd 1 (builtins.filter (x: builtins.typeOf x == "string") (builtins.split "\\." ip))
     );
+
+  clientConfig = lib.types.submodule {
+    options = {
+      mac = lib.mkOption {
+        type = lib.types.str;
+        description = "MAC address of the client.";
+        example = "6b:e9:ca:0a:03:04";
+      };
+      ip = lib.mkOption {
+        type = lib.types.str;
+        description = "Static IP address to assign.";
+        example = "192.168.1.102";
+      };
+    };
+  };
 in {
   options = {
     internal = {
@@ -64,6 +79,18 @@ in {
           default = true;
           description = "Whether to advertise this server as the DNS resolver.";
         };
+
+        staticLeases = lib.mkOption {
+          type = lib.types.attrsOf clientConfig;
+          default = {};
+          description = "Map of hostnames to static IP/MAC configurations.";
+          example = {
+            samsung-tv = {
+              mac = "6b:e9:ca:0a:03:04";
+              ip = "192.168.1.102";
+            };
+          };
+        };
       };
 
       static = lib.mkOption {
@@ -94,26 +121,35 @@ in {
     };
   };
 
-  services.dnsmasq = lib.mkIf cfg.internal.dhcpd.enable {
-    enable = true;
-    alwaysKeepRunning = true;
-    settings = {
-      inherit (cfg.internal) interface;
-      dhcp-range = "${cfg.internal.dhcpd.start},${cfg.internal.dhcpd.end},${toString cfg.internal.static.prefix}";
+  services.dnsmasq = let
+    dhcpd-cfg = cfg.internal.dhcpd;
+  in
+    lib.mkIf dhcpd-cfg.enable {
+      enable = true;
+      alwaysKeepRunning = true;
+      settings = {
+        inherit (cfg.internal) interface;
+        dhcp-range = "${dhcpd-cfg.start},${cfg.internal.dhcpd.end},${toString cfg.internal.static.prefix}";
 
-      dhcp-option =
-        [
-          "3,${
-            if cfg.internal.static.gateway != null
-            then cfg.internal.static.gateway
-            else cfg.internal.static.ip
-          }"
-        ]
-        ++ (lib.lists.optional cfg.internal.dhcpd.dns "6,${cfg.internal.static.ip}");
+        dhcp-option =
+          [
+            "3,${
+              if cfg.internal.static.gateway != null
+              then cfg.internal.static.gateway
+              else cfg.internal.static.ip
+            }"
+          ]
+          ++ (lib.lists.optional dhcpd-cfg.dns "6,${cfg.internal.static.ip}");
 
-      server = config.networking.nameservers;
+        dhcp-host =
+          lib.mapAttrsToList (
+            hostname: config: "${config.mac},${hostname},${config.ip}"
+          )
+          dhcpd-cfg.staticLeases;
+
+        server = config.networking.nameservers;
+      };
     };
-  };
 
   networking.firewall = {
     allowPing = true;

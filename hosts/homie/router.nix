@@ -3,6 +3,12 @@
     enable = true;
     internal = {
       interface = "enp1s0";
+      dhcpd.staticLeases = {
+        "uzdil-proxmox" = {
+          mac = "c8:7f:54:68:43:4d";
+          ip = "192.168.1.50";
+        };
+      };
     };
 
     external = {
