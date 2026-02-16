@@ -11,47 +11,70 @@
   vpnPort = "51820";
   inherit (cf) outIface netnsName;
 
-  generateOpenPortCmd = {
-    port,
-    protocol,
-  }:
-    builtins.concatStringsSep "\n" (builtins.map (proto: ''
-        ip netns exec ${netnsName} iptables \
-        -A INPUT -p ${proto} \
-        --dport ${toString port} \
-        -j ACCEPT
-      '') (
-        if protocol == "both"
-        then ["tcp" "udp"]
-        else [protocol]
-      ));
+  protoList = protocol:
+    if protocol == "both"
+    then ["tcp" "udp"]
+    else [protocol];
 
-  generateOpenPorts = ports:
-    builtins.concatStringsSep "\n" (builtins.map generateOpenPortCmd ports);
+  # Generate nft rules for open ports inside the netns
+  generateOpenPortRules = ports:
+    builtins.concatStringsSep "\n" (builtins.concatMap ({
+      port,
+      protocol,
+    }:
+      builtins.map (proto: "        ${proto} dport ${toString port} accept")
+      (protoList protocol))
+    ports);
 
-  openPortsCmd = generateOpenPorts cf.openPorts;
+  openPortRules = generateOpenPortRules cf.openPorts;
 
-  generatePortMappingCmd = {
-    from,
-    to,
-    protocol,
-  }:
-    builtins.concatStringsSep "\n" (builtins.map (proto: ''
-        iptables -t nat -A PREROUTING -p ${proto} \
-        --dport ${toString from} \
-        -j DNAT \
-        --to-destination 10.200.200.2:${toString to}
-      '') (
-        if protocol == "both"
-        then ["tcp" "udp"]
-        else [protocol]
-      ));
+  # Generate nft DNAT rules for port mappings on the host
+  generateDnatRules = mappings:
+    builtins.concatStringsSep "\n" (builtins.concatMap ({
+      from,
+      to,
+      protocol,
+    }:
+      builtins.map (proto: "        ${proto} dport ${toString from} dnat to 10.200.200.2:${toString to}")
+      (protoList protocol))
+    mappings);
 
-  generatePortMapping = mappings:
-    builtins.concatStringsSep "\n"
-    (builtins.map generatePortMappingCmd mappings);
+  dnatRules = generateDnatRules cf.portMappings;
 
-  mappingCmds = generatePortMapping cf.portMappings;
+  hostNftConf = pkgs.writeText "${netnsName}-host-nft.conf" ''
+    table ip vpn-${netnsName} {
+      chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        ip saddr 10.200.200.0/24 oifname "${outIface}" masquerade
+      }
+      chain prerouting {
+        type nat hook prerouting priority dstnat; policy accept;
+    ${dnatRules}
+      }
+    }
+  '';
+
+  netnsNftConf = pkgs.writeText "${netnsName}-netns-nft.conf" ''
+    table inet filter {
+      chain input {
+        type filter hook input priority filter; policy drop;
+        iifname "lo" accept
+        ct state established,related accept
+        iifname "wg-${netnsName}" accept
+    ${openPortRules}
+      }
+      chain output {
+        type filter hook output priority filter; policy drop;
+        oifname "lo" accept
+        ct state established,related accept
+        oifname "wg-${netnsName}" accept
+        oifname "veth1" ip daddr ${vpnServerIP} udp dport ${vpnPort} accept
+      }
+      chain forward {
+        type filter hook forward priority filter; policy drop;
+      }
+    }
+  '';
 in {
   options = {
     netnsName = lib.mkOption {
@@ -132,7 +155,7 @@ in {
     wantedBy = ["multi-user.target"];
     before = ["${netnsName}-vpn.service"];
 
-    path = with pkgs; [iptables iproute2 nettools coreutils];
+    path = with pkgs; [nftables iproute2 nettools coreutils];
 
     serviceConfig = {
       Type = "oneshot";
@@ -140,11 +163,8 @@ in {
       ExecStop = pkgs.writeShellScript "${netnsName}-netns-stop" ''
         echo "[${netnsName} netns] Stopping..."
 
-        # Clean up iptables in netns
-        ip netns exec ${netnsName} iptables -F || true
-        ip netns exec ${netnsName} iptables -P INPUT ACCEPT || true
-        ip netns exec ${netnsName} iptables -P OUTPUT ACCEPT || true
-        ip netns exec ${netnsName} iptables -P FORWARD ACCEPT || true
+        # Clean up nftables in netns
+        ip netns exec ${netnsName} nft flush ruleset || true
 
         # Remove namespace
         ip netns del ${netnsName} || true
@@ -152,8 +172,8 @@ in {
         # Remove veth interfaces
         ip link delete veth0 || true
 
-        # Remove host iptables NAT rule
-        iptables -t nat -D POSTROUTING -s 10.200.200.0/24 -o ${outIface} -j MASQUERADE 2>/dev/null || true
+        # Remove host nftables table
+        nft delete table ip vpn-${netnsName} || true
 
         echo "[${netnsName} netns] Stopping Done."
       '';
@@ -173,30 +193,12 @@ in {
         ip netns exec ${netnsName} ip route add default via 10.200.200.1 || true
         ip netns exec ${netnsName} ip route add 146.70.129.18/32 via 10.200.200.1 dev veth1 || true
 
+        # Host-side NAT and port forwarding via nftables
+        nft delete table ip vpn-${netnsName} 2>/dev/null || true
+        nft -f ${hostNftConf}
 
-        iptables -t nat -C POSTROUTING -s 10.200.200.0/24 -o ${outIface} -j MASQUERADE 2>/dev/null || \
-          iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o ${outIface} -j MASQUERADE
-
-        ip netns exec ${netnsName} iptables -F
-        ip netns exec ${netnsName} iptables -P OUTPUT DROP
-        ip netns exec ${netnsName} iptables -P INPUT DROP
-        ip netns exec ${netnsName} iptables -P FORWARD DROP
-        ip netns exec ${netnsName} iptables -A INPUT -i lo -j ACCEPT
-        ip netns exec ${netnsName} iptables -A OUTPUT -o lo -j ACCEPT
-
-        ip netns exec ${netnsName} iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-        ip netns exec ${netnsName} iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-
-        ip netns exec ${netnsName} iptables -A OUTPUT -o wg-${netnsName} -j ACCEPT
-        ip netns exec ${netnsName} iptables -A INPUT -i wg-${netnsName} -j ACCEPT
-
-        ip netns exec ${netnsName} iptables -A OUTPUT -o veth1 -d ${vpnServerIP} -p udp --dport ${vpnPort} -j ACCEPT
-
-        # Open ports
-        ${openPortsCmd}
-
-        # Port mappings
-        ${mappingCmds}
+        # Netns firewall via nftables
+        ip netns exec ${netnsName} nft -f ${netnsNftConf}
 
         echo "[${netnsName} netns] Setup complete."
       '';

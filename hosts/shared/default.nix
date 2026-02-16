@@ -1,4 +1,6 @@
 {
+  networking.nftables.enable = true;
+
   custom.wireguard.allConfigs = [
     {
       name = "RPI-home_assistant-brnikov";
