@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }: let
   uniqueListPred = list: pred:
@@ -144,31 +143,16 @@ in {
       in
         acc
         // {
-          "${interfaceConfig.interfaceName}" =
-            {
-              ips = [interfaceConfig.ip];
+          "${interfaceConfig.interfaceName}" = {
+            ips = [interfaceConfig.ip];
 
-              inherit (interfaceConfig) listenPort fwMark;
+            inherit (interfaceConfig) listenPort fwMark;
 
-              privateKeyFile = "/wireguard-keys/private-${interfaceConfig.interfaceName}";
-              generatePrivateKeyFile = true;
+            privateKeyFile = "/wireguard-keys/private-${interfaceConfig.interfaceName}";
+            generatePrivateKeyFile = true;
 
-              peers = genPeers interfaceConfig;
-            }
-            // (
-              lib.attrsets.optionalAttrs interfaceConfig.isServer {
-                # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-                # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
-                postSetup = ''
-                  ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
-                '';
-
-                # This undoes the above command
-                postShutdown = ''
-                  ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s ${parsedIp.networkWithPrefix} -o ${config.networking.nat.externalInterface} -j MASQUERADE
-                '';
-              }
-            );
+            peers = genPeers interfaceConfig;
+          };
         }) {}
       hostConfigs;
     };
