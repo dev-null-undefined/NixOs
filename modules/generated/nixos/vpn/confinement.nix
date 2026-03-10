@@ -41,19 +41,6 @@
 
   dnatRules = generateDnatRules cf.portMappings;
 
-  hostNftConf = pkgs.writeText "${netnsName}-host-nft.conf" ''
-    table ip vpn-${netnsName} {
-      chain postrouting {
-        type nat hook postrouting priority srcnat; policy accept;
-        ip saddr 10.200.200.0/24 oifname "${outIface}" masquerade
-      }
-      chain prerouting {
-        type nat hook prerouting priority dstnat; policy accept;
-    ${dnatRules}
-      }
-    }
-  '';
-
   netnsNftConf = pkgs.writeText "${netnsName}-netns-nft.conf" ''
     table inet filter {
       chain input {
@@ -150,6 +137,21 @@ in {
     })
     cf.portMappings;
 
+  networking.nftables.tables."vpn-${netnsName}" = {
+    family = "ip";
+    content = ''
+      chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        ip saddr 10.200.200.0/24 oifname "${outIface}" masquerade
+        ct status dnat oifname "veth0" masquerade
+      }
+      chain prerouting {
+        type nat hook prerouting priority dstnat; policy accept;
+    ${dnatRules}
+      }
+    '';
+  };
+
   systemd.services."${netnsName}-netns" = {
     description = "Set up ${netnsName} network namespace and firewall";
     wantedBy = ["multi-user.target"];
@@ -172,9 +174,6 @@ in {
         # Remove veth interfaces
         ip link delete veth0 || true
 
-        # Remove host nftables table
-        nft delete table ip vpn-${netnsName} || true
-
         echo "[${netnsName} netns] Stopping Done."
       '';
       ExecStart = pkgs.writeShellScript "${netnsName}-netns-start" ''
@@ -192,10 +191,6 @@ in {
         ip netns exec ${netnsName} ip link set lo up
         ip netns exec ${netnsName} ip route add default via 10.200.200.1 || true
         ip netns exec ${netnsName} ip route add 146.70.129.18/32 via 10.200.200.1 dev veth1 || true
-
-        # Host-side NAT and port forwarding via nftables
-        nft delete table ip vpn-${netnsName} 2>/dev/null || true
-        nft -f ${hostNftConf}
 
         # Netns firewall via nftables
         ip netns exec ${netnsName} nft -f ${netnsNftConf}
@@ -244,6 +239,9 @@ in {
   };
 
   networking.firewall.checkReversePath = false;
+  networking.firewall.extraForwardRules = ''
+    iifname "veth0" oifname "${outIface}" accept
+  '';
 
   systemd.services."wireguard-wg-${netnsName}" = {
     requires = ["${netnsName}-netns.service"];
