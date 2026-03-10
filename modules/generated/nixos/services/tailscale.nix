@@ -1,6 +1,8 @@
 {config, ...}: {
   services.tailscale.enable = true;
 
+  networking.firewall.trustedInterfaces = [config.services.tailscale.interfaceName];
+
   # Systemd service to restart Tailscale around suspend
   systemd.services.tailscale-restart-after-suspend = {
     description = "Restart Tailscale service";
