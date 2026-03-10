@@ -84,6 +84,11 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -194,9 +199,22 @@
           hostConfigs;
       };
     }
-    // (flake-utils.lib.eachDefaultSystem (system: {
+    // (flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
+    in {
       packages = lib'.internal.mkPkgsWithOverlays system;
-      formatter = nixpkgs.legacyPackages.${system}.alejandra;
+      formatter = pkgs.alejandra;
+      checks.pre-commit-check = inputs.git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          alejandra.enable = true;
+        };
+      };
+      devShells.default = pkgs.mkShell {
+        shellHook = ''
+          ${self.checks.${system}.pre-commit-check.shellHook}
+        '';
+      };
     }))
     // {
       templates = import ./templates;
