@@ -140,15 +140,15 @@ in {
   networking.nftables.tables."vpn-${netnsName}" = {
     family = "ip";
     content = ''
-      chain postrouting {
-        type nat hook postrouting priority srcnat; policy accept;
-        ip saddr 10.200.200.0/24 oifname "${outIface}" masquerade
-        ct status dnat oifname "veth0" masquerade
-      }
-      chain prerouting {
-        type nat hook prerouting priority dstnat; policy accept;
-    ${dnatRules}
-      }
+        chain postrouting {
+          type nat hook postrouting priority srcnat; policy accept;
+          ip saddr 10.200.200.0/24 oifname "${outIface}" masquerade
+          ct status dnat oifname "veth0" masquerade
+        }
+        chain prerouting {
+          type nat hook prerouting priority dstnat; policy accept;
+      ${dnatRules}
+        }
     '';
   };
 

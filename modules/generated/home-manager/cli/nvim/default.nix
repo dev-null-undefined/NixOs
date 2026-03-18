@@ -4,8 +4,7 @@
   self,
   ...
 }:
-with lib;
-{
+with lib; {
   home.packages = with pkgs; [
     nixd
     nixfmt-classic # Nix
@@ -155,7 +154,7 @@ with lib;
               };
 
               formatting = {
-                command = [ "alejadra" ];
+                command = ["alejadra"];
               };
               options = {
                 nixos = {
@@ -302,9 +301,9 @@ with lib;
               name = "buffer";
               keyword_lenght = 4;
             }
-            { name = "calc"; }
-            { name = "emoji"; }
-            { name = "luasnip"; }
+            {name = "calc";}
+            {name = "emoji";}
+            {name = "luasnip";}
           ];
           mapping = {
             "<Down>" = "cmp.mapping.select_next_item()";

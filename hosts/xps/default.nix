@@ -52,7 +52,10 @@
     fprintd.enable = true;
 
     xserver = {
-      videoDrivers = ["nvidia" "modesetting"];
+      videoDrivers = [
+        "nvidia"
+        "modesetting"
+      ];
       synaptics.enable = lib.mkForce false;
     };
     thermald.enable = true;
@@ -71,12 +74,16 @@
   };
 
   boot = {
-    blacklistedKernelModules = ["i2c_hid" "hid_multitouch" "i2c-hid"];
+    blacklistedKernelModules = [
+      "i2c_hid"
+      "hid_multitouch"
+      "i2c-hid"
+    ];
     # blacklistedKernelModules = ["i2c_hid" "i2c_hid_acpi" "psmouse"];
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
 
-    # kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.stable.linuxPackages_6_12;
     # latest kernel doesn't work with nvidia proprietery driver
 
     # Air plane mode fix
@@ -121,7 +128,7 @@
 
   hardware = {
     nvidia = {
-      # package = config.boot.kernelPackages.nvidiaPackages;
+      # package = config.boot.kernelPackages.nvidiaPackages.latest;
       # Modesetting is required.
       modesetting.enable = true;
 
