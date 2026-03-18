@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo:*)",
+      "Bash(hyprctl version:*)",
+      "WebSearch",
+      "WebFetch(domain:wiki.hyprland.org)",
+      "WebFetch(domain:wiki.hypr.land)",
+      "WebFetch(domain:github.com)",
+      "Bash(hyprctl keyword:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Skill(rebuild)"
+    ]
+  }
+}
