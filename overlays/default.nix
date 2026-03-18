@@ -14,6 +14,8 @@ with self.lib'.internal; {
   stable-pkgs = super: final: {
     inherit
       (super.stable)
+      bitwarden-desktop
+      webcord
       godot_4
       pixelorama
       firefox
@@ -34,6 +36,11 @@ with self.lib'.internal; {
       copyq
       nextcloud-client
       lutris
+      wine
+      wineWowPackages
+      kcat
+      freecad
+      mycli
       ;
     inherit (super.dev-null) rpi-imager;
   };

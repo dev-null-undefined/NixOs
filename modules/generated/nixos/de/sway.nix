@@ -24,7 +24,6 @@
       wrapperFeatures.gtk = true;
     };
     wshowkeys.enable = true;
-    light.enable = true;
     kdeconnect.enable = true;
   };
 

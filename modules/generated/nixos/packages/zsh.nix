@@ -19,7 +19,7 @@
 
     # Flex spec sharing Utilities
     screenfetch
-    neofetch
+    fastfetch
     cpufetch
     #macchina
 

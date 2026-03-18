@@ -27,13 +27,13 @@
       "$mainMod CTRL, ${bind.keybind}, workspace, ${bind.number}"
 
       # Switch workspaces with mainMod + [0-9]
-      "bind = $mainMod, ${bind.keybind}, workspace, ${bind.number}"
+      "$mainMod, ${bind.keybind}, workspace, ${bind.number}"
 
       # Move active window to a workspace with mainMod + Alt + [0-9] but stay at current workspace
       "$mainMod CTRL SHIFT, ${bind.keybind}, movetoworkspacesilent, ${bind.number}"
 
       # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      "bind = $mainMod SHIFT, ${bind.keybind}, movetoworkspace, ${bind.number}"
+      "$mainMod SHIFT, ${bind.keybind}, movetoworkspace, ${bind.number}"
     ])
     mappings;
 in {
@@ -47,7 +47,7 @@ in {
         # LayOut managment
         "$mainMod, P, pseudo,"
         # dwindle
-        "$mainMod, J, togglesplit, # dwindle"
+        "$mainMod, J, layoutmsg, togglesplit"
 
         # Window managment key binds
         "$mainMod,     Q, killactive,"
@@ -115,12 +115,12 @@ in {
       ", XF86AudioMicMute,     exec, wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle"
 
       # backlight
-      ", XF86MonBrightnessUp,   exec, light -A 2.5"
-      ", XF86MonBrightnessDown, exec, light -T 0.6"
+      ", XF86MonBrightnessUp,   exec, brightnessctl set +2%"
+      ", XF86MonBrightnessDown, exec, brightnessctl set 2%-"
 
       # brightness shortcuts with Ctrl for max/min
-      "CTRL, XF86MonBrightnessUp,   exec, light -S 100"
-      "CTRL, XF86MonBrightnessDown, exec, light -r -S 1"
+      "CTRL, XF86MonBrightnessUp,   exec, brightnessctl set 100%"
+      "CTRL, XF86MonBrightnessDown, exec, brightnessctl set 1%"
     ];
 
     bindl = [

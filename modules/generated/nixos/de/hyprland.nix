@@ -15,6 +15,7 @@
     kdePackages.polkit-kde-agent-1
 
     wl-clipboard
+    brightnessctl
   ];
 
   services = {
@@ -34,7 +35,6 @@
     };
 
     wshowkeys.enable = true;
-    light.enable = true;
     kdeconnect.enable = true;
   };
 

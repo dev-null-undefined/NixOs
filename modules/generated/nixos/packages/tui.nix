@@ -39,7 +39,7 @@
 
     # Utilities
     pandoc
-    light
+    brightnessctl
     autorandr
     cron
     libnotify

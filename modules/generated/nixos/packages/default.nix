@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
   generated.packages = {
@@ -25,7 +26,9 @@
     man
     man-pages
     man-pages-posix
-    linux-manual
+    #(pkgs.linux-manual.override {
+    #  linuxPackages_latest = config.boot.kernelPackages;
+    #})
 
     # Archives
     unzip
