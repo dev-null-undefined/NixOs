@@ -52,6 +52,7 @@ with self.lib'.internal; {
       kodi
       discord
       jetbrains
+      claude-code
       ;
   };
 
