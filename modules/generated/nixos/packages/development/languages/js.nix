@@ -4,5 +4,6 @@
     nodejs
     nodePackages.npm
     yarn
+    bun
   ];
 }
