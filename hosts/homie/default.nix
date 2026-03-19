@@ -1,7 +1,10 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {config, ...}: {
-  imports = [./router.nix ./grafana.nix];
+  imports = [
+    ./router.nix
+    ./grafana.nix
+  ];
   generated = {
     services = {
       ssh.enable = true;
@@ -11,9 +14,22 @@
       prometheus.enable = true;
       media.enable = true;
       smartd.enable = true;
+      ntopng.enable = true;
     };
     vpn.enable = true;
   };
+
+  services.ntopng.interfaces = [
+    "enp1s0"
+    "enp6s0"
+    "veth0"
+    "wg0"
+    "vlan500"
+    "vlan300"
+    "vlan100"
+    "tailscale0"
+    "docker0"
+  ];
 
   services.prometheus.scrapeConfigs = [
     {
@@ -50,7 +66,10 @@
       hostName = "homie.rat-python.ts.net";
       home = "/var/data/nextcloud";
       settings = {
-        trusted_domains = ["192.168.2.1" "cloud.dev-null.me"];
+        trusted_domains = [
+          "192.168.2.1"
+          "cloud.dev-null.me"
+        ];
         trusted_proxies = ["10.100.0.1"];
       };
     };
