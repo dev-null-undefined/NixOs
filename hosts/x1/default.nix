@@ -19,6 +19,7 @@
     de.hyprland.enable = lib.mkDefault true;
     hardware.thinkpad.enable = true;
     services = {
+      distributed-builds.enable = true;
       # syncthing.enable = true;
       # opensnitch.enable = true;
       # mariadb.enable = true;

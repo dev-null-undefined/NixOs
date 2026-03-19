@@ -23,6 +23,7 @@
     de.hyprland.enable = lib.mkDefault true;
     nvidia.nvidia-sync.enable = true;
     services = {
+      distributed-builds.enable = true;
       # syncthing.enable = true;
       # opensnitch.enable = true;
       # mariadb.enable = true;
