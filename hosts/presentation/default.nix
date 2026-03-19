@@ -13,7 +13,7 @@
 
   domain = "dev-null.me";
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   networking.firewall.enable = false;
   networking.firewall.allowPing = true;

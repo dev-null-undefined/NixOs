@@ -38,7 +38,7 @@
 
   # networking.firewall.enable = false;
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
   #documentation.nixos.includeAllModules = false;
 
   systemd.sleep.extraConfig = "HibernateDelaySec=1h";

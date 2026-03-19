@@ -55,7 +55,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   custom.wireguard.ips = ["10.100.0.4/24"];
 

@@ -37,7 +37,7 @@
     privateKeySuffix = "_X1";
   };
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   # nix.settings.max-jobs = 5;
 

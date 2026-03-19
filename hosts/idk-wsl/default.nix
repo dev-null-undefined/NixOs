@@ -16,7 +16,7 @@
 
   networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   system.stateVersion = "23.05"; # Did you read the comment?
 }

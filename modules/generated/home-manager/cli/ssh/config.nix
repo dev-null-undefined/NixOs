@@ -1,7 +1,7 @@
 {
   programs.ssh = {
     enable = true;
-    hashKnownHosts = true;
+    matchBlocks."*".hashKnownHosts = true;
     extraConfig = ''
       VisualHostKey yes
     '';

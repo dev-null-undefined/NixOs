@@ -10,7 +10,7 @@
 
     man = {
       enable = true;
-      generateCaches = lib.mkDefault true;
+      cache.enable = lib.mkDefault true;
     };
 
     # nixos.includeAllModules = lib.mkDefault true;

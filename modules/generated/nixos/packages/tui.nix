@@ -47,9 +47,9 @@
     xclip
 
     # Libs
-    xorg.libX11
-    xorg.libXinerama
-    xorg.libXft
+    libx11
+    libxinerama
+    libxft
     imlib2
     ncurses
 

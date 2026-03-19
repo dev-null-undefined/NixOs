@@ -24,7 +24,7 @@
     };
   };
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   domain = "dev-null.me";
 

@@ -7,7 +7,7 @@
 with lib; {
   home.packages = with pkgs; [
     nixd
-    nixfmt-classic # Nix
+    nixfmt # Nix
     lua-language-server
     stylua # Lua
     clang-tools
@@ -173,7 +173,11 @@ with lib; {
             };
           };
           statix.enable = true;
-          rust_analyzer.enable = true;
+          rust_analyzer = {
+            enable = true;
+            installCargo = false;
+            installRustc = false;
+          };
           lua_ls.enable = true;
           clangd.enable = true;
           jsonls.enable = true;
@@ -249,11 +253,11 @@ with lib; {
       };
       lsp-lines.enable = true;
       lsp-format.enable = true;
-      lspconfig.enable = true;
       lspsaga = {
         enable = true;
-        lightbulb.enable = false;
+        settings.lightbulb.enable = false;
       };
+      web-devicons.enable = true;
 
       noice.enable = true;
 

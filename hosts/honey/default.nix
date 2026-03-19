@@ -40,7 +40,7 @@
 
   # custom.wireguard.ips = ["10.100.0.5/24"];
 
-  documentation.man.generateCaches = false;
+  documentation.man.cache.enable = false;
 
   # nix.settings.max-jobs = 5;
 
