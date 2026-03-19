@@ -15,6 +15,7 @@
       media.enable = true;
       smartd.enable = true;
       ntopng.enable = true;
+      harmonia.enable = true;
     };
     vpn.enable = true;
   };

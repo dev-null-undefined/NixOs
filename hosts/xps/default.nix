@@ -41,7 +41,7 @@
 
   documentation.man.cache.enable = false;
 
-  nix.settings.max-jobs = 5;
+  nix.settings.max-jobs = 0; # offload all builds to homie
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 

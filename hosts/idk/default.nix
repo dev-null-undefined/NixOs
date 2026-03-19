@@ -38,6 +38,8 @@
 
   # networking.firewall.enable = false;
 
+  nix.settings.max-jobs = 0; # offload all builds to homie
+
   documentation.man.cache.enable = false;
   #documentation.nixos.includeAllModules = false;
 

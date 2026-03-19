@@ -28,15 +28,35 @@ in {
               trusted-users = ["root" "@wheel"];
 
               # TODO: move to special folder
-              substituters = ["https://hyprland.cachix.org"];
+              substituters = [
+                "http://homie:5000"
+                "https://hyprland.cachix.org"
+              ];
               trusted-public-keys = [
+                "homie-1:nVkPXYcuMRV5aeTf7F1coe/qFX1BrqRLmlTQBy5A6OA="
                 "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
               ];
 
               auto-optimise-store = true;
               keep-outputs = true;
               keep-derivations = true;
+
+              # let remote builders use their own substituters
+              builders-use-substitutes = true;
             };
+
+            buildMachines = [
+              {
+                hostName = "homie";
+                protocol = "ssh-ng";
+                system = "x86_64-linux";
+                maxJobs = 8;
+                speedFactor = 2;
+                supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
+              }
+            ];
+            distributedBuilds = true;
+
             nixPath =
               lib.mapAttrsToList (k: v: "${k}=${v.to.path}") config.nix.registry;
             registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
