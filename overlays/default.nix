@@ -14,33 +14,13 @@ with self.lib'.internal; {
   stable-pkgs = super: final: {
     inherit
       (super.stable)
-      bitwarden-desktop
-      webcord
-      godot_4
-      pixelorama
-      firefox
-      libreoffice
-      thunderbird
-      carla
-      blender
-      easyeffects
-      shotcut
-      gimp-with-plugins
-      # davinci-resolve
-      audacity
-      clisp
-      lldb
-      darktable
-      batgrep
       bat-extras
-      copyq
-      nextcloud-client
+      batgrep
+      bitwarden-desktop
       lutris
-      wine
-      wineWowPackages
-      kcat
-      freecad
       mycli
+      webcord
+      wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
   };
