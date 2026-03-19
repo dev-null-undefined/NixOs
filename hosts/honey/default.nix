@@ -58,7 +58,7 @@
     };
   };
 
-  systemd.sleep.extraConfig = "HibernateDelaySec=1h";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
 
   networking = {
     hostId = "d765d516";
