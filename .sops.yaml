@@ -5,6 +5,10 @@ keys:
   - &pc_xps age15rgrjxrkkxglvmp46fk750le24c297xtvnqww7tnnqa9zz6sh9cqrpesy4
   - &pc_x1 age19564e6pfuud8qanqvkygnt48vt84jsuazxkj8c3x55r2n90qqffsrxnawd
 creation_rules:
+  - path_regex: secrets/grafana-secret-key
+    key_groups:
+      - age:
+          - *server_homie
   - path_regex: secrets/network-manager.env
     key_groups:
       - age:
