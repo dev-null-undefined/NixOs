@@ -58,6 +58,7 @@
     openssl
     killall
     pciutils
+    xxd
 
     # multimedia manipulation
     ffmpeg
