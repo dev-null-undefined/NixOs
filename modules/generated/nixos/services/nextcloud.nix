@@ -6,7 +6,6 @@
 }: let
   nextcloud-domain = "cloud.${config.domain}";
   service = config.services.nextcloud;
-  cfg = service.config;
 in {
   generated = {
     services.mariadb.enable = lib.mkDefault true;
@@ -22,6 +21,7 @@ in {
       https = lib.mkDefault true;
       home = lib.mkDefault "/nextcloud";
       maxUploadSize = "32G";
+      database.createLocally = true;
       config = {
         dbtype = "mysql";
         adminpassFile = "/var/nextcloud-admin-pass";
@@ -53,15 +53,6 @@ in {
         "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
         "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
       };
-    };
-    mysql = {
-      ensureDatabases = [cfg.dbname];
-      ensureUsers = [
-        {
-          name = cfg.dbuser;
-          ensurePermissions = {"${cfg.dbname}.*" = "ALL PRIVILEGES";};
-        }
-      ];
     };
     nginx = {
       # Setup Nextcloud virtual host to listen on ports
