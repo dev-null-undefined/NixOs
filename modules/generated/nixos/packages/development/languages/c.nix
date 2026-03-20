@@ -18,7 +18,7 @@
       strace
       ltrace
 
-      config.boot.kernelPackages.perf
+      perf
       perf-tools
 
       bintools-unwrapped
@@ -69,7 +69,7 @@
       # makefile checker
       checkmake
     ]
-    ++ (lib.lists.optionals (config.nixpkgs.system == "x86_64-linux") [
+    ++ (lib.lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
       # Multilib support
       #gcc_multi
       clang_multi

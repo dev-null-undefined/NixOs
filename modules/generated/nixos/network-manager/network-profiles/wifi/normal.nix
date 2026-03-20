@@ -53,5 +53,5 @@
   };
 in {
   networking.networkmanager.ensureProfiles.profiles =
-    lib.fold (a: b: a // b) {} (builtins.map generate data);
+    lib.foldr (a: b: a // b) {} (builtins.map generate data);
 }

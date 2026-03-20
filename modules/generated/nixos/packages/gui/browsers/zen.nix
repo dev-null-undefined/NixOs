@@ -3,5 +3,5 @@
   config,
   ...
 }: {
-  environment.systemPackages = [inputs.zen-browser.packages.${config.nixpkgs.system}.default];
+  environment.systemPackages = [inputs.zen-browser.packages.${config.nixpkgs.hostPlatform.system}.default];
 }

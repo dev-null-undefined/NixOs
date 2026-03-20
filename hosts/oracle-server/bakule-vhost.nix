@@ -6,7 +6,7 @@
     "github:dev-null-undefined/bakule-timer/96213dcca47c36eae632a560e496daa087643e4a";
 
   bakule-uzdil-pkg =
-    bakule-timer-flake.packages.${config.nixpkgs.system}.bakule-timer-uzdil;
+    bakule-timer-flake.packages.${config.nixpkgs.hostPlatform.system}.bakule-timer-uzdil;
 
   bakule-uzdil-path = "${bakule-uzdil-pkg}/share/bakule-timer";
 

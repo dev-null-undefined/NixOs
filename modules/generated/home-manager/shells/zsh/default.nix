@@ -22,7 +22,7 @@ in {
   programs.zsh = {
     enable = true;
 
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     autosuggestion.enable = true;
     #enableSyntaxHighlighting = true;
