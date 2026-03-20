@@ -45,21 +45,29 @@ in {
               builders-use-substitutes = true;
             };
 
-            buildMachines = [
+            buildMachines = lib.mkIf (hostname != "homie") [
               {
                 hostName = "homie";
+                sshUser = "nix-builder";
                 protocol = "ssh-ng";
                 system = "x86_64-linux";
                 maxJobs = 8;
                 speedFactor = 2;
                 supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
+                sshKey = config.sops.secrets."nix-builder-key".path;
               }
             ];
-            distributedBuilds = true;
+            distributedBuilds = hostname != "homie";
 
             nixPath =
               lib.mapAttrsToList (k: v: "${k}=${v.to.path}") config.nix.registry;
             registry = lib.mapAttrs (_: value: {flake = value;}) inputs;
+          };
+
+          # deploy builder SSH key for distributed builds (SOPS-encrypted)
+          sops.secrets."nix-builder-key" = lib.mkIf (hostname != "homie") {
+            sopsFile = self.outPath + "/secrets/nix-builder-key";
+            format = "binary";
           };
 
           nixpkgs.hostPlatform = lib.mkDefault system;
