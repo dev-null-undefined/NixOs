@@ -10,7 +10,6 @@ in {
     system ? "x86_64-linux",
     modules ? [],
   }: {
-    inherit system;
     pkgs = mkPkgsWithOverlays system;
     specialArgs = {inherit inputs self;};
     modules =
