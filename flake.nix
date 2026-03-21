@@ -224,7 +224,19 @@
         // nixpkgs.lib.mapAttrs' (
           name: cfg:
             nixpkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel
-        ) (nixpkgs.lib.filterAttrs (_: cfg: cfg.pkgs.system == system) self.nixosConfigurations);
+        ) (nixpkgs.lib.filterAttrs (
+            name: cfg:
+              cfg.pkgs.system == system && name != "presentation"
+          )
+          self.nixosConfigurations)
+        // nixpkgs.lib.mapAttrs' (
+          name: cfg:
+            nixpkgs.lib.nameValuePair "home-${name}" cfg.activationPackage
+        ) (nixpkgs.lib.filterAttrs (
+            _: cfg:
+              cfg.pkgs.system == system
+          )
+          self.homeConfigurations);
       devShells.default = pkgs.mkShell {
         shellHook = ''
           ${self.checks.${system}.pre-commit-check.shellHook}
