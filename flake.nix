@@ -204,12 +204,27 @@
     in {
       packages = lib'.internal.mkPkgsWithOverlays system;
       formatter = pkgs.alejandra;
-      checks.pre-commit-check = inputs.git-hooks.lib.${system}.run {
-        src = ./.;
-        hooks = {
-          alejandra.enable = true;
-        };
-      };
+      checks =
+        {
+          pre-commit-check = inputs.git-hooks.lib.${system}.run {
+            src = ./.;
+            hooks = {
+              alejandra.enable = true;
+              nixos-eval = {
+                enable = true;
+                entry = "${pkgs.writeShellScript "nixos-eval-check" ''
+                  ${pkgs.nix-fast-build}/bin/nix-fast-build --no-build --skip-cached --no-nom --flake .#checks.${system} 2>&1
+                ''}";
+                pass_filenames = false;
+                stages = ["pre-push"];
+              };
+            };
+          };
+        }
+        // nixpkgs.lib.mapAttrs' (
+          name: cfg:
+            nixpkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel
+        ) (nixpkgs.lib.filterAttrs (_: cfg: cfg.pkgs.system == system) self.nixosConfigurations);
       devShells.default = pkgs.mkShell {
         shellHook = ''
           ${self.checks.${system}.pre-commit-check.shellHook}
