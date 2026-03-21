@@ -41,7 +41,7 @@
   documentation.man.cache.enable = false;
   #documentation.nixos.includeAllModules = false;
 
-  systemd.sleep.extraConfig = "HibernateDelaySec=1h";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
 
   networking.hostId = "69faa160";
 

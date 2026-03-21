@@ -27,9 +27,10 @@
   '';
 
   # lid close action
-  services.logind.lidSwitch = "ignore";
-  services.logind.lidSwitchDocked = "ignore";
-  services.logind.extraConfig = "HandleLidSwitch=ignore";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchDocked = "ignore";
+  };
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 

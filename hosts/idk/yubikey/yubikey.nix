@@ -23,7 +23,6 @@
     #yubikey-manager-qt
     yubikey-touch-detector
     yubikey-personalization
-    yubikey-personalization-gui
 
     gnupg
     pinentry-curses
