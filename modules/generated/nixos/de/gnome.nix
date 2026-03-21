@@ -40,7 +40,6 @@
     };
 
     udev.packages = with pkgs; [gnome-settings-daemon];
-    dbus.packages = with pkgs; [gnome2.GConf];
   };
   environment = {
     systemPackages =
