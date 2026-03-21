@@ -61,9 +61,9 @@
 
   environment = {
     systemPackages = with pkgs; [
-      gnome.gnome-disk-utility
-      gnome.gnome-tweaks
-      gnome.nautilus
+      gnome-disk-utility
+      gnome-tweaks
+      nautilus
 
       rofi
       ulauncher

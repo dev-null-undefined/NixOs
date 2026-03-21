@@ -39,13 +39,13 @@
       };
     };
 
-    udev.packages = with pkgs; [gnome.gnome-settings-daemon];
+    udev.packages = with pkgs; [gnome-settings-daemon];
     dbus.packages = with pkgs; [gnome2.GConf];
   };
   environment = {
     systemPackages =
       (with pkgs; [
-        gnome.gnome-tweaks
+        gnome-tweaks
 
         # A app-indicator for GNOME desktops wireless headsets
         headset-charge-indicator
