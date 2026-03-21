@@ -11,7 +11,7 @@ with self.lib'.internal; {
   hyprland = inputs.hyprland.overlays.default;
   hyprland-contrib = inputs.hyprland-contrib.overlays.default;
 
-  stable-pkgs = super: final: {
+  stable-pkgs = final: super: {
     inherit
       (super.stable)
       bat-extras
@@ -25,7 +25,7 @@ with self.lib'.internal; {
     inherit (super.dev-null) rpi-imager;
   };
 
-  master-pkgs = super: final: {
+  master-pkgs = final: super: {
     inherit
       (super.master)
       flaresolverr
