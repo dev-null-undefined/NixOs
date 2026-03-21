@@ -56,6 +56,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.binfmt.emulatedSystems = ["aarch64-linux"];
+
   documentation.man.cache.enable = false;
 
   custom.wireguard.ips = ["10.100.0.4/24"];
