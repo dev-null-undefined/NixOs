@@ -1,8 +1,7 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   environment.systemPackages = with pkgs; [nvitop];
 
   hardware = {
-    opengl.enable = true;
     graphics = {
       enable = true;
       enable32Bit = true;
@@ -11,7 +10,10 @@
         nvidia-vaapi-driver
       ];
     };
-    nvidia = {nvidiaSettings = true;};
+    nvidia = {
+      nvidiaSettings = true;
+      open = lib.mkDefault false;
+    };
   };
 
   services.xserver = {
