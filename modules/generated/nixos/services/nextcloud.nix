@@ -16,7 +16,7 @@ in {
     nextcloud = {
       enable = true;
       configureRedis = true;
-      package = pkgs.nextcloud32;
+      package = pkgs.nextcloud33;
       hostName = lib.mkDefault nextcloud-domain;
       https = lib.mkDefault true;
       home = lib.mkDefault "/nextcloud";
