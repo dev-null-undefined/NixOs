@@ -15,7 +15,7 @@
   '';
   shortcut = pkgs.makeDesktopItem {
     name = "yubikey-guide";
-    icon = "${pkgs.yubikey-manager}/share/icons/hicolor/128x128/apps/ykman.png";
+    icon = "${pkgs.yubioath-flutter}/share/icons/hicolor/128x128/apps/com.yubico.yubioath.png";
     desktopName = "drduh's YubiKey Guide";
     genericName = "Guide to using YubiKey for GPG and SSH";
     comment = "Open the guide in a reader program";
