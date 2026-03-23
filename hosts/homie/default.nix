@@ -98,5 +98,17 @@
     };
   };
 
+  # Open service ports on the main LAN (services proxied via oracle-server nginx)
+  networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts = [
+    5055 # jellyseerr
+    7878 # radarr
+    8096 # jellyfin
+    8100 # mc (crafty)
+    8123 # home-assistant
+    8989 # sonarr
+    9091 # transmission
+    9696 # prowlarr
+  ];
+
   system.stateVersion = "22.11"; # Did you read the comment?
 }
