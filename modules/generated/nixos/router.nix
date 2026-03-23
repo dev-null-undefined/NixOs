@@ -46,11 +46,6 @@
       lib.lists.dropEnd 1 (builtins.filter (x: builtins.typeOf x == "string") (builtins.split "\\." ip))
     );
 
-  vlanIfName = name: vlanCfg:
-    if vlanCfg.id == null
-    then vlanCfg.interface
-    else "vlan${toString vlanCfg.id}";
-
   vlans = cfg.vlans;
   vlanNames = builtins.attrNames vlans;
 
@@ -60,9 +55,6 @@
   isolated = lib.filterAttrs (_: v: v.policy.isolated) vlans;
   nonIsolated = lib.filterAttrs (_: v: !v.policy.isolated) vlans;
   routerAccess = lib.filterAttrs (_: v: v.policy.routerAccess) vlans;
-
-  # All VLAN interface names
-  allVlanIfNames = lib.mapAttrs vlanIfName vlans;
 
   # Duplicate VLAN ID detection
   vlanIdsWithTags = lib.filter (x: x != null) (lib.mapAttrsToList (_: v: v.id) vlans);
@@ -84,6 +76,15 @@ in {
             type = lib.types.str;
             description = "Physical interface (trunk parent if id is set).";
             example = "enp1s0";
+          };
+
+          vlanInterface = lib.mkOption {
+            type = lib.types.str;
+            default =
+              if selfCfg.id == null
+              then selfCfg.interface
+              else "vlan${toString selfCfg.id}";
+            description = "Network interface name used for this VLAN. Auto-derived from id/interface but can be overridden.";
           };
 
           static = lib.mkOption {
@@ -189,11 +190,10 @@ in {
   networking.interfaces =
     (lib.foldl' (acc: name: let
       v = vlans.${name};
-      ifName = vlanIfName name v;
     in
       acc
       // {
-        ${ifName} = {
+        ${v.vlanInterface} = {
           useDHCP = false;
           ipv4.addresses = [
             {
@@ -230,24 +230,22 @@ in {
       settings = {
         bind-interfaces = true;
 
-        interface = builtins.map (name: vlanIfName name dhcpEnabled.${name}) dhcpNames;
+        interface = builtins.map (name: dhcpEnabled.${name}.vlanInterface) dhcpNames;
 
         dhcp-range = builtins.map (name: let
           v = dhcpEnabled.${name};
-          ifName = vlanIfName name v;
-        in "interface:${ifName},${v.dhcp.start},${v.dhcp.end},${toString v.static.prefix}")
+        in "interface:${v.vlanInterface},${v.dhcp.start},${v.dhcp.end},${toString v.static.prefix}")
         dhcpNames;
 
         dhcp-option = builtins.concatMap (name: let
           v = dhcpEnabled.${name};
-          ifName = vlanIfName name v;
           gw =
             if v.static.gateway != null
             then v.static.gateway
             else v.static.ip;
         in
-          ["interface:${ifName},3,${gw}"]
-          ++ (lib.optional v.dhcp.dns "interface:${ifName},6,${v.static.ip}"))
+          ["interface:${v.vlanInterface},3,${gw}"]
+          ++ (lib.optional v.dhcp.dns "interface:${v.vlanInterface},6,${v.static.ip}"))
         dhcpNames;
 
         dhcp-host = builtins.concatMap (name: let
@@ -266,7 +264,7 @@ in {
   networking.nat = {
     enable = true;
     externalInterface = cfg.external.interface;
-    internalInterfaces = lib.mapAttrsToList (name: v: vlanIfName name v) natEnabled;
+    internalInterfaces = lib.mapAttrsToList (_: v: v.vlanInterface) natEnabled;
   };
 
   # 5. networking.firewall
@@ -274,11 +272,10 @@ in {
     # INPUT: per-interface DNS/DHCP ports
     ifaceRules = lib.foldl' (acc: name: let
       v = routerAccess.${name};
-      ifName = vlanIfName name v;
     in
       acc
       // {
-        ${ifName} = {
+        ${v.vlanInterface} = {
           allowedUDPPorts = [53 67];
           allowedTCPPorts = [53];
         };
@@ -290,7 +287,7 @@ in {
 
     # Non-isolated VLANs: accept to external + accept between each other
     nonIsolatedNames = builtins.attrNames nonIsolated;
-    nonIsolatedIfNames = builtins.map (n: vlanIfName n nonIsolated.${n}) nonIsolatedNames;
+    nonIsolatedIfNames = builtins.map (n: nonIsolated.${n}.vlanInterface) nonIsolatedNames;
 
     nonIsolatedForwardRules = builtins.concatMap (ifName:
       ["iifname \"${ifName}\" oifname \"${extIf}\" accept"]
@@ -303,21 +300,16 @@ in {
 
     isolatedAcceptRules = builtins.concatMap (name: let
       v = isolated.${name};
-      ifName = vlanIfName name v;
     in
       (lib.optional v.policy.nat
-        "iifname \"${ifName}\" oifname \"${extIf}\" accept")
-      ++ builtins.map (allowedName: let
-        allowedV = vlans.${allowedName};
-        allowedIfName = vlanIfName allowedName allowedV;
-      in "iifname \"${ifName}\" oifname \"${allowedIfName}\" accept")
+        "iifname \"${v.vlanInterface}\" oifname \"${extIf}\" accept")
+      ++ builtins.map (allowedName: "iifname \"${v.vlanInterface}\" oifname \"${vlans.${allowedName}.vlanInterface}\" accept")
       v.policy.allowedVlans)
     isolatedNames;
 
     isolatedDropRules = builtins.map (name: let
       v = isolated.${name};
-      ifName = vlanIfName name v;
-    in "iifname \"${ifName}\" drop")
+    in "iifname \"${v.vlanInterface}\" drop")
     isolatedNames;
 
     allForwardRules =
