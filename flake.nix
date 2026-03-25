@@ -89,6 +89,11 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ssht = {
+      url = "git+ssh://git@git.cdn77.eu/martin.kos/ssh-tagged.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
