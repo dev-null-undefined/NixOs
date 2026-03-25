@@ -1112,11 +1112,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774443283,
-        "narHash": "sha256-IDAYJyFIEWjZGRZJAG2JcGd8gIBw47OIvuvoEQcGsK8=",
+        "lastModified": 1774447725,
+        "narHash": "sha256-4nBg7vSfK9oqiCyGxKC70XZTwIdwXK7fPr/+5fkvgRU=",
         "ref": "refs/heads/main",
-        "rev": "1001ac838f8014e581999f57f15af01e054225f4",
-        "revCount": 4,
+        "rev": "ef1d4fcad798fecd32d84eadcc471afa5eb7360e",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@git.cdn77.eu/martin.kos/ssh-tagged.git"
       },

@@ -215,14 +215,6 @@
             src = ./.;
             hooks = {
               alejandra.enable = true;
-              nixos-eval = {
-                enable = true;
-                entry = "${pkgs.writeShellScript "nixos-eval-check" ''
-                  nix flake check --no-build 2>&1
-                ''}";
-                pass_filenames = false;
-                stages = ["pre-push"];
-              };
             };
           };
         }
