@@ -65,6 +65,10 @@ in {
 
           extraConfig = ''
             access_log  /var/log/nginx/access.log  main;
+
+            # Strip CSP headers that break the Memories Android app timeline
+            # https://github.com/pulsejet/memories/issues/1396
+            fastcgi_hide_header Content-Security-Policy;
           '';
         };
       };
