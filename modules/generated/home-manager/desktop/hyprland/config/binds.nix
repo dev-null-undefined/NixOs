@@ -89,7 +89,7 @@ in {
         "CTRL SHIFT,    A, exec, copyq toggle"
         "CTRL SHIFT,    N, exec, swaync-client -t -sw"
 
-        "$mainMod, L, exec, swaylock"
+        "$mainMod, L, exec, hyprlock"
         "CTRL SHIFT, Escape, exec, wlogout"
         ", Print, exec, grimblast copy area"
 
