@@ -43,7 +43,7 @@ in {
 
     initContent =
       (import ./_extra {inherit lib' pkgs inputs;})
-      + builtins.readFile p10k-config;
+      + "source ${p10k-config}";
 
     shellAliases = import ./_aliases.nix {inherit lib' pkgs;};
 
