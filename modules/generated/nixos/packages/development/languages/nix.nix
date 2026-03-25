@@ -61,6 +61,9 @@ in {
 
       # Deployment tool
       deploy-rs
+
+      # Fast parallel nix builder
+      nix-fast-build
     ]
     ++ alien-pkgs;
 }

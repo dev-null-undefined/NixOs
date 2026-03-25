@@ -213,7 +213,7 @@
               nixos-eval = {
                 enable = true;
                 entry = "${pkgs.writeShellScript "nixos-eval-check" ''
-                  ${pkgs.nix-fast-build}/bin/nix-fast-build --no-build --skip-cached --no-nom --flake .#checks.${system} 2>&1
+                  nix flake check --no-build 2>&1
                 ''}";
                 pass_filenames = false;
                 stages = ["pre-push"];
