@@ -9,7 +9,10 @@
       "WebFetch(domain:github.com)",
       "Bash(hyprctl keyword:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Skill(rebuild)"
+      "Skill(rebuild)",
+      "Bash(hyprctl dispatch:*)",
+      "WebFetch(domain:docs.atuin.sh)",
+      "Bash(nix eval:*)"
     ]
   }
 }
