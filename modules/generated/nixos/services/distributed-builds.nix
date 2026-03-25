@@ -8,6 +8,8 @@
     format = "binary";
   };
 
+  programs.ssh.knownHosts.homie.publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZIZhUGVfHjBIlUpj8XqWMokRWJrisOd/aN7PDsYAfo";
+
   nix = {
     distributedBuilds = true;
     buildMachines = [
