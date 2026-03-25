@@ -226,7 +226,7 @@
             nixpkgs.lib.nameValuePair "nixos-${name}" cfg.config.system.build.toplevel
         ) (nixpkgs.lib.filterAttrs (
             name: cfg:
-              cfg.pkgs.system == system && name != "presentation"
+              cfg.pkgs.stdenv.hostPlatform.system == system && name != "presentation"
           )
           self.nixosConfigurations)
         // nixpkgs.lib.mapAttrs' (
@@ -234,7 +234,7 @@
             nixpkgs.lib.nameValuePair "home-${name}" cfg.activationPackage
         ) (nixpkgs.lib.filterAttrs (
             _: cfg:
-              cfg.pkgs.system == system
+              cfg.pkgs.stdenv.hostPlatform.system == system
           )
           self.homeConfigurations);
       devShells.default = pkgs.mkShell {

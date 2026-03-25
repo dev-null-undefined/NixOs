@@ -51,7 +51,7 @@ in
           name,
           overlays ? [],
         }: (_final: prev: {
-          "${name}" = mkPkgs (import input) overlays prev.pkgs.system;
+          "${name}" = mkPkgs (import input) overlays prev.stdenv.hostPlatform.system;
         });
 
         groupIfExist = config: groups:

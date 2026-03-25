@@ -4,7 +4,7 @@
   ...
 }: let
   # With flakes:
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.system};
+  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   programs.spicetify = {
     enable = true;
