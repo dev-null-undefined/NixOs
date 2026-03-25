@@ -25,6 +25,7 @@
     enable = true;
     protocol = "ssh-ng";
     write = true;
+    trusted = true;
     keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJKrCyFNBmNG8etEU4JGCtaiy/6ibzr0YMgA0lwi6Fg/ nix-builder"
     ];
