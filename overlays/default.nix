@@ -16,10 +16,7 @@ with self.lib'.internal; {
       (super.stable)
       bat-extras
       batgrep
-      bitwarden-desktop
       lutris
-      mycli
-      webcord
       wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
