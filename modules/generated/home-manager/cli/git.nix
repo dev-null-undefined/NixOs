@@ -34,6 +34,7 @@
     signing = {
       signByDefault = true;
       key = "B1C4FAB94F0F1443";
+      format = "openpgp";
     };
   };
   programs.delta = {
