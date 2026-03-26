@@ -18,8 +18,8 @@
         sshUser = "nix-ssh";
         sshKey = config.sops.secrets."nix-builder-ssh-key".path;
         protocol = "ssh-ng";
-        system = "x86_64-linux";
-        maxJobs = 8;
+        systems = ["x86_64-linux" "i686-linux"];
+        maxJobs = 12;
         speedFactor = 2;
         supportedFeatures = ["nixos-test" "benchmark" "big-parallel" "kvm"];
       }
