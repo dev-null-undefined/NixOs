@@ -11,4 +11,6 @@
     smartctl.enable = lib.mkDefault config.generated.services.smartd.enable;
     node.enable = lib.mkDefault true;
   };
+
+  generated.services.harmonia.prometheus.enable = lib.mkDefault config.services.harmonia.cache.enable;
 }

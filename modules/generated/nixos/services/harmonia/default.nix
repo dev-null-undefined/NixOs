@@ -15,8 +15,6 @@
     settings.priority = 35;
   };
 
-  networking.firewall.allowedTCPPorts = [5000];
-
   # sign all locally built paths via the nix daemon
   nix.settings.secret-key-files = [config.sops.secrets."harmonia-signing-key".path];
 
