@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "admin-helper-scripts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774527335,
+        "narHash": "sha256-S/y1sfGdnWhsI+JNiQKkDI24riK8JENFBYEXgf1+4WI=",
+        "ref": "refs/heads/master",
+        "rev": "5ed00776725443f48c6fe25770d43ad95e011881",
+        "revCount": 23,
+        "type": "git",
+        "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
+      }
+    },
     "aquamarine": {
       "inputs": {
         "hyprutils": [
@@ -1001,6 +1021,7 @@
     },
     "root": {
       "inputs": {
+        "admin-helper-scripts": "admin-helper-scripts",
         "deploy-rs": "deploy-rs",
         "flake-utils": "flake-utils",
         "git-hooks": "git-hooks",
@@ -1021,7 +1042,6 @@
         "rust-overlay": "rust-overlay_2",
         "sops": "sops",
         "spicetify-nix": "spicetify-nix",
-        "ssht": "ssht",
         "zen-browser": "zen-browser"
       }
     },
@@ -1103,26 +1123,6 @@
         "owner": "Gerg-L",
         "repo": "spicetify-nix",
         "type": "github"
-      }
-    },
-    "ssht": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1774447725,
-        "narHash": "sha256-4nBg7vSfK9oqiCyGxKC70XZTwIdwXK7fPr/+5fkvgRU=",
-        "ref": "refs/heads/main",
-        "rev": "ef1d4fcad798fecd32d84eadcc471afa5eb7360e",
-        "revCount": 7,
-        "type": "git",
-        "url": "ssh://git@git.cdn77.eu/martin.kos/ssh-tagged.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@git.cdn77.eu/martin.kos/ssh-tagged.git"
       }
     },
     "systems": {

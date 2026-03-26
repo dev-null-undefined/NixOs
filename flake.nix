@@ -90,8 +90,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ssht = {
-      url = "git+ssh://git@git.cdn77.eu/martin.kos/ssh-tagged.git";
+    admin-helper-scripts = {
+      url = "git+ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
