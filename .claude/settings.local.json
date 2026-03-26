@@ -12,7 +12,8 @@
       "Skill(rebuild)",
       "Bash(hyprctl dispatch:*)",
       "WebFetch(domain:docs.atuin.sh)",
-      "Bash(nix eval:*)"
+      "Bash(nix eval:*)",
+      "Bash(nix flake:*)"
     ]
   }
 }
