@@ -1,4 +1,6 @@
 {
+  nix.settings.download-buffer-size = 268435456; # 256 MiB
+
   networking.nftables.enable = true;
 
   custom.wireguard.allConfigs = [
