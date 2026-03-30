@@ -1,13 +1,32 @@
 ---
 description: Smart NixOS update with automatic package pinning and unpinning
-allowed-tools: Bash(nh:*), Bash(nix:*), Bash(git:*), Bash(alejandra:*), Bash(python3:*), Read, Edit
+allowed-tools: Bash(nh:*), Bash(darwin-rebuild:*), Bash(sudo darwin-rebuild:*), Bash(nix:*), Bash(git:*), Bash(alejandra:*), Bash(python3:*), Bash(uname:*), Bash(hostname:*), Read, Edit
 ---
 
 ## Your task
 
-Perform a smart NixOS flake update that automatically handles broken packages by pinning them to the stable channel, and afterwards attempts to unpin packages that are no longer broken on unstable.
+Perform a smart flake update that automatically handles broken packages by pinning them to the stable channel, and afterwards attempts to unpin packages that are no longer broken on unstable.
 
-The overlay file is at `$NIXOS_CONFIG_DIR/overlays/default.nix`. The `stable-pkgs` overlay has this structure:
+### Step 0: Detect platform
+
+Determine the config directory and platform:
+```bash
+CONFIG_DIR="${NIXOS_CONFIG_DIR:-/etc/nixos}"
+```
+
+Check if this is macOS or Linux:
+```bash
+uname -s
+```
+
+- **Linux**: use `nh os switch --no-nom $CONFIG_DIR` as the rebuild command throughout
+- **Darwin/macOS**: use `darwin-rebuild switch --flake $CONFIG_DIR` as the rebuild command throughout
+
+Use the appropriate rebuild command wherever this document says "rebuild command".
+
+---
+
+The overlay file is at `$CONFIG_DIR/overlays/default.nix`. The `stable-pkgs` overlay has this structure:
 
 ```nix
 stable-pkgs = super: final: {
@@ -27,8 +46,8 @@ Only modify packages in the `inherit (super.stable) ...;` block. Never touch `in
 
 ### Phase 1: Update flake inputs and attempt build
 
-1. Run `nix flake update --flake $NIXOS_CONFIG_DIR`
-2. Attempt the build: `nh os switch --no-nom $NIXOS_CONFIG_DIR`
+1. Run `nix flake update --flake $CONFIG_DIR`
+2. Attempt the build using the rebuild command
 3. If it succeeds, skip to Phase 3.
 4. If it fails, capture the full error output and proceed to Phase 2.
 
@@ -56,7 +75,7 @@ Look for these patterns in the error output (check all of them):
 
 Before pinning, verify the package exists in nixpkgs-stable:
 ```bash
-nix eval --inputs-from $NIXOS_CONFIG_DIR 'nixpkgs-stable#PACKAGENAME.name' 2>&1
+nix eval --inputs-from $CONFIG_DIR 'nixpkgs-stable#PACKAGENAME.name' 2>&1
 ```
 If this succeeds, the package can be pinned to stable.
 
@@ -64,10 +83,10 @@ If the package does not exist in stable either, report it to the user and stop �
 
 #### How to pin a package
 
-1. Read the current `$NIXOS_CONFIG_DIR/overlays/default.nix`
+1. Read the current `$CONFIG_DIR/overlays/default.nix`
 2. Add the broken package name to the `inherit (super.stable)` block using the Edit tool. Maintain alphabetical order within the existing list.
-3. Format the file: `alejandra $NIXOS_CONFIG_DIR/overlays/default.nix`
-4. Retry the build: `nh os switch --no-nom $NIXOS_CONFIG_DIR`
+3. Format the file: `alejandra $CONFIG_DIR/overlays/default.nix`
+4. Retry the build using the rebuild command
 5. If it fails again with a **different** package, repeat from the identification step
 6. If it fails again with the **same** package or a non-package error, report to the user and stop
 
@@ -93,17 +112,17 @@ After a successful build (from Phase 1 or Phase 2), attempt to unpin packages fr
 Run the test script to check all stable-pinned packages against unstable in parallel:
 
 ```bash
-python3 $NIXOS_CONFIG_DIR/scripts/test-overlay-packages.py --json --jobs 4
+python3 $CONFIG_DIR/scripts/test-overlay-packages.py --json --jobs 4
 ```
 
 This outputs JSON with three lists: `can_unpin`, `must_keep`, `timed_out`.
 
 If there are packages in `can_unpin`:
 
-1. Read the current `$NIXOS_CONFIG_DIR/overlays/default.nix`
+1. Read the current `$CONFIG_DIR/overlays/default.nix`
 2. Remove the unpin-candidate package names from the `inherit (super.stable) ...;` block using the Edit tool
-3. Format: `alejandra $NIXOS_CONFIG_DIR/overlays/default.nix`
-4. Rebuild the system to verify: `nh os switch --no-nom $NIXOS_CONFIG_DIR`
+3. Format: `alejandra $CONFIG_DIR/overlays/default.nix`
+4. Rebuild the system to verify using the rebuild command
 5. If the rebuild fails, identify which unpinned package caused the failure from the error output, re-pin it (add it back), format with `alejandra`, and retry. Repeat until the build succeeds.
 
 If `can_unpin` is empty, skip this phase — all packages still need stable.
@@ -114,7 +133,7 @@ If `can_unpin` is empty, skip this phase — all packages still need stable.
 
 1. Stage changed files:
    ```bash
-   git -C $NIXOS_CONFIG_DIR add flake.lock overlays/default.nix
+   git -C $CONFIG_DIR add flake.lock overlays/default.nix
    ```
 
 2. Report a summary to the user:
