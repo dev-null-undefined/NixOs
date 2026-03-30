@@ -18,5 +18,8 @@
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";
+    masApps = {
+      WireGuard = 1451685025;
+    };
   };
 }
