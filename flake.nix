@@ -94,6 +94,22 @@
       url = "git+ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -102,6 +118,7 @@
     flake-utils,
     home-manager,
     deploy-rs,
+    nix-darwin,
     ...
   } @ inputs: let
     autoDetectedHosts = builtins.listToAttrs (
@@ -121,7 +138,9 @@
       lib'.attrsets.filterAttrs (_: v: v == "directory") (builtins.readDir ./home)
     );
 
-    hostConfigs = autoDetectedHosts;
+    isDarwin = cfg: lib'.strings.hasSuffix "darwin" (cfg.system or "x86_64-linux");
+
+    hostConfigs = lib'.attrsets.filterAttrs (_: cfg: !isDarwin cfg) autoDetectedHosts;
 
     homeConfigs =
       builtins.foldl'
@@ -161,6 +180,7 @@
     {
       inherit lib';
       nixosModules = import ./modules/nixos;
+      darwinModules = import ./modules/darwin;
       home-managerModules = import ./modules/home-manager;
       overlays = import ./overlays {inherit inputs self;};
 
@@ -188,6 +208,19 @@
             // acc
         ) {}
         homeConfigs;
+
+      darwinConfigurations =
+        builtins.mapAttrs (
+          name: value: let
+            config =
+              {
+                hostname = name;
+              }
+              // value;
+          in
+            nix-darwin.lib.darwinSystem (lib'.internal.mkDarwinHost config)
+        )
+        (lib'.attrsets.filterAttrs (_: cfg: isDarwin cfg) autoDetectedHosts);
 
       deploy = {
         remoteBuild = true;

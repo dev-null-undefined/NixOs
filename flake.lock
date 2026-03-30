@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774548550,
-        "narHash": "sha256-XaEfwQ2vgHZy+lYi4p1dDMA0+dNwZD0XxppSznSlbYI=",
+        "lastModified": 1774873025,
+        "narHash": "sha256-jXQsSqouunbkzKHf09vSPv/8ZJXP9l7e2XeenRobVZs=",
         "ref": "refs/heads/master",
-        "rev": "1f8aca60426542dddc583d58c36cc8e120d47699",
-        "revCount": 39,
+        "rev": "541b73af0a724bc1a244aa561c9cda8d3d0c69d2",
+        "revCount": 44,
         "type": "git",
         "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
       },
@@ -50,6 +50,23 @@
       "original": {
         "owner": "hyprwm",
         "repo": "aquamarine",
+        "type": "github"
+      }
+    },
+    "brew-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774235677,
+        "narHash": "sha256-0ryNYmzDAeRlrzPTAgmzGH/Cgc8iv/LBN6jWGUANvIk=",
+        "owner": "Homebrew",
+        "repo": "brew",
+        "rev": "894a3d23ac0c8aaf561b9874b528b9cb2e839201",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Homebrew",
+        "ref": "5.1.1",
+        "repo": "brew",
         "type": "github"
       }
     },
@@ -372,6 +389,38 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "homebrew-cask": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774717137,
+        "narHash": "sha256-fF94d+OihwbNxxCNs0LNIBEUSKDmxwjlOgXbe1qoELg=",
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "rev": "53d313e78df8ddbd0b64de34442e1cd2e0d3135a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-cask",
+        "type": "github"
+      }
+    },
+    "homebrew-core": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774721250,
+        "narHash": "sha256-xDms7ZEpiq3g6HW9bEoQ9fO/MV6CHv9uJmPGepwcvOo=",
+        "owner": "homebrew",
+        "repo": "homebrew-core",
+        "rev": "fa48bb4aadfdbb0a65e0c17397d159dd45e0b4de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "homebrew",
+        "repo": "homebrew-core",
         "type": "github"
       }
     },
@@ -813,6 +862,45 @@
         "type": "github"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773000227,
+        "narHash": "sha256-zm3ftUQw0MPumYi91HovoGhgyZBlM4o3Zy0LhPNwzXE=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "da529ac9e46f25ed5616fd634079a5f3c579135f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "nix-homebrew": {
+      "inputs": {
+        "brew-src": "brew-src"
+      },
+      "locked": {
+        "lastModified": 1774720267,
+        "narHash": "sha256-YYftFe8jyfpQI649yfr0E+dqEXE2jznZNcYvy/lKV1U=",
+        "owner": "zhaofengli-wip",
+        "repo": "nix-homebrew",
+        "rev": "a7760a3a83f7609f742861afb5732210fdc437ed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zhaofengli-wip",
+        "repo": "nix-homebrew",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -1026,12 +1114,16 @@
         "flake-utils": "flake-utils",
         "git-hooks": "git-hooks",
         "home-manager": "home-manager",
+        "homebrew-cask": "homebrew-cask",
+        "homebrew-core": "homebrew-core",
         "hyprgrass": "hyprgrass",
         "hyprland": "hyprland",
         "hyprland-contrib": "hyprland-contrib",
         "hyprspace": "hyprspace",
         "lanzaboote": "lanzaboote",
         "nix-alien": "nix-alien",
+        "nix-darwin": "nix-darwin",
+        "nix-homebrew": "nix-homebrew",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
