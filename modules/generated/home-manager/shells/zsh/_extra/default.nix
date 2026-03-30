@@ -20,7 +20,7 @@ in
     RPROMPT='[%F{yellow}%?%f]'
 
     # https://github.com/eth-p/bat-extras/blob/master/doc/batpipe.md
-    eval `batpipe`
+    eval "$(batpipe 2>/dev/null)"
 
     # Bind ctrl + [up,down] to history up and down since atuin rewrites that
     bindkey "^[[1;5A" history-beginning-search-backward
