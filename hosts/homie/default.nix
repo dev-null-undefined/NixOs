@@ -16,6 +16,7 @@
       smartd.enable = true;
       ntopng.enable = true;
       harmonia.enable = true;
+      tailscale.prometheus.enable = true;
     };
     vpn.enable = true;
   };

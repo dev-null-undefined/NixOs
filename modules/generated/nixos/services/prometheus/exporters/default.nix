@@ -13,5 +13,4 @@
   };
 
   generated.services.harmonia.prometheus.enable = lib.mkDefault config.services.harmonia.cache.enable;
-  generated.services.tailscale.prometheus.enable = lib.mkDefault config.services.prometheus.enable;
 }
