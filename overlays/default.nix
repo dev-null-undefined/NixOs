@@ -16,6 +16,7 @@ with self.lib'.internal; {
       (super.stable)
       bat-extras
       batgrep
+      glances
       lutris
       wineWowPackages
       ;
