@@ -2,10 +2,6 @@
   environment.systemPackages = with pkgs; [
     # ----- Terminal tools -----
     # TUI
-    procs # better ps
-    dust # better du
-    duf # better df
-    ncdu # TUI windirstat
     termdown # timer/stopwatch
     tre-command # better tree
 
@@ -23,14 +19,10 @@
     (btop.override {cudaSupport = true;})
     glances
     gotop
-    htop
     atop
-    bottom
     zenith
 
     mutt # email client
-
-    hyperfine # terminal benchmark
 
     # Commands
     home-manager

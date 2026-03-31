@@ -31,47 +31,24 @@
     #})
 
     # Archives
-    unzip
-    zip
     lrzip
     unrar-wrapper
 
-    ripgrep
-    jq # json
-    fx # better json
-    bc # calculator
     mat2 # meta data stripper
     # onionshare
 
     usbutils
 
     # Commands
-    delta # diff
-    tmux # term multiplexor
-    tealdeer
     navi # interactive tldr
-    tree
     most
     sshfs
-    openssh
     pssh
-    openssl
     killall
     pciutils
     xxd
 
-    # multimedia manipulation
-    ffmpeg
-    imagemagick
-
-    # Utilities
-    wget
-    curl
-
     pkg-config
     dbus
-
-    age
-    sops
   ];
 }
