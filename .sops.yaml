@@ -32,6 +32,10 @@ creation_rules:
       - age:
         - *server_homie
         - *server_oracle
+  - path_regex: secrets/jellyfin-api-key
+    key_groups:
+      - age:
+        - *server_homie
   - path_regex: secrets/nix-builder-ssh-key
     key_groups:
       - age:
