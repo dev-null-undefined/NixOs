@@ -16,9 +16,15 @@
 
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
+      AppleInterfaceStyle = "Dark";
       # Faster key repeat for vim-style editing
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
+    };
+
+    menuExtraClock = {
+      Show24Hour = true;
+      ShowSeconds = true;
     };
 
     trackpad = {
