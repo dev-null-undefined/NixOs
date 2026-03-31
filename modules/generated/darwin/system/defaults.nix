@@ -37,6 +37,13 @@
       "com.apple.screencapture" = {
         disable-shadow = true;
       };
+
+      # Maccy clipboard manager
+      "org.p0deje.Maccy" = {
+        pasteByDefault = true;
+        showInStatusBar = true;
+        popupPosition = "center"; # show in center of screen
+      };
     };
   };
 }
