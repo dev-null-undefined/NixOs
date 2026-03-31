@@ -53,7 +53,5 @@
     kcat
 
     sqlite
-
-    claude-code
   ];
 }
