@@ -1,7 +1,7 @@
 {
   homebrew.casks = [
     "protonvpn"
-    "tailscale"
-    "wireshark"
+    "tailscale-app"
+    "wireshark-app"
   ];
 }
