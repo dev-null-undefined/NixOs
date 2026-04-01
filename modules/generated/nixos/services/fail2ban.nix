@@ -32,8 +32,8 @@
       "~.*EBML header parsing failed.*"
     ];
 
-    # Jellyseerr: ~13k/day — debug-level download sync every minute
-    jellyseerr.serviceConfig.LogFilterPatterns = [
+    # Seerr (formerly Jellyseerr): ~13k/day — debug-level download sync every minute
+    seerr.serviceConfig.LogFilterPatterns = [
       "~.*\\[debug\\].*"
     ];
 
