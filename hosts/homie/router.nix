@@ -1,4 +1,15 @@
 {
+  config,
+  self,
+  ...
+}: {
+  sops.secrets."dnsmasq-static-leases" = {
+    sopsFile = self.outPath + "/secrets/dnsmasq-static-leases";
+    format = "binary";
+  };
+
+  services.dnsmasq.settings.dhcp-hostsfile = config.sops.secrets."dnsmasq-static-leases".path;
+
   generated.router = {
     enable = true;
     vlans = {
@@ -41,12 +52,6 @@
           nat = true;
           isolated = true;
           routerAccess = true;
-        };
-        dhcp.staticLeases = {
-          "uzdil-proxmox" = {
-            mac = "c8:7f:54:68:43:4d";
-            ip = "192.168.10.50";
-          };
         };
       };
     };

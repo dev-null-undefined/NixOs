@@ -48,6 +48,10 @@ creation_rules:
     key_groups:
       - age:
         - *server_homie
+  - path_regex: secrets/dnsmasq-static-leases
+    key_groups:
+      - age:
+        - *server_homie
   - path_regex: secrets/nix-builder-ssh-key
     key_groups:
       - age:
