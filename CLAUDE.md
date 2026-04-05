@@ -116,6 +116,10 @@ Key shell functions (available in zsh):
 - `nix-find <pkg>` / `nix-path <pkg>` — print store path of a flake package
 - `ngrep <pattern>` — grep the nixos config directory
 
+## Networking
+
+Nearly all machines run Tailscale and are connected via a Tailnet. Tailscale has firewall passthrough, so when connecting between machines (SSH, web UIs, etc.), prefer using Tailscale addresses — no firewall rules to worry about.
+
 ## Conventions
 
 - Host-specific logic goes in `hosts/{hostname}/default.nix`; reusable logic goes in `modules/generated/`

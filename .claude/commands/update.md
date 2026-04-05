@@ -47,9 +47,9 @@ Only modify packages in the `inherit (super.stable) ...;` block. Never touch `in
 ### Phase 1: Update flake inputs and attempt build
 
 1. Run `nix flake update --flake $CONFIG_DIR`
-2. Attempt the build using the rebuild command
-3. If it succeeds, skip to Phase 3.
-4. If it fails, capture the full error output and proceed to Phase 2.
+2. Attempt a dry build first using `nix build $CONFIG_DIR#nixosConfigurations.$(hostname).config.system.build.toplevel --no-link` to check for errors without switching.
+3. If the dry build succeeds, **ask the user for confirmation before switching**. Then run the rebuild command to activate.
+4. If it fails, capture the full error output and proceed to Phase 2. After fixing issues in Phase 2, always ask the user before the final switch.
 
 ---
 
@@ -129,12 +129,35 @@ If `can_unpin` is empty, skip this phase — all packages still need stable.
 
 ---
 
-### Phase 4: Finalize
+### Phase 4: Build other hosts (homie only)
 
-1. Stage changed files:
+If the current hostname is `homie`, build configurations for the other main machines so they are cached in the nix store (and served by Harmonia to the network automatically).
+
+1. Check the hostname:
+   ```bash
+   hostname
+   ```
+
+2. If the hostname is `homie`, build these host configurations (run all three in parallel if possible):
+   ```bash
+   nix build $CONFIG_DIR#nixosConfigurations.x1.config.system.build.toplevel --no-link
+   nix build $CONFIG_DIR#nixosConfigurations.xps.config.system.build.toplevel --no-link
+   nix build $CONFIG_DIR#nixosConfigurations.honey.config.system.build.toplevel --no-link
+   ```
+
+3. If any host build fails, investigate and fix the issue before proceeding. These builds are **blocking** — all hosts must build successfully. Apply the same error analysis techniques from Phase 2 (check error output, identify broken packages, pin if needed). If the error is not package-related (e.g., missing flake input dependency, overlay mismatch), fix the root cause directly. After fixing, re-run all failed host builds to confirm they pass.
+
+If the hostname is NOT `homie`, skip this phase entirely.
+
+---
+
+### Phase 5: Finalize
+
+1. Stage all changed files (flake.lock, overlays, and any config files modified during the update):
    ```bash
    git -C $CONFIG_DIR add flake.lock overlays/default.nix
    ```
+   Also stage any other files that were modified to fix build issues (e.g., module renames, overlay changes).
 
 2. Report a summary to the user:
    - Which flake inputs were updated
