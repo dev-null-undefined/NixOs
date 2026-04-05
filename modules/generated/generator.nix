@@ -16,7 +16,7 @@
 
   filtered = [moduleOptions];
 
-  # Recusivly return all files in given directory in a list
+  # Recursively return all files in given directory in a list
   # str -> [ str ]
   getAllFiles = lib.filesystem.listFilesRecursive;
 
@@ -39,7 +39,7 @@
   # [ str ] -> [ str ]
   filterNixFiles = builtins.filter (lib.strings.hasSuffix ".nix");
 
-  # Stplit file path into list of folders and then the file name
+  # Split file path into list of folders and then the file name
   # str -> [ str ]
   pathSplit = lib.strings.splitString "/";
   # Apply pathSplit to file with removed suffix ".nix"
@@ -63,12 +63,12 @@
 
   # Get all parent folders until mainDir
   # str -> [ str ]
-  getParrentFolders = folder:
+  getParentFolders = folder:
     [folder]
     ++ (
-      if folder != mainDir
-      then (getParrentFolders (builtins.dirOf folder))
-      else []
+      if folder == mainDir || folder == "/" || folder == "."
+      then []
+      else (getParentFolders (builtins.dirOf folder))
     );
 
   # Get list of nixKeyPath folders that contain at least one .nix file or have sub folder with at least one nix file
@@ -76,7 +76,7 @@
   nixKeyPathsToFolders = keyPaths:
     lib.lists.unique (
       builtins.concatMap (
-        keyPath: builtins.map mkNixKeyPath (getParrentFolders (builtins.dirOf keyPath.path))
+        keyPath: builtins.map mkNixKeyPath (getParentFolders (builtins.dirOf keyPath.path))
       )
       keyPaths
     );
@@ -130,15 +130,18 @@
       };
     });
 
-  generateOption = keyPath:
+  # Build a nested attrset by walking keyPath.parts, applying leafFn at the end
+  nestAttr = leafFn: keyPath:
     if (builtins.length keyPath.parts) == 0
-    then mkFileOption keyPath
+    then leafFn keyPath
     else {
-      "${builtins.head keyPath.parts}" = generateOption {
+      "${builtins.head keyPath.parts}" = nestAttr leafFn {
         parts = builtins.tail keyPath.parts;
         inherit (keyPath) path;
       };
     };
+
+  generateOption = nestAttr mkFileOption;
 
   getConfigFromFile = keyPath: let
     configFile = keyPath;
@@ -160,15 +163,7 @@
       (lib.attrsets.filterAttrs (n: _v: !builtins.elem n filtered) (getConfigFromFile keyPath.path));
   };
 
-  enableOption = keyPath:
-    if (builtins.length keyPath.parts) == 0
-    then {enable = lib.mkDefault true;}
-    else {
-      "${builtins.head keyPath.parts}" = enableOption {
-        inherit (keyPath) path;
-        parts = builtins.tail keyPath.parts;
-      };
-    };
+  enableOption = nestAttr (_: {enable = lib.mkDefault true;});
 
   enableAllSubOptions = builtins.foldl' (
     acc: keyPath: lib.attrsets.recursiveUpdate (enableOption keyPath) acc
@@ -191,30 +186,24 @@
   # str -> {}
   generateFolderEnableAttrs = folder: filterEnabledIfDefault (enableAllSubOptions (getNixKeyPaths folder));
 
-  folderHasDefault = folder:
-    builtins.elem default (
-      builtins.map (nixKeyPath: lib.lists.last nixKeyPath.parts) (getNixKeyPaths folder)
+  folderHasDefault = folder: let
+    keyPaths = getNixKeyPaths folder;
+  in
+    keyPaths != [] && builtins.elem default (
+      builtins.map (nixKeyPath: lib.lists.last nixKeyPath.parts) keyPaths
     );
 
   generateFolderEnableAllAttrs = folder: let
-    samira = mkNixKeyPath folder;
+    folderKeyPath = mkNixKeyPath folder;
   in
     lib.attrsets.updateManyAttrsByPath [
       {
-        path = samira.parts;
+        path = folderKeyPath.parts;
         update = builtins.mapAttrs (_: value: filterEnabledIfDefault value);
       }
     ] (enableAllSubOptions (getNixKeyPaths folder));
 
-  generateFolderOption = keyPath:
-    if (builtins.length keyPath.parts) == 0
-    then mkFolderOption keyPath
-    else {
-      "${builtins.head keyPath.parts}" = generateFolderOption {
-        parts = builtins.tail keyPath.parts;
-        inherit (keyPath) path;
-      };
-    };
+  generateFolderOption = nestAttr mkFolderOption;
 
   generateFolderConfig = folder:
     [
