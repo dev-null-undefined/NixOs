@@ -1,6 +1,6 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{...}: {
+{config, ...}: {
   imports = [
     ./nginx-vhosts.nix
     ./openvpn-server.nix
@@ -26,9 +26,9 @@
 
   documentation.man.cache.enable = false;
 
-  domain = "dev-null.me";
+  domain = config.registry.domain;
 
-  custom.wireguard.ips = ["10.100.0.1/24"];
+  custom.wireguard.ips = ["${config.registry.hosts.oracle-server.wgIp}/24"];
 
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;

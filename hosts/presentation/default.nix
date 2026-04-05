@@ -1,6 +1,6 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{...}: {
+{config, ...}: {
   generated = {
     enable = true;
     services = {
@@ -11,7 +11,7 @@
     };
   };
 
-  domain = "dev-null.me";
+  domain = config.registry.domain;
 
   documentation.man.cache.enable = false;
 

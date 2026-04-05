@@ -1,10 +1,10 @@
 # Help is available in the default.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  config,
   lib,
   inputs,
   pkgs,
-  config,
   ...
 }: {
   imports = [
@@ -42,7 +42,7 @@
 
   systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
 
-  custom.wireguard.ips = ["10.100.0.5/24"];
+  custom.wireguard.ips = ["${config.registry.hosts.xps.wgIp}/24"];
 
   documentation.man.cache.enable = false;
 

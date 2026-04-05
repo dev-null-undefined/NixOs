@@ -1,6 +1,7 @@
 # Help is available in the default.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  config,
   lib,
   inputs,
   ...
@@ -25,7 +26,7 @@
     packages.gui.browsers.all.enable = true;
   };
 
-  custom.wireguard.ips = ["10.100.0.3/24"];
+  custom.wireguard.ips = ["${config.registry.hosts.idk.wgIp}/24"];
 
   specialisation = {
     gnome.configuration = {

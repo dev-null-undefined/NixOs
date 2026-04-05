@@ -1,7 +1,11 @@
-{lib, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   services.ntopng = {
     enable = true;
-    httpPort = 3001;
+    httpPort = config.registry.services.ntopng.port;
   };
 
   services.influxdb2.enable = true;

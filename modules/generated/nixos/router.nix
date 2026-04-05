@@ -256,7 +256,8 @@ in {
           v.dhcp.staticLeases)
         dhcpNames;
 
-        server = config.networking.nameservers;
+        quiet-dhcp = true;
+        port = 0; # Disable DNS — handled by AdGuard Home
       };
     };
 

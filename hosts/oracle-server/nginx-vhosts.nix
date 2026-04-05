@@ -4,6 +4,15 @@
   lib,
   ...
 }: let
+  r = config.registry;
+  svc = r.services;
+
+  # http://<host>:<port> for a registry service
+  proxyTo = name: "http://${svc.${name}.host}:${toString svc.${name}.port}";
+
+  # <subdomain>.<domain> for a registry service
+  vhost = name: "${svc.${name}.subdomain}.${r.domain}";
+
   visualSorting = pkgs.fetchFromGitHub {
     owner = "dev-null-undefined";
     repo = "VisualSorting";
@@ -12,114 +21,114 @@
   };
   hosts =
     {
-      "${config.domain}" = {
+      "${r.domain}" = {
         root = visualSorting;
       };
-      "cpp.${config.domain}" = {
+      "cpp.${r.domain}" = {
         root = "${pkgs.cppreference-doc.outPath}/share/cppreference/doc/html";
         locations."= /".extraConfig = ''
           return 301 /en;
         '';
       };
-      "nixos.${config.domain}" = {
+      "nixos.${r.domain}" = {
         root = "${config.system.build.manual.manualHTML}/share/doc/nixos";
       };
-      "mc.${config.domain}" = {
+      "${vhost "crafty"}" = {
         locations."/" = {
-          proxyPass = "http://homie:8100";
+          proxyPass = proxyTo "crafty";
           proxyWebsockets = true;
         };
       };
-      "cloud.${config.domain}" = {
+      "${vhost "nextcloud"}" = {
         locations."/" = {
-          proxyPass = "https://homie.rat-python.ts.net";
+          proxyPass = "https://${svc.nextcloud.host}.${r.tailnetDomain}";
           proxyWebsockets = true;
         };
         extraConfig = ''
           client_max_body_size 32G;
         '';
       };
-      "grafana.${config.domain}" = {
+      "${vhost "grafana"}" = {
         locations."/" = {
-          proxyPass = "http://homie";
+          proxyPass = "http://${svc.grafana.host}";
           proxyWebsockets = true;
         };
       };
-      "unifi.${config.domain}" = {
+      "${vhost "unifi"}" = {
         locations."/" = {
-          proxyPass = "https://homie:8443";
+          proxyPass = "https://${svc.unifi.host}:${toString svc.unifi.port}";
           extraConfig = ''
             proxy_ssl_verify off;
           '';
           proxyWebsockets = true;
         };
       };
-      "brnikov.${config.domain}" = {
+      "${vhost "home-assistant-brnikov"}" = {
         locations."/" = {
-          proxyPass = "http://brnikov:8123";
+          proxyPass = proxyTo "home-assistant-brnikov";
           proxyWebsockets = true;
         };
       };
-      "prosek.${config.domain}" = {
+      "${vhost "home-assistant-prosek"}" = {
         locations."/" = {
-          proxyPass = "http://prosek-wagner:8123";
+          proxyPass = proxyTo "home-assistant-prosek";
           proxyWebsockets = true;
         };
       };
-      "home.${config.domain}" = {
+      "${vhost "home-assistant"}" = {
         locations."/" = {
-          proxyPass = "http://homie:8123";
+          proxyPass = proxyTo "home-assistant";
           proxyWebsockets = true;
         };
       };
-      "ny.${config.domain}" = {
+      "ny.${r.domain}" = {
         extraConfig = ''
           rewrite ^/(.*)$ http://dev-null-undefined.github.io/time-zone/$1 permanent;
         '';
       };
       # Arr stack
-      "jellyfin.${config.domain}" = {
+      "${vhost "jellyfin"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:8096";
+          proxyPass = proxyTo "jellyfin";
         };
       };
-      "jellyseerr.${config.domain}" = {
+      "${vhost "jellyseerr"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:5055";
+          proxyPass = proxyTo "jellyseerr";
         };
       };
-      "prowlarr.${config.domain}" = {
+      "${vhost "prowlarr"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:9696";
+          proxyPass = proxyTo "prowlarr";
         };
       };
-      "sonarr.${config.domain}" = {
+      "${vhost "sonarr"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:8989";
+          proxyPass = proxyTo "sonarr";
         };
       };
-      "radarr.${config.domain}" = {
+      "${vhost "radarr"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:7878";
+          proxyPass = proxyTo "radarr";
         };
       };
-      "transmission.${config.domain}" = {
+      "${vhost "transmission"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://homie:9091";
+          proxyPass = proxyTo "transmission";
         };
       };
     }
     // (lib.attrsets.optionalAttrs config.generated.services.atuin.enable {
-      "atuin.${config.domain}" = {
+      "${vhost "atuin"}" = {
         locations."/" = {
           proxyWebsockets = true;
-          proxyPass = "http://localhost:${toString config.services.atuin.port}";
+          proxyPass = "http://localhost:${toString svc.atuin.port}";
         };
       };
     });

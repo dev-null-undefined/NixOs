@@ -1,7 +1,12 @@
-{...}: {
+{config, ...}: let
+  r = config.registry;
+  mcHost = r.hosts.${r.services.minecraft.host}.tailscaleIp;
+  mcPort = toString r.services.minecraft.port;
+  voicePort = toString r.services.minecraft-voice.port;
+in {
   networking.firewall = {
-    allowedTCPPorts = [25565];
-    allowedUDPPorts = [33665];
+    allowedTCPPorts = [r.services.minecraft.port];
+    allowedUDPPorts = [r.services.minecraft-voice.port];
   };
 
   networking.nftables.tables.minecraft-forwarding = {
@@ -9,8 +14,8 @@
     content = ''
       chain prerouting {
         type nat hook prerouting priority dstnat; policy accept;
-        tcp dport 25565 dnat to 100.103.242.75:25565
-        tcp dport 33665 dnat to 100.103.242.75:33665
+        tcp dport ${mcPort} dnat to ${mcHost}:${mcPort}
+        udp dport ${voicePort} dnat to ${mcHost}:${voicePort}
       }
       chain postrouting {
         type nat hook postrouting priority srcnat; policy accept;

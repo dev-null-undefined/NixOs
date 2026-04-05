@@ -1,6 +1,9 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{config, ...}: {
+{config, ...}: let
+  r = config.registry;
+  svc = r.services;
+in {
   imports = [
     ./router.nix
     ./grafana.nix
@@ -16,6 +19,9 @@
       smartd.enable = true;
       ntopng.enable = true;
       harmonia.enable = true;
+      victorialogs.enable = true;
+      adguard-home.enable = true;
+      fail2ban.enable = true;
       tailscale.prometheus.enable = true;
     };
     vpn.enable = true;
@@ -61,29 +67,29 @@
 
   documentation.man.cache.enable = false;
 
-  custom.wireguard.ips = ["10.100.0.4/24"];
+  custom.wireguard.ips = ["${r.hosts.homie.wgIp}/24"];
 
   services = {
     nextcloud = {
       https = true;
       appstoreEnable = true;
-      hostName = "homie.rat-python.ts.net";
+      hostName = "homie.${r.tailnetDomain}";
       home = "/var/data/nextcloud";
       settings = {
         trusted_domains = [
-          "192.168.2.1"
-          "cloud.dev-null.me"
+          r.hosts.homie.lanIp
+          "${svc.nextcloud.subdomain}.${r.domain}"
         ];
-        trusted_proxies = ["10.100.0.1"];
+        trusted_proxies = [r.hosts.oracle-server.wgIp];
       };
     };
 
     nginx = {
       commonHttpConfig = ''
         # Wireguard
-        set_real_ip_from 10.100.0.1;
+        set_real_ip_from ${r.hosts.oracle-server.wgIp};
         # TailScale
-        set_real_ip_from 100.105.178.96;
+        set_real_ip_from ${r.hosts.oracle-server.tailscaleIp};
       '';
 
       # Setup Nextcloud virtual host to listen on ports
@@ -100,16 +106,17 @@
   };
 
   # Open service ports on the main LAN (services proxied via oracle-server nginx)
-  networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts = [
-    5055 # jellyseerr
-    7878 # radarr
-    8096 # jellyfin
-    8100 # mc (crafty)
-    8123 # home-assistant
-    8989 # sonarr
-    9091 # transmission
-    9696 # prowlarr
-  ];
+  networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts =
+    map (name: svc.${name}.port) [
+      "jellyseerr"
+      "radarr"
+      "jellyfin"
+      "crafty"
+      "home-assistant"
+      "sonarr"
+      "transmission"
+      "prowlarr"
+    ];
 
   system.stateVersion = "22.11"; # Did you read the comment?
 }

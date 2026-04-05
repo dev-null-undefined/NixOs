@@ -11,7 +11,7 @@
   services.prometheus.exporters.nextcloud = {
     enable = true;
     user = "nextcloud";
-    url = "https://homie.rat-python.ts.net";
+    url = "https://${config.registry.services.nextcloud.host}.${config.registry.tailnetDomain}";
     tokenFile = "/var/nextcloud-token";
   };
 }
