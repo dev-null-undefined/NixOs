@@ -30,7 +30,7 @@ nix flake update
 Update a specific flake input:
 
 ```
-nix flake lock --update-input <input>
+nix flake update <input>
 ```
 
 ## Rebuilding the system
@@ -38,9 +38,7 @@ nix flake lock --update-input <input>
 Rebuild the system:
 
 ```sh
-sudo nixos-rebuild switch
-# Or if nomos-rebuild custom package is already installed:
-sudo nomos-rebuild switch
+nh os switch /etc/nixos
 ```
 
 # Structure of the configuration:
