@@ -125,7 +125,10 @@
       builtins.map
       (hostname: {
         name = hostname;
-        value = lib'.internal.ifExists (./hosts/${hostname} + "/overrides.nix");
+        value = let
+          file = ./hosts/${hostname} + "/overrides.nix";
+        in
+          if builtins.pathExists file then import file else {};
       })
       (
         builtins.attrNames (
