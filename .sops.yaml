@@ -40,6 +40,10 @@ creation_rules:
     key_groups:
       - age:
         - *server_homie
+  - path_regex: secrets/adguard-admin-pass
+    key_groups:
+      - age:
+        - *server_homie
   - path_regex: secrets/jellyfin-api-key
     key_groups:
       - age:
