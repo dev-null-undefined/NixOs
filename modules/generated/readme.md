@@ -20,12 +20,14 @@ Generate modules based on the file path.
 The generator.nix file is a function that these arguments: [ prefix mainDir ignorePrefix ]
 - prefix: The prefix of the module name. (e.g. [ `generated` ] or [ `generated` `home` ]), this is needed to overcome collisions with other modules. And also to make it clear that the module is generated.
 - mainDir: The directory that contains the file structure used to generate the modules.
-- ignorePrefix: file prefix that if found IN ANY PART OF THE PATH will cause the file to be ignored. As if it was not there.
+- ignorePrefix: file prefix that if found IN ANY PART OF THE PATH will cause the file to be ignored. As if it was not there. Default is `_`.
 
 The generator will generate option for each file and each folder in the structure.
 
 ### Files:
 For files, it's pretty straight forward. The file name is used as the option name. With the suffix `.nix` removed. And `.enable` is appended to the name.
+
+Module files can also export an `options` attribute to add custom sub-options alongside `enable`.
 
 ### Folders:
 Folders are a bit more complicated, Same as for files option will be created for each folder. But if the folder is enabled it will enable every file/folder that is inside of it.
