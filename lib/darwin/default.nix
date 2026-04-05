@@ -3,7 +3,7 @@
   inputs,
   ...
 }: let
-  inherit (self.lib'.internal) mkPkgsWithOverlays ifExists;
+  inherit (self.lib'.internal) mkPkgsWithOverlays optionalPath;
 in {
   mkDarwinHost = {
     hostname,
@@ -81,11 +81,9 @@ in {
       home.homeDirectory = lib.mkForce "/Users/${username}";
       home.stateVersion = "24.05";
       imports =
-        [
-          (ifExists userSpecific)
-          (ifExists hostSpecific)
-          default
-        ]
+        [default]
+        ++ optionalPath userSpecific
+        ++ optionalPath hostSpecific
         ++ modules;
     };
   };

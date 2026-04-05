@@ -3,7 +3,7 @@
   inputs,
   ...
 }: let
-  inherit (self.lib'.internal) mkPkgsWithOverlays ifExists;
+  inherit (self.lib'.internal) mkPkgsWithOverlays optionalPath;
 in {
   mkHost = {
     hostname,
@@ -74,10 +74,10 @@ in {
         }
 
         # Host config
-        (ifExists (../../hosts + "/${hostname}/hardware-configuration.nix"))
-        (ifExists (../../hosts + "/${hostname}/hardware-partitions.nix"))
         (../../hosts + "/${hostname}/default.nix")
       ]
+      ++ optionalPath (../../hosts + "/${hostname}/hardware-configuration.nix")
+      ++ optionalPath (../../hosts + "/${hostname}/hardware-partitions.nix")
       ++ (self.lib'.filesystem.listFilesRecursive ../../hosts/shared)
       ++ modules
       ++ (builtins.attrValues self.nixosModules);
@@ -93,13 +93,11 @@ in {
     in {
       home.stateVersion = nixosConfig.system.stateVersion;
       imports =
-        [
-          (ifExists userSpecific)
-          (ifExists hostSpecific)
-          (ifExists nixosSpecific)
-          (ifExists userHostSpecific)
-          default
-        ]
+        [default]
+        ++ optionalPath userSpecific
+        ++ optionalPath hostSpecific
+        ++ optionalPath nixosSpecific
+        ++ optionalPath userHostSpecific
         ++ modules;
     };
   };

@@ -68,10 +68,7 @@ in
 
         inherit getAttrsPathsSep;
 
-        ifExists = file:
-          if builtins.pathExists file
-          then (import file)
-          else {};
+        optionalPath = file: if builtins.pathExists file then [file] else [];
 
         getAttrsPaths = attrset: getAttrsPathsSep attrset ".";
       }

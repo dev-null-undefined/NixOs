@@ -8,20 +8,17 @@
     hostname,
     ...
   }: let
+    inherit (self.lib'.internal) optionalPath;
     default = ../../home/default.nix;
     hostSpecific = ../../home/default/${hostname}.nix;
     userSpecific = ../../home/${username}/default.nix;
     userHostSpecific = ../../home/${username}/${hostname}.nix;
-    ifExists = file:
-      if builtins.pathExists file
-      then file
-      else {};
   in
-    [
-      (ifExists userSpecific)
-      (ifExists hostSpecific)
-      (ifExists userHostSpecific)
-      default
+    [default]
+    ++ optionalPath userSpecific
+    ++ optionalPath hostSpecific
+    ++ optionalPath userHostSpecific
+    ++ [
       ({pkgs, ...}: rec {
         home.stateVersion = "22.11";
         home.username = username;
