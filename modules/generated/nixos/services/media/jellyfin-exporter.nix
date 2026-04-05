@@ -2,7 +2,6 @@
   config,
   pkgs,
   self,
-  lib,
   ...
 }: let
   exporterScript = pkgs.writers.writePython3 "jellyfin-exporter" {} ''
@@ -11,8 +10,8 @@
     import http.server
     import os
 
-    JF_URL = "http://127.0.0.1:8096"
-    PORT = 9711
+    JF_URL = "http://127.0.0.1:${toString config.registry.services.jellyfin.port}"
+    PORT = ${toString config.registry.services."jellyfin-exporter".port}
 
 
     def jf_api(path):
@@ -108,6 +107,21 @@ in {
       DynamicUser = true;
       LoadCredential = "api-key:${config.sops.secrets."jellyfin-api-key".path}";
       Restart = "on-failure";
+      ProtectHome = true;
+      ProtectSystem = "strict";
+      PrivateTmp = true;
+      PrivateDevices = true;
+      ProtectHostname = true;
+      ProtectClock = true;
+      ProtectKernelTunables = true;
+      ProtectKernelModules = true;
+      ProtectKernelLogs = true;
+      ProtectControlGroups = true;
+      NoNewPrivileges = true;
+      RestrictRealtime = true;
+      RestrictSUIDSGID = true;
+      RemoveIPC = true;
+      PrivateMounts = true;
     };
     script = ''
       export JF_API_KEY="$(cat $CREDENTIALS_DIRECTORY/api-key)"
@@ -118,7 +132,7 @@ in {
   services.prometheus.scrapeConfigs = [
     {
       job_name = "jellyfin";
-      static_configs = [{targets = ["127.0.0.1:9711"];}];
+      static_configs = [{targets = ["127.0.0.1:${toString config.registry.services."jellyfin-exporter".port}"];}];
     }
   ];
 }
