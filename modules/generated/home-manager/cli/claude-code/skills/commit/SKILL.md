@@ -32,6 +32,12 @@ git log --oneline -10
 
 Note the commit message style from `git log` — you must match it exactly (casing, prefix conventions, tense, length).
 
+Check for unpushed local commits:
+```bash
+git log --oneline @{u}..HEAD
+```
+If this fails (no upstream), all local commits are unpushed.
+
 ### Step 2: Review changes
 
 Analyze the full diff for the following issues. If any are found, report them to the user and **stop — do not commit**.
@@ -57,6 +63,8 @@ Analyze all changes and split them into groups where each group:
 - Gets a short commit title matching the style from `git log`
 
 If all changes are related, a single commit is fine.
+
+**Amending unpushed commits**: If there are unpushed local commits and the current changes logically belong to one of them (same feature, same fix, continuation of the same work), amend into that commit using `git commit --amend` instead of creating a new one. Only amend the most recent commit (use interactive rebase for older ones if needed). If the changes are unrelated to any existing unpushed commit, create a new commit as usual.
 
 ### Step 4: Execute commits
 

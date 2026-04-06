@@ -47,9 +47,17 @@ Only modify packages in the `inherit (super.stable) ...;` block. Never touch `in
 ### Phase 1: Update flake inputs and attempt build
 
 1. Run `nix flake update --flake $CONFIG_DIR`
-2. Attempt a dry build first using `nix build $CONFIG_DIR#nixosConfigurations.$(hostname).config.system.build.toplevel --no-link` to check for errors without switching.
-3. If the dry build succeeds, **ask the user for confirmation before switching**. Then run the rebuild command to activate.
-4. If it fails, capture the full error output and proceed to Phase 2. After fixing issues in Phase 2, always ask the user before the final switch.
+2. Attempt a dry build first using `nix build $CONFIG_DIR#nixosConfigurations.$(hostname).config.system.build.toplevel --print-out-paths` to check for errors without switching. Capture the output path.
+3. If the dry build succeeds, show the user which main packages were updated by running:
+   ```bash
+   nix store diff-closures /run/current-system <built-path>
+   ```
+   This prints lines like `package-name: 1.0 → 1.1, +2.3 MiB`. After showing the full output, summarize highlights for the user:
+   - **Major version bumps** (e.g., 1.x → 2.x) — call these out explicitly as they may have breaking changes
+   - **Notable packages** — flag updates to kernel, mesa, systemd, glibc, firefox, chromium, python, node, rust, go, gcc, and desktop environments (gnome, plasma, hyprland)
+   - **New or removed packages** in the closure
+4. **Ask the user for confirmation before switching.** Then run the rebuild command to activate.
+5. If the dry build fails, capture the full error output and proceed to Phase 2. After fixing issues in Phase 2, run the diff-closures step above before the final confirmation and switch.
 
 ---
 
