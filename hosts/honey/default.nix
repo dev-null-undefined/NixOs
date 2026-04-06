@@ -51,6 +51,13 @@
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+  # MSI OLED and ASUS PG27UCDM support 4K@240Hz but RTX 4070 Ti SUPER
+  # doesn't have enough display engine bandwidth for all monitors at 240Hz
+  environment.sessionVariables = {
+    AQ_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
+    AQ_NO_ATOMIC = "1";
+  };
+
   services = {
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
