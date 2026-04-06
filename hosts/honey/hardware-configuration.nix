@@ -49,8 +49,12 @@ in {
 
   swapDevices = [{device = "/swap/swapfile";}];
 
+  boot.resumeDevice = "/dev/disk/by-uuid/${root}";
+
   boot.kernelParams = [
     "usbcore.initial_descriptor_timeout=100"
+    # Regenerate with: sudo btrfs inspect-internal map-swapfile -r /swap/swapfile
+    "resume_offset=533760"
   ];
 
   hardware = {
