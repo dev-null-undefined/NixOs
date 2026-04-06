@@ -1,14 +1,13 @@
 {pkgs, ...}: {
   home.packages = [pkgs.claude-code];
 
-  home.file.".claude/settings.json" = {
-    force = true;
-    text = builtins.toJSON {
-      skipDangerousModePermissionPrompt = true;
-      effortLevel = "high";
-    };
+  home.file.".claude/settings.json".text = builtins.toJSON {
+    skipDangerousModePermissionPrompt = true;
+    effortLevel = "high";
   };
 
+  home.file.".claude/CLAUDE.md".source = ./CLAUDE.md;
   home.file.".claude/skills/commit/SKILL.md".source = ./skills/commit/SKILL.md;
   home.file.".claude/skills/review/SKILL.md".source = ./skills/review/SKILL.md;
+  home.file.".claude/skills/sync-memory/SKILL.md".source = ./skills/sync-memory/SKILL.md;
 }
