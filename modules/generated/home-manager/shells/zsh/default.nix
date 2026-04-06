@@ -63,7 +63,7 @@ in {
 
     oh-my-zsh = {
       enable = true;
-      plugins = ["git" "sudo" "common-aliases" "docker" "docker-compose"];
+      plugins = ["git" "sudo" "docker" "docker-compose"];
     };
 
     plugins = [
