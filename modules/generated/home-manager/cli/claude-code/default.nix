@@ -9,5 +9,5 @@
     };
   };
 
-  home.file.".claude/commands/commit.md".source = ./commands/commit.md;
+  home.file.".claude/skills/commit/SKILL.md".source = ./skills/commit/SKILL.md;
 }

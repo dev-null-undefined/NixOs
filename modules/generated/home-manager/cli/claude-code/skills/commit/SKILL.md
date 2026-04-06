@@ -4,7 +4,7 @@ allowed-tools: Bash(git:*), Read, Grep, Glob
 ---
 
 <!-- READ-ONLY: Managed by NixOS. Edit the source at:
-     modules/generated/home-manager/cli/claude-code/commands/commit.md -->
+     modules/generated/home-manager/cli/claude-code/skills/commit/SKILL.md -->
 
 ## Your task
 
