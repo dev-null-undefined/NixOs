@@ -4,6 +4,7 @@
     python3Packages.ueberzug
 
     uv
+    pyright
 
     (python3.withPackages (e: [
       e.matplotlib
