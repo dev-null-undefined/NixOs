@@ -13,7 +13,10 @@
       "Bash(hyprctl dispatch:*)",
       "WebFetch(domain:docs.atuin.sh)",
       "Bash(nix eval:*)",
-      "Bash(nix flake:*)"
+      "Bash(nix flake:*)",
+      "Read(//home/martin/GitHub/martin/nixos/**)",
+      "mcp__nixos__nix",
+      "Bash(nix search:*)"
     ]
   }
 }
