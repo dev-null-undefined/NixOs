@@ -1,6 +1,6 @@
 ---
 description: Rebuild and switch to new NixOS configuration
-allowed-tools: Bash(nh:*), Bash(darwin-rebuild:*), Bash(sudo darwin-rebuild:*), Bash(uname:*), Bash(hostname:*)
+allowed-tools: Bash(nh:*), Bash(darwin-rebuild:*), Bash(sudo darwin-rebuild:*), Bash(uname:*), Bash(hostname:*), AskUserQuestion
 ---
 
 ## Your task
@@ -37,7 +37,7 @@ Show the user a summary of what will change (new/updated/removed packages).
 
 #### Step 2: Ask for confirmation
 
-Ask the user if they want to proceed with the switch.
+**Use AskUserQuestion** to ask the user if they want to proceed with the switch.
 
 #### Step 3: Apply the rebuild
 
@@ -61,7 +61,7 @@ Show the user a summary of what will change.
 
 #### Step 2: Ask for confirmation
 
-Ask the user if they want to proceed with the switch.
+**Use AskUserQuestion** to ask the user if they want to proceed with the switch.
 
 #### Step 3: Apply the rebuild
 

@@ -1,6 +1,6 @@
 ---
 description: Smart NixOS update with automatic package pinning and unpinning
-allowed-tools: Bash(nh:*), Bash(darwin-rebuild:*), Bash(sudo darwin-rebuild:*), Bash(nix:*), Bash(git:*), Bash(alejandra:*), Bash(python3:*), Bash(uname:*), Bash(hostname:*), Read, Edit
+allowed-tools: Bash(nh:*), Bash(darwin-rebuild:*), Bash(sudo darwin-rebuild:*), Bash(nix:*), Bash(git:*), Bash(alejandra:*), Bash(python3:*), Bash(uname:*), Bash(hostname:*), Read, Edit, AskUserQuestion
 ---
 
 ## Your task
@@ -56,7 +56,7 @@ Only modify packages in the `inherit (super.stable) ...;` block. Never touch `in
    - **Major version bumps** (e.g., 1.x → 2.x) — call these out explicitly as they may have breaking changes
    - **Notable packages** — flag updates to kernel, mesa, systemd, glibc, firefox, chromium, python, node, rust, go, gcc, and desktop environments (gnome, plasma, hyprland)
    - **New or removed packages** in the closure
-4. **Ask the user for confirmation before switching.** Then run the rebuild command to activate.
+4. **Use AskUserQuestion to ask the user for confirmation before switching.** Then run the rebuild command to activate.
 5. If the dry build fails, capture the full error output and proceed to Phase 2. After fixing issues in Phase 2, run the diff-closures step above before the final confirmation and switch.
 
 ---

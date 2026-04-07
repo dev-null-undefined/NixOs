@@ -1,6 +1,6 @@
 ---
 description: Sync Claude memories between current machine and homie via SSH
-allowed-tools: Bash(ssh:*), Bash(cat:*), Bash(ls:*), Bash(mkdir:*), Bash(hostname:*), Bash(scp:*), Read, Write, Glob, Grep
+allowed-tools: Bash(ssh:*), Bash(cat:*), Bash(ls:*), Bash(mkdir:*), Bash(hostname:*), Bash(scp:*), Read, Write, Glob, Grep, AskUserQuestion
 ---
 
 <!-- READ-ONLY: Managed by NixOS. Edit the source at:
@@ -10,9 +10,11 @@ allowed-tools: Bash(ssh:*), Bash(cat:*), Bash(ls:*), Bash(mkdir:*), Bash(hostnam
 
 Synchronize Claude Code memories between this machine and homie. Memories are merged bidirectionally — local memories are uploaded to homie, and relevant remote memories are downloaded here.
 
+**Important: This is an interactive process.** Present findings and proposed actions to the user for approval before making changes. Never silently merge, overwrite, or skip memories.
+
 ### Directory structure
 
-Memories live in `~/.claude/projects/-etc-nixos/memory/`. On homie, host-specific memories from other machines are stored separately:
+On homie, the canonical memory directory is `~/.claude/projects/-etc-nixos/memory/`. Host-specific memories from other machines are stored in subdirectories:
 
 ```
 memory/
@@ -26,36 +28,70 @@ memory/
 
 ### Step 1: Gather state
 
-Determine the local hostname:
+#### 1a. Discover paths
+
+The local memory directory path varies by machine — it encodes the absolute path to the repo with `-` separators. **Do not hardcode it.** Discover it dynamically:
+
 ```bash
 hostname
+ls -d ~/.claude/projects/*/memory/ 2>/dev/null
 ```
 
-Define paths:
-- **Local memory dir**: `~/.claude/projects/-etc-nixos/memory/`
-- **Remote memory dir**: `~/.claude/projects/-etc-nixos/memory/` (on homie via SSH)
-- **Remote host-specific dir**: `~/.claude/projects/-etc-nixos/memory/hosts/<local-hostname>/` (on homie)
+Identify which local project directory corresponds to the NixOS config (look for the one containing this repo's memories — it may be `-etc-nixos`, `-home-martin-GitHub-martin-nixos`, or another path depending on where the repo is cloned/symlinked).
 
-Read all local memory files (MEMORY.md + all .md files):
+The remote path on homie is always `~/.claude/projects/-etc-nixos/memory/`.
+
+#### 1b. Set up SSH multiplexing
+
+To avoid repeated SSH handshakes (and noisy host key fingerprint output), start a persistent SSH control connection at the beginning:
+
 ```bash
-ls ~/.claude/projects/-etc-nixos/memory/*.md
+ssh -o ControlMaster=yes -o ControlPath=/tmp/ssh-homie-sync-%r@%h -o ControlPersist=120 -fN homie
 ```
-Then read each file's content.
 
-Read all remote memory files on homie:
+Then use `-o ControlPath=/tmp/ssh-homie-sync-%r@%h` on all subsequent `ssh` and `scp` commands. Clean up at the end:
+
 ```bash
+ssh -o ControlPath=/tmp/ssh-homie-sync-%r@%h -O exit homie 2>/dev/null
+```
+
+#### 1c. Read all memory files
+
+Read all local memory files (every `.md` in the memory directory) and all remote memory files on homie:
+
+```bash
+# Local
+ls <local-memory-dir>/*.md
+
+# Remote (main dir + host subdirectories)
 ssh homie "ls ~/.claude/projects/-etc-nixos/memory/*.md 2>/dev/null"
 ssh homie "ls -d ~/.claude/projects/-etc-nixos/memory/hosts/*/ 2>/dev/null"
 ```
-For each remote host directory found, also read its MEMORY.md and files.
 
-Read the content of each remote memory file (excluding MEMORY.md indices) to understand what's already stored.
+Read the **full content** of every memory file on both sides (excluding MEMORY.md indices). You need the content for duplicate detection and conflict resolution.
 
-### Step 2: Analyze and classify local memories
+### Step 2: Detect duplicates and conflicts
 
-For each local memory file (excluding MEMORY.md), determine if it already exists on homie (by filename match in either the main dir or `hosts/<local-hostname>/` dir).
+Before syncing anything, analyze all memories from both sides together. Build a unified view:
 
-For memories that are **new or updated locally**, classify each as:
+#### 2a. Exact filename matches (conflicts)
+
+Files with the **same filename** on both sides — compare content:
+- **Identical content**: already in sync, no action needed
+- **Different content**: this is a conflict — present both versions to the user (see Step 3)
+
+#### 2b. Semantic duplicates (different filenames, same topic)
+
+Scan for memories that cover the **same topic** but have different filenames. Common patterns:
+- Same `name` or `description` in frontmatter
+- Same core advice/rule with different wording or examples
+- One is a subset of the other (e.g., a short version vs a detailed version)
+
+For each potential duplicate pair found, flag it for user review (see Step 3).
+
+#### 2c. Classify new memories
+
+For memories that exist on only one side and have no duplicates, classify as:
 
 **Global** — relevant to all machines working on this NixOS config:
 - User preferences, role, workflow habits (type: user, feedback)
@@ -64,51 +100,93 @@ For memories that are **new or updated locally**, classify each as:
 - Feedback about Claude behavior, code style, commit style
 
 **Host-specific** — relevant only to the originating machine:
-- Hardware-specific details (GPU, disk, peripherals)
+- Hardware-specific details (GPU model, disk layout, peripherals)
 - Services running only on this host
 - Local network config or IP addresses specific to this machine
 - Machine-specific debugging history
 
-### Step 3: Upload to homie
+### Step 3: Present sync plan to user
 
-For each new/updated local memory:
+**Use AskUserQuestion for every decision that involves merging, overwriting, or skipping.** Present the full sync plan before executing anything.
 
-**If global**, upload to homie's main memory directory:
+#### 3a. Conflicts (same filename, different content)
+
+For each conflict, show a diff summary and ask:
+
+- **Keep local** — overwrite remote with local version
+- **Keep remote** — overwrite local with remote version
+- **Merge** — combine the best parts (you'll draft the merged version for approval)
+
+#### 3b. Semantic duplicates
+
+For each duplicate pair, show both memories side by side and ask:
+
+- **Merge into one** — combine into a single memory, delete the other. You draft the merged content and a filename, user approves. The merged file replaces both originals on both machines.
+- **Keep both** — sync both to both sides as-is
+- **Keep only local / Keep only remote** — delete the other from its origin
+
+When merging, prefer the more detailed/specific version as the base, and incorporate any unique details from the other. Use the more descriptive filename.
+
+#### 3c. New memories (no conflicts or duplicates)
+
+Present the list of new memories to sync in each direction, grouped by classification:
+
+- **Will upload to homie (global)**: list with one-line descriptions
+- **Will upload to homie (host-specific)**: list with one-line descriptions
+- **Will download from homie**: list with one-line descriptions
+- **Will skip (not relevant to this machine)**: list with reasons
+
+Ask user to confirm, or let them override any classification.
+
+### Step 4: Execute sync
+
+Only after user approval, execute the sync plan:
+
+#### 4a. Upload to homie
+
+**Global memories** — upload to homie's main memory directory:
 ```bash
-scp ~/.claude/projects/-etc-nixos/memory/<file>.md homie:~/.claude/projects/-etc-nixos/memory/<file>.md
+scp <local-memory-dir>/<file>.md homie:~/.claude/projects/-etc-nixos/memory/<file>.md
 ```
 
-**If host-specific**, upload to the host-specific subdirectory:
+**Host-specific memories** — upload to the host-specific subdirectory:
 ```bash
 ssh homie "mkdir -p ~/.claude/projects/-etc-nixos/memory/hosts/<local-hostname>"
-scp ~/.claude/projects/-etc-nixos/memory/<file>.md homie:~/.claude/projects/-etc-nixos/memory/hosts/<local-hostname>/<file>.md
+scp <local-memory-dir>/<file>.md homie:~/.claude/projects/-etc-nixos/memory/hosts/<local-hostname>/<file>.md
 ```
 
-### Step 4: Pull relevant memories from homie
+#### 4b. Download from homie
 
-For each memory on homie (both main dir and all `hosts/<other-hostname>/` dirs) that does NOT exist locally:
-
-1. Read its content
-2. Decide if it's relevant to this machine:
-   - **Always pull**: user preferences, feedback about Claude behavior, workflow habits, project-wide decisions, external references
-   - **Pull if relevant**: monitoring/infra knowledge that applies here too, security guidelines, naming conventions
-   - **Skip**: host-specific hardware details for another machine, services not running here, debugging history for other hosts
-3. If pulling, download to the local memory directory:
 ```bash
-scp homie:~/.claude/projects/-etc-nixos/memory/<file>.md ~/.claude/projects/-etc-nixos/memory/<file>.md
-```
-   Or from a host-specific dir:
-```bash
-scp homie:~/.claude/projects/-etc-nixos/memory/hosts/<other-host>/<file>.md ~/.claude/projects/-etc-nixos/memory/<file>.md
+scp homie:~/.claude/projects/-etc-nixos/memory/<file>.md <local-memory-dir>/<file>.md
 ```
 
-For memories that exist on both sides, compare content. If the remote version is newer or has more information, pull it (overwriting local). If the local version is newer, it was already pushed in Step 3.
+Or from a host-specific dir:
+```bash
+scp homie:~/.claude/projects/-etc-nixos/memory/hosts/<other-host>/<file>.md <local-memory-dir>/<file>.md
+```
+
+#### 4c. Apply merges
+
+For any memories the user chose to merge:
+1. Write the merged content to the surviving filename on the local side
+2. Upload to homie
+3. Delete the retired filename from both sides:
+```bash
+rm <local-memory-dir>/<retired-file>.md
+ssh homie "rm ~/.claude/projects/-etc-nixos/memory/<retired-file>.md 2>/dev/null"
+```
+
+#### 4d. Apply conflict resolutions
+
+Overwrite the losing side with the winning version.
 
 ### Step 5: Update indices
 
-**Update homie's main MEMORY.md** to include any newly uploaded global memories. SSH in and rewrite it:
+**Update homie's main MEMORY.md** to include any newly uploaded global memories:
 - Keep all existing entries
 - Add new entries for uploaded global memories
+- Remove entries for any deleted/merged files
 - Do NOT add host-specific memories to the main index
 
 **Update/create homie's host-specific MEMORY.md** at `hosts/<local-hostname>/MEMORY.md`:
@@ -118,6 +196,7 @@ For memories that exist on both sides, compare content. If the remote version is
 **Update local MEMORY.md** to include any newly downloaded memories:
 - Keep all existing entries
 - Add new entries for pulled memories
+- Remove entries for any deleted/merged files
 
 Index format for all MEMORY.md files:
 ```markdown
@@ -126,11 +205,18 @@ Index format for all MEMORY.md files:
 - [filename.md](filename.md) — short description
 ```
 
-### Step 6: Report
+### Step 6: Cleanup and report
+
+Close the SSH control connection:
+```bash
+ssh -o ControlPath=/tmp/ssh-homie-sync-%r@%h -O exit homie 2>/dev/null
+```
 
 Print a summary:
+- **Merged**: list pairs that were combined, with resulting filename
 - **Uploaded to homie (global)**: list files
 - **Uploaded to homie (host-specific)**: list files
 - **Downloaded from homie**: list files with source (main or which host)
+- **Conflict resolutions**: list files with which side won
 - **Skipped (not relevant)**: list files with brief reason
 - **Already in sync**: count of files that needed no changes

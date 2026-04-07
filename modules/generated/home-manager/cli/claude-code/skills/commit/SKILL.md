@@ -1,6 +1,6 @@
 ---
 description: Review changes and commit with smart grouping
-allowed-tools: Bash(git:*), Read, Grep, Glob
+allowed-tools: Bash(git:*), Read, Grep, Glob, AskUserQuestion
 ---
 
 <!-- READ-ONLY: Managed by NixOS. Edit the source at:
@@ -40,7 +40,7 @@ If this fails (no upstream), all local commits are unpushed.
 
 ### Step 2: Review changes
 
-Analyze the full diff for the following issues. If any are found, report them to the user and **stop — do not commit**.
+Analyze the full diff for the following issues. If any are found, present them and **use AskUserQuestion** to ask whether to proceed, fix the issues first, or abort. Do not commit until the user confirms.
 
 **Security & hygiene:**
 - Secrets, credentials, `.env` files, API keys, tokens in the diff

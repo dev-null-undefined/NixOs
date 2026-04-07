@@ -1,6 +1,13 @@
+<!-- This file is NixOS-managed via home-manager. Source: modules/generated/home-manager/cli/claude-code/CLAUDE.md -->
+<!-- Deployed to ~/.claude/CLAUDE.md — do NOT edit the deployed copy directly -->
+
 ## General Rules
 
 Never make autonomous changes beyond what was explicitly requested. Do not move, remove, or refactor code that wasn't part of the ask. If you think something should change, ask first.
+
+## Presenting Options
+
+When presenting multiple options or suggestions to the user, always use AskUserQuestion with multiSelect instead of listing them in text. This lets the user pick interactively rather than reading a wall of text.
 
 ## Git Operations
 
