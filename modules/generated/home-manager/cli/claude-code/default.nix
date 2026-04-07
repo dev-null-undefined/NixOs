@@ -4,6 +4,12 @@
   home.file.".claude/settings.json".text = builtins.toJSON {
     skipDangerousModePermissionPrompt = true;
     effortLevel = "high";
+    voiceEnabled = false;
+    enabledPlugins = {
+      "rust-analyzer-lsp@claude-plugins-official" = true;
+      "clangd-lsp@claude-plugins-official" = true;
+      "typescript-lsp@claude-plugins-official" = true;
+    };
   };
 
   home.file.".claude/CLAUDE.md".source = ./CLAUDE.md;
