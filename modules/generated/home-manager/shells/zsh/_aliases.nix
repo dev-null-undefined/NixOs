@@ -40,6 +40,8 @@ in
     cd = "z";
 
     pping = "trip";
+
+    claude-kos = "CLAUDE_CONFIG_DIR=~/.claude-kos claude";
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;
