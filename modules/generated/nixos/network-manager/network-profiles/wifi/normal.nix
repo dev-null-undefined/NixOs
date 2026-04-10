@@ -33,11 +33,13 @@
           // lib.optionalAttrs (security == "wpa-psk") {
             psk = "${secret_prefix}_PSK";
           };
-        ipv4 = {
-          method = "auto";
-        } // lib.optionalAttrs (config.networking.nameservers != []) {
-          dns = "${builtins.concatStringsSep ";" config.networking.nameservers};";
-        };
+        ipv4 =
+          {
+            method = "auto";
+          }
+          // lib.optionalAttrs (config.networking.nameservers != []) {
+            dns = "${builtins.concatStringsSep ";" config.networking.nameservers};";
+          };
         ipv6 = {
           addr-gen-mode = "stable-privacy";
           method = "disabled";

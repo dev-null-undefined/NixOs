@@ -128,7 +128,9 @@
         value = let
           file = ./hosts/${hostname} + "/overrides.nix";
         in
-          if builtins.pathExists file then import file else {};
+          if builtins.pathExists file
+          then import file
+          else {};
       })
       (
         builtins.attrNames (

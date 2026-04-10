@@ -189,7 +189,9 @@
   folderHasDefault = folder: let
     keyPaths = getNixKeyPaths folder;
   in
-    keyPaths != [] && builtins.elem default (
+    keyPaths
+    != []
+    && builtins.elem default (
       builtins.map (nixKeyPath: lib.lists.last nixKeyPath.parts) keyPaths
     );
 
