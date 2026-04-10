@@ -1,4 +1,5 @@
 {lib, ...}: {
+  generated.home.desktop.hyprland.config.idle.useDpms = true;
   wayland.windowManager.hyprland.settings = {
     monitor = lib.mkForce [
       ",preferred,auto,1"

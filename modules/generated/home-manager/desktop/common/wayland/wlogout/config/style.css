@@ -31,6 +31,13 @@ button:focus {
     background-image: image(url("./lock-hover.png"));
 }
 
+#sleep {
+    background-image: image(url("./sleep.png"));
+}
+#sleep:focus {
+    background-image: image(url("./sleep-hover.png"));
+}
+
 #hibernate {
     background-image: image(url("./sleep.png"));
 }

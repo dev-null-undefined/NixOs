@@ -5,6 +5,12 @@
     "keybind" : "l"
 }
 {
+    "label" : "sleep",
+    "action" : "sleep-monitors",
+    "text" : "Sleep",
+    "keybind" : "m"
+}
+{
     "label" : "reboot",
     "action" : "systemctl reboot",
     "text" : "Reboot",
