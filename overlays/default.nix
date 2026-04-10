@@ -21,6 +21,7 @@ with self.lib'.internal; {
       batgrep
       lutris
       wineWowPackages
+      glances
       ;
     inherit (super.dev-null) rpi-imager;
   };
