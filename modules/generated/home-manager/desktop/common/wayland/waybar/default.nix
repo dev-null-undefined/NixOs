@@ -12,6 +12,125 @@
   nm-connection-editor = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
   nm-tui = ''"${pkgs.networkmanager}/bin/nmtui connect"'';
 
+  ddcutil = "${pkgs.ddcutil}/bin/ddcutil";
+  brightnessctl' = "${pkgs.brightnessctl}/bin/brightnessctl";
+
+  brightnessScript = pkgs.writeShellScriptBin "brightness-control" ''
+    set -euo pipefail
+
+    CACHE="/tmp/waybar-brightness"
+    DISPLAYS_CACHE="/tmp/waybar-brightness-displays"
+    TARGET="/tmp/waybar-brightness-target"
+    APPLY_LOCK="/tmp/waybar-brightness-lock"
+
+    # Exponential step: fine control at low brightness, coarse at high
+    get_step() {
+      local val=$1
+      if [ "$val" -le 5 ]; then echo 1
+      elif [ "$val" -le 15 ]; then echo 2
+      elif [ "$val" -le 30 ]; then echo 5
+      elif [ "$val" -le 60 ]; then echo 10
+      else echo 15
+      fi
+    }
+
+    has_backlight() {
+      [ -n "$(ls /sys/class/backlight/ 2>/dev/null)" ]
+    }
+
+    DDC_OPTS="--sleep-multiplier 0.03 --noverify"
+
+    get_buses() {
+      if [ -f "$DISPLAYS_CACHE" ]; then
+        cat "$DISPLAYS_CACHE"
+        return
+      fi
+      ${ddcutil} detect --brief 2>/dev/null | awk -F/ '/I2C bus:/{print $NF}' | sed 's/i2c-//' | tee "$DISPLAYS_CACHE"
+    }
+
+    get_first_bus() {
+      get_buses | head -1
+    }
+
+    get_live() {
+      if has_backlight; then
+        ${brightnessctl'} -m -c backlight 2>/dev/null | awk -F, '{gsub(/%/,"",$4); print int($4)}'
+      else
+        local bus
+        bus=$(get_first_bus)
+        ${ddcutil} getvcp 10 --brief --bus "$bus" $DDC_OPTS 2>/dev/null | awk '{print int($4)}'
+      fi
+    }
+
+    get_cached() {
+      if has_backlight; then
+        get_live
+      elif [ -f "$CACHE" ] && [ -s "$CACHE" ]; then
+        cat "$CACHE"
+      else
+        local val
+        val=$(get_live)
+        [ -n "$val" ] && echo "$val" > "$CACHE"
+        echo "''${val:-0}"
+      fi
+    }
+
+    set_brightness() {
+      local val=$1
+      if has_backlight; then
+        ${brightnessctl'} set "''${val}%" > /dev/null
+      else
+        echo "$val" > "$CACHE"
+        echo "$val" > "$TARGET"
+        # Debounced apply: flock ensures only one applier runs at a time.
+        # Rapid scrolls just update TARGET and exit; the running applier
+        # picks up the latest value after each DDC write cycle.
+        (
+          flock -n 9 || exit 0
+          while true; do
+            sleep 0.3
+            val=$(cat "$TARGET")
+            echo "$val" > "$CACHE"
+            while IFS= read -r bus; do
+              [ -n "$bus" ] && ${ddcutil} setvcp 10 "$val" --bus "$bus" $DDC_OPTS 2>/dev/null &
+            done < <(get_buses)
+            wait
+            [ "$(cat "$TARGET")" = "$val" ] && break
+          done
+        ) 9>"$APPLY_LOCK" &
+        disown
+      fi
+    }
+
+    case "''${1:-get}" in
+      get)
+        val=$(get_cached)
+        val=''${val:-0}
+        if [ "$val" -le 25 ]; then icon="󰃞"
+        elif [ "$val" -le 50 ]; then icon="󰃟"
+        else icon="󰃠"
+        fi
+        printf '{"text": "%s %s%%", "tooltip": "Brightness: %s%%", "percentage": %s}\n' "$icon" "$val" "$val" "$val"
+        ;;
+      up)
+        val=$(get_cached)
+        val=''${val:-50}
+        step=$(get_step "$val")
+        new=$(( val + step ))
+        [ "$new" -gt 100 ] && new=100
+        set_brightness "$new"
+        ;;
+      down)
+        val=$(get_cached)
+        val=''${val:-50}
+        step=$(get_step "$val")
+        new=$(( val - step ))
+        [ "$new" -lt 0 ] && new=0
+        set_brightness "$new"
+        ;;
+    esac
+  '';
+
   terminal = "${pkgs.kitty}/bin/kitty";
   terminal-spawn = cmd: "${terminal} $SHELL -i -c ${cmd}";
 
@@ -67,6 +186,7 @@ in {
           "battery"
           "network#wl"
           "network#en"
+          "custom/brightness"
           "pulseaudio"
           "pulseaudio#microphone"
         ];
@@ -173,6 +293,14 @@ in {
           tooltip-format-disconnected = "Disconnected";
           on-click = networkMonitor;
           on-click-right = nm-connection-editor;
+        };
+        "custom/brightness" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${brightnessScript}/bin/brightness-control get";
+          on-scroll-up = "${brightnessScript}/bin/brightness-control up";
+          on-scroll-down = "${brightnessScript}/bin/brightness-control down";
+          interval = 2;
         };
         "pulseaudio#microphone" = {
           format = "{format_source}";

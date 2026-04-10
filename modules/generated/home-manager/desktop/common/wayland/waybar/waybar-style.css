@@ -52,6 +52,7 @@ tooltip {
 #custom-updates,
 #custom-caffeine,
 #custom-weather,
+#custom-brightness,
 #cpu,
 #memory,
 #window,
@@ -122,6 +123,12 @@ tooltip {
 
 #network {
     color: #f9e2af;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#custom-brightness {
+    color: #94e2d5;
     border-left: 0px;
     border-right: 0px;
 }
