@@ -2,7 +2,10 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*".hashKnownHosts = true;
+    matchBlocks."*" = {
+      user = "martin";
+      hashKnownHosts = true;
+    };
     extraConfig = ''
       VisualHostKey yes
     '';
