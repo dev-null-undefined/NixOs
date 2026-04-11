@@ -2,13 +2,53 @@
   config,
   self,
   ...
-}: {
+}: let
+  wan = config.generated.router.external.interface;
+  lan = config.generated.router.vlans.main.vlanInterface;
+in {
   sops.secrets."dnsmasq-static-leases" = {
     sopsFile = self.outPath + "/secrets/dnsmasq-static-leases";
     format = "binary";
   };
 
   services.dnsmasq.settings.dhcp-hostsfile = config.sops.secrets."dnsmasq-static-leases".path;
+
+  # IPv6 — WAN address + routed /64 on LAN
+  networking.interfaces.${wan}.ipv6.addresses = [
+    {
+      address = "2a00:c500:34:6613::2";
+      prefixLength = 61;
+    }
+  ];
+  networking.interfaces.${lan}.ipv6.addresses = [
+    {
+      address = "2a00:c500:234:6613::1";
+      prefixLength = 64;
+    }
+  ];
+  networking.defaultGateway6 = {
+    address = "2a00:c500:34:6613::1";
+    interface = wan;
+  };
+  networking.nameservers = ["2a00:c500:0:12::1" "2a00:c500:0:22::1"];
+
+  # SLAAC — advertise the routed /64 on the main LAN
+  services.radvd = {
+    enable = true;
+    config = ''
+      interface ${lan} {
+        AdvSendAdvert on;
+        AdvManagedFlag off;
+        AdvOtherConfigFlag off;
+        prefix 2a00:c500:234:6613::/64 {
+          AdvOnLink on;
+          AdvAutonomous on;
+        };
+        RDNSS 2a00:c500:234:6613::1 {
+        };
+      };
+    '';
+  };
 
   generated.router = {
     enable = true;
