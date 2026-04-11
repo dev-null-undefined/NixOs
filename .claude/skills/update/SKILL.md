@@ -46,7 +46,32 @@ Only modify packages in the `inherit (super.stable) ...;` block. Never touch `in
 
 ### Phase 1: Update flake inputs and attempt build
 
-1. Run `nix flake update --flake $CONFIG_DIR`
+1. Update flake inputs, **excluding any inputs whose URL contains `git.cdn77.eu`** (these are private work inputs that should be updated separately).
+
+   First, identify which top-level inputs to update (excluding cdn77 ones):
+   ```bash
+   nix flake metadata --json $CONFIG_DIR | python3 -c "
+   import json, sys
+   meta = json.load(sys.stdin)
+   locks = meta['locks']
+   root_inputs = locks['nodes'][locks['root']]['inputs']
+   to_update = []
+   for name, target in root_inputs.items():
+       node_name = target if isinstance(target, str) else target[-1]
+       node = locks['nodes'].get(node_name, {})
+       locked = node.get('locked', {}) or node.get('original', {})
+       url = locked.get('url', '')
+       if 'git.cdn77.eu' not in url:
+           to_update.append(name)
+   print(' '.join(sorted(to_update)))
+   "
+   ```
+
+   Then update only those inputs by passing them as positional arguments:
+   ```bash
+   nix flake update --flake $CONFIG_DIR <input1> <input2> ...
+   ```
+   If no inputs need to be skipped, you can simply run `nix flake update --flake $CONFIG_DIR` with no arguments.
 2. Attempt a dry build first using `nix build $CONFIG_DIR#nixosConfigurations.$(hostname).config.system.build.toplevel --print-out-paths` to check for errors without switching. Capture the output path.
 3. If the dry build succeeds, show the user which main packages were updated by running:
    ```bash
