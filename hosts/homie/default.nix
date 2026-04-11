@@ -4,9 +4,11 @@
   r = config.registry;
   svc = r.services;
 in {
+  domain = config.registry.domain;
   imports = [
     ./router.nix
     ./grafana.nix
+    ./nginx-vhosts.nix
   ];
   generated = {
     services = {
@@ -20,8 +22,11 @@ in {
       ntopng.enable = true;
       harmonia.enable = true;
       victorialogs.enable = true;
+      acme.enable = true;
       adguard-home.enable = true;
+      atuin.enable = true;
       fail2ban.enable = true;
+      minecraft.enable = true;
       tailscale.prometheus.enable = true;
     };
     vpn.enable = true;
@@ -73,39 +78,20 @@ in {
     nextcloud = {
       https = true;
       appstoreEnable = true;
-      hostName = "homie.${r.tailnetDomain}";
       home = "/var/data/nextcloud";
       settings = {
         trusted_domains = [
           r.hosts.homie.lanIp
-          "${svc.nextcloud.subdomain}.${r.domain}"
+          "homie.${r.tailnetDomain}"
         ];
-        trusted_proxies = [r.hosts.oracle-server.wgIp];
+        trusted_proxies = ["127.0.0.1"];
       };
     };
 
-    nginx = {
-      commonHttpConfig = ''
-        # Wireguard
-        set_real_ip_from ${r.hosts.oracle-server.wgIp};
-        # TailScale
-        set_real_ip_from ${r.hosts.oracle-server.tailscaleIp};
-      '';
-
-      # Setup Nextcloud virtual host to listen on ports
-      virtualHosts = {
-        "${config.services.nextcloud.hostName}" = {
-          enableACME = false;
-          forceSSL = false;
-          addSSL = true;
-          sslCertificateKey = "/var/lib/${config.services.nextcloud.hostName}.key";
-          sslCertificate = "/var/lib/${config.services.nextcloud.hostName}.crt";
-        };
-      };
-    };
+    nginx.virtualHosts.${config.services.nextcloud.hostName}.http3 = true;
   };
 
-  # Open service ports on the main LAN (services proxied via oracle-server nginx)
+  # Open service ports on the main LAN for direct access (bypassing nginx)
   networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts = map (name: svc.${name}.port) [
     "jellyseerr"
     "radarr"

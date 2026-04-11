@@ -7,6 +7,10 @@
 }: let
   routerCfg = config.generated.router;
   vlanIPs = lib.mapAttrsToList (_: v: v.static.ip) routerCfg.vlans;
+  vlanIPv6s =
+    lib.concatMap
+    (v: map (addr: addr.address) config.networking.interfaces.${v.vlanInterface}.ipv6.addresses)
+    (lib.attrValues routerCfg.vlans);
 
   exporterScript = pkgs.writers.writePython3 "adguard-exporter" {} ''
     import json
@@ -275,7 +279,7 @@ in {
       ];
 
       dns = {
-        bind_hosts = vlanIPs ++ ["127.0.0.1"];
+        bind_hosts = vlanIPs ++ vlanIPv6s ++ ["127.0.0.1"];
         port = 53;
 
         upstream_dns = [
@@ -294,7 +298,19 @@ in {
         fastest_addr = true;
       };
 
-      filtering.enabled = true;
+      filtering = {
+        enabled = true;
+        rewrites = [
+          {
+            domain = config.registry.domain;
+            answer = routerCfg.vlans.main.static.ip;
+          }
+          {
+            domain = "*.${config.registry.domain}";
+            answer = routerCfg.vlans.main.static.ip;
+          }
+        ];
+      };
 
       filters = [
         {

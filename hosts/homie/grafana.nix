@@ -24,6 +24,9 @@ in {
     };
   };
   services.nginx.virtualHosts.${grafanaFqdn} = {
+    enableACME = true;
+    forceSSL = true;
+    http3 = true;
     locations."/" = {
       proxyPass = "http://${toString config.services.grafana.settings.server.http_addr}:${
         toString config.services.grafana.settings.server.http_port

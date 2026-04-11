@@ -69,6 +69,9 @@ in {
         wgIp = "10.100.0.4";
         tailscaleIp = "100.103.242.75";
       };
+      homie-vpn = {
+        lanIp = "10.200.200.2";
+      };
       oracle-server = {
         wgIp = "10.100.0.1";
         tailscaleIp = "100.105.178.96";
@@ -128,7 +131,7 @@ in {
         subdomain = "prowlarr";
       };
       transmission = {
-        host = "homie";
+        host = "homie-vpn";
         port = 9091;
         subdomain = "transmission";
       };
@@ -199,7 +202,7 @@ in {
         port = 5000;
       };
       atuin = {
-        host = "oracle-server";
+        host = "homie";
         port = 8888;
         subdomain = "atuin";
       };
