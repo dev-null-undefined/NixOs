@@ -44,24 +44,21 @@ in {
     "docker0"
   ];
 
-  services.prometheus.scrapeConfigs = [
+  services.prometheus.scrapeConfigs = let
+    mkTarget = name: let s = svc.${name}; in "${r.hosts.${s.host}.tailscaleIp}:${toString s.port}";
+  in [
     {
       job_name = "self-mc-server";
       static_configs = [{targets = ["127.0.0.1:19565"];}];
     }
-    #    {
-    #      job_name = "bakule";
-    #      static_configs = [
-    #        {
-    #          targets = [
-    #            "bc.dev-null.me:443"
-    #            "bc.kubik.dev-null.me:443"
-    #            "bc.posledni.dev-null.me:443"
-    #          ];
-    #        }
-    #      ];
-    #      scheme = "https";
-    #    }
+    {
+      job_name = "remote-node";
+      static_configs = [
+        {
+          targets = map mkTarget ["node-exporter-oracle" "node-exporter-prosek" "node-exporter-brnikov"];
+        }
+      ];
+    }
   ];
 
   # Use the systemd-boot EFI boot loader.
