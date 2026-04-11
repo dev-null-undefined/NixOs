@@ -1,7 +1,7 @@
 {
   homebrew.casks = [
     "betterdisplay"
-    "jordanbaird-ice"
+    "jordanbaird-ice@beta"
     "iterm2"
     "localsend"
     "maccy"
