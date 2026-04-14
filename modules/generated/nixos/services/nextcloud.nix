@@ -50,6 +50,7 @@ in {
           "OC\\Preview\\Photoshop"
         ];
         "memories.exiftool" = "${lib.getExe pkgs.exiftool}";
+        "memories.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
         "memories.vod.ffmpeg" = "${lib.getExe pkgs.ffmpeg-headless}";
         "memories.vod.ffprobe" = "${pkgs.ffmpeg-headless}/bin/ffprobe";
       };
