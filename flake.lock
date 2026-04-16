@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776088544,
-        "narHash": "sha256-nDQuCg76FEfmm0Kw0sdHljfYzbNrcjBnxhpeAHuSrws=",
+        "lastModified": 1776339393,
+        "narHash": "sha256-oYUdLaakSydJwrEhNCmNFdf4p+V7H9RJW4QYFjmM/XE=",
         "ref": "refs/heads/master",
-        "rev": "eced4e2acaf6b4b99a41a554f7d810e3a3eb7de5",
-        "revCount": 79,
+        "rev": "b3bf8180783658dbe3dababdf904ad5036295d41",
+        "revCount": 102,
         "type": "git",
         "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
       },
