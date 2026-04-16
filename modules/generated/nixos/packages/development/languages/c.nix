@@ -69,7 +69,7 @@
       # makefile checker
       checkmake
     ]
-    ++ (lib.lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
+    ++ (lib.lists.optionals (pkgs.stdenv.hostPlatform.system == "x86_64-linux") [
       # Multilib support
       #gcc_multi
       clang_multi

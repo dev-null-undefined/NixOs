@@ -4,7 +4,7 @@
   inputs,
   ...
 }: let
-  alien-pkgs = with inputs.nix-alien.packages.${config.nixpkgs.hostPlatform.system}; [
+  alien-pkgs = with inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}; [
     nix-alien
     nix-index-update
   ];

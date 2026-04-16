@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   kubik-source-domain = "source.kubik.${config.domain}";
 
   bakule-timer-flake =
@@ -6,7 +10,7 @@
     "github:dev-null-undefined/bakule-timer/96213dcca47c36eae632a560e496daa087643e4a";
 
   bakule-uzdil-pkg =
-    bakule-timer-flake.packages.${config.nixpkgs.hostPlatform.system}.bakule-timer-uzdil;
+    bakule-timer-flake.packages.${pkgs.stdenv.hostPlatform.system}.bakule-timer-uzdil;
 
   bakule-uzdil-path = "${bakule-uzdil-pkg}/share/bakule-timer";
 
