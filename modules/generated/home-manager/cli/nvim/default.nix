@@ -47,7 +47,7 @@ with lib; {
       relativenumber = true;
       shiftwidth = 2;
       tabstop = 2;
-      wrap = false;
+      wrap = true;
       swapfile = false; # Undotree
       backup = false; # Undotree
       undofile = true;
