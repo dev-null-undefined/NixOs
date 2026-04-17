@@ -5,6 +5,7 @@
     skipDangerousModePermissionPrompt = true;
     effortLevel = "high";
     voiceEnabled = false;
+    spinnerTipsEnabled = false;
     enabledPlugins = {
       "rust-analyzer-lsp@claude-plugins-official" = true;
       "clangd-lsp@claude-plugins-official" = true;
