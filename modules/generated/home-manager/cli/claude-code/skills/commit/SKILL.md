@@ -1,5 +1,6 @@
 ---
-description: Review changes and commit with smart grouping
+description: Review changes and commit with smart grouping. Optional arg: `all` (default, commit everything), `ask` (confirm each group), `context` (only files touched this session).
+argument-hint: "[all|ask|context]"
 allowed-tools: Bash(git:*), Read, Grep, Glob, AskUserQuestion
 ---
 
@@ -9,6 +10,16 @@ allowed-tools: Bash(git:*), Read, Grep, Glob, AskUserQuestion
 ## Your task
 
 Review all uncommitted changes, check for issues, split into logical commits matching the repo's style, and commit them.
+
+### Scope argument
+
+The skill accepts one optional argument controlling which changes to commit:
+
+- **`all`** (default if no argument) — commit every uncommitted change, grouped logically. Do not ask for confirmation on groupings.
+- **`ask`** — commit every uncommitted change, but use AskUserQuestion to confirm each proposed commit group (title + file list) before running `git commit`. Options per group: **Commit**, **Skip this group**, **Edit message**, **Abort**.
+- **`context`** — only commit files you touched or discussed in the current conversation. Leave unrelated pre-existing modifications / untracked files alone. If nothing in the working tree matches your session context, report that and exit without committing.
+
+If the argument is anything else or ambiguous, ask the user which mode to use before proceeding.
 
 ### Step 1: Gather context
 
@@ -64,6 +75,8 @@ Analyze all changes and split them into groups where each group:
 
 If all changes are related, a single commit is fine.
 
+In **`context`** mode, first filter the change set down to files you touched or discussed in the current conversation before grouping. Drop the rest — do not stage them, do not mention them in commit messages.
+
 **Amending unpushed commits**: If there are unpushed local commits and the current changes logically belong to one of them (same feature, same fix, continuation of the same work), amend into that commit using `git commit --amend` instead of creating a new one. Only amend the most recent commit (use interactive rebase for older ones if needed). If the changes are unrelated to any existing unpushed commit, create a new commit as usual.
 
 ### Step 4: Execute commits
@@ -88,7 +101,7 @@ EOF
 )"
 ```
 
-Do not ask for confirmation. Just commit.
+In **`all`** and **`context`** modes, do not ask for confirmation — just commit. In **`ask`** mode, call AskUserQuestion for each group before running `git add` + `git commit`, honoring the user's choice (Commit / Skip / Edit message / Abort).
 
 ### Step 5: Report
 
