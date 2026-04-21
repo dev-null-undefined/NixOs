@@ -13,102 +13,77 @@ Review all uncommitted changes, check for issues, split into logical commits mat
 
 ### Scope argument
 
-The skill accepts one optional argument controlling which changes to commit:
+Controls which changes to commit:
 
-- **`all`** (default if no argument) — commit every uncommitted change, grouped logically. Do not ask for confirmation on groupings.
-- **`ask`** — commit every uncommitted change, but use AskUserQuestion to confirm each proposed commit group (title + file list) before running `git commit`. Options per group: **Commit**, **Skip this group**, **Edit message**, **Abort**.
-- **`context`** — only commit files you touched or discussed in the current conversation. Leave unrelated pre-existing modifications / untracked files alone. If nothing in the working tree matches your session context, report that and exit without committing.
+- **`all`** (default) — commit every uncommitted change, grouped logically. Don't ask for confirmation on groupings.
+- **`ask`** — like `all`, but call AskUserQuestion to confirm each proposed group (title + file list) before committing. Options: **Commit**, **Skip group**, **Edit message**, **Abort**.
+- **`context`** — only commit files you touched or discussed this conversation. Leave unrelated pre-existing changes / untracked files alone. If nothing matches, report and exit.
 
-If the argument is anything else or ambiguous, ask the user which mode to use before proceeding.
+If the argument is anything else, ask which mode to use first.
 
 ### Step 1: Gather context
 
-Run these commands to understand the current state:
-
 ```bash
 git status
-```
-
-```bash
 git diff
-```
-
-```bash
 git diff --staged
-```
-
-```bash
 git log --oneline -10
+git log --oneline @{u}..HEAD   # unpushed; fails if no upstream → all local commits are unpushed
 ```
 
-Note the commit message style from `git log` — you must match it exactly (casing, prefix conventions, tense, length).
+Match the commit-message style from `git log` exactly (casing, prefix conventions, tense, length).
 
-Check for unpushed local commits:
-```bash
-git log --oneline @{u}..HEAD
-```
-If this fails (no upstream), all local commits are unpushed.
+### Step 2: Review the diff
 
-### Step 2: Review changes
-
-Analyze the full diff for the following issues. If any are found, present them and **use AskUserQuestion** to ask whether to proceed, fix the issues first, or abort. Do not commit until the user confirms.
+Scan for issues below. If any are found, present them and **use AskUserQuestion** to ask whether to proceed, fix first, or abort. Don't commit until the user confirms.
 
 **Security & hygiene:**
-- Secrets, credentials, `.env` files, API keys, tokens in the diff
-- Files that should not be committed: build artifacts, large binaries, editor temp files, `.DS_Store`
+- Secrets, credentials, `.env` files, API keys, tokens
+- Build artifacts, large binaries, editor temp files, `.DS_Store`
 
-**Code quality — LLM antipatterns:**
-- Duplicate code: copy-pasted blocks that should be a shared function or module
-- Unnecessary abstractions: helpers, wrappers, or utilities for one-time operations
-- Over-engineering: complexity beyond what the change requires (extra error handling, feature flags, unused configurability)
-- Dead code: unused imports, unreachable branches, commented-out code left behind
-- Excessive comments or docstrings on self-explanatory code
-- Backwards-compat shims: re-exports, renamed `_vars`, `// removed` markers for deleted code
-- Style inconsistency: code that does not follow the patterns, naming conventions, and idioms used in the rest of the codebase
+**LLM antipatterns:**
+- Copy-pasted blocks that should be a shared helper
+- Helpers/wrappers for one-time operations
+- Extra error handling, feature flags, unused configurability
+- Unused imports, unreachable branches, commented-out code
+- Excessive comments on self-explanatory code
+- Backwards-compat shims: re-exports, renamed `_vars`, `// removed` markers
+- Deviates from patterns/idioms already in the codebase
 
 ### Step 3: Group into logical commits
 
-Analyze all changes and split them into groups where each group:
-- Has a single clear purpose (one feature, one fix, one refactor)
-- Does NOT mix unrelated changes
-- Gets a short commit title matching the style from `git log`
+Each group: one clear purpose (one feature, one fix, one refactor), no mixed concerns, short title matching `git log` style. A single commit is fine if all changes are related.
 
-If all changes are related, a single commit is fine.
+In **`context`** mode, first filter to files you touched/discussed this session. Drop the rest — don't stage them, don't mention them.
 
-In **`context`** mode, first filter the change set down to files you touched or discussed in the current conversation before grouping. Drop the rest — do not stage them, do not mention them in commit messages.
-
-**Amending unpushed commits**: If there are unpushed local commits and the current changes logically belong to one of them (same feature, same fix, continuation of the same work), amend into that commit using `git commit --amend` instead of creating a new one. Only amend the most recent commit (use interactive rebase for older ones if needed). If the changes are unrelated to any existing unpushed commit, create a new commit as usual.
+**Amending unpushed commits**: If the change logically belongs to an existing unpushed commit (same feature/fix, continuation of the same work), amend into it with `git commit --amend` instead of creating a new one. Only amend the most recent commit; use interactive rebase for older ones.
 
 ### Step 4: Execute commits
 
-For each group, stage the relevant files and commit:
+For each group:
 
 ```bash
 git add <files>
+git commit -m "<title>"
 ```
 
-```bash
-git commit -m "<message>"
-```
+Multi-line messages — use HEREDOC:
 
-Use a HEREDOC for multi-line messages:
 ```bash
 git commit -m "$(cat <<'EOF'
 <title>
 
-<body if needed>
+<body>
 EOF
 )"
 ```
 
-In **`all`** and **`context`** modes, do not ask for confirmation — just commit. In **`ask`** mode, call AskUserQuestion for each group before running `git add` + `git commit`, honoring the user's choice (Commit / Skip / Edit message / Abort).
+In **`all`** and **`context`**, commit without confirmation. In **`ask`**, call AskUserQuestion per group and honor the user's choice.
 
 ### Step 5: Report
-
-Print the final list of commits created:
 
 ```bash
 git log --oneline -<N>
 ```
 
-Where N is the number of commits you just created. Show only the new commits.
+N = number of commits you just created.
