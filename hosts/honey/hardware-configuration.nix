@@ -55,6 +55,9 @@ in {
     "usbcore.initial_descriptor_timeout=100"
     # Regenerate with: sudo btrfs inspect-internal map-swapfile -r /swap/swapfile
     "resume_offset=533760"
+    # Fix MediaTek MT7925 Bluetooth firmware load timeout
+    "mt7925e.disable_aspm=1"
+    "btusb.enable_autosuspend=0"
   ];
 
   hardware = {
