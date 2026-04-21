@@ -95,6 +95,10 @@ in {
 
         # Hyprspace overview plugin
         # "CTRL, Tab,   overview:toggle,"
+
+        # MX Master 4 thumbwheel (horizontal scroll) + SUPER for workspace switching
+        "$mainMod, mouse_right, workspace, m+1"
+        "$mainMod, mouse_left,  workspace, m-1"
       ]
       ++ workspace_control;
 

@@ -20,6 +20,7 @@
     services = {
       ssh.enable = true;
       distributed-builds.enable = true;
+      logiops.enable = true;
       # syncthing.enable = true;
       # opensnitch.enable = true;
       # mariadb.enable = true;
