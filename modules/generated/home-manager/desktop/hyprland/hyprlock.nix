@@ -3,20 +3,13 @@
     enable = true;
     settings = {
       general = {
-        grace = 2;
         hide_cursor = true;
       };
 
       background = [
         {
-          path = "screenshot";
-          blur_passes = 3;
-          blur_size = 5;
-          noise = 1.17e-2;
-          contrast = 0.8916;
-          brightness = 0.8172;
-          vibrancy = 0.1696;
-          vibrancy_darkness = 0.0;
+          path = ""; # solid color - screenshot+blur causes NVIDIA freezes
+          color = "rgb(191724)"; # rose-pine base
         }
       ];
 
