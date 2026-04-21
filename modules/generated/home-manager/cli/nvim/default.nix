@@ -17,6 +17,7 @@ with lib; {
     vscode-langservers-extracted
     deadnix
     statix
+    basedpyright # Python
   ];
 
   programs.zsh.shellAliases = {
@@ -182,6 +183,7 @@ with lib; {
           clangd.enable = true;
           jsonls.enable = true;
           ruff.enable = true;
+          basedpyright.enable = true;
           html.enable = true;
           yamlls.enable = true;
           ts_ls.enable = true;
