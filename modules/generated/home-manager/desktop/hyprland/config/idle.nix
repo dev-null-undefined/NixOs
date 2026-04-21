@@ -32,15 +32,7 @@
   sleepMonitors = pkgs.writeShellScriptBin "sleep-monitors" ''
     loginctl lock-session
     sleep 0.5
-    ${offCmd}
-    # Re-enable monitors once hyprlock exits (user unlocked)
-    (
-      while ${pkgs.procps}/bin/pidof hyprlock > /dev/null 2>&1; do
-        sleep 0.5
-      done
-      sleep 0.2
-      ${onCmd}
-    ) &
+    systemctl suspend
   '';
 in {
   options = {
@@ -68,11 +60,10 @@ in {
           timeout = 600;
           on-timeout = "loginctl lock-session";
         }
-        # Turn off monitors after 15 minutes (OLED burn-in protection)
+        # Suspend after 30 minutes - monitor disable causes NVIDIA GPU freeze
         {
-          timeout = 900;
-          on-timeout = offCmd;
-          on-resume = onCmd;
+          timeout = 1800;
+          on-timeout = "systemctl suspend";
         }
       ];
     };
