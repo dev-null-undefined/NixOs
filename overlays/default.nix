@@ -19,10 +19,9 @@ with self.lib'.internal; {
       (super.stable)
       bat-extras
       batgrep
-      chromium # hyprland overlay invalidates binary cache
-      electron # hyprland overlay invalidates binary cache
       glances # test failing on oracle-server host, due to aarch architecture
       lutris
+      mycli
       wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
