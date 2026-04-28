@@ -15,6 +15,8 @@
 
     gping # TUI ping with graph
 
+    nettools # netstat, ifconfig, route, etc.
+
     wavemon
     wirelesstools
     iw
