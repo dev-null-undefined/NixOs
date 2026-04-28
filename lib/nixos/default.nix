@@ -28,6 +28,8 @@ in {
               trusted-users = ["root" "@wheel"];
 
               # TODO: move to special folder
+              # harmonia is fronted by nginx bound only on homie's Tailscale IP,
+              # so "homie" must resolve via Tailscale MagicDNS for substitution to work.
               substituters = [
                 "http://homie:5000"
                 "https://hyprland.cachix.org"

@@ -45,7 +45,12 @@ in {
           };
           port = mkOption {
             type = types.port;
-            description = "Port the service listens on.";
+            description = "Public port the service is reached on.";
+          };
+          internalPort = mkOption {
+            type = types.nullOr types.port;
+            default = null;
+            description = "Internal port the application binds to when fronted by a reverse proxy. Null means the service is direct (uses `port`).";
           };
           subdomain = mkOption {
             type = types.nullOr types.str;
@@ -205,6 +210,7 @@ in {
       harmonia = {
         host = "homie";
         port = 5000;
+        internalPort = 5001;
       };
       atuin = {
         host = "homie";
