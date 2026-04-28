@@ -10,10 +10,6 @@
   imports = [./hardware-configuration.nix];
 
   generated = {
-    nix-download-limit = {
-      enable = true;
-      max-speed = 200;
-    };
     network-manager.enable = true;
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
