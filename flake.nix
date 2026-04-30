@@ -91,7 +91,7 @@
     };
 
     admin-helper-scripts = {
-      url = "git+ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git";
+      url = "path:/home/martin/Work/CDN77/admin-helper-scripts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

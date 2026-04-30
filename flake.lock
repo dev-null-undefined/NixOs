@@ -7,17 +7,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1777478237,
-        "narHash": "sha256-G7QKWUChnuxB8iFVD4wCxeWm0CwtH/Lp0lYfyD6NoAA=",
-        "ref": "refs/heads/master",
-        "rev": "ef864f256acda8fb438e9a262d60aab89b9e34fd",
-        "revCount": 174,
-        "type": "git",
-        "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
+        "lastModified": 1777557934,
+        "narHash": "sha256-7JM3wC6QYfCn5O9QxafVtTHYwdTkCnEFki0OPmWDS7k=",
+        "path": "/home/martin/Work/CDN77/admin-helper-scripts",
+        "type": "path"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
+        "path": "/home/martin/Work/CDN77/admin-helper-scripts",
+        "type": "path"
       }
     },
     "aquamarine": {
