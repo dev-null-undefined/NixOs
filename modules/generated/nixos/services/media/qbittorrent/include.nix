@@ -69,6 +69,9 @@ in {
       ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
 
       NetworkNamespacePath = "/run/netns/${vpnNetns}";
+
+      Restart = "on-failure";
+      RestartSec = "10s";
     };
 
     environment = {
