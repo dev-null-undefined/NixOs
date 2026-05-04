@@ -30,6 +30,14 @@ with self.lib'.internal; {
     inherit (super.dev-null) rpi-imager;
   };
 
+  # direnv 2.37.1 test suite hangs/OOMs on macOS during fish/zsh scenarios;
+  # disable checkPhase so the package builds locally.
+  direnv-skip-tests = final: super: {
+    direnv = super.direnv.overrideAttrs (_: {
+      doCheck = false;
+    });
+  };
+
   master-pkgs = final: super: {
     inherit
       (super.master)
