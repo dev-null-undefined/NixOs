@@ -23,10 +23,6 @@
 
     # Git utils
     git
-    # github tui
-    gh
-    # gitlab tui
-    glab
     lazygit # tui git client
 
     lsof

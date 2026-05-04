@@ -38,5 +38,9 @@
     # Secrets
     age
     sops
+
+    # Git utils
+    gh # github cli
+    glab # gitlab cli
   ];
 }
