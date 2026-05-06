@@ -66,7 +66,7 @@
   networking.modemmanager.fccUnlockScripts = [
     {
       id = "1eac:1007";
-      path = "${pkgs.modemmanager}/share/ModemManager/fcc-unlock.available.d/1eac";
+      path = "${pkgs.modemmanager}/share/ModemManager/fcc-unlock.available.d/1eac:1007";
     }
   ];
 
@@ -81,6 +81,8 @@
   };
 
   boot = {
+    initrd.kernelModules = ["usb_ljca" "gpio_ljca"];
+
     # kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
 
     loader = {
