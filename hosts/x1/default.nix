@@ -81,7 +81,7 @@
   };
 
   boot = {
-    initrd.kernelModules = ["usb_ljca" "gpio_ljca"];
+    initrd.kernelModules = ["usbio" "gpio_usbio" "i2c_usbio"];
 
     # kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
 
