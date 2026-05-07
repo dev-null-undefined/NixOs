@@ -21,7 +21,6 @@ with self.lib'.internal; {
       batgrep
       glances # test failing on oracle-server host, due to aarch architecture
       lutris
-      mycli
       wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
