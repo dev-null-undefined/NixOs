@@ -1,3 +1,3 @@
 {pkgs, ...}: {
-  environment.systemPackages = with pkgs; [wasistlos];
+  environment.systemPackages = with pkgs; [karere];
 }
