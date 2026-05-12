@@ -24,7 +24,7 @@
   };
 
   security = {
-    pam.services.hyprlock.u2fAuth = true;
+    pam.services.hyprlock.u2f.enable = true;
     polkit.enable = true;
   };
 

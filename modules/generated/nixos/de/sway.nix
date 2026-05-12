@@ -14,7 +14,7 @@
   services.blueman.enable = true;
 
   security = {
-    pam.services.swaylock.u2fAuth = true;
+    pam.services.swaylock.u2f.enable = true;
     polkit.enable = true;
   };
 

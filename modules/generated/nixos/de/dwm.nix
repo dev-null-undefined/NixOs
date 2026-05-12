@@ -10,7 +10,7 @@
 
   services.blueman.enable = true;
 
-  security.pam.services.sddm.u2fAuth = true;
+  security.pam.services.sddm.u2f.enable = true;
 
   programs = {
     i3lock = {
