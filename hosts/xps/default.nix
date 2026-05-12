@@ -22,6 +22,7 @@
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
     nvidia.nvidia-sync.enable = true;
+    hardware.fingerprint.enable = true;
     services = {
       distributed-builds.enable = true;
       # syncthing.enable = true;
@@ -53,8 +54,6 @@
   services = {
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
-
-    fprintd.enable = true;
 
     xserver = {
       videoDrivers = [

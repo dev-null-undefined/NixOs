@@ -18,6 +18,7 @@
     plymouth.enable = true;
     de.hyprland.enable = lib.mkDefault true;
     hardware.thinkpad.enable = true;
+    hardware.fingerprint.enable = true;
     services = {
       distributed-builds.enable = true;
       # syncthing.enable = true;
@@ -45,7 +46,6 @@
   services = {
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
-    fprintd.enable = true;
 
     # btrfs root is mounted with discard=async (continuous trim);
     # periodic fstrim is redundant and FITRIM fails on btrfs+async-discard.
