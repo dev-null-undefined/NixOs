@@ -46,7 +46,16 @@
     # Allows for updating firmware via `fwupdmgr`.
     fwupd.enable = true;
     fprintd.enable = true;
+
+    # btrfs root is mounted with discard=async (continuous trim);
+    # periodic fstrim is redundant and FITRIM fails on btrfs+async-discard.
+    fstrim.enable = false;
   };
+
+  # Plymouth implicitly enables console.earlySetup; the initrd-stage setfont
+  # cannot resolve Lat2-Terminus16 (KBD_FONT_DIR isn't set on the unit), producing
+  # boot-log errors. Post-boot vconsole-setup exits cleanly without setting a font.
+  console.earlySetup = lib.mkForce false;
 
   systemd.services.fprintd = {
     wantedBy = ["multi-user.target"];
