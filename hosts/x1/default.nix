@@ -92,6 +92,8 @@
   boot = {
     initrd.kernelModules = ["usbio" "gpio_usbio" "i2c_usbio"];
 
+    resumeDevice = "/dev/disk/by-uuid/a2ac4f11-cef2-411d-92af-1911aa165d32";
+
     # kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
 
     loader = {
@@ -107,6 +109,35 @@
       efi.efiSysMountPoint = "/boot";
     };
   };
+
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    lidSwitchExternalPower = "suspend-then-hibernate";
+  };
+
+  systemd.sleep.settings.Sleep = {
+    HibernateDelaySec = "2h";
+    HibernateMode = "shutdown";
+  };
+
+  services.tlp.settings = {
+    USB_AUTOSUSPEND = 1;
+    PCIE_ASPM_ON_BAT = "powersupersave";
+    WIFI_PWR_ON_BAT = "on";
+    RUNTIME_PM_ON_BAT = "auto";
+    NMI_WATCHDOG = 0;
+  };
+
+  # Trim wakeup sources to reduce spurious S0ix wakes. Lid + power button still
+  # wake the system. Re-enable a device if you need wake-on-dock or wake-on-USB.
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:14.0", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.0", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.2", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.3", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:07.0", ATTR{power/wakeup}="disabled"
+    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:07.2", ATTR{power/wakeup}="disabled"
+  '';
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "cs_CZ.UTF-8";
