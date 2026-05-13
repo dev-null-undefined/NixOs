@@ -1,294 +1,188 @@
 [
   {
-    "id": "1761418387898",
-    "alias": "Lights merger",
-    "description": "",
+    "id": "bedroom_shelly_smart_toggle",
+    "alias": "Bedroom Shelly smart toggle",
+    "description": "On any state change of the bedroom ceiling input, if lights are off → smart-on (auto level by sun + time); if any are on → smart-off.",
     "triggers": [
       {
         "trigger": "state",
-        "entity_id": [
-          "binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"
+        "entity_id": ["binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"]
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "choose": [
+          {
+            "conditions": [
+              {
+                "condition": "template",
+                "value_template": "{{ states('input_number.bedroom_light_level') | int(0) > 0 }}"
+              }
+            ],
+            "sequence": [
+              {"service": "script.bedroom_lights_off"}
+            ]
+          }
         ],
-        "from": "on",
-        "to": "off"
-      },
-      {
-        "trigger": "state",
-        "entity_id": [
-          "binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"
-        ],
-        "from": "off",
-        "to": "on"
-      }
-    ],
-    "conditions": [],
-    "actions": [
-      {
-        "action": "light.toggle",
-        "metadata": {},
-        "data": {
-          "transition": 2
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
+        "default": [
+          {"service": "script.bedroom_lights_smart_on"}
+        ]
       }
     ],
     "mode": "single"
   },
   {
-    "id": "1761771065024",
-    "alias": "Turn on lights using remote",
-    "description": "",
+    "id": "dimmer_on_press",
+    "alias": "Dimmer ON button (any dimmer) → smart on",
     "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "turn_on",
-        "trigger": "device"
-      }
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "turn_on"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "turn_on"}
     ],
-    "conditions": [],
+    "actions": [{"service": "script.bedroom_lights_smart_on"}],
+    "mode": "single"
+  },
+  {
+    "id": "dimmer_off_press",
+    "alias": "Dimmer OFF button (any dimmer) → all off",
+    "triggers": [
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "turn_off"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "turn_off"}
+    ],
     "actions": [
-      {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "transition": 2,
-          "kelvin": 3602
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      }
+      {"service": "input_boolean.turn_off", "target": {"entity_id": "input_boolean.bedroom_override_full"}},
+      {"service": "script.bedroom_lights_off"}
     ],
     "mode": "single"
   },
   {
-    "id": "1761771099322",
-    "alias": "Turn off lights using remote",
-    "description": "",
+    "id": "dimmer_up_short_press",
+    "alias": "Dimmer up short press",
     "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "turn_off",
-        "trigger": "device"
-      }
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "dim_up"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "dim_up"}
     ],
-    "conditions": [],
     "actions": [
-      {
-        "action": "light.turn_off",
-        "metadata": {},
-        "data": {
-          "transition": 2
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      }
+      {"service": "input_number.increment", "target": {"entity_id": "input_number.bedroom_light_level"}},
+      {"service": "script.apply_bedroom_level"}
+    ],
+    "mode": "queued",
+    "max": 4
+  },
+  {
+    "id": "dimmer_down_short_press",
+    "alias": "Dimmer down short press",
+    "triggers": [
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "dim_down"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "dim_down"}
+    ],
+    "actions": [
+      {"service": "input_number.decrement", "target": {"entity_id": "input_number.bedroom_light_level"}},
+      {"service": "script.apply_bedroom_level"}
+    ],
+    "mode": "queued",
+    "max": 4
+  },
+  {
+    "id": "dimmer_up_double_press",
+    "alias": "Dimmer up double press",
+    "description": "Native Hue double-press of brightness UP → jump to level 10 (full), set override flag.",
+    "triggers": [
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_double_press", "subtype": "dim_up"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_double_press", "subtype": "dim_up"}
+    ],
+    "actions": [
+      {"service": "input_boolean.turn_on", "target": {"entity_id": "input_boolean.bedroom_override_full"}},
+      {"service": "input_number.set_value", "target": {"entity_id": "input_number.bedroom_light_level"}, "data": {"value": 10}},
+      {"service": "script.apply_bedroom_level"}
     ],
     "mode": "single"
   },
   {
-    "id": "1761771233547",
-    "alias": "Brightness up using remote",
-    "description": "",
+    "id": "dimmer_down_double_press",
+    "alias": "Dimmer down double press",
+    "description": "Native Hue double-press of brightness DOWN → snap to level 1 (lowest visible).",
     "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_long_press",
-        "subtype": "dim_up",
-        "trigger": "device"
-      },
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "dim_up",
-        "trigger": "device"
-      }
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_double_press", "subtype": "dim_down"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_double_press", "subtype": "dim_down"}
     ],
-    "conditions": [],
     "actions": [
-      {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "brightness_step_pct": 10,
-          "transition": 1
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      }
+      {"service": "input_number.set_value", "target": {"entity_id": "input_number.bedroom_light_level"}, "data": {"value": 1}},
+      {"service": "script.apply_bedroom_level"}
     ],
     "mode": "single"
   },
   {
-    "id": "1761771281591",
-    "alias": "Brightness down using remote",
-    "description": "",
+    "id": "dimmer_up_long_press_start",
+    "alias": "Dimmer brightness UP hold → continuous ramp up",
     "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_long_press",
-        "subtype": "dim_down",
-        "trigger": "device"
-      },
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "dim_down",
-        "trigger": "device"
-      }
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_press", "subtype": "dim_up"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_press", "subtype": "dim_up"}
     ],
-    "conditions": [],
     "actions": [
+      {"service": "input_boolean.turn_on", "target": {"entity_id": "input_boolean.dim_up_holding"}},
       {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "brightness_step_pct": -10,
-          "transition": 1
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      }
-    ],
-    "mode": "single"
-  },
-  {
-    "id": "1761771464599",
-    "alias": "Brightness up max on double press",
-    "description": "",
-    "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_double_press",
-        "subtype": "dim_up",
-        "trigger": "device"
-      }
-    ],
-    "conditions": [],
-    "actions": [
-      {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "brightness_pct": 100,
-          "transition": 2
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      },
-      {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "brightness_pct": 75,
-          "transition": 2
-        },
-        "target": {
-          "entity_id": "light.signify_netherlands_b_v_440400982842_light_4"
-        }
-      }
-    ],
-    "mode": "single"
-  },
-  {
-    "id": "1761771537383",
-    "alias": "Brightness dowm min and warm on double press",
-    "description": "",
-    "triggers": [
-      {
-        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
-        "domain": "zha",
-        "type": "remote_button_double_press",
-        "subtype": "dim_down",
-        "trigger": "device"
-      }
-    ],
-    "conditions": [],
-    "actions": [
-      {
-        "action": "light.turn_on",
-        "metadata": {},
-        "data": {
-          "transition": 2,
-          "kelvin": 2501,
-          "brightness_pct": 5
-        },
-        "target": {
-          "entity_id": "light.living_room_all"
-        }
-      }
-    ],
-    "mode": "single"
-  },
-  {
-    "id": "1767534188610",
-    "alias": "Turn Off Lights Using Remote Bedroom",
-    "description": "",
-    "triggers": [
-      {
-        "device_id": "3a61acda608554317af8e3de61ca148a",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "turn_off",
-        "trigger": "device"
-      }
-    ],
-    "conditions": [],
-    "actions": [
-      {
-        "action": "light.turn_off",
-        "metadata": {},
-        "data": {
-          "transition": 2
-        },
-        "target": {
-          "entity_id": [
-            "light.bedroom_all"
+        "repeat": {
+          "while": [
+            {"condition": "state", "entity_id": "input_boolean.dim_up_holding", "state": "on"},
+            {"condition": "template", "value_template": "{{ states('input_number.bedroom_light_level') | int(0) < 10 }}"}
+          ],
+          "sequence": [
+            {"service": "input_number.increment", "target": {"entity_id": "input_number.bedroom_light_level"}},
+            {"service": "script.apply_bedroom_level"},
+            {"delay": "00:00:00.4"}
           ]
         }
       }
     ],
+    "mode": "restart"
+  },
+  {
+    "id": "dimmer_up_long_release",
+    "alias": "Dimmer brightness UP release → stop continuous ramp",
+    "triggers": [
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_release", "subtype": "dim_up"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_release", "subtype": "dim_up"}
+    ],
+    "actions": [
+      {"service": "input_boolean.turn_off", "target": {"entity_id": "input_boolean.dim_up_holding"}}
+    ],
     "mode": "single"
   },
   {
-    "id": "1767534445270",
-    "alias": "Turn On Lights Using Remote Bedroom",
-    "description": "",
+    "id": "dimmer_down_long_press_start",
+    "alias": "Dimmer brightness DOWN hold → continuous ramp down",
     "triggers": [
-      {
-        "device_id": "3a61acda608554317af8e3de61ca148a",
-        "domain": "zha",
-        "type": "remote_button_short_press",
-        "subtype": "turn_on",
-        "trigger": "device"
-      }
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_press", "subtype": "dim_down"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_press", "subtype": "dim_down"}
     ],
-    "conditions": [],
     "actions": [
+      {"service": "input_boolean.turn_on", "target": {"entity_id": "input_boolean.dim_down_holding"}},
       {
-        "action": "light.turn_on",
-        "metadata": {},
-        "target": {
-          "entity_id": [
-            "light.bedroom_all"
+        "repeat": {
+          "while": [
+            {"condition": "state", "entity_id": "input_boolean.dim_down_holding", "state": "on"},
+            {"condition": "template", "value_template": "{{ states('input_number.bedroom_light_level') | int(0) > 0 }}"}
+          ],
+          "sequence": [
+            {"service": "input_number.decrement", "target": {"entity_id": "input_number.bedroom_light_level"}},
+            {"service": "script.apply_bedroom_level"},
+            {"delay": "00:00:00.4"}
           ]
         }
       }
+    ],
+    "mode": "restart"
+  },
+  {
+    "id": "dimmer_down_long_release",
+    "alias": "Dimmer brightness DOWN release → stop continuous ramp",
+    "triggers": [
+      {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_release", "subtype": "dim_down"},
+      {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_release", "subtype": "dim_down"}
+    ],
+    "actions": [
+      {"service": "input_boolean.turn_off", "target": {"entity_id": "input_boolean.dim_down_holding"}}
     ],
     "mode": "single"
   }
