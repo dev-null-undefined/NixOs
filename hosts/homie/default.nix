@@ -14,7 +14,7 @@ in {
     services = {
       ssh.enable = true;
       nextcloud.enable = true;
-      unifi-docker.enable = true;
+      unifi.enable = true;
       home-assistant.enable = true;
       prometheus.enable = true;
       media.enable = true;
