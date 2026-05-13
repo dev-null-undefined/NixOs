@@ -1,0 +1,295 @@
+[
+  {
+    "id": "1761418387898",
+    "alias": "Lights merger",
+    "description": "",
+    "triggers": [
+      {
+        "trigger": "state",
+        "entity_id": [
+          "binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"
+        ],
+        "from": "on",
+        "to": "off"
+      },
+      {
+        "trigger": "state",
+        "entity_id": [
+          "binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"
+        ],
+        "from": "off",
+        "to": "on"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.toggle",
+        "metadata": {},
+        "data": {
+          "transition": 2
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771065024",
+    "alias": "Turn on lights using remote",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "turn_on",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "transition": 2,
+          "kelvin": 3602
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771099322",
+    "alias": "Turn off lights using remote",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "turn_off",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_off",
+        "metadata": {},
+        "data": {
+          "transition": 2
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771233547",
+    "alias": "Brightness up using remote",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_long_press",
+        "subtype": "dim_up",
+        "trigger": "device"
+      },
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "dim_up",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "brightness_step_pct": 10,
+          "transition": 1
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771281591",
+    "alias": "Brightness down using remote",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_long_press",
+        "subtype": "dim_down",
+        "trigger": "device"
+      },
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "dim_down",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "brightness_step_pct": -10,
+          "transition": 1
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771464599",
+    "alias": "Brightness up max on double press",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_double_press",
+        "subtype": "dim_up",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "brightness_pct": 100,
+          "transition": 2
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      },
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "brightness_pct": 75,
+          "transition": 2
+        },
+        "target": {
+          "entity_id": "light.signify_netherlands_b_v_440400982842_light_4"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1761771537383",
+    "alias": "Brightness dowm min and warm on double press",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "83c2fbd1dd0f4ea5bf2da6e099d05f6c",
+        "domain": "zha",
+        "type": "remote_button_double_press",
+        "subtype": "dim_down",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "data": {
+          "transition": 2,
+          "kelvin": 2501,
+          "brightness_pct": 5
+        },
+        "target": {
+          "entity_id": "light.living_room_all"
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1767534188610",
+    "alias": "Turn Off Lights Using Remote Bedroom",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "3a61acda608554317af8e3de61ca148a",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "turn_off",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_off",
+        "metadata": {},
+        "data": {
+          "transition": 2
+        },
+        "target": {
+          "entity_id": [
+            "light.bedroom_all"
+          ]
+        }
+      }
+    ],
+    "mode": "single"
+  },
+  {
+    "id": "1767534445270",
+    "alias": "Turn On Lights Using Remote Bedroom",
+    "description": "",
+    "triggers": [
+      {
+        "device_id": "3a61acda608554317af8e3de61ca148a",
+        "domain": "zha",
+        "type": "remote_button_short_press",
+        "subtype": "turn_on",
+        "trigger": "device"
+      }
+    ],
+    "conditions": [],
+    "actions": [
+      {
+        "action": "light.turn_on",
+        "metadata": {},
+        "target": {
+          "entity_id": [
+            "light.bedroom_all"
+          ]
+        }
+      }
+    ],
+    "mode": "single"
+  }
+]

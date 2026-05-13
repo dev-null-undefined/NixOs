@@ -1,0 +1,377 @@
+{
+  "toggle_lights": {
+    "alias": "Toggle Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "toggle"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:button-pointer"
+  },
+  "max_lights": {
+    "alias": "Max Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "max"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-7"
+  },
+  "mid_lights": {
+    "alias": "Mid Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "mid"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-6"
+  },
+  "min_lights_duplicate": {
+    "alias": "Min Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "min"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-5"
+  },
+  "sleep_lights": {
+    "alias": "Sleep Lights",
+    "sequence": [
+      {
+        "action": "script.toggle_lights",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "delay": {
+          "hours": 0,
+          "minutes": 0,
+          "seconds": 0,
+          "milliseconds": 300
+        }
+      },
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "night"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:power-sleep"
+  },
+  "rgb_lights": {
+    "alias": "RGB Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "target": {
+          "device_id": "6beafc7781f086fa24c0c42cb3e99773"
+        },
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "rgb"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:party-popper"
+  },
+  "toggle_lights_2": {
+    "alias": "Living Room Toggle Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "toggle"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:button-pointer"
+  },
+  "living_room_max_lights": {
+    "alias": "Living Room Max Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "max"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-7"
+  },
+  "living_room_mid_lights": {
+    "alias": "Living Room Mid Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "mid"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-6"
+  },
+  "living_room_min_lights": {
+    "alias": "Living Room Min Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "min"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:brightness-5"
+  },
+  "living_room_rgb_lights": {
+    "alias": "Living Room RGB Lights",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "ceiling_light",
+          "command": "rgb"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:party-popper"
+  },
+  "monitor_light_on": {
+    "alias": "Monitor Light On",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "monitor",
+          "command": "light_on"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:desk-lamp-on"
+  },
+  "monitor_light_off": {
+    "alias": "Monitor Light Off",
+    "sequence": [
+      {
+        "action": "remote.send_command",
+        "data": {
+          "num_repeats": 1,
+          "delay_secs": 0.4,
+          "hold_secs": 0,
+          "device": "monitor",
+          "command": "light_off"
+        },
+        "target": {
+          "device_id": "df8b233468d116c6d2037de8599dd6b2"
+        }
+      }
+    ],
+    "description": "",
+    "icon": "mdi:desk-lamp-off"
+  },
+  "off_lights": {
+    "alias": "Off Lights",
+    "sequence": [
+      {
+        "action": "script.rgb_lights",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.toggle_lights",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:lightbulb-off"
+  },
+  "living_room_off_lights": {
+    "alias": "Living Room Off Lights",
+    "sequence": [
+      {
+        "action": "script.living_room_rgb_lights",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.toggle_lights_2",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:lightbulb-off"
+  },
+  "work": {
+    "alias": "Work",
+    "sequence": [
+      {
+        "action": "script.monitor_light_on",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.living_room_rgb_lights",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.living_room_mid_lights",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:briefcase"
+  },
+  "living_room_off": {
+    "alias": "Living Room Off",
+    "sequence": [
+      {
+        "action": "script.monitor_light_off",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.living_room_off_lights",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:briefcase-off"
+  },
+  "house_off": {
+    "alias": "House Off",
+    "sequence": [
+      {
+        "action": "script.living_room_off",
+        "metadata": {},
+        "data": {}
+      },
+      {
+        "action": "script.bedroom_off",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:home-off"
+  },
+  "bedroom_off": {
+    "alias": "Bedroom Off",
+    "sequence": [
+      {
+        "action": "script.off_lights",
+        "metadata": {},
+        "data": {}
+      }
+    ],
+    "description": "",
+    "icon": "mdi:power-plug-off"
+  }
+}

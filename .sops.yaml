@@ -58,3 +58,11 @@ creation_rules:
         - *pc_honey
         - *pc_xps
         - *pc_x1
+  - path_regex: secrets/home-assistant-google-sa.json
+    key_groups:
+      - age:
+        - *server_homie
+  - path_regex: secrets/zfs-rpool-key
+    key_groups:
+      - age:
+        - *server_homie
