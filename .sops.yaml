@@ -66,3 +66,16 @@ creation_rules:
     key_groups:
       - age:
         - *server_homie
+  - path_regex: secrets/git-auto-fetch-personal
+    key_groups:
+      - age:
+        - *server_homie
+        - *pc_honey
+        - *pc_xps
+        - *pc_x1
+  - path_regex: secrets/git-auto-fetch-work
+    key_groups:
+      - age:
+        - *pc_honey
+        - *pc_xps
+        - *pc_x1
