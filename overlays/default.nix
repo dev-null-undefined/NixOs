@@ -20,6 +20,7 @@ with self.lib'.internal; {
       bat-extras
       batgrep
       glances # test failing on oracle-server host, due to aarch architecture
+      hyprlock # 0.9.3 SIGSEGVs in CShader dtor when init fails, deadlocking session lock
       lutris
       wineWowPackages
       ;
