@@ -1,12 +1,10 @@
 {
+  config,
   lib,
   pkgs,
   modulesPath,
-  self,
   ...
-}: let
-  sshKeys = import (self.outPath + "/lib/ssh-keys.nix");
-in {
+}: {
   imports = [
     # Produces config.system.build.kexecTree (kernel + initrd + kexec-boot script).
     "${modulesPath}/installer/netboot/netboot-minimal.nix"
@@ -42,7 +40,7 @@ in {
       PermitRootLogin = "prohibit-password";
     };
   };
-  users.users.root.openssh.authorizedKeys.keys = sshKeys;
+  users.users.root.openssh.authorizedKeys.keys = config.registry.values.sshKeys;
 
   # Tools for the FDE migration session.
   environment.systemPackages = with pkgs; [

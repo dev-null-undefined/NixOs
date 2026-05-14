@@ -1,10 +1,8 @@
 {
   lib,
-  self,
+  config,
   ...
-}: let
-  sshKeys = import (self.outPath + "/lib/ssh-keys.nix");
-in {
+}: {
   services.openssh = {
     enable = true;
     ports = [22 8022];
@@ -15,6 +13,6 @@ in {
   };
 
   users.users = {
-    root.openssh.authorizedKeys.keys = sshKeys;
+    root.openssh.authorizedKeys.keys = config.registry.values.sshKeys;
   };
 }
