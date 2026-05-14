@@ -8,6 +8,7 @@ with self.lib'.internal; {
   master = mkOverlay {name = "master";};
   custom-packages = import ../pkgs;
   wep_wpa_supplicant_fix = import ./wep_wpa_supplicant_fix.nix;
+  waybar-bandwidth-fix = import ./waybar-bandwidth-fix.nix;
   hyprland = inputs.nixpkgs.lib.composeManyExtensions [
     inputs.hyprland.overlays.hyprland-packages
     inputs.hyprland.overlays.hyprland-extras
