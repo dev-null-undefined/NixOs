@@ -23,6 +23,8 @@ with self.lib'.internal; {
       glances # test failing on oracle-server host, due to aarch architecture
       hyprlock # 0.9.3 SIGSEGVs in CShader dtor when init fails, deadlocking session lock
       lutris
+      qbittorrent # qBit 5.2.0 SIGSEGV in Http::Connection::acceptsGzipEncoding on Qt 6.11.0 (upstream issue #24038, no fix yet). stable ships qtbase 6.10.2, pre-regression.
+      qbittorrent-nox
       wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
