@@ -44,9 +44,6 @@
   nix.settings.max-jobs = 0; # offload all builds to homie
 
   services = {
-    # Allows for updating firmware via `fwupdmgr`.
-    fwupd.enable = true;
-
     # btrfs root is mounted with discard=async (continuous trim);
     # periodic fstrim is redundant and FITRIM fails on btrfs+async-discard.
     fstrim.enable = false;

@@ -59,9 +59,6 @@
   };
 
   services = {
-    # Allows for updating firmware via `fwupdmgr`.
-    fwupd.enable = true;
-
     xserver = {
       videoDrivers = [
         "nvidia"

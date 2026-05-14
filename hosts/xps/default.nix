@@ -52,9 +52,6 @@
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   services = {
-    # Allows for updating firmware via `fwupdmgr`.
-    fwupd.enable = true;
-
     xserver = {
       videoDrivers = [
         "nvidia"
