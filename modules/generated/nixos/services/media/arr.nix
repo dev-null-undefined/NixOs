@@ -55,10 +55,15 @@
     ];
 
     # Jellyfin: ~3.5k/day — playback tracker polling + webhook task completion
-    jellyfin.serviceConfig.LogFilterPatterns = [
-      "~.*Processing playback tracker.*"
-      "~.*Webhook Item .* Notifier Completed.*"
-    ];
+    jellyfin.serviceConfig = {
+      LogFilterPatterns = [
+        "~.*Processing playback tracker.*"
+        "~.*Webhook Item .* Notifier Completed.*"
+      ];
+      # Group-readable extracted subs/nfos/artwork so bazarr (in shared-media) can index them.
+      # mkForce overrides the upstream jellyfin module's "0077" default.
+      UMask = lib.mkForce "0027";
+    };
 
     # qbittorrent-natpmp: ~3.5k/day — logs every 45s even when nothing changes
     qbittorrent-natpmp.serviceConfig.LogFilterPatterns = [

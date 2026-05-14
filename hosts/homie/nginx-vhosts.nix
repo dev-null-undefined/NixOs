@@ -112,6 +112,12 @@
         proxyPass = proxyTo "radarr";
       };
     };
+    "${vhost "bazarr"}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = proxyTo "bazarr";
+      };
+    };
     "${vhost "transmission"}" = {
       locations."/" = {
         proxyWebsockets = true;

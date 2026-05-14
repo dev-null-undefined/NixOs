@@ -130,6 +130,11 @@ in {
         port = 9696;
         subdomain = "prowlarr";
       };
+      bazarr = {
+        host = "homie";
+        port = 6767;
+        subdomain = "bazarr";
+      };
       transmission = {
         host = "homie-vpn";
         port = 9091;
