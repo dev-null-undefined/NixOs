@@ -91,7 +91,7 @@ in {
 
         "$mainMod, L, exec, hyprlock"
         "CTRL SHIFT, Escape, exec, wlogout"
-        ", Print, exec, grimblast copy area"
+        ", Print, exec, grimblast --freeze copy area"
 
         # Hyprspace overview plugin
         # "CTRL, Tab,   overview:toggle,"
