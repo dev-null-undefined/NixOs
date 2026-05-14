@@ -3,7 +3,7 @@
   wayland.windowManager.hyprland.settings = {
     monitor = [
       # left: Dell 27" rotated portrait (NVIDIA DP)
-      "desc:Dell Inc. DELL U2725QE 4DC0JF4,3840x2160@120,1120x1025,1.5,transform,1"
+      "desc:Dell Inc. DELL U2725QE 4DC0JF4,3840x2160@120,1120x1025,1.5,transform,3"
       # center: ASUS 27" (NVIDIA DP)
       "desc:ASUSTek COMPUTER INC PG27UCDM TALMAS004976,3840x2160@120,2560x1440,1.5"
       # right: Dell 27" (AMD iGPU)
