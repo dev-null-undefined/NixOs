@@ -16,7 +16,11 @@
       "Bash(nix flake:*)",
       "Read(//home/martin/GitHub/martin/nixos/**)",
       "mcp__nixos__nix",
-      "Bash(nix search:*)"
+      "Bash(nix search:*)",
+      "Bash(mkdir -p /home/martin/.claude/skills/commit-workspace/iteration-1 /home/martin/.claude/skills/review-workspace/iteration-1 /tmp/skill-snapshots)",
+      "Bash(cp /etc/nixos/modules/generated/home-manager/cli/claude-code/skills/commit/SKILL.md /tmp/skill-snapshots/commit-SKILL.md)",
+      "Bash(cp /etc/nixos/modules/generated/home-manager/cli/claude-code/skills/review/SKILL.md /tmp/skill-snapshots/review-SKILL.md)",
+      "Read(//tmp/**)"
     ]
   }
 }
