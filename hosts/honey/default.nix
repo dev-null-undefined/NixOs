@@ -55,7 +55,6 @@
   # doesn't have enough display engine bandwidth for all monitors at 240Hz
   environment.sessionVariables = {
     AQ_DRM_DEVICES = "/dev/dri/card1:/dev/dri/card2";
-    AQ_NO_ATOMIC = "1";
   };
 
   services = {
@@ -76,7 +75,8 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest; # latest kernel doesn't work with nvidia proprietery driver
+    # Pin to 6.12 LTS — newer kernels regularly break the nvidia proprietary driver.
+    kernelPackages = pkgs.linuxPackages_6_12;
 
     lanzaboote = {
       enable = true;
