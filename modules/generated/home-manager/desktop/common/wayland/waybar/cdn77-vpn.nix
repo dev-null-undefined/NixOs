@@ -9,13 +9,13 @@ in {
         ];
         "network#wg-cdn77" = {
           interface = "wg-cdn77";
-          interval = 3;
+          interval = 1;
           format = " CDN77";
           format-disconnected = " CDN77";
           tooltip-format = ''
             {ifname} ({ipaddr}/{cidr})
-            Up: {bandwidthUpBits}
-            Down: {bandwidthDownBits}'';
+            Up:   {bandwidthUpBits:>10}
+            Down: {bandwidthDownBits:>10}'';
           tooltip-format-disconnected = "CDN77 VPN: Disconnected";
           on-click = ''
             CONN_NAME="CDN77 VPN${suffix}"

@@ -267,29 +267,29 @@ in {
         };
         "network#en" = {
           interface = "en*";
-          interval = 3;
+          interval = 1;
           format = "{ifname}";
           format-ethernet = " {ipaddr}/{cidr}";
           format-disconnected = "";
           tooltip-format = ''
             {ipaddr}/{cidr}
-            Up: {bandwidthUpBits}
-            Down: {bandwidthDownBits}'';
+            Up:   {bandwidthUpBits:>10}
+            Down: {bandwidthDownBits:>10}'';
           tooltip-format-disconnected = "Disconnected";
           on-click = networkMonitor;
           on-click-right = nm-connection-editor;
         };
         "network#wl" = {
           interface = "wl*";
-          interval = 3;
+          interval = 1;
           format = "{ifname}";
           format-wifi = " {essid}";
           format-disconnected = "";
           tooltip-format = ''
             {essid} ({signalStrength}%) 
             {ipaddr}/{cidr}
-            Up: {bandwidthUpBits}
-            Down: {bandwidthDownBits}'';
+            Up:   {bandwidthUpBits:>10}
+            Down: {bandwidthDownBits:>10}'';
           tooltip-format-disconnected = "Disconnected";
           on-click = networkMonitor;
           on-click-right = nm-connection-editor;
