@@ -6,7 +6,6 @@
   sops.secrets."harmonia-signing-key" = {
     sopsFile = self.outPath + "/secrets/harmonia-signing-key";
     format = "binary";
-    owner = "harmonia";
   };
 
   services.harmonia.cache = {
