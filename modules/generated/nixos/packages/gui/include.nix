@@ -16,6 +16,7 @@
     nextcloud-client
 
     headsetcontrol # Logitech headphones controll
+    solaar # Logitech Unifying/Bolt receiver manager
 
     thunderbird
 
