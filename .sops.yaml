@@ -66,3 +66,7 @@ creation_rules:
     key_groups:
       - age:
         - *server_homie
+  - path_regex: secrets/unifi-prometheus-pass
+    key_groups:
+      - age:
+        - *server_homie
