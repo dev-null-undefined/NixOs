@@ -9,6 +9,7 @@ in {
     ./router.nix
     ./grafana.nix
     ./nginx-vhosts.nix
+    ./zfs-encryption.nix
   ];
   generated = {
     services = {
