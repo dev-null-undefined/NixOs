@@ -36,7 +36,7 @@
   },
   {
     "id": "dimmer_on_press",
-    "alias": "Dimmer ON button (any dimmer) → smart on",
+    "alias": "Dimmer on press",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "turn_on"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "turn_on"}
@@ -46,13 +46,12 @@
   },
   {
     "id": "dimmer_off_press",
-    "alias": "Dimmer OFF button (any dimmer) → all off",
+    "alias": "Dimmer off press",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_short_press", "subtype": "turn_off"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_short_press", "subtype": "turn_off"}
     ],
     "actions": [
-      {"service": "input_boolean.turn_off", "target": {"entity_id": "input_boolean.bedroom_override_full"}},
       {"service": "script.bedroom_lights_off"}
     ],
     "mode": "single"
@@ -66,7 +65,7 @@
     ],
     "actions": [
       {"service": "input_number.increment", "target": {"entity_id": "input_number.bedroom_light_level"}},
-      {"service": "script.apply_bedroom_level"}
+      {"service": "script.apply_bedroom_level", "data": {"transition": 0.3}}
     ],
     "mode": "queued",
     "max": 4
@@ -80,7 +79,7 @@
     ],
     "actions": [
       {"service": "input_number.decrement", "target": {"entity_id": "input_number.bedroom_light_level"}},
-      {"service": "script.apply_bedroom_level"}
+      {"service": "script.apply_bedroom_level", "data": {"transition": 0.3}}
     ],
     "mode": "queued",
     "max": 4
@@ -88,14 +87,17 @@
   {
     "id": "dimmer_up_double_press",
     "alias": "Dimmer up double press",
-    "description": "Native Hue double-press of brightness UP → jump to level 10 (full), set override flag.",
+    "description": "Native Hue double-press of brightness UP → snap up to next 30% preset (3=monitor+svetluška, 6=all warm, 10=working).",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_double_press", "subtype": "dim_up"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_double_press", "subtype": "dim_up"}
     ],
     "actions": [
-      {"service": "input_boolean.turn_on", "target": {"entity_id": "input_boolean.bedroom_override_full"}},
-      {"service": "input_number.set_value", "target": {"entity_id": "input_number.bedroom_light_level"}, "data": {"value": 10}},
+      {
+        "service": "input_number.set_value",
+        "target": {"entity_id": "input_number.bedroom_light_level"},
+        "data": {"value": "{% set L = states('input_number.bedroom_light_level') | int(0) %}{% if L < 3 %}3{% elif L < 6 %}6{% else %}10{% endif %}"}
+      },
       {"service": "script.apply_bedroom_level"}
     ],
     "mode": "single"
@@ -103,20 +105,24 @@
   {
     "id": "dimmer_down_double_press",
     "alias": "Dimmer down double press",
-    "description": "Native Hue double-press of brightness DOWN → snap to level 1 (lowest visible).",
+    "description": "Native Hue double-press of brightness DOWN → snap down to previous 30% preset (6=all warm, 3=monitor+svetluška, 0=off).",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_double_press", "subtype": "dim_down"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_double_press", "subtype": "dim_down"}
     ],
     "actions": [
-      {"service": "input_number.set_value", "target": {"entity_id": "input_number.bedroom_light_level"}, "data": {"value": 1}},
+      {
+        "service": "input_number.set_value",
+        "target": {"entity_id": "input_number.bedroom_light_level"},
+        "data": {"value": "{% set L = states('input_number.bedroom_light_level') | int(0) %}{% if L > 6 %}6{% elif L > 3 %}3{% else %}0{% endif %}"}
+      },
       {"service": "script.apply_bedroom_level"}
     ],
     "mode": "single"
   },
   {
     "id": "dimmer_up_long_press_start",
-    "alias": "Dimmer brightness UP hold → continuous ramp up",
+    "alias": "Dimmer up hold",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_press", "subtype": "dim_up"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_press", "subtype": "dim_up"}
@@ -131,8 +137,8 @@
           ],
           "sequence": [
             {"service": "input_number.increment", "target": {"entity_id": "input_number.bedroom_light_level"}},
-            {"service": "script.apply_bedroom_level"},
-            {"delay": "00:00:00.4"}
+            {"service": "script.apply_bedroom_level", "data": {"transition": 0.15}},
+            {"delay": "00:00:00.2"}
           ]
         }
       }
@@ -141,7 +147,7 @@
   },
   {
     "id": "dimmer_up_long_release",
-    "alias": "Dimmer brightness UP release → stop continuous ramp",
+    "alias": "Dimmer up release",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_release", "subtype": "dim_up"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_release", "subtype": "dim_up"}
@@ -153,7 +159,7 @@
   },
   {
     "id": "dimmer_down_long_press_start",
-    "alias": "Dimmer brightness DOWN hold → continuous ramp down",
+    "alias": "Dimmer down hold",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_press", "subtype": "dim_down"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_press", "subtype": "dim_down"}
@@ -168,8 +174,8 @@
           ],
           "sequence": [
             {"service": "input_number.decrement", "target": {"entity_id": "input_number.bedroom_light_level"}},
-            {"service": "script.apply_bedroom_level"},
-            {"delay": "00:00:00.4"}
+            {"service": "script.apply_bedroom_level", "data": {"transition": 0.15}},
+            {"delay": "00:00:00.2"}
           ]
         }
       }
@@ -178,7 +184,7 @@
   },
   {
     "id": "dimmer_down_long_release",
-    "alias": "Dimmer brightness DOWN release → stop continuous ramp",
+    "alias": "Dimmer down release",
     "triggers": [
       {"trigger": "device", "domain": "zha", "device_id": "7c351f5ca363350e853ee853ae43b6e5", "type": "remote_button_long_release", "subtype": "dim_down"},
       {"trigger": "device", "domain": "zha", "device_id": "3e960c542db95a898624e541ab3f582c", "type": "remote_button_long_release", "subtype": "dim_down"}

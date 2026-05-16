@@ -1,0 +1,570 @@
+{
+  "title": "Home",
+  "views": [
+    {
+      "title": "Home",
+      "path": "home",
+      "icon": "mdi:home",
+      "type": "sections",
+      "max_columns": 3,
+      "sections": [
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Who's home",
+              "icon": "mdi:account-multiple"
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "square": false,
+              "cards": [
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Martin",
+                  "secondary": "{{ states('sensor.martin_room') }}",
+                  "icon": "mdi:account",
+                  "icon_color": "{{ 'green' if is_state('person.martin','home') else 'disabled' }}",
+                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#martin"},
+                  "entity": "person.martin"
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Úzdíl",
+                  "secondary": "{{ states('sensor.uzdil_room') }}",
+                  "icon": "mdi:account",
+                  "icon_color": "{{ 'green' if is_state('person.uzdil','home') else 'disabled' }}",
+                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#uzdil"},
+                  "entity": "person.uzdil"
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Štefánko",
+                  "secondary": "{{ states('sensor.stefanko_room') }}",
+                  "icon": "mdi:account",
+                  "icon_color": "{{ 'green' if is_state('person.stefanko','home') else 'disabled' }}",
+                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#stefanko"},
+                  "entity": "person.stefanko"
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Samira",
+                  "secondary": "{{ states('sensor.samira_room') }}",
+                  "icon": "mdi:account",
+                  "icon_color": "{{ 'green' if is_state('person.samira','home') else 'disabled' }}",
+                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#samira"},
+                  "entity": "person.samira"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Rooms now",
+              "icon": "mdi:home-floor-1"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Living Room",
+              "secondary": "{{ states('sensor.living_room_people') }}",
+              "icon": "mdi:sofa",
+              "icon_color": "{{ 'amber' if states('sensor.living_room_occupancy') | int > 0 else 'disabled' }}",
+              "entity": "sensor.living_room_occupancy"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Bedroom",
+              "secondary": "{{ states('sensor.bedroom_people') }}",
+              "icon": "mdi:bed",
+              "icon_color": "{{ 'amber' if states('sensor.bedroom_occupancy') | int > 0 else 'disabled' }}",
+              "entity": "sensor.bedroom_occupancy"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Martin Bedroom",
+              "secondary": "{{ states('sensor.martin_bedroom_people') }}",
+              "icon": "mdi:bed-king",
+              "icon_color": "{{ 'amber' if states('sensor.martin_bedroom_occupancy') | int > 0 else 'disabled' }}",
+              "entity": "sensor.martin_bedroom_occupancy"
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "TV",
+              "icon": "mdi:television"
+            },
+            {
+              "type": "custom:mushroom-media-player-card",
+              "entity": "media_player.77_oled",
+              "use_media_info": true,
+              "media_controls": ["play_pause_stop", "previous", "next"],
+              "volume_controls": ["volume_mute", "volume_set"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Surveillance",
+      "path": "surveillance",
+      "icon": "mdi:cctv",
+      "type": "sections",
+      "max_columns": 3,
+      "sections": [
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Rooms — last 24h",
+              "icon": "mdi:chart-timeline-variant"
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Living Room",
+              "entities": [{"entity": "sensor.living_room_occupancy"}],
+              "hours_to_show": 24,
+              "points_per_hour": 12,
+              "line_width": 2,
+              "line_color": "#ff9800",
+              "show": {"labels": true, "name": true, "icon": false},
+              "lower_bound": 0,
+              "upper_bound": 4
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Bedroom",
+              "entities": [{"entity": "sensor.bedroom_occupancy"}],
+              "hours_to_show": 24,
+              "points_per_hour": 12,
+              "line_width": 2,
+              "line_color": "#03a9f4",
+              "show": {"labels": true, "name": true, "icon": false},
+              "lower_bound": 0,
+              "upper_bound": 4
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Martin Bedroom",
+              "entities": [{"entity": "sensor.martin_bedroom_occupancy"}],
+              "hours_to_show": 24,
+              "points_per_hour": 12,
+              "line_width": 2,
+              "line_color": "#9c27b0",
+              "show": {"labels": true, "name": true, "icon": false},
+              "lower_bound": 0,
+              "upper_bound": 4
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "All persons — last 24h",
+              "icon": "mdi:account-clock"
+            },
+            {
+              "type": "history-graph",
+              "title": "",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "person.martin", "name": "Martin"},
+                {"entity": "person.uzdil", "name": "Úzdíl"},
+                {"entity": "person.stefanko", "name": "Štefánko"},
+                {"entity": "person.samira", "name": "Samira"}
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Rooms",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "sensor.martin_room", "name": "Martin"},
+                {"entity": "sensor.uzdil_room", "name": "Úzdíl"},
+                {"entity": "sensor.stefanko_room", "name": "Štefánko"},
+                {"entity": "sensor.samira_room", "name": "Samira"}
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "TV — last 48h",
+              "icon": "mdi:television-classic"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Now watching",
+              "secondary": "{{ states('sensor.tv_channel') }}",
+              "icon": "mdi:television-play",
+              "icon_color": "{{ 'amber' if is_state('media_player.77_oled','on') else 'disabled' }}",
+              "entity": "media_player.77_oled"
+            },
+            {
+              "type": "history-graph",
+              "title": "TV state + channel (48h)",
+              "hours_to_show": 48,
+              "entities": [
+                {"entity": "media_player.77_oled", "name": "TV state"},
+                {"entity": "sensor.tv_channel", "name": "Channel/App"},
+                {"entity": "media_player.q_series_soundbar", "name": "Soundbar"}
+              ]
+            },
+            {
+              "type": "logbook",
+              "title": "TV log 48h",
+              "hours_to_show": 48,
+              "entities": [
+                "media_player.77_oled",
+                "sensor.tv_channel",
+                "media_player.q_series_soundbar"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Comings & goings — 48h",
+              "icon": "mdi:format-list-bulleted-square"
+            },
+            {
+              "type": "logbook",
+              "title": "",
+              "hours_to_show": 48,
+              "entities": [
+                "person.martin",
+                "person.uzdil",
+                "person.stefanko",
+                "person.samira",
+                "sensor.martin_room",
+                "sensor.uzdil_room",
+                "sensor.stefanko_room",
+                "sensor.samira_room"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "All persons — last 7 days",
+              "icon": "mdi:chart-bell-curve"
+            },
+            {
+              "type": "history-graph",
+              "title": "",
+              "hours_to_show": 168,
+              "entities": [
+                {"entity": "person.martin", "name": "Martin"},
+                {"entity": "person.uzdil", "name": "Úzdíl"},
+                {"entity": "person.stefanko", "name": "Štefánko"},
+                {"entity": "person.samira", "name": "Samira"}
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "People",
+      "path": "people",
+      "icon": "mdi:account-multiple",
+      "type": "sections",
+      "max_columns": 2,
+      "sections": [
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Martin",
+              "icon": "mdi:account"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Martin",
+              "secondary": "{{ states('person.martin') }} · {{ states('sensor.martin_room') }}",
+              "icon": "mdi:account",
+              "icon_color": "{{ 'green' if is_state('person.martin','home') else 'disabled' }}",
+              "entity": "person.martin"
+            },
+            {
+              "type": "history-graph",
+              "title": "Presence + room (24h)",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "person.martin", "name": "Home/Away"},
+                {"entity": "sensor.martin_room", "name": "Room"}
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Week",
+              "hours_to_show": 168,
+              "entities": [
+                {"entity": "person.martin", "name": "Home/Away"}
+              ]
+            },
+            {
+              "type": "logbook",
+              "title": "Activity",
+              "hours_to_show": 72,
+              "entities": ["person.martin", "sensor.martin_room"]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Úzdíl",
+              "icon": "mdi:account"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Úzdíl",
+              "secondary": "{{ states('person.uzdil') }} · {{ states('sensor.uzdil_room') }}",
+              "icon": "mdi:account",
+              "icon_color": "{{ 'green' if is_state('person.uzdil','home') else 'disabled' }}",
+              "entity": "person.uzdil"
+            },
+            {
+              "type": "history-graph",
+              "title": "Presence + room (24h)",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "person.uzdil", "name": "Home/Away"},
+                {"entity": "sensor.uzdil_room", "name": "Room"}
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Week",
+              "hours_to_show": 168,
+              "entities": [{"entity": "person.uzdil", "name": "Home/Away"}]
+            },
+            {
+              "type": "logbook",
+              "title": "Activity",
+              "hours_to_show": 72,
+              "entities": ["person.uzdil", "sensor.uzdil_room"]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Štefánko",
+              "icon": "mdi:account"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Štefánko",
+              "secondary": "{{ states('person.stefanko') }} · {{ states('sensor.stefanko_room') }}",
+              "icon": "mdi:account",
+              "icon_color": "{{ 'green' if is_state('person.stefanko','home') else 'disabled' }}",
+              "entity": "person.stefanko"
+            },
+            {
+              "type": "history-graph",
+              "title": "Presence + room (24h)",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "person.stefanko", "name": "Home/Away"},
+                {"entity": "sensor.stefanko_room", "name": "Room"}
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Week",
+              "hours_to_show": 168,
+              "entities": [{"entity": "person.stefanko", "name": "Home/Away"}]
+            },
+            {
+              "type": "logbook",
+              "title": "Activity",
+              "hours_to_show": 72,
+              "entities": ["person.stefanko", "sensor.stefanko_room"]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Samira",
+              "icon": "mdi:account"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Samira",
+              "secondary": "{{ states('person.samira') }} · {{ states('sensor.samira_room') }}",
+              "icon": "mdi:account",
+              "icon_color": "{{ 'green' if is_state('person.samira','home') else 'disabled' }}",
+              "entity": "person.samira"
+            },
+            {
+              "type": "history-graph",
+              "title": "Presence + room (24h)",
+              "hours_to_show": 24,
+              "entities": [
+                {"entity": "person.samira", "name": "Home/Away"},
+                {"entity": "sensor.samira_room", "name": "Room"}
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Week",
+              "hours_to_show": 168,
+              "entities": [{"entity": "person.samira", "name": "Home/Away"}]
+            },
+            {
+              "type": "logbook",
+              "title": "Activity",
+              "hours_to_show": 72,
+              "entities": ["person.samira", "sensor.samira_room"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lights",
+      "path": "lights",
+      "icon": "mdi:lightbulb-multiple",
+      "type": "sections",
+      "max_columns": 3,
+      "sections": [
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Bedroom tier",
+              "icon": "mdi:tune-variant"
+            },
+            {
+              "type": "custom:mushroom-number-card",
+              "entity": "input_number.bedroom_light_level",
+              "display_mode": "slider",
+              "icon": "mdi:lightbulb-on-outline",
+              "name": "Level (0–10)"
+            },
+            {
+              "type": "horizontal-stack",
+              "cards": [
+                {
+                  "type": "custom:button-card",
+                  "name": "Off",
+                  "icon": "mdi:lightbulb-off",
+                  "color": "var(--disabled-text-color)",
+                  "size": "30%",
+                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 0}}
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "30%",
+                  "icon": "mdi:brightness-2",
+                  "color": "var(--warning-color)",
+                  "size": "30%",
+                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 3}}
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "60%",
+                  "icon": "mdi:brightness-6",
+                  "color": "var(--state-light-active-color)",
+                  "size": "30%",
+                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 6}}
+                },
+                {
+                  "type": "custom:button-card",
+                  "name": "100%",
+                  "icon": "mdi:brightness-7",
+                  "color": "var(--state-light-active-color)",
+                  "size": "30%",
+                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 10}}
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Bedroom lights",
+              "icon": "mdi:bed"
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.prenosna_svetluska_light",
+              "name": "Svetluška",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "show_color_temp_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.philips_915005998001_light",
+              "name": "Ceiling",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "show_color_temp_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.monitor",
+              "name": "Monitor group",
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.signify_netherlands_b_v_440400982842_light_2",
+              "name": "Monitor Right",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.signify_netherlands_b_v_440400982842_light_3",
+              "name": "Monitor Left",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
