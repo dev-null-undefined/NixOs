@@ -6,7 +6,9 @@
     "triggers": [
       {
         "trigger": "state",
-        "entity_id": ["binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"]
+        "entity_id": ["binary_sensor.shelly1minig4_7c2c6773c2f0_input_0_input"],
+        "not_from": ["unavailable", "unknown"],
+        "not_to": ["unavailable", "unknown"]
       }
     ],
     "conditions": [],
