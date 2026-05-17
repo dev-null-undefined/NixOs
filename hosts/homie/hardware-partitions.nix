@@ -1,8 +1,6 @@
-{...}: let
-  root = "2ca089e6-f522-4c43-82c7-ad7f567ab9fa";
-in {
+{...}: {
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/${root}";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = [
       "subvol=root"
@@ -12,7 +10,7 @@ in {
   };
 
   fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/${root}";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = [
       "subvol=home"
@@ -22,7 +20,7 @@ in {
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-uuid/${root}";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = [
       "subvol=nix"
@@ -32,7 +30,7 @@ in {
   };
 
   fileSystems."/swap" = {
-    device = "/dev/disk/by-uuid/${root}";
+    device = "/dev/mapper/cryptroot";
     fsType = "btrfs";
     options = ["subvol=swap"];
   };

@@ -11,6 +11,7 @@ in {
     ./nginx-vhosts.nix
     ./zfs-encryption.nix
     ./secure-boot.nix
+    ./luks.nix
   ];
   generated = {
     services = {
