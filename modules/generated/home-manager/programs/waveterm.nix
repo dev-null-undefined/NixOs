@@ -1,0 +1,3 @@
+{
+  programs.waveterm.enable = true;
+}
