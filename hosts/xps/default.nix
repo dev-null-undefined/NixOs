@@ -45,6 +45,12 @@
 
   custom.wireguard.ips = ["${config.registry.hosts.xps.wgIp}/24"];
 
+  generated.network-manager.network-profiles.vpn.cdn77 = {
+    enable = true;
+    address = "10.0.4.173";
+    privateKeySuffix = "_X1";
+  };
+
   documentation.man.cache.enable = false;
 
   nix.settings.max-jobs = 0; # offload all builds to homie
