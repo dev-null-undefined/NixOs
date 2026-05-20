@@ -53,6 +53,28 @@
         "type": "github"
       }
     },
+    "blueprint": {
+      "inputs": {
+        "nixpkgs": [
+          "unifi-os-server",
+          "nixpkgs"
+        ],
+        "systems": "systems_6"
+      },
+      "locked": {
+        "lastModified": 1776249299,
+        "narHash": "sha256-Dt9t1TGRmJFc0xVYhttNBD6QsAgHOHCArqGa0AyjrJY=",
+        "owner": "numtide",
+        "repo": "blueprint",
+        "rev": "56131e8628f173d24a27f6d27c0215eff57e40dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "blueprint",
+        "type": "github"
+      }
+    },
     "brew-src": {
       "flake": false,
       "locked": {
@@ -1134,6 +1156,7 @@
         "rust-overlay": "rust-overlay_2",
         "sops": "sops",
         "spicetify-nix": "spicetify-nix",
+        "unifi-os-server": "unifi-os-server",
         "zen-browser": "zen-browser"
       }
     },
@@ -1289,6 +1312,42 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "unifi-os-server": {
+      "inputs": {
+        "blueprint": "blueprint",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778254898,
+        "narHash": "sha256-uVwHzZ3pw8QlEy/VyNlqqkGoe8iASSxXmCOKR4IzBHY=",
+        "owner": "rcambrj",
+        "repo": "unifi-os-server",
+        "rev": "b3629718dca90c849eb4ad957ec1e40b1c59c8b2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rcambrj",
+        "repo": "unifi-os-server",
         "type": "github"
       }
     },

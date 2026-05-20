@@ -47,7 +47,7 @@
     };
     unifi = {
       host = "homie";
-      port = 8443;
+      port = 11443;
       subdomain = "unifi";
     };
     crafty = {

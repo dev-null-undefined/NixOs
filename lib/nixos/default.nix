@@ -64,6 +64,8 @@ in {
 
         inputs.lanzaboote.nixosModules.lanzaboote
 
+        inputs.unifi-os-server.nixosModules.unifi-os-server
+
         # Home manager
         inputs.home-manager.nixosModules.default
         {

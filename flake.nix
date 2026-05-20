@@ -100,6 +100,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    unifi-os-server = {
+      url = "github:rcambrj/unifi-os-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
 
     homebrew-core = {

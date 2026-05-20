@@ -1,6 +1,10 @@
 # Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   r = config.registry;
   svc = r.services;
 in {
@@ -17,7 +21,7 @@ in {
     services = {
       ssh.enable = true;
       nextcloud.enable = true;
-      unifi.enable = true;
+      unifi-os-server.enable = true;
       home-assistant.enable = true;
       prometheus.enable = true;
       media.enable = true;
@@ -88,6 +92,11 @@ in {
 
     nginx.virtualHosts.${config.services.nextcloud.hostName}.http3 = true;
   };
+
+  # Allow podman container egress to the internet (UOS needs UI cloud reachability)
+  networking.firewall.extraForwardRules = lib.mkAfter ''
+    iifname "podman0" oifname "${config.generated.router.external.interface}" accept
+  '';
 
   # Open service ports on the main LAN for direct access (bypassing nginx)
   networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts = map (name: svc.${name}.port) [
