@@ -359,7 +359,6 @@ in {
                 "device_tracker.martin_s_s24"
                 "device_tracker.unifi_default_ee_0c_e7_33_04_27"
                 "device_tracker.bee"
-                "device_tracker.laptop_3kgqhbnm"
                 "device_tracker.martin_mac_air"
               ];
             })
