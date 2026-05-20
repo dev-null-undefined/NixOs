@@ -81,11 +81,6 @@
   };
 
   boot = {
-    blacklistedKernelModules = [
-      "i2c_hid"
-      "hid_multitouch"
-      "i2c-hid"
-    ];
     # blacklistedKernelModules = ["i2c_hid" "i2c_hid_acpi" "psmouse"];
     # blacklistedKernelModules = ["psmouse"];
     # kernelModules = ["synaptics_i2c"];
@@ -93,17 +88,18 @@
     # kernelPackages = pkgs.stable.linuxPackages_6_12;
     # latest kernel doesn't work with nvidia proprietery driver
 
-    # Air plane mode fix
     kernelParams = [
-      "acpi_osi=!"
-      ''acpi_osi="Windows 2020"''
       "nvidia-drm.fbdev=1"
       "acpi_backlight=native"
-      # Force S3 sleep mode
-      "mem_sleep_default=deep"
 
       # https://wiki.hyprland.org/Nvidia/
       "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+
+      # XPS 16 9640: fix Intel Arc GPU random freezes
+      "iommu.strict=1"
+
+      # XPS 16 9640 + Hyprland: avoid swiotlb buffer exhaustion via simpledrm
+      "initcall_blacklist=simpledrm_platform_driver_init"
     ];
 
     loader = {
@@ -150,6 +146,7 @@
       powerManagement.finegrained = false;
       open = true;
       nvidiaSettings = true;
+      nvidiaPersistenced = true;
 
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
 
