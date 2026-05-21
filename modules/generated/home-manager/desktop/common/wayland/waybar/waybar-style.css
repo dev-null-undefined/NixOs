@@ -96,9 +96,9 @@ tooltip {
 }
 
 #custom-language {
-    color: #f38ba8;
-    border-left: 0px;
-    border-right: 0px;
+    color: #fab387;
+    border-radius: 10px;
+    margin-right: 10px;
 }
 
 #custom-updates {

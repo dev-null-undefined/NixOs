@@ -163,6 +163,17 @@
 
   isSway = config.generated.home.desktop.sway.enable;
   isHyprland = config.generated.home.desktop.hyprland.enable;
+
+  languageScript = pkgs.writeShellScriptBin "waybar-language" ''
+    layout=$(${pkgs.hyprland}/bin/hyprctl devices -j 2>/dev/null \
+      | ${pkgs.jq}/bin/jq -r '[.keyboards[] | select(.main==true)] | first | .active_keymap // "??"')
+    case "$layout" in
+      "English (US)") text="󰌌 US" ;;
+      "Czech"*) text="󰌌 CZ" ;;
+      *) text="󰌌 $layout" ;;
+    esac
+    printf '{"text": "%s", "tooltip": "%s"}\n' "$text" "$layout"
+  '';
 in {
   programs.waybar = {
     enable = true;
@@ -181,15 +192,17 @@ in {
           ++ (lib.lists.optionals isSway ["sway/window"])
           ++ (lib.lists.optionals isHyprland ["hyprland/window"]);
 
-        modules-right = [
-          "tray"
-          "battery"
-          "network#wl"
-          "network#en"
-          "custom/brightness"
-          "pulseaudio"
-          "pulseaudio#microphone"
-        ];
+        modules-right =
+          (lib.lists.optionals (isSway || isHyprland) ["custom/language"])
+          ++ [
+            "tray"
+            "battery"
+            "network#wl"
+            "network#en"
+            "custom/brightness"
+            "pulseaudio"
+            "pulseaudio#microphone"
+          ];
         "sway/workspaces" = {
           format = "{name} {icon}";
           format-icons = {
@@ -224,6 +237,16 @@ in {
             "n?vim (.*)" = " $1";
           };
           separate-outputs = true;
+        };
+        "custom/language" = {
+          format = "{}";
+          return-type = "json";
+          interval = 1;
+          exec = "${languageScript}/bin/waybar-language";
+          on-click =
+            if isHyprland
+            then "${pkgs.hyprland}/bin/hyprctl switchxkblayout all next"
+            else "${pkgs.sway}/bin/swaymsg 'input * xkb_switch_layout next'";
         };
         clock = {
           format = "{:%d-%m-%Y (%R)}  ";
