@@ -30,10 +30,11 @@ in {
               # TODO: move to special folder
               # harmonia is fronted by nginx bound only on homie's Tailscale IP,
               # so "homie" must resolve via Tailscale MagicDNS for substitution to work.
-              substituters = [
-                "http://homie:5000"
-                "https://hyprland.cachix.org"
-              ];
+              # Skip on homie itself: the hostname resolves to 127.0.0.2 locally,
+              # not the Tailscale IP nginx listens on.
+              substituters =
+                lib.optional (hostname != "homie") "http://homie:5000"
+                ++ ["https://hyprland.cachix.org"];
               trusted-public-keys = [
                 "homie-1:nVkPXYcuMRV5aeTf7F1coe/qFX1BrqRLmlTQBy5A6OA="
                 "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
