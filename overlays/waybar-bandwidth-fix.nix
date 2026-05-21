@@ -34,10 +34,15 @@ in {
         };
         # master added cava as an auto-detected meson subproject; nixpkgs doesn't
         # supply it, and sandboxed builds can't fetch wrap subprojects.
-        mesonFlags = (oldAttrs.mesonFlags or []) ++ ["-Dcava=disabled"];
+        # -Dtests=disabled overrides nixpkgs's -Dtests=enabled — waybar:utils
+        # fails sandbox checks on master (execs bash-interactive, relative css
+        # fixture paths), and disabling at meson level also drops the catch2
+        # configure-time dep. Master is a moving target; trust upstream CI.
+        mesonFlags = (oldAttrs.mesonFlags or []) ++ ["-Dcava=disabled" "-Dtests=disabled"];
         # `waybar --version` still prints upstream's "0.15.0" since meson.build
         # hasn't been bumped on master, so versionCheckHook fails on our pinned
         # derivation version string. Skip it.
         doInstallCheck = false;
+        doCheck = false;
       });
 }
