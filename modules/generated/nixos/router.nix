@@ -114,6 +114,11 @@ in {
               default = true;
               description = "Whether to advertise this server as the DNS resolver.";
             };
+            leaseTime = lib.mkOption {
+              type = lib.types.str;
+              default = "12h";
+              description = "DHCP lease time (dnsmasq syntax, e.g. \"12h\", \"30m\", \"infinite\").";
+            };
             staticLeases = lib.mkOption {
               type = lib.types.attrsOf clientConfig;
               default = {};
@@ -234,7 +239,7 @@ in {
 
         dhcp-range = builtins.map (name: let
           v = dhcpEnabled.${name};
-        in "interface:${v.vlanInterface},${v.dhcp.start},${v.dhcp.end},${toString v.static.prefix}")
+        in "interface:${v.vlanInterface},${v.dhcp.start},${v.dhcp.end},${v.dhcp.leaseTime}")
         dhcpNames;
 
         dhcp-option = builtins.concatMap (name: let
