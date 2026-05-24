@@ -9,6 +9,8 @@ in {
   sops.secrets."dnsmasq-static-leases" = {
     sopsFile = self.outPath + "/secrets/dnsmasq-static-leases";
     format = "binary";
+    owner = "dnsmasq";
+    group = "dnsmasq";
   };
 
   services.dnsmasq.settings.dhcp-hostsfile = config.sops.secrets."dnsmasq-static-leases".path;
