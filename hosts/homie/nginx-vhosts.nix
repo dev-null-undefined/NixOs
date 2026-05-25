@@ -83,9 +83,16 @@
     };
     # Arr stack
     "${vhost "jellyfin"}" = {
+      extraConfig = ''
+        client_max_body_size 20M;
+      '';
       locations."/" = {
         proxyWebsockets = true;
         proxyPass = proxyTo "jellyfin";
+        extraConfig = ''
+          proxy_buffering off;
+          proxy_request_buffering off;
+        '';
       };
     };
     "${vhost "jellyseerr"}" = {
