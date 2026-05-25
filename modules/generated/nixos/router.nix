@@ -262,7 +262,6 @@ in {
         dhcpNames;
 
         quiet-dhcp = true;
-        dhcp-authoritative = true;
         port = 0; # Disable DNS — handled by AdGuard Home
       };
     };
