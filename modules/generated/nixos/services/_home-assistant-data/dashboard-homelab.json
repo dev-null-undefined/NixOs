@@ -1,0 +1,137 @@
+{
+  "title": "Homelab",
+  "views": [
+    {
+      "title": "Network",
+      "path": "network",
+      "icon": "mdi:lan",
+      "cards": [
+        {"type": "markdown", "content": "## Internet uplink"},
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 2,
+          "entities": [
+            {"entity": "sensor.usw_lite_8_poe_airwaynet_antena_link_speed", "name": "Airwaynet"},
+            {"entity": "sensor.usw_lite_8_poe_homie_enp1s0_dhcp_nat_link_speed", "name": "Homie WAN"}
+          ]
+        },
+        {"type": "markdown", "content": "## AdGuard DNS"},
+        {
+          "type": "horizontal-stack",
+          "cards": [
+            {"type": "entity", "entity": "switch.adguard_home_protection", "name": "Protection"},
+            {"type": "entity", "entity": "switch.adguard_home_filtering", "name": "Filtering"},
+            {"type": "entity", "entity": "switch.adguard_home_safe_browsing", "name": "Safe Browsing"}
+          ]
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {"entity": "sensor.adguard_home_dns_queries", "name": "Queries"},
+            {"entity": "sensor.adguard_home_dns_queries_blocked", "name": "Blocked"},
+            {"entity": "sensor.adguard_home_dns_queries_blocked_ratio", "name": "Block %"},
+            {"entity": "sensor.adguard_home_average_processing_speed", "name": "Speed"}
+          ]
+        },
+        {
+          "type": "statistics-graph",
+          "title": "DNS — last 24h",
+          "days_to_show": 1,
+          "period": "hour",
+          "stat_types": ["change"],
+          "entities": [
+            "sensor.adguard_home_dns_queries",
+            "sensor.adguard_home_dns_queries_blocked"
+          ]
+        },
+        {"type": "markdown", "content": "## Access points"},
+        {
+          "type": "horizontal-stack",
+          "cards": [
+            {
+              "type": "entities",
+              "title": "Obývák",
+              "entities": [
+                "sensor.obyvak_state",
+                "sensor.obyvak_clients",
+                "sensor.obyvak_cpu_utilization",
+                "sensor.obyvak_memory_utilization",
+                "sensor.obyvak_uptime"
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Ložnice",
+              "entities": [
+                "sensor.loznice_state",
+                "sensor.loznice_clients",
+                "sensor.loznice_cpu_utilization",
+                "sensor.loznice_memory_utilization",
+                "sensor.loznice_uptime"
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Pracovna (Martínek)",
+              "entities": [
+                "sensor.pracovna_state",
+                "sensor.pracovna_clients",
+                "sensor.pracovna_cpu_utilization",
+                "sensor.pracovna_memory_utilization",
+                "sensor.pracovna_uptime"
+              ]
+            }
+          ]
+        },
+        {"type": "markdown", "content": "## Switch — USW Lite 8 PoE"},
+        {
+          "type": "entities",
+          "entities": [
+            "sensor.usw_lite_8_poe_state",
+            "sensor.usw_lite_8_poe_clients",
+            "sensor.usw_lite_8_poe_cpu_utilization",
+            "sensor.usw_lite_8_poe_memory_utilization",
+            "sensor.usw_lite_8_poe_uptime"
+          ]
+        },
+        {
+          "type": "glance",
+          "title": "PoE power per port",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {"entity": "sensor.usw_lite_8_poe_port_1_poe_power", "name": "Port 1"},
+            {"entity": "sensor.usw_lite_8_poe_port_2_poe_power", "name": "Port 2"},
+            {"entity": "sensor.usw_lite_8_poe_port_3_poe_power", "name": "Port 3"},
+            {"entity": "sensor.usw_lite_8_poe_port_4_poe_power", "name": "Port 4"}
+          ]
+        },
+        {"type": "markdown", "content": "## Wi-Fi SSIDs"},
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 3,
+          "entities": [
+            {"entity": "sensor.dev_null", "name": "@dev_null"},
+            {"entity": "sensor.dev_null_iot_clients", "name": "IoT"},
+            {"entity": "sensor.dev_null_iot_5_clients", "name": "IoT-5"},
+            {"entity": "sensor.std_visit", "name": "std::visit"},
+            {"entity": "sensor.martinkuv_pisecek", "name": "Píseček"}
+          ]
+        },
+        {"type": "markdown", "content": "## Zigbee — SLZB-06"},
+        {
+          "type": "entities",
+          "entities": [
+            "binary_sensor.slzb_06_serial_connected",
+            "sensor.slzb_06_uptime",
+            "binary_sensor.physical_button_status"
+          ]
+        }
+      ]
+    }
+  ]
+}

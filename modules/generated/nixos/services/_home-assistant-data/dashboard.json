@@ -72,7 +72,7 @@
             {
               "type": "custom:mushroom-template-card",
               "primary": "Living Room",
-              "secondary": "{{ states('sensor.living_room_people') }}",
+              "secondary": "{{ states('sensor.living_room_people') }} · {{ states('sensor.teplomer_living_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_living_room_humidity') | float(0) | round(0) }}% RH",
               "icon": "mdi:sofa",
               "icon_color": "{{ 'amber' if states('sensor.living_room_occupancy') | int > 0 else 'disabled' }}",
               "entity": "sensor.living_room_occupancy"
@@ -80,7 +80,7 @@
             {
               "type": "custom:mushroom-template-card",
               "primary": "Bedroom",
-              "secondary": "{{ states('sensor.bedroom_people') }}",
+              "secondary": "{{ states('sensor.bedroom_people') }} · {{ states('sensor.teplomer_loznice_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_loznice_humidity') | float(0) | round(0) }}% RH",
               "icon": "mdi:bed",
               "icon_color": "{{ 'amber' if states('sensor.bedroom_occupancy') | int > 0 else 'disabled' }}",
               "entity": "sensor.bedroom_occupancy"

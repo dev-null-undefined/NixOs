@@ -55,6 +55,11 @@
   # tier change snaps instantly; restore to ~2 / ~5 for normal "feel".
   fadeIn = 2;
   fadeOut = 5;
+  # Extra declarative dashboards. JSON is a valid YAML subset, so the lovelace
+  # YAML loader reads the .json content verbatim from /var/lib/hass/ui-lovelace-*.yaml.
+  healthDashboardFile = pkgs.writeText "ui-lovelace-health.yaml" (builtins.readFile (haData + "/dashboard-health.json"));
+  homelabDashboardFile = pkgs.writeText "ui-lovelace-homelab.yaml" (builtins.readFile (haData + "/dashboard-homelab.json"));
+  allDashboardFile = pkgs.writeText "ui-lovelace-all.yaml" (builtins.readFile (haData + "/dashboard-all.json"));
 in {
   sops.secrets."home-assistant-google-sa" = {
     sopsFile = self.outPath + "/secrets/home-assistant-google-sa.json";
@@ -62,6 +67,12 @@ in {
     owner = "hass";
     path = "${dataDir}/SERVICE_ACCOUNT.json";
   };
+
+  systemd.services.home-assistant.preStart = lib.mkAfter ''
+    ln -fns ${healthDashboardFile} ${dataDir}/ui-lovelace-health.yaml
+    ln -fns ${homelabDashboardFile} ${dataDir}/ui-lovelace-homelab.yaml
+    ln -fns ${allDashboardFile} ${dataDir}/ui-lovelace-all.yaml
+  '';
 
   services.home-assistant = {
     enable = true;
@@ -73,6 +84,12 @@ in {
       button-card
       card-mod
       auto-entities
+    ];
+
+    customComponents = [
+      pkgs.home-assistant-custom-components.xiaomi_miot
+      pkgs.home-assistant-custom-components.midea_ac_lan
+      pkgs.home-assistant-electrolux-status
     ];
 
     lovelaceConfig = builtins.fromJSON (builtins.readFile (haData + "/dashboard.json"));
@@ -94,6 +111,11 @@ in {
       "unifi"
       "smartthings"
       "withings"
+      "homekit"
+      "xbox"
+      "samsungtv"
+      "jellyfin"
+      "adguard"
       "met"
       "sun"
       "radio_browser"
@@ -111,19 +133,58 @@ in {
     config = {
       default_config = {};
       frontend = {};
-      # New (2026.8+) lovelace schema. The legacy `lovelace.mode = "yaml"`
-      # was deprecated. `resource_mode = "yaml"` keeps customLovelaceModules
-      # resources loading from the generated ui-lovelace.yaml.
+      # 2026.8+ lovelace schema: top-level `lovelace.mode` is removed.
+      # The default Overview dashboard is auto-declared by the NixOS module as
+      # `dashboards.nixos-lovelace` whenever `lovelaceConfig` is set, and
+      # `resource_mode = "yaml"` is auto-set whenever `customLovelaceModules`
+      # is non-empty — both apply here, so we only declare the extras below.
       lovelace = {
-        resource_mode = "yaml";
-        dashboards.lovelace = {
-          mode = "yaml";
-          filename = "ui-lovelace.yaml";
-          title = "Overview";
-          icon = "mdi:view-dashboard";
-          show_in_sidebar = true;
+        dashboards = {
+          "health-withings" = {
+            mode = "yaml";
+            filename = "ui-lovelace-health.yaml";
+            title = "Health";
+            icon = "mdi:heart-pulse";
+            show_in_sidebar = true;
+          };
+          "homelab-network" = {
+            mode = "yaml";
+            filename = "ui-lovelace-homelab.yaml";
+            title = "Homelab";
+            icon = "mdi:server-network";
+            show_in_sidebar = true;
+          };
+          "all-entities" = {
+            mode = "yaml";
+            filename = "ui-lovelace-all.yaml";
+            title = "All entities";
+            icon = "mdi:format-list-bulleted";
+            show_in_sidebar = true;
+          };
         };
       };
+
+      # Statistics-derived helpers powering the Health dashboard.
+      sensor = [
+        {
+          platform = "statistics";
+          name = "Weight 7d change";
+          unique_id = "withings_weight_7d_change";
+          entity_id = "sensor.withings_weight";
+          state_characteristic = "change";
+          sampling_size = 200;
+          max_age.days = 7;
+        }
+        {
+          platform = "statistics";
+          name = "Weight 30d change";
+          unique_id = "withings_weight_30d_change";
+          entity_id = "sensor.withings_weight";
+          state_characteristic = "change";
+          sampling_size = 1000;
+          max_age.days = 30;
+        }
+      ];
 
       http = {
         use_x_forwarded_for = true;
@@ -476,6 +537,26 @@ in {
                 {%- if states('sensor.stefanko_room') == 'Martin Bedroom' %}{%- set p = p + ['Štefánko'] -%}{%- endif %}
                 {%- if states('sensor.samira_room') == 'Martin Bedroom' %}{%- set p = p + ['Samira'] -%}{%- endif %}
                 {{ p | join(', ') if p else 'empty' }}
+              '';
+            }
+            # BMI derived from Withings height + weight.
+            {
+              name = "Withings BMI";
+              unique_id = "withings_bmi";
+              unit_of_measurement = "kg/m²";
+              state_class = "measurement";
+              state = ''
+                {% set w = states('sensor.withings_weight') | float(0) %}
+                {% set h = states('sensor.withings_height') | float(0) %}
+                {% if w > 0 and h > 0 %}
+                  {{ (w / (h * h)) | round(1) }}
+                {% else %}
+                  unknown
+                {% endif %}
+              '';
+              availability = ''
+                {{ states('sensor.withings_weight') not in ['unknown','unavailable','none']
+                   and states('sensor.withings_height') not in ['unknown','unavailable','none'] }}
               '';
             }
           ];
