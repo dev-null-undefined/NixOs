@@ -39,6 +39,8 @@
     privateKeySuffix = "_X1";
   };
 
+  generated.network-manager.network-profiles.gsm.o2-cz.enable = true;
+
   documentation.man.cache.enable = false;
 
   nix.settings.max-jobs = 0; # offload all builds to homie
@@ -47,6 +49,10 @@
     # btrfs root is mounted with discard=async (continuous trim);
     # periodic fstrim is redundant and FITRIM fails on btrfs+async-discard.
     fstrim.enable = false;
+
+    # thermald cannot run on Lunar Lake (logs: "Unsupported cpu model or platform")
+    # and exits immediately on every boot.
+    thermald.enable = false;
   };
 
   # Plymouth implicitly enables console.earlySetup; the initrd-stage setfont
@@ -113,8 +119,9 @@
   };
 
   systemd.sleep.settings.Sleep = {
-    HibernateDelaySec = "2h";
+    HibernateDelaySec = "4h";
     HibernateMode = "shutdown";
+    HibernateOnACPower = false;
   };
 
   services.tlp.settings = {
@@ -123,18 +130,28 @@
     WIFI_PWR_ON_BAT = "on";
     RUNTIME_PM_ON_BAT = "auto";
     NMI_WATCHDOG = 0;
+
+    PLATFORM_PROFILE_ON_BAT = "low-power";
+    CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+    CPU_MAX_PERF_ON_BAT = 70;
+    DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE = "bluetooth";
   };
 
-  # Trim wakeup sources to reduce spurious S0ix wakes. Lid + power button still
-  # wake the system. Re-enable a device if you need wake-on-dock or wake-on-USB.
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:14.0", ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.0", ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.2", ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:0d.3", ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:07.0", ATTR{power/wakeup}="disabled"
-    ACTION=="add", SUBSYSTEM=="pci", KERNEL=="0000:00:07.2", ATTR{power/wakeup}="disabled"
-  '';
+  generated.hardware.wakeup-trim = {
+    enable = true;
+    pciDevices = {
+      "0000:00:14.0" = "Arrow Lake xHCI USB 3.2 controller";
+      "0000:00:0d.0" = "Thunderbolt 4 USB controller";
+      "0000:00:0d.2" = "Thunderbolt 4 NHI #0";
+      "0000:00:0d.3" = "Thunderbolt 4 NHI #1";
+      "0000:00:07.0" = "Thunderbolt 4 PCIe Root Port #0";
+      "0000:00:07.2" = "Thunderbolt 4 PCIe Root Port #2";
+      # Quectel RM520N-GL WWAN modem — cellular paging wakes the laptop from s2idle.
+      "0000:00:1c.6" = "PCIe Root Port #7 (WWAN modem upstream)";
+      "0000:08:00.0" = "Quectel RM520N-GL 5G WWAN modem";
+    };
+    mhiDevices.mhi0 = "Modem Host Interface (Quectel WWAN)";
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "cs_CZ.UTF-8";
