@@ -15,6 +15,19 @@ with self.lib'.internal; {
   ];
   hyprland-contrib = inputs.hyprland-contrib.overlays.default;
 
+  # Lift hyprlock's hard-coded 3-attempt fingerprint cap. Upstream offers no
+  # config knob for this; see https://github.com/hyprwm/hyprlock/issues/711.
+  hyprlock-no-retry-cap = final: super: {
+    hyprlock = super.hyprlock.overrideAttrs (old: {
+      postPatch =
+        (old.postPatch or "")
+        + ''
+          substituteInPlace src/auth/Fingerprint.cpp \
+            --replace-fail "m_sDBUSState.retries >= 3" "m_sDBUSState.retries >= 9999"
+        '';
+    });
+  };
+
   stable-pkgs = final: super: {
     inherit
       (super.stable)
