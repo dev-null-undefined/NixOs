@@ -35,10 +35,7 @@ with self.lib'.internal; {
       batgrep
       glances # test_phys_core_returns_int fails on aarch64-linux (oracle-server) — phys_core() returns None
       hyprlock # 0.9.3 SIGSEGVs in CShader dtor when init fails, deadlocking session lock
-      john # unstable's pinned commit tarball hash drifted; pin to stable until upstream rev bumps
       lutris
-      qbittorrent # qBit 5.2.0 SIGSEGV in Http::Connection::acceptsGzipEncoding on Qt 6.11.0 (upstream issue #24038, no fix yet). stable ships qtbase 6.10.2, pre-regression.
-      qbittorrent-nox
       wineWowPackages
       ;
     inherit (super.dev-null) rpi-imager;
