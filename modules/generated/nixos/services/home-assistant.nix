@@ -55,11 +55,6 @@
   # tier change snaps instantly; restore to ~2 / ~5 for normal "feel".
   fadeIn = 2;
   fadeOut = 5;
-  # Extra declarative dashboards. JSON is a valid YAML subset, so the lovelace
-  # YAML loader reads the .json content verbatim from /var/lib/hass/ui-lovelace-*.yaml.
-  healthDashboardFile = pkgs.writeText "ui-lovelace-health.yaml" (builtins.readFile (haData + "/dashboard-health.json"));
-  homelabDashboardFile = pkgs.writeText "ui-lovelace-homelab.yaml" (builtins.readFile (haData + "/dashboard-homelab.json"));
-  allDashboardFile = pkgs.writeText "ui-lovelace-all.yaml" (builtins.readFile (haData + "/dashboard-all.json"));
 in {
   sops.secrets."home-assistant-google-sa" = {
     sopsFile = self.outPath + "/secrets/home-assistant-google-sa.json";
@@ -68,10 +63,20 @@ in {
     path = "${dataDir}/SERVICE_ACCOUNT.json";
   };
 
+  # Remove stale per-dashboard YAML symlinks left over from when Health,
+  # Homelab and All-entities lived as separate dashboards — they are now
+  # merged as tabs in the main overview. Also force the system default panel
+  # to our YAML dashboard so users land on the merged overview instead of
+  # the built-in (and now redundant) /home/overview panel.
   systemd.services.home-assistant.preStart = lib.mkAfter ''
-    ln -fns ${healthDashboardFile} ${dataDir}/ui-lovelace-health.yaml
-    ln -fns ${homelabDashboardFile} ${dataDir}/ui-lovelace-homelab.yaml
-    ln -fns ${allDashboardFile} ${dataDir}/ui-lovelace-all.yaml
+    rm -f ${dataDir}/ui-lovelace-health.yaml \
+          ${dataDir}/ui-lovelace-homelab.yaml \
+          ${dataDir}/ui-lovelace-all.yaml
+    file=${dataDir}/.storage/frontend.system_data
+    if [ -f "$file" ]; then
+      ${pkgs.jq}/bin/jq '.data.core.default_panel = "nixos-lovelace"' "$file" > "$file.tmp" \
+        && mv "$file.tmp" "$file"
+    fi
   '';
 
   services.home-assistant = {
@@ -84,6 +89,7 @@ in {
       button-card
       card-mod
       auto-entities
+      plotly-chart-card
     ];
 
     customComponents = [
@@ -137,32 +143,9 @@ in {
       # The default Overview dashboard is auto-declared by the NixOS module as
       # `dashboards.nixos-lovelace` whenever `lovelaceConfig` is set, and
       # `resource_mode = "yaml"` is auto-set whenever `customLovelaceModules`
-      # is non-empty — both apply here, so we only declare the extras below.
-      lovelace = {
-        dashboards = {
-          "health-withings" = {
-            mode = "yaml";
-            filename = "ui-lovelace-health.yaml";
-            title = "Health";
-            icon = "mdi:heart-pulse";
-            show_in_sidebar = true;
-          };
-          "homelab-network" = {
-            mode = "yaml";
-            filename = "ui-lovelace-homelab.yaml";
-            title = "Homelab";
-            icon = "mdi:server-network";
-            show_in_sidebar = true;
-          };
-          "all-entities" = {
-            mode = "yaml";
-            filename = "ui-lovelace-all.yaml";
-            title = "All entities";
-            icon = "mdi:format-list-bulleted";
-            show_in_sidebar = true;
-          };
-        };
-      };
+      # is non-empty — both apply here. Health / Homelab / All-entities used
+      # to be separate dashboards; they now live as tabs inside the main
+      # overview, so no extra dashboards are declared.
 
       # Statistics-derived helpers powering the Health dashboard.
       sensor = [
@@ -256,6 +239,43 @@ in {
                   {
                     service = "light.turn_off";
                     target.entity_id = "light.prenosna_svetluska_light";
+                    data.transition = "{{ t_out }}";
+                  }
+                ];
+              }
+              # Wardrobe accent pair (top of wardrobe) — always-on baseline from L=1
+              {
+                choose = [
+                  {
+                    conditions = [
+                      {
+                        condition = "template";
+                        value_template = "{{ L > 0 }}";
+                      }
+                    ];
+                    sequence = [
+                      {
+                        service = "light.turn_on";
+                        target.entity_id = [
+                          "light.wardrobe_left"
+                          "light.wardrobe_right"
+                        ];
+                        data = {
+                          brightness_pct = "{{ [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100][L] }}";
+                          color_temp_kelvin = "{{ [2700, 2000, 2200, 2700, 2700, 2700, 2700, 3000, 3300, 3700, 4000][L] }}";
+                          transition = "{{ t_in }}";
+                        };
+                      }
+                    ];
+                  }
+                ];
+                default = [
+                  {
+                    service = "light.turn_off";
+                    target.entity_id = [
+                      "light.wardrobe_left"
+                      "light.wardrobe_right"
+                    ];
                     data.transition = "{{ t_out }}";
                   }
                 ];
@@ -418,8 +438,6 @@ in {
                 "device_tracker.pixel_10_pro_3"
                 "device_tracker.martin_s24"
                 "device_tracker.martin_s_s24"
-                "device_tracker.unifi_default_ee_0c_e7_33_04_27"
-                "device_tracker.bee"
                 "device_tracker.martin_mac_air"
               ];
             })
@@ -430,7 +448,8 @@ in {
               trackers = [
                 "device_tracker.redmi_note_11_pro_5g"
                 "device_tracker.xiaomi_17"
-                "device_tracker.unifi_default_c2_83_ca_8a_c6_6a"
+                "device_tracker.unifi_uzdil_macbook"
+                "device_tracker.unifi_uzdil_macbook_2"
               ];
             })
             (mkPersonRoom {
@@ -439,7 +458,7 @@ in {
               person = "person.stefanko";
               trackers = [
                 "device_tracker.stefan_s_s24"
-                "device_tracker.unifi_default_56_24_44_9c_ba_0a"
+                "device_tracker.unifi_stefi_mac"
               ];
             })
             (mkPersonRoom {

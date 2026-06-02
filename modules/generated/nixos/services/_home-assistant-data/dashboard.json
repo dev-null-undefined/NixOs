@@ -27,7 +27,10 @@
                   "secondary": "{{ states('sensor.martin_room') }}",
                   "icon": "mdi:account",
                   "icon_color": "{{ 'green' if is_state('person.martin','home') else 'disabled' }}",
-                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#martin"},
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/people#martin"
+                  },
                   "entity": "person.martin"
                 },
                 {
@@ -36,7 +39,10 @@
                   "secondary": "{{ states('sensor.uzdil_room') }}",
                   "icon": "mdi:account",
                   "icon_color": "{{ 'green' if is_state('person.uzdil','home') else 'disabled' }}",
-                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#uzdil"},
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/people#uzdil"
+                  },
                   "entity": "person.uzdil"
                 },
                 {
@@ -45,7 +51,10 @@
                   "secondary": "{{ states('sensor.stefanko_room') }}",
                   "icon": "mdi:account",
                   "icon_color": "{{ 'green' if is_state('person.stefanko','home') else 'disabled' }}",
-                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#stefanko"},
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/people#stefanko"
+                  },
                   "entity": "person.stefanko"
                 },
                 {
@@ -54,44 +63,13 @@
                   "secondary": "{{ states('sensor.samira_room') }}",
                   "icon": "mdi:account",
                   "icon_color": "{{ 'green' if is_state('person.samira','home') else 'disabled' }}",
-                  "tap_action": {"action": "navigate", "navigation_path": "/lovelace/people#samira"},
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/people#samira"
+                  },
                   "entity": "person.samira"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "type": "grid",
-          "cards": [
-            {
-              "type": "heading",
-              "heading": "Rooms now",
-              "icon": "mdi:home-floor-1"
-            },
-            {
-              "type": "custom:mushroom-template-card",
-              "primary": "Living Room",
-              "secondary": "{{ states('sensor.living_room_people') }} · {{ states('sensor.teplomer_living_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_living_room_humidity') | float(0) | round(0) }}% RH",
-              "icon": "mdi:sofa",
-              "icon_color": "{{ 'amber' if states('sensor.living_room_occupancy') | int > 0 else 'disabled' }}",
-              "entity": "sensor.living_room_occupancy"
-            },
-            {
-              "type": "custom:mushroom-template-card",
-              "primary": "Bedroom",
-              "secondary": "{{ states('sensor.bedroom_people') }} · {{ states('sensor.teplomer_loznice_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_loznice_humidity') | float(0) | round(0) }}% RH",
-              "icon": "mdi:bed",
-              "icon_color": "{{ 'amber' if states('sensor.bedroom_occupancy') | int > 0 else 'disabled' }}",
-              "entity": "sensor.bedroom_occupancy"
-            },
-            {
-              "type": "custom:mushroom-template-card",
-              "primary": "Martin Bedroom",
-              "secondary": "{{ states('sensor.martin_bedroom_people') }}",
-              "icon": "mdi:bed-king",
-              "icon_color": "{{ 'amber' if states('sensor.martin_bedroom_occupancy') | int > 0 else 'disabled' }}",
-              "entity": "sensor.martin_bedroom_occupancy"
             }
           ]
         },
@@ -107,8 +85,216 @@
               "type": "custom:mushroom-media-player-card",
               "entity": "media_player.77_oled",
               "use_media_info": true,
-              "media_controls": ["play_pause_stop", "previous", "next"],
-              "volume_controls": ["volume_mute", "volume_set"]
+              "media_controls": [
+                "play_pause_stop",
+                "previous",
+                "next"
+              ],
+              "volume_controls": [
+                "volume_mute",
+                "volume_set"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "custom:auto-entities",
+              "card": {
+                "type": "entities",
+                "title": "⚠️ Low batteries",
+                "state_color": true
+              },
+              "filter": {
+                "include": [
+                  {
+                    "domain": "sensor",
+                    "attributes": {
+                      "device_class": "battery"
+                    },
+                    "state": "< 30",
+                    "options": {
+                      "secondary_info": "last-changed"
+                    }
+                  }
+                ],
+                "exclude": [
+                  {
+                    "entity_id": "sensor.pixel_*"
+                  },
+                  {
+                    "entity_id": "sensor.*macbook*"
+                  },
+                  {
+                    "entity_id": "sensor.*iphone*"
+                  },
+                  {
+                    "entity_id": "sensor.*ipad*"
+                  },
+                  {
+                    "entity_id": "sensor.*s24*"
+                  },
+                  {
+                    "entity_id": "sensor.xiaomi_17*"
+                  },
+                  {
+                    "entity_id": "sensor.redmi_*"
+                  },
+                  {
+                    "entity_id": "sensor.*_car_*"
+                  }
+                ]
+              },
+              "sort": {
+                "method": "state",
+                "numeric": true
+              },
+              "show_empty": false
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Rooms",
+              "icon": "mdi:floor-plan"
+            },
+            {
+              "type": "grid",
+              "columns": 2,
+              "square": false,
+              "cards": [
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Living Room",
+                  "secondary": "{% set p = states('sensor.living_room_people') %}{% if p and p != 'empty' %}{{ p }}\n{% endif %}{{ states('sensor.temperameture_living_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.temperameture_living_room_humidity') | float(0) | round(0) }}% RH",
+                  "icon": "mdi:sofa",
+                  "icon_color": "{{ 'amber' if states('sensor.living_room_occupancy') | int(0) > 0 else 'disabled' }}",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-living_room"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_living_room"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Main Bedroom",
+                  "secondary": "{% set p = states('sensor.bedroom_people') %}{% if p and p != 'empty' %}{{ p }}\n{% endif %}{{ states('sensor.teplomer_bedroom_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_bedroom_humidity') | float(0) | round(0) }}% RH{% if is_state('binary_sensor.door_bedroom','on') %}\n🚪 Door open{% endif %}",
+                  "icon": "mdi:bed-queen",
+                  "icon_color": "{{ 'amber' if states('sensor.bedroom_occupancy') | int(0) > 0 else 'disabled' }}",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-bedroom"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_bedroom"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Uždil Bedroom",
+                  "secondary": "{% set p = states('sensor.martin_bedroom_people') %}{% if p and p != 'empty' %}{{ p }}\n{% endif %}{{ states('sensor.teplomer_uzdil_bedroom_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_uzdil_bedroom_humidity') | float(0) | round(0) }}% RH",
+                  "icon": "mdi:bed-single",
+                  "icon_color": "{{ 'amber' if states('sensor.martin_bedroom_occupancy') | int(0) > 0 else 'disabled' }}",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-bedroom_martin"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_bedroom_martin"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Kitchen",
+                  "secondary": "{{ states('sensor.tepmerameture_kitchen_temperature') | float(0) | round(1) }}°C · {{ states('sensor.tepmerameture_kitchen_humidity') | float(0) | round(0) }}% RH{% if is_state('binary_sensor.main_doors','on') %}\n🚪 Fridge open{% endif %}",
+                  "icon": "mdi:silverware-fork-knife",
+                  "icon_color": "{{ 'red' if is_state('binary_sensor.main_doors','on') else 'disabled' }}",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-kitchen"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_kitchen"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Main Bathroom",
+                  "secondary": "",
+                  "icon": "mdi:shower",
+                  "icon_color": "disabled",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-main_bathroom"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_main_bathroom"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Laundry room",
+                  "secondary": "",
+                  "icon": "mdi:washing-machine",
+                  "icon_color": "disabled",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-laundry_room"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_laundry_room"
+                  }
+                },
+                {
+                  "type": "custom:mushroom-template-card",
+                  "primary": "Server Room",
+                  "secondary": "{{ states('sensor.temperature_server_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.temperature_server_room_humidity') | float(0) | round(0) }}% RH",
+                  "icon": "mdi:server",
+                  "icon_color": "disabled",
+                  "layout": "vertical",
+                  "fill_container": true,
+                  "multiline_secondary": true,
+                  "tap_action": {
+                    "action": "navigate",
+                    "navigation_path": "/home/areas-server_room"
+                  },
+                  "hold_action": {
+                    "action": "navigate",
+                    "navigation_path": "/nixos-lovelace/area_server_room"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -132,36 +318,60 @@
             {
               "type": "custom:mini-graph-card",
               "name": "Living Room",
-              "entities": [{"entity": "sensor.living_room_occupancy"}],
+              "entities": [
+                {
+                  "entity": "sensor.living_room_occupancy"
+                }
+              ],
               "hours_to_show": 24,
               "points_per_hour": 12,
               "line_width": 2,
               "line_color": "#ff9800",
-              "show": {"labels": true, "name": true, "icon": false},
+              "show": {
+                "labels": true,
+                "name": true,
+                "icon": false
+              },
               "lower_bound": 0,
               "upper_bound": 4
             },
             {
               "type": "custom:mini-graph-card",
               "name": "Bedroom",
-              "entities": [{"entity": "sensor.bedroom_occupancy"}],
+              "entities": [
+                {
+                  "entity": "sensor.bedroom_occupancy"
+                }
+              ],
               "hours_to_show": 24,
               "points_per_hour": 12,
               "line_width": 2,
               "line_color": "#03a9f4",
-              "show": {"labels": true, "name": true, "icon": false},
+              "show": {
+                "labels": true,
+                "name": true,
+                "icon": false
+              },
               "lower_bound": 0,
               "upper_bound": 4
             },
             {
               "type": "custom:mini-graph-card",
               "name": "Martin Bedroom",
-              "entities": [{"entity": "sensor.martin_bedroom_occupancy"}],
+              "entities": [
+                {
+                  "entity": "sensor.martin_bedroom_occupancy"
+                }
+              ],
               "hours_to_show": 24,
               "points_per_hour": 12,
               "line_width": 2,
               "line_color": "#9c27b0",
-              "show": {"labels": true, "name": true, "icon": false},
+              "show": {
+                "labels": true,
+                "name": true,
+                "icon": false
+              },
               "lower_bound": 0,
               "upper_bound": 4
             }
@@ -180,10 +390,22 @@
               "title": "",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "person.martin", "name": "Martin"},
-                {"entity": "person.uzdil", "name": "Úzdíl"},
-                {"entity": "person.stefanko", "name": "Štefánko"},
-                {"entity": "person.samira", "name": "Samira"}
+                {
+                  "entity": "person.martin",
+                  "name": "Martin"
+                },
+                {
+                  "entity": "person.uzdil",
+                  "name": "Úzdíl"
+                },
+                {
+                  "entity": "person.stefanko",
+                  "name": "Štefánko"
+                },
+                {
+                  "entity": "person.samira",
+                  "name": "Samira"
+                }
               ]
             },
             {
@@ -191,10 +413,22 @@
               "title": "Rooms",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "sensor.martin_room", "name": "Martin"},
-                {"entity": "sensor.uzdil_room", "name": "Úzdíl"},
-                {"entity": "sensor.stefanko_room", "name": "Štefánko"},
-                {"entity": "sensor.samira_room", "name": "Samira"}
+                {
+                  "entity": "sensor.martin_room",
+                  "name": "Martin"
+                },
+                {
+                  "entity": "sensor.uzdil_room",
+                  "name": "Úzdíl"
+                },
+                {
+                  "entity": "sensor.stefanko_room",
+                  "name": "Štefánko"
+                },
+                {
+                  "entity": "sensor.samira_room",
+                  "name": "Samira"
+                }
               ]
             }
           ]
@@ -220,9 +454,18 @@
               "title": "TV state + channel (48h)",
               "hours_to_show": 48,
               "entities": [
-                {"entity": "media_player.77_oled", "name": "TV state"},
-                {"entity": "sensor.tv_channel", "name": "Channel/App"},
-                {"entity": "media_player.q_series_soundbar", "name": "Soundbar"}
+                {
+                  "entity": "media_player.77_oled",
+                  "name": "TV state"
+                },
+                {
+                  "entity": "sensor.tv_channel",
+                  "name": "Channel/App"
+                },
+                {
+                  "entity": "media_player.q_series_soundbar",
+                  "name": "Soundbar"
+                }
               ]
             },
             {
@@ -275,10 +518,22 @@
               "title": "",
               "hours_to_show": 168,
               "entities": [
-                {"entity": "person.martin", "name": "Martin"},
-                {"entity": "person.uzdil", "name": "Úzdíl"},
-                {"entity": "person.stefanko", "name": "Štefánko"},
-                {"entity": "person.samira", "name": "Samira"}
+                {
+                  "entity": "person.martin",
+                  "name": "Martin"
+                },
+                {
+                  "entity": "person.uzdil",
+                  "name": "Úzdíl"
+                },
+                {
+                  "entity": "person.stefanko",
+                  "name": "Štefánko"
+                },
+                {
+                  "entity": "person.samira",
+                  "name": "Samira"
+                }
               ]
             }
           ]
@@ -313,8 +568,14 @@
               "title": "Presence + room (24h)",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "person.martin", "name": "Home/Away"},
-                {"entity": "sensor.martin_room", "name": "Room"}
+                {
+                  "entity": "person.martin",
+                  "name": "Home/Away"
+                },
+                {
+                  "entity": "sensor.martin_room",
+                  "name": "Room"
+                }
               ]
             },
             {
@@ -322,14 +583,20 @@
               "title": "Week",
               "hours_to_show": 168,
               "entities": [
-                {"entity": "person.martin", "name": "Home/Away"}
+                {
+                  "entity": "person.martin",
+                  "name": "Home/Away"
+                }
               ]
             },
             {
               "type": "logbook",
               "title": "Activity",
               "hours_to_show": 72,
-              "entities": ["person.martin", "sensor.martin_room"]
+              "entities": [
+                "person.martin",
+                "sensor.martin_room"
+              ]
             }
           ]
         },
@@ -354,21 +621,35 @@
               "title": "Presence + room (24h)",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "person.uzdil", "name": "Home/Away"},
-                {"entity": "sensor.uzdil_room", "name": "Room"}
+                {
+                  "entity": "person.uzdil",
+                  "name": "Home/Away"
+                },
+                {
+                  "entity": "sensor.uzdil_room",
+                  "name": "Room"
+                }
               ]
             },
             {
               "type": "history-graph",
               "title": "Week",
               "hours_to_show": 168,
-              "entities": [{"entity": "person.uzdil", "name": "Home/Away"}]
+              "entities": [
+                {
+                  "entity": "person.uzdil",
+                  "name": "Home/Away"
+                }
+              ]
             },
             {
               "type": "logbook",
               "title": "Activity",
               "hours_to_show": 72,
-              "entities": ["person.uzdil", "sensor.uzdil_room"]
+              "entities": [
+                "person.uzdil",
+                "sensor.uzdil_room"
+              ]
             }
           ]
         },
@@ -393,21 +674,35 @@
               "title": "Presence + room (24h)",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "person.stefanko", "name": "Home/Away"},
-                {"entity": "sensor.stefanko_room", "name": "Room"}
+                {
+                  "entity": "person.stefanko",
+                  "name": "Home/Away"
+                },
+                {
+                  "entity": "sensor.stefanko_room",
+                  "name": "Room"
+                }
               ]
             },
             {
               "type": "history-graph",
               "title": "Week",
               "hours_to_show": 168,
-              "entities": [{"entity": "person.stefanko", "name": "Home/Away"}]
+              "entities": [
+                {
+                  "entity": "person.stefanko",
+                  "name": "Home/Away"
+                }
+              ]
             },
             {
               "type": "logbook",
               "title": "Activity",
               "hours_to_show": 72,
-              "entities": ["person.stefanko", "sensor.stefanko_room"]
+              "entities": [
+                "person.stefanko",
+                "sensor.stefanko_room"
+              ]
             }
           ]
         },
@@ -432,22 +727,917 @@
               "title": "Presence + room (24h)",
               "hours_to_show": 24,
               "entities": [
-                {"entity": "person.samira", "name": "Home/Away"},
-                {"entity": "sensor.samira_room", "name": "Room"}
+                {
+                  "entity": "person.samira",
+                  "name": "Home/Away"
+                },
+                {
+                  "entity": "sensor.samira_room",
+                  "name": "Room"
+                }
               ]
             },
             {
               "type": "history-graph",
               "title": "Week",
               "hours_to_show": 168,
-              "entities": [{"entity": "person.samira", "name": "Home/Away"}]
+              "entities": [
+                {
+                  "entity": "person.samira",
+                  "name": "Home/Away"
+                }
+              ]
             },
             {
               "type": "logbook",
               "title": "Activity",
               "hours_to_show": 72,
-              "entities": ["person.samira", "sensor.samira_room"]
+              "entities": [
+                "person.samira",
+                "sensor.samira_room"
+              ]
             }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Climate",
+      "path": "climate",
+      "icon": "mdi:thermometer",
+      "type": "sections",
+      "max_columns": 3,
+      "sections": [
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Temperature & Humidity",
+              "icon": "mdi:thermometer-water"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Bedroom",
+              "secondary": "{{ states('sensor.teplomer_bedroom_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_bedroom_humidity') | float(0) | round(0) }}% RH",
+              "icon": "mdi:bed",
+              "icon_color": "amber",
+              "entity": "sensor.teplomer_bedroom_temperature"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Úzdíl Bedroom",
+              "secondary": "{{ states('sensor.teplomer_uzdil_bedroom_temperature') | float(0) | round(1) }}°C · {{ states('sensor.teplomer_uzdil_bedroom_humidity') | float(0) | round(0) }}% RH",
+              "icon": "mdi:bed-single",
+              "icon_color": "blue",
+              "entity": "sensor.teplomer_uzdil_bedroom_temperature"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Living Room",
+              "secondary": "{{ states('sensor.temperameture_living_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.temperameture_living_room_humidity') | float(0) | round(0) }}% RH",
+              "icon": "mdi:sofa",
+              "icon_color": "purple",
+              "entity": "sensor.temperameture_living_room_temperature"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Kitchen",
+              "secondary": "{{ states('sensor.tepmerameture_kitchen_temperature') | float(0) | round(1) }}°C · {{ states('sensor.tepmerameture_kitchen_humidity') | float(0) | round(0) }}% RH",
+              "icon": "mdi:silverware-fork-knife",
+              "icon_color": "deep-orange",
+              "entity": "sensor.tepmerameture_kitchen_temperature"
+            },
+            {
+              "type": "custom:mushroom-template-card",
+              "primary": "Server Room",
+              "secondary": "{{ states('sensor.temperature_server_room_temperature') | float(0) | round(1) }}°C · {{ states('sensor.temperature_server_room_humidity') | float(0) | round(0) }}% RH",
+              "icon": "mdi:server",
+              "icon_color": "blue-grey",
+              "entity": "sensor.temperature_server_room_temperature"
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Temperature — 24h",
+              "entities": [
+                {
+                  "entity": "sensor.teplomer_bedroom_temperature",
+                  "name": "Bedroom",
+                  "color": "#ff9800"
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_temperature",
+                  "name": "Úzdíl Bedroom",
+                  "color": "#03a9f4"
+                },
+                {
+                  "entity": "sensor.temperameture_living_room_temperature",
+                  "name": "Living Room",
+                  "color": "#9c27b0"
+                },
+                {
+                  "entity": "sensor.tepmerameture_kitchen_temperature",
+                  "name": "Kitchen",
+                  "color": "#ff5722"
+                },
+                {
+                  "entity": "sensor.temperature_server_room_temperature",
+                  "name": "Server Room",
+                  "color": "#607d8b"
+                }
+              ],
+              "hours_to_show": 24,
+              "points_per_hour": 6,
+              "line_width": 2,
+              "show": {
+                "labels": true,
+                "name": true,
+                "icon": false,
+                "legend": true
+              }
+            },
+            {
+              "type": "custom:mini-graph-card",
+              "name": "Humidity — 24h",
+              "entities": [
+                {
+                  "entity": "sensor.teplomer_bedroom_humidity",
+                  "name": "Bedroom",
+                  "color": "#ff9800"
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_humidity",
+                  "name": "Úzdíl Bedroom",
+                  "color": "#03a9f4"
+                },
+                {
+                  "entity": "sensor.temperameture_living_room_humidity",
+                  "name": "Living Room",
+                  "color": "#9c27b0"
+                },
+                {
+                  "entity": "sensor.tepmerameture_kitchen_humidity",
+                  "name": "Kitchen",
+                  "color": "#ff5722"
+                },
+                {
+                  "entity": "sensor.temperature_server_room_humidity",
+                  "name": "Server Room",
+                  "color": "#607d8b"
+                }
+              ],
+              "hours_to_show": 24,
+              "points_per_hour": 6,
+              "line_width": 2,
+              "show": {
+                "labels": true,
+                "name": true,
+                "icon": false,
+                "legend": true
+              }
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "AC",
+              "icon": "mdi:air-conditioner"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.olimpia_ac",
+              "features": [
+                {
+                  "type": "climate-hvac-modes"
+                },
+                {
+                  "type": "climate-fan-modes"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "AC details",
+              "state_color": true,
+              "entities": [
+                {
+                  "entity": "sensor.152832117747545_indoor_temperature",
+                  "name": "Indoor temperature"
+                },
+                {
+                  "entity": "binary_sensor.152832117747545_full_dust",
+                  "name": "Dust filter"
+                },
+                {
+                  "entity": "switch.152832117747545_screen_display",
+                  "name": "Display"
+                },
+                {
+                  "entity": "switch.152832117747545_sleep_mode",
+                  "name": "Sleep mode"
+                }
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "AC — 24h",
+              "hours_to_show": 24,
+              "entities": [
+                {
+                  "entity": "climate.olimpia_ac",
+                  "name": "AC mode"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "grid",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Fan",
+              "icon": "mdi:fan"
+            },
+            {
+              "type": "tile",
+              "entity": "fan.dmaker_p33_2231_fan",
+              "name": "Standing Fan",
+              "vertical": false,
+              "features": [
+                {
+                  "type": "fan-speed"
+                },
+                {
+                  "type": "fan-preset-modes",
+                  "style": "dropdown"
+                }
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Fan — 24h",
+              "hours_to_show": 24,
+              "entities": [
+                {
+                  "entity": "fan.dmaker_p33_2231_fan",
+                  "name": "Fan"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Temperature",
+      "path": "temperature",
+      "icon": "mdi:thermometer-lines",
+      "type": "panel",
+      "max_columns": 1,
+      "cards": [
+        {
+          "type": "vertical-stack",
+          "cards": [
+            {
+              "type": "heading",
+              "heading": "Last 24 hours",
+              "icon": "mdi:clock-outline"
+            },
+            {
+              "type": "custom:plotly-graph",
+              "title": "Temperatures — interactive",
+              "hours_to_show": 24,
+              "refresh_interval": 30,
+              "ha_theme": true,
+              "layout": {
+                "height": 720,
+                "margin": {
+                  "t": 30,
+                  "l": 50,
+                  "r": 20,
+                  "b": 40
+                },
+                "yaxis": {
+                  "title": "°C"
+                },
+                "legend": {
+                  "orientation": "h",
+                  "y": -0.18
+                },
+                "dragmode": "pan"
+              },
+              "config": {
+                "scrollZoom": true,
+                "displaylogo": false
+              },
+              "entities": [
+                {
+                  "entity": "sensor.teplomer_bedroom_temperature",
+                  "name": "Bedroom",
+                  "line": {
+                    "color": "#ff9800",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_temperature",
+                  "name": "Úzdíl Bedroom",
+                  "line": {
+                    "color": "#03a9f4",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "climate.olimpia_ac",
+                  "attribute": "current_temperature",
+                  "name": "AC Sensor",
+                  "line": {
+                    "color": "#4caf50",
+                    "shape": "hv",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "climate.olimpia_ac",
+                  "attribute": "temperature",
+                  "name": "AC Setpoint",
+                  "line": {
+                    "color": "#e91e63",
+                    "shape": "hv",
+                    "width": 2,
+                    "dash": "dash"
+                  }
+                },
+                {
+                  "entity": "sensor.temperameture_living_room_temperature",
+                  "name": "Living Room",
+                  "line": {
+                    "color": "#9c27b0",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.tepmerameture_kitchen_temperature",
+                  "name": "Kitchen",
+                  "line": {
+                    "color": "#ff5722",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.temperature_server_room_temperature",
+                  "name": "Server Room",
+                  "line": {
+                    "color": "#607d8b",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "heading": "Weekly trend (min/max band)",
+              "icon": "mdi:chart-bell-curve"
+            },
+            {
+              "type": "custom:plotly-graph",
+              "title": "Room temperatures — 7 days",
+              "hours_to_show": "7d",
+              "refresh_interval": 300,
+              "ha_theme": true,
+              "layout": {
+                "height": 720,
+                "margin": {
+                  "t": 30,
+                  "l": 50,
+                  "r": 20,
+                  "b": 40
+                },
+                "yaxis": {
+                  "title": "°C"
+                },
+                "legend": {
+                  "orientation": "h",
+                  "y": -0.18
+                },
+                "dragmode": "pan"
+              },
+              "config": {
+                "scrollZoom": true,
+                "displaylogo": false
+              },
+              "entities": [
+                {
+                  "entity": "sensor.teplomer_bedroom_temperature",
+                  "statistic": "min",
+                  "period": "hour",
+                  "name": "Bedroom min",
+                  "line": {
+                    "color": "rgba(255,152,0,0)",
+                    "width": 0
+                  },
+                  "showlegend": false
+                },
+                {
+                  "entity": "sensor.teplomer_bedroom_temperature",
+                  "statistic": "max",
+                  "period": "hour",
+                  "name": "Bedroom range",
+                  "line": {
+                    "color": "rgba(255,152,0,0)",
+                    "width": 0
+                  },
+                  "fill": "tonexty",
+                  "fillcolor": "rgba(255,152,0,0.18)"
+                },
+                {
+                  "entity": "sensor.teplomer_bedroom_temperature",
+                  "statistic": "mean",
+                  "period": "hour",
+                  "name": "Bedroom mean",
+                  "line": {
+                    "color": "#ff9800",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_temperature",
+                  "statistic": "min",
+                  "period": "hour",
+                  "name": "Úzdíl min",
+                  "line": {
+                    "color": "rgba(3,169,244,0)",
+                    "width": 0
+                  },
+                  "showlegend": false
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_temperature",
+                  "statistic": "max",
+                  "period": "hour",
+                  "name": "Úzdíl range",
+                  "line": {
+                    "color": "rgba(3,169,244,0)",
+                    "width": 0
+                  },
+                  "fill": "tonexty",
+                  "fillcolor": "rgba(3,169,244,0.18)"
+                },
+                {
+                  "entity": "sensor.teplomer_uzdil_bedroom_temperature",
+                  "statistic": "mean",
+                  "period": "hour",
+                  "name": "Úzdíl mean",
+                  "line": {
+                    "color": "#03a9f4",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.temperameture_living_room_temperature",
+                  "statistic": "mean",
+                  "period": "hour",
+                  "name": "Living Room mean",
+                  "line": {
+                    "color": "#9c27b0",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.tepmerameture_kitchen_temperature",
+                  "statistic": "mean",
+                  "period": "hour",
+                  "name": "Kitchen mean",
+                  "line": {
+                    "color": "#ff5722",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "sensor.temperature_server_room_temperature",
+                  "statistic": "mean",
+                  "period": "hour",
+                  "name": "Server Room mean",
+                  "line": {
+                    "color": "#607d8b",
+                    "shape": "spline",
+                    "width": 2
+                  }
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "heading": "AC — last 7 days",
+              "icon": "mdi:air-conditioner"
+            },
+            {
+              "type": "custom:plotly-graph",
+              "title": "AC sensor vs setpoint",
+              "hours_to_show": "7d",
+              "refresh_interval": 300,
+              "ha_theme": true,
+              "layout": {
+                "height": 720,
+                "margin": {
+                  "t": 30,
+                  "l": 50,
+                  "r": 20,
+                  "b": 40
+                },
+                "yaxis": {
+                  "title": "°C"
+                },
+                "legend": {
+                  "orientation": "h",
+                  "y": -0.18
+                },
+                "dragmode": "pan"
+              },
+              "config": {
+                "scrollZoom": true,
+                "displaylogo": false
+              },
+              "entities": [
+                {
+                  "entity": "climate.olimpia_ac",
+                  "attribute": "current_temperature",
+                  "name": "AC Sensor",
+                  "line": {
+                    "color": "#4caf50",
+                    "shape": "hv",
+                    "width": 2
+                  }
+                },
+                {
+                  "entity": "climate.olimpia_ac",
+                  "attribute": "temperature",
+                  "name": "AC Setpoint",
+                  "line": {
+                    "color": "#e91e63",
+                    "shape": "hv",
+                    "width": 2,
+                    "dash": "dash"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health",
+      "path": "health",
+      "icon": "mdi:heart-pulse",
+      "cards": [
+        {
+          "type": "markdown",
+          "content": "## Current"
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {
+              "entity": "sensor.withings_weight",
+              "name": "Weight"
+            },
+            {
+              "entity": "sensor.weight_7d_change",
+              "name": "Δ 7d"
+            },
+            {
+              "entity": "sensor.weight_30d_change",
+              "name": "Δ 30d"
+            },
+            {
+              "entity": "sensor.withings_bmi",
+              "name": "BMI"
+            },
+            {
+              "entity": "sensor.withings_fat_ratio",
+              "name": "Fat %"
+            },
+            {
+              "entity": "sensor.withings_muscle_mass",
+              "name": "Muscle"
+            },
+            {
+              "entity": "sensor.withings_battery",
+              "name": "Battery"
+            },
+            {
+              "entity": "sensor.withings_heart_pulse",
+              "name": "Pulse"
+            }
+          ]
+        },
+        {
+          "type": "statistics-graph",
+          "title": "Weight — 30d",
+          "days_to_show": 30,
+          "period": "day",
+          "stat_types": [
+            "mean",
+            "min",
+            "max"
+          ],
+          "entities": [
+            "sensor.withings_weight"
+          ]
+        },
+        {
+          "type": "statistics-graph",
+          "title": "Body composition — 30d",
+          "days_to_show": 30,
+          "period": "day",
+          "stat_types": [
+            "mean"
+          ],
+          "entities": [
+            "sensor.withings_fat_mass",
+            "sensor.withings_muscle_mass",
+            "sensor.withings_bone_mass",
+            "sensor.withings_hydration"
+          ]
+        },
+        {
+          "type": "statistics-graph",
+          "title": "Heart pulse — 30d",
+          "days_to_show": 30,
+          "period": "day",
+          "stat_types": [
+            "mean",
+            "min",
+            "max"
+          ],
+          "entities": [
+            "sensor.withings_heart_pulse"
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Activity today"
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {
+              "entity": "sensor.withings_steps_today",
+              "name": "Steps"
+            },
+            {
+              "entity": "sensor.withings_distance_travelled_today",
+              "name": "Distance"
+            },
+            {
+              "entity": "sensor.withings_active_time_today",
+              "name": "Active"
+            },
+            {
+              "entity": "sensor.withings_total_calories_burnt_today",
+              "name": "Calories"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Last workout"
+        },
+        {
+          "type": "entities",
+          "entities": [
+            "sensor.withings_last_workout_type",
+            "sensor.withings_last_workout_duration",
+            "sensor.withings_last_workout_intensity",
+            "sensor.withings_calories_burnt_last_workout",
+            "sensor.withings_distance_travelled_last_workout"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Network",
+      "path": "network",
+      "icon": "mdi:lan",
+      "cards": [
+        {
+          "type": "markdown",
+          "content": "## Internet uplink"
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 2,
+          "entities": [
+            {
+              "entity": "sensor.usw_lite_8_poe_airwaynet_antena_link_speed",
+              "name": "Airwaynet"
+            },
+            {
+              "entity": "sensor.usw_lite_8_poe_homie_enp1s0_dhcp_nat_link_speed",
+              "name": "Homie WAN"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## AdGuard DNS"
+        },
+        {
+          "type": "horizontal-stack",
+          "cards": [
+            {
+              "type": "entity",
+              "entity": "switch.adguard_home_protection",
+              "name": "Protection"
+            },
+            {
+              "type": "entity",
+              "entity": "switch.adguard_home_filtering",
+              "name": "Filtering"
+            },
+            {
+              "type": "entity",
+              "entity": "switch.adguard_home_safe_browsing",
+              "name": "Safe Browsing"
+            }
+          ]
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {
+              "entity": "sensor.adguard_home_dns_queries",
+              "name": "Queries"
+            },
+            {
+              "entity": "sensor.adguard_home_dns_queries_blocked",
+              "name": "Blocked"
+            },
+            {
+              "entity": "sensor.adguard_home_dns_queries_blocked_ratio",
+              "name": "Block %"
+            },
+            {
+              "entity": "sensor.adguard_home_average_processing_speed",
+              "name": "Speed"
+            }
+          ]
+        },
+        {
+          "type": "statistics-graph",
+          "title": "DNS — last 24h",
+          "days_to_show": 1,
+          "period": "hour",
+          "stat_types": [
+            "change"
+          ],
+          "entities": [
+            "sensor.adguard_home_dns_queries",
+            "sensor.adguard_home_dns_queries_blocked"
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Access points"
+        },
+        {
+          "type": "horizontal-stack",
+          "cards": [
+            {
+              "type": "entities",
+              "title": "Obývák",
+              "entities": [
+                "sensor.obyvak_state",
+                "sensor.obyvak_clients",
+                "sensor.obyvak_cpu_utilization",
+                "sensor.obyvak_memory_utilization",
+                "sensor.obyvak_uptime"
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Ložnice",
+              "entities": [
+                "sensor.loznice_state",
+                "sensor.loznice_clients",
+                "sensor.loznice_cpu_utilization",
+                "sensor.loznice_memory_utilization",
+                "sensor.loznice_uptime"
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Pracovna (Martínek)",
+              "entities": [
+                "sensor.pracovna_state",
+                "sensor.pracovna_clients",
+                "sensor.pracovna_cpu_utilization",
+                "sensor.pracovna_memory_utilization",
+                "sensor.pracovna_uptime"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Switch — USW Lite 8 PoE"
+        },
+        {
+          "type": "entities",
+          "entities": [
+            "sensor.usw_lite_8_poe_state",
+            "sensor.usw_lite_8_poe_clients",
+            "sensor.usw_lite_8_poe_cpu_utilization",
+            "sensor.usw_lite_8_poe_memory_utilization",
+            "sensor.usw_lite_8_poe_uptime"
+          ]
+        },
+        {
+          "type": "glance",
+          "title": "PoE power per port",
+          "show_state": true,
+          "columns": 4,
+          "entities": [
+            {
+              "entity": "sensor.usw_lite_8_poe_port_1_poe_power",
+              "name": "Port 1"
+            },
+            {
+              "entity": "sensor.usw_lite_8_poe_port_2_poe_power",
+              "name": "Port 2"
+            },
+            {
+              "entity": "sensor.usw_lite_8_poe_port_3_poe_power",
+              "name": "Port 3"
+            },
+            {
+              "entity": "sensor.usw_lite_8_poe_port_4_poe_power",
+              "name": "Port 4"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Wi-Fi SSIDs"
+        },
+        {
+          "type": "glance",
+          "show_state": true,
+          "columns": 3,
+          "entities": [
+            {
+              "entity": "sensor.dev_null",
+              "name": "@dev_null"
+            },
+            {
+              "entity": "sensor.dev_null_iot_clients",
+              "name": "IoT"
+            },
+            {
+              "entity": "sensor.dev_null_iot_5_clients",
+              "name": "IoT-5"
+            },
+            {
+              "entity": "sensor.std_visit",
+              "name": "std::visit"
+            },
+            {
+              "entity": "sensor.martinkuv_pisecek",
+              "name": "Píseček"
+            }
+          ]
+        },
+        {
+          "type": "markdown",
+          "content": "## Zigbee — SLZB-06"
+        },
+        {
+          "type": "entities",
+          "entities": [
+            "binary_sensor.slzb_06_serial_connected",
+            "sensor.slzb_06_uptime",
+            "binary_sensor.physical_button_status"
           ]
         }
       ]
@@ -483,7 +1673,13 @@
                   "icon": "mdi:lightbulb-off",
                   "color": "var(--disabled-text-color)",
                   "size": "30%",
-                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 0}}
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "script.bedroom_set_level",
+                    "service_data": {
+                      "level": 0
+                    }
+                  }
                 },
                 {
                   "type": "custom:button-card",
@@ -491,7 +1687,13 @@
                   "icon": "mdi:brightness-2",
                   "color": "var(--warning-color)",
                   "size": "30%",
-                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 3}}
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "script.bedroom_set_level",
+                    "service_data": {
+                      "level": 3
+                    }
+                  }
                 },
                 {
                   "type": "custom:button-card",
@@ -499,7 +1701,13 @@
                   "icon": "mdi:brightness-6",
                   "color": "var(--state-light-active-color)",
                   "size": "30%",
-                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 6}}
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "script.bedroom_set_level",
+                    "service_data": {
+                      "level": 6
+                    }
+                  }
                 },
                 {
                   "type": "custom:button-card",
@@ -507,7 +1715,13 @@
                   "icon": "mdi:brightness-7",
                   "color": "var(--state-light-active-color)",
                   "size": "30%",
-                  "tap_action": {"action": "call-service", "service": "script.bedroom_set_level", "service_data": {"level": 10}}
+                  "tap_action": {
+                    "action": "call-service",
+                    "service": "script.bedroom_set_level",
+                    "service_data": {
+                      "level": 10
+                    }
+                  }
                 }
               ]
             }
@@ -563,6 +1777,639 @@
               "collapsible_controls": true
             }
           ]
+        }
+      ]
+    },
+    {
+      "title": "Batteries",
+      "path": "batteries",
+      "icon": "mdi:battery-50",
+      "cards": [
+        {
+          "type": "markdown",
+          "content": "## Whitelisted battery levels (no phones/tablets/laptops/cars)"
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "All batteries",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "domain": "sensor",
+                "attributes": {
+                  "device_class": "battery"
+                },
+                "options": {
+                  "secondary_info": "last-changed"
+                }
+              }
+            ],
+            "exclude": [
+              {
+                "entity_id": "sensor.pixel_*"
+              },
+              {
+                "entity_id": "sensor.*macbook*"
+              },
+              {
+                "entity_id": "sensor.*iphone*"
+              },
+              {
+                "entity_id": "sensor.*ipad*"
+              },
+              {
+                "entity_id": "sensor.*s24*"
+              },
+              {
+                "entity_id": "sensor.xiaomi_17*"
+              },
+              {
+                "entity_id": "sensor.redmi_*"
+              },
+              {
+                "entity_id": "sensor.*_car_*"
+              }
+            ]
+          },
+          "sort": {
+            "method": "state",
+            "numeric": true
+          }
+        },
+        {
+          "type": "history-graph",
+          "title": "Battery levels — last 7 days",
+          "hours_to_show": 168,
+          "entities": [
+            {
+              "entity": "sensor.teplomer_bedroom_battery",
+              "name": "Bedroom Teplomer"
+            },
+            {
+              "entity": "sensor.teplomer_uzdil_bedroom_battery",
+              "name": "Úzdíl Bedroom Teplomer"
+            },
+            {
+              "entity": "sensor.signify_netherlands_b_v_rwl022_battery",
+              "name": "Hue Dimmer 1"
+            },
+            {
+              "entity": "sensor.signify_netherlands_b_v_rwl022_battery_2",
+              "name": "Hue Dimmer 2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Overview",
+      "path": "overview",
+      "icon": "mdi:home-variant",
+      "strategy": {
+        "type": "home-overview"
+      }
+    },
+    {
+      "title": "Living Room",
+      "path": "area_living_room",
+      "icon": "mdi:sofa",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Lights",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "living_room",
+                "domain": "light"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Switches",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "living_room",
+                "domain": "switch"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Climate & Fans",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "living_room",
+                "domain": "climate"
+              },
+              {
+                "area": "living_room",
+                "domain": "fan"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Media"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "living_room",
+                "domain": "media_player"
+              },
+              {
+                "area": "living_room",
+                "domain": "remote"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Sensors"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "living_room",
+                "domain": "sensor"
+              },
+              {
+                "area": "living_room",
+                "domain": "binary_sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "entities",
+          "title": "TV — 77\" OLED",
+          "state_color": true,
+          "entities": [
+            {
+              "entity": "sensor.77_oled_power",
+              "name": "Power"
+            },
+            {
+              "entity": "sensor.77_oled_energy",
+              "name": "Energy"
+            },
+            {
+              "entity": "sensor.77_oled_tv_channel_name",
+              "name": "Channel"
+            },
+            {
+              "entity": "sensor.light_sensor_77_oled_illuminance",
+              "name": "Ambient light"
+            },
+            {
+              "entity": "sensor.light_sensor_77_oled_brightness_intensity",
+              "name": "Brightness"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Bedroom",
+      "path": "area_bedroom",
+      "icon": "mdi:bed",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Lights",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom",
+                "domain": "light"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Switches",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom",
+                "domain": "switch"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Climate & Fans",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom",
+                "domain": "climate"
+              },
+              {
+                "area": "bedroom",
+                "domain": "fan"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Sensors"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom",
+                "domain": "sensor"
+              },
+              {
+                "area": "bedroom",
+                "domain": "binary_sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        }
+      ]
+    },
+    {
+      "title": "Bedroom Martin",
+      "path": "area_bedroom_martin",
+      "icon": "mdi:bed-single",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Lights",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom_martin",
+                "domain": "light"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Switches",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom_martin",
+                "domain": "switch"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Sensors"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "bedroom_martin",
+                "domain": "sensor"
+              },
+              {
+                "area": "bedroom_martin",
+                "domain": "binary_sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        }
+      ]
+    },
+    {
+      "title": "Kitchen",
+      "path": "area_kitchen",
+      "icon": "mdi:silverware-fork-knife",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Lights",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "kitchen",
+                "domain": "light"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Appliances & switches",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "kitchen",
+                "domain": "switch"
+              },
+              {
+                "area": "kitchen",
+                "domain": "binary_sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Sensors"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "kitchen",
+                "domain": "sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "entities",
+          "title": "Dishwasher",
+          "state_color": true,
+          "entities": [
+            {
+              "entity": "sensor.electrolux_dishwasher_cyclephase",
+              "name": "Cycle phase"
+            },
+            {
+              "entity": "binary_sensor.electrolux_dishwasher_doorstate",
+              "name": "Door"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_timetoend",
+              "name": "Time to end"
+            },
+            {
+              "entity": "binary_sensor.electrolux_dishwasher_miscellaneousstate_ecomode",
+              "name": "Eco mode"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_alerts",
+              "name": "Alerts"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_userselections_ecoscore",
+              "name": "Eco score"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_userselections_energyscore",
+              "name": "Energy score"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_userselections_waterscore",
+              "name": "Water score"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_totalcyclecounter",
+              "name": "Total cycles"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_remotecontrol",
+              "name": "Remote control"
+            },
+            {
+              "entity": "sensor.electrolux_dishwasher_connectivitystate",
+              "name": "Connectivity"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Main Bathroom",
+      "path": "area_main_bathroom",
+      "icon": "mdi:shower",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Lights",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "main_bathroom",
+                "domain": "light"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Switches",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "main_bathroom",
+                "domain": "switch"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Sensors"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "main_bathroom",
+                "domain": "sensor"
+              },
+              {
+                "area": "main_bathroom",
+                "domain": "binary_sensor"
+              }
+            ]
+          },
+          "show_empty": false
+        },
+        {
+          "type": "entities",
+          "title": "Washer",
+          "state_color": true,
+          "entities": [
+            {
+              "entity": "sensor.washer_machine_state",
+              "name": "State"
+            },
+            {
+              "entity": "sensor.washer_job_state",
+              "name": "Job"
+            },
+            {
+              "entity": "sensor.washer_completion_time",
+              "name": "Completion time"
+            },
+            {
+              "entity": "binary_sensor.washer_power_2",
+              "name": "Power"
+            },
+            {
+              "entity": "binary_sensor.washer_remote_control_2",
+              "name": "Remote control"
+            },
+            {
+              "entity": "binary_sensor.washer_child_lock_2",
+              "name": "Child lock"
+            },
+            {
+              "entity": "sensor.washer_water_consumption",
+              "name": "Water consumption"
+            },
+            {
+              "entity": "sensor.washer_energy_2",
+              "name": "Energy (total)"
+            },
+            {
+              "entity": "sensor.washer_power_2",
+              "name": "Power draw"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Laundry room",
+      "path": "area_laundry_room",
+      "icon": "mdi:washing-machine",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "Appliances",
+            "state_color": true
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "laundry_room"
+              }
+            ]
+          },
+          "show_empty": false
+        }
+      ]
+    },
+    {
+      "title": "Server Room",
+      "path": "area_server_room",
+      "icon": "mdi:server",
+      "subview": true,
+      "cards": [
+        {
+          "type": "custom:auto-entities",
+          "card": {
+            "type": "entities",
+            "title": "All entities"
+          },
+          "filter": {
+            "include": [
+              {
+                "area": "server_room"
+              }
+            ]
+          },
+          "show_empty": false
         }
       ]
     }
