@@ -93,7 +93,7 @@ Small set of custom package derivations (plymouth theme, material-symbols, prome
 ## Nixpkgs Channels
 
 - `nixpkgs` (primary): unstable
-- `nixpkgs-stable`: 25.11
+- `nixpkgs-stable`: 26.05
 - `nixpkgs-master`: master branch
 - `nixpkgs-dev-null`: fork with custom patches
 

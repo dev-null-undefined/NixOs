@@ -4,7 +4,7 @@ final: prev: {
   prometheus-qbittorrent-exporter = prev.callPackage ./prometheus-qbittorrent-exporter {};
 
   home-assistant-electrolux-status = let
-    pyPkgs = prev.home-assistant.python.pkgs;
+    pyPkgs = prev.home-assistant.python3Packages;
     pyelectroluxocp = pyPkgs.callPackage ./pyelectroluxocp {};
   in
     prev.callPackage ./home-assistant-electrolux-status {
