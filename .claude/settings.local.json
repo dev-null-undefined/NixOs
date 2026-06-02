@@ -16,7 +16,10 @@
       "Bash(nix flake:*)",
       "Read(//home/martin/GitHub/martin/nixos/**)",
       "mcp__nixos__nix",
-      "Bash(nix search:*)"
+      "Bash(nix search:*)",
+      "Bash(journalctl --since \"yesterday 20:00\" --until \"today 09:00\")",
+      "Bash(journalctl --since \"2026-06-01 20:00\" --until \"2026-06-02 09:00\")"
     ]
-  }
+  },
+  "outputStyle": "default"
 }
