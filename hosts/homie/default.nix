@@ -16,7 +16,6 @@ in {
     ./zfs-encryption.nix
     ./secure-boot.nix
     ./luks.nix
-    ./jellyfin-hwaccel.nix
   ];
   generated = {
     services = {
