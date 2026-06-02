@@ -40,7 +40,6 @@
 
   services.displayManager.gdm = {
     enable = true;
-    wayland = true;
   };
 
   #services.xserver.displayManager.gdm = {
