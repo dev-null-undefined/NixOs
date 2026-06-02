@@ -95,6 +95,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    money-machine = {
+      url = "path:/home/martin/GitHub/martin/money-machine";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";

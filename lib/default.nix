@@ -17,6 +17,7 @@
         permittedInsecurePackages = [
           "electron-19.1.9"
           "electron-25.9.0"
+          "electron-39.8.10"
           "dotnet-sdk-7.0.410"
           "dotnet-sdk-wrapped-7.0.410"
           "dotnet-sdk-6.0.428"

@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1777478237,
-        "narHash": "sha256-G7QKWUChnuxB8iFVD4wCxeWm0CwtH/Lp0lYfyD6NoAA=",
+        "lastModified": 1778770868,
+        "narHash": "sha256-fBRGAw1/VOYHwXffce6AAj1pY9+uJdjrwNLJI+vO+PA=",
         "ref": "refs/heads/master",
-        "rev": "ef864f256acda8fb438e9a262d60aab89b9e34fd",
-        "revCount": 174,
+        "rev": "26c53ce29428d349421ba8a406ef96628492957e",
+        "revCount": 182,
         "type": "git",
         "url": "ssh://git@git.cdn77.eu/cdn/admins/admin-helper-scripts.git"
       },
@@ -862,6 +862,26 @@
         "type": "github"
       }
     },
+    "money-machine": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780414260,
+        "narHash": "sha256-tCYaTBnJYu9q89SbcNzs5NNEeRvaVG2Nj4udhagx7xg=",
+        "path": "/home/martin/GitHub/martin/money-machine",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/martin/GitHub/martin/money-machine",
+        "type": "path"
+      }
+    },
     "nix-alien": {
       "inputs": {
         "flake-compat": "flake-compat_5",
@@ -1159,6 +1179,7 @@
         "hyprland-contrib": "hyprland-contrib",
         "hyprspace": "hyprspace",
         "lanzaboote": "lanzaboote",
+        "money-machine": "money-machine",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",

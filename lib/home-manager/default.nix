@@ -29,6 +29,7 @@
         imports = [
           inputs.hyprland.homeManagerModules.default
           inputs.nixvim.homeModules.nixvim
+          inputs.money-machine.homeManagerModules.default
         ];
         home.homeDirectory = "/home/${home.username}";
 

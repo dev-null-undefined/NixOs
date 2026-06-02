@@ -5,9 +5,15 @@
   inputs,
   pkgs,
   config,
+  self,
   ...
 }: {
   imports = [./hardware-configuration.nix];
+
+  services.money-machine = {
+    enable = true;
+    secretsFile = self.outPath + "/secrets/money-machine.env";
+  };
 
   generated = {
     network-manager.enable = true;

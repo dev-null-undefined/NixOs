@@ -63,6 +63,8 @@ in {
 
         inputs.sops.nixosModules.default
 
+        inputs.money-machine.nixosModules.default
+
         inputs.lanzaboote.nixosModules.lanzaboote
 
         inputs.unifi-os-server.nixosModules.unifi-os-server
@@ -74,7 +76,11 @@ in {
             useUserPackages = true;
             useGlobalPkgs = true;
             extraSpecialArgs = {inherit self inputs;};
-            sharedModules = [../../home/nixosDefaults.nix inputs.nixvim.homeModules.nixvim];
+            sharedModules = [
+              ../../home/nixosDefaults.nix
+              inputs.nixvim.homeModules.nixvim
+              inputs.money-machine.homeManagerModules.default
+            ];
           };
         }
 
