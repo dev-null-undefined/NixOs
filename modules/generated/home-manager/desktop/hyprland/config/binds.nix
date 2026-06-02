@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   mappings = with lib.lists;
     (map (n: {
       keybind = toString n;
@@ -52,6 +56,7 @@ in {
         # Window managment key binds
         "$mainMod,     Q, killactive,"
         "$mainMod,     F, fullscreen,"
+        "$mainMod,     B, exec, ${pkgs.procps}/bin/pkill -SIGUSR1 -x .waybar-wrapped"
         "$mainMod, Space, togglefloating,"
 
         # Move focus with mainMod + arrow keys
