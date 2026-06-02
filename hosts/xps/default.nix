@@ -150,7 +150,12 @@
       # Fine-grained power management. Turns off GPU when not in use.
       # Experimental and only works on modern Nvidia GPUs (Turing or newer).
       powerManagement.finegrained = false;
-      open = true;
+      open = false;
+      # GSP-RM firmware bug: heartbeat freezes after GC6 exit, causing GPU hang
+      # on dock disconnect / display pipeline events. Disable GSP and runtime PM.
+      # GSP can only be disabled on the proprietary driver.
+      gsp.enable = false;
+      moduleParams.nvidia.NVreg_DynamicPowerManagement = "0x00";
       nvidiaSettings = true;
       nvidiaPersistenced = true;
 
