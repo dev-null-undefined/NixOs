@@ -68,7 +68,7 @@ in {
   home.file.".claude/settings.json".text = builtins.toJSON {
     skipDangerousModePermissionPrompt = true;
     skipAutoPermissionPrompt = true;
-    effortLevel = "high";
+    effortLevel = "xhigh";
     voiceEnabled = false;
     spinnerTipsEnabled = false;
     awaySummaryEnabled = false;
