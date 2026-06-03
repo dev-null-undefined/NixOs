@@ -24,4 +24,7 @@
   ];
 
   wayland.windowManager.hyprland.enable = true;
+  # UWSM (enabled system-side) owns the systemd user session, so disable
+  # home-manager's own hyprland systemd integration to avoid double management.
+  wayland.windowManager.hyprland.systemd.enable = false;
 }
