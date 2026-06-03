@@ -152,9 +152,11 @@
       powerManagement.finegrained = false;
       open = false;
       # GSP-RM firmware bug: heartbeat freezes after GC6 exit, causing GPU hang
-      # on dock disconnect / display pipeline events. Disable GSP and runtime PM.
-      # GSP can only be disabled on the proprietary driver.
-      gsp.enable = false;
+      # on dock disconnect / display pipeline events. Use proprietary driver
+      # and disable runtime PM. GSP itself cannot be disabled on Ada Lovelace
+      # with driver 595 (mandatory at hw level; module drops the firmware bundle
+      # via `hardware.firmware = optional gsp.enable nvidia_x11.firmware`, which
+      # breaks DRM init).
       moduleParams.nvidia.NVreg_DynamicPowerManagement = "0x00";
       nvidiaSettings = true;
       nvidiaPersistenced = true;
