@@ -49,6 +49,8 @@
 
   systemd.sleep.settings.Sleep.HibernateDelaySec = "1h";
 
+  services.logind.powerKey = "lock";
+
   custom.wireguard.ips = ["${config.registry.hosts.xps.wgIp}/24"];
 
   generated.network-manager.network-profiles.vpn.cdn77 = {
