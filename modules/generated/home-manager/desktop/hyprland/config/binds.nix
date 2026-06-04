@@ -123,11 +123,11 @@ in {
       ", XF86AudioMute,        exec, wpctl set-mute   @DEFAULT_AUDIO_SINK@   toggle"
       ", XF86AudioMicMute,     exec, wpctl set-mute   @DEFAULT_AUDIO_SOURCE@ toggle"
 
-      # backlight
-      ", XF86MonBrightnessUp,   exec, brightnessctl set +2%"
-      ", XF86MonBrightnessDown, exec, brightnessctl set 2%-"
+      # backlight — seamless: hardware down to ~1%, then software-dim below that
+      ", XF86MonBrightnessUp,   exec, brightness-ctl up"
+      ", XF86MonBrightnessDown, exec, brightness-ctl down"
 
-      # brightness shortcuts with Ctrl for max/min
+      # brightness shortcuts with Ctrl for hardware max/min
       "CTRL, XF86MonBrightnessUp,   exec, brightnessctl set 100%"
       "CTRL, XF86MonBrightnessDown, exec, brightnessctl set 1%"
     ];
