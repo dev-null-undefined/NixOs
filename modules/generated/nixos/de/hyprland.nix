@@ -52,6 +52,15 @@
   # bounces back to the greeter. Force the UWSM-managed Hyprland session.
   services.displayManager.defaultSession = "hyprland-uwsm";
 
+  # hyprland-uwsm.desktop uses bare `Exec=uwsm …` / `TryExec=uwsm`, but GDM's
+  # service PATH lacks uwsm. GLib's GDesktopAppInfo honours TryExec, so the
+  # entry resolves to invalid ("not using invalid .dmrc session: hyprland-uwsm")
+  # and GDM falls back to gnome-session → "Session never registered". Putting
+  # uwsm on GDM's PATH makes the TryExec check pass so the session launches.
+  # Regression of nixpkgs PR #508309 (absolute-pathed the .desktop) in current
+  # hyprland. https://github.com/NixOS/nixpkgs/issues/484328
+  systemd.services.display-manager.path = [pkgs.uwsm];
+
   # Workaround for GDM 50 not finding gnome-session in PATH on NixOS.
   # Upstream fix is in nixpkgs master (PR #523948, merged 2026-06-02) but not
   # yet promoted to nixos-unstable. Remove once channel catches up.
