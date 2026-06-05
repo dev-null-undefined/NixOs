@@ -21,6 +21,12 @@ creation_rules:
         - *pc_honey
         - *pc_xps
         - *pc_x1
+  - path_regex: secrets/opencode-dp-baseurl
+    key_groups:
+      - age:
+        - *pc_honey
+        - *pc_xps
+        - *pc_x1
   - path_regex: secrets/protonvpn-wireguard-pk
     key_groups:
       - age:

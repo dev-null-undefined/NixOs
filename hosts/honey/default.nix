@@ -15,6 +15,13 @@
     secretsFile = self.outPath + "/secrets/money-machine.env";
   };
 
+  # DataPacket AI baseURL for opencode; resolved via {file:...} at load time.
+  sops.secrets."opencode-dp-baseurl" = {
+    sopsFile = self.outPath + "/secrets/opencode-dp-baseurl";
+    format = "binary";
+    owner = "martin";
+  };
+
   generated = {
     network-manager.enable = true;
     plymouth.enable = true;
