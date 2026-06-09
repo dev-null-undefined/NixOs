@@ -33,8 +33,6 @@ with self.lib'.internal; {
       (super.stable)
       bat-extras
       batgrep
-      glances # test_phys_core_returns_int fails on aarch64-linux (oracle-server) — phys_core() returns None
-      hyprlock # 0.9.3 SIGSEGVs in CShader dtor when init fails, deadlocking session lock
       lutris
       wineWowPackages
       ;
