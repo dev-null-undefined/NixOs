@@ -231,5 +231,26 @@
       {"service": "input_boolean.turn_off", "target": {"entity_id": "input_boolean.dim_down_holding"}}
     ],
     "mode": "single"
+  },
+  {
+    "id": "bedroom_level_apply_on_change",
+    "alias": "Bedroom level apply on change",
+    "description": "Apply the bedroom light tier whenever input_number.bedroom_light_level changes (e.g. the dashboard slider, which only sets the value). Suppressed during dimmer hold ramps, which apply with their own tuned transition.",
+    "triggers": [
+      {
+        "trigger": "state",
+        "entity_id": ["input_number.bedroom_light_level"],
+        "not_from": ["unavailable", "unknown"],
+        "not_to": ["unavailable", "unknown"]
+      }
+    ],
+    "conditions": [
+      {"condition": "state", "entity_id": "input_boolean.dim_up_holding", "state": "off"},
+      {"condition": "state", "entity_id": "input_boolean.dim_down_holding", "state": "off"}
+    ],
+    "actions": [
+      {"service": "script.apply_bedroom_level"}
+    ],
+    "mode": "restart"
   }
 ]

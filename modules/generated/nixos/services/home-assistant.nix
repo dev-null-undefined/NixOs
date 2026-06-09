@@ -295,6 +295,41 @@ in {
         }
       ];
 
+      # Bedroom accent-light groups. The four signify_netherlands bulbs are
+      # four separate lamps: the desk pair (behind the monitors) and the
+      # wardrobe pair. `Ambiance` nests both sub-groups so all accent lights
+      # can be controlled together. Declared here (not as UI helpers) so they
+      # live in git; the old broken UI "Monitor" group helper was removed.
+      light = [
+        {
+          platform = "group";
+          name = "Desk Lights";
+          unique_id = "bedroom_desk_lights";
+          entities = [
+            "light.signify_netherlands_b_v_440400982842_light_2"
+            "light.signify_netherlands_b_v_440400982842_light_3"
+          ];
+        }
+        {
+          platform = "group";
+          name = "Wardrobe Lights";
+          unique_id = "bedroom_wardrobe_lights";
+          entities = [
+            "light.wardrobe_left"
+            "light.wardrobe_right"
+          ];
+        }
+        {
+          platform = "group";
+          name = "Ambiance";
+          unique_id = "bedroom_ambiance";
+          entities = [
+            "light.desk_lights"
+            "light.wardrobe_lights"
+          ];
+        }
+      ];
+
       http = {
         use_x_forwarded_for = true;
         trusted_proxies = [
@@ -351,6 +386,7 @@ in {
                     sequence = [
                       {
                         service = "light.turn_on";
+                        continue_on_error = true;
                         target.entity_id = "light.prenosna_svetluska_light";
                         data = {
                           brightness_pct = "{{ [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100][L] }}";
@@ -364,6 +400,7 @@ in {
                 default = [
                   {
                     service = "light.turn_off";
+                    continue_on_error = true;
                     target.entity_id = "light.prenosna_svetluska_light";
                     data.transition = "{{ t_out }}";
                   }
@@ -382,6 +419,7 @@ in {
                     sequence = [
                       {
                         service = "light.turn_on";
+                        continue_on_error = true;
                         target.entity_id = [
                           "light.wardrobe_left"
                           "light.wardrobe_right"
@@ -398,6 +436,7 @@ in {
                 default = [
                   {
                     service = "light.turn_off";
+                    continue_on_error = true;
                     target.entity_id = [
                       "light.wardrobe_left"
                       "light.wardrobe_right"
@@ -419,6 +458,7 @@ in {
                     sequence = [
                       {
                         service = "light.turn_on";
+                        continue_on_error = true;
                         target.entity_id = [
                           "light.signify_netherlands_b_v_440400982842_light_2"
                           "light.signify_netherlands_b_v_440400982842_light_3"
@@ -435,6 +475,7 @@ in {
                 default = [
                   {
                     service = "light.turn_off";
+                    continue_on_error = true;
                     target.entity_id = [
                       "light.signify_netherlands_b_v_440400982842_light_2"
                       "light.signify_netherlands_b_v_440400982842_light_3"
@@ -456,6 +497,7 @@ in {
                     sequence = [
                       {
                         service = "light.turn_on";
+                        continue_on_error = true;
                         target.entity_id = "light.philips_915005998001_light";
                         data = {
                           brightness_pct = "{{ [0, 0, 0, 0, 0, 0, 60, 70, 80, 90, 100][L] }}";
@@ -469,6 +511,7 @@ in {
                 default = [
                   {
                     service = "light.turn_off";
+                    continue_on_error = true;
                     target.entity_id = "light.philips_915005998001_light";
                     data.transition = "{{ t_out }}";
                   }

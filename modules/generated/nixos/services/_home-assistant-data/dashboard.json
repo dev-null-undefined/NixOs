@@ -903,12 +903,13 @@
           "cards": [
             {
               "type": "heading",
-              "heading": "AC",
+              "heading": "Bedroom AC",
               "icon": "mdi:air-conditioner"
             },
             {
               "type": "thermostat",
               "entity": "climate.olimpia_ac",
+              "name": "Bedroom AC",
               "features": [
                 {
                   "type": "climate-hvac-modes"
@@ -920,7 +921,7 @@
             },
             {
               "type": "entities",
-              "title": "AC details",
+              "title": "Bedroom AC details",
               "state_color": true,
               "entities": [
                 {
@@ -943,11 +944,63 @@
             },
             {
               "type": "history-graph",
-              "title": "AC — 24h",
+              "title": "Bedroom AC — 24h",
               "hours_to_show": 24,
               "entities": [
                 {
                   "entity": "climate.olimpia_ac",
+                  "name": "AC mode"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "heading": "Living Room AC",
+              "icon": "mdi:air-conditioner"
+            },
+            {
+              "type": "thermostat",
+              "entity": "climate.153931629420204_climate",
+              "name": "Living Room AC",
+              "features": [
+                {
+                  "type": "climate-hvac-modes"
+                },
+                {
+                  "type": "climate-fan-modes"
+                }
+              ]
+            },
+            {
+              "type": "entities",
+              "title": "Living Room AC details",
+              "state_color": true,
+              "entities": [
+                {
+                  "entity": "sensor.153931629420204_indoor_temperature",
+                  "name": "Indoor temperature"
+                },
+                {
+                  "entity": "binary_sensor.153931629420204_full_dust",
+                  "name": "Dust filter"
+                },
+                {
+                  "entity": "switch.153931629420204_screen_display",
+                  "name": "Display"
+                },
+                {
+                  "entity": "switch.153931629420204_sleep_mode",
+                  "name": "Sleep mode"
+                }
+              ]
+            },
+            {
+              "type": "history-graph",
+              "title": "Living Room AC — 24h",
+              "hours_to_show": 24,
+              "entities": [
+                {
+                  "entity": "climate.153931629420204_climate",
                   "name": "AC mode"
                 }
               ]
@@ -1755,15 +1808,22 @@
             },
             {
               "type": "custom:mushroom-light-card",
-              "entity": "light.monitor",
-              "name": "Monitor group",
+              "entity": "light.ambiance",
+              "name": "Ambiance",
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.desk_lights",
+              "name": "Desk Lights",
               "show_brightness_control": true,
               "collapsible_controls": true
             },
             {
               "type": "custom:mushroom-light-card",
               "entity": "light.signify_netherlands_b_v_440400982842_light_2",
-              "name": "Monitor Right",
+              "name": "Desk Right",
               "use_light_color": true,
               "show_brightness_control": true,
               "collapsible_controls": true
@@ -1771,7 +1831,30 @@
             {
               "type": "custom:mushroom-light-card",
               "entity": "light.signify_netherlands_b_v_440400982842_light_3",
-              "name": "Monitor Left",
+              "name": "Desk Left",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.wardrobe_lights",
+              "name": "Wardrobe Lights",
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.wardrobe_left",
+              "name": "Wardrobe Left",
+              "use_light_color": true,
+              "show_brightness_control": true,
+              "collapsible_controls": true
+            },
+            {
+              "type": "custom:mushroom-light-card",
+              "entity": "light.wardrobe_right",
+              "name": "Wardrobe Right",
               "use_light_color": true,
               "show_brightness_control": true,
               "collapsible_controls": true
