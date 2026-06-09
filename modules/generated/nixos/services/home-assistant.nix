@@ -55,6 +55,89 @@
   # tier change snaps instantly; restore to ~2 / ~5 for normal "feel".
   fadeIn = 2;
   fadeOut = 5;
+
+  # Clean dashboard for the restricted "uzdil" user. One auto-entities card per
+  # area he can access; auto-entities iterates permission-filtered states, so
+  # entities he can't read never appear (unlike the `areas` strategy, which
+  # leaks entity-registry names). We drop the monitoring noise: diagnostic/config
+  # entities and the device_tracker / update domains. show_empty hides areas with
+  # nothing left. Cards auto-update as devices are added. JSON is valid YAML.
+  #
+  # Mirrors uzdil's group policy area allow-list (Server Room intentionally
+  # excluded here and in the policy). Visible to everyone (HA has no per-user
+  # dashboard visibility); other users can hide it from their own sidebar.
+  uzdilAreas = [
+    {
+      id = "hallway";
+      title = "Hallway";
+    }
+    {
+      id = "kitchen";
+      title = "Kitchen";
+    }
+    {
+      id = "laundry_room";
+      title = "Laundry Room";
+    }
+    {
+      id = "living_room";
+      title = "Living Room";
+    }
+    {
+      id = "main_bathroom";
+      title = "Main Bathroom";
+    }
+    {
+      id = "bedroom_martin";
+      title = "Uždil Bedroom";
+    }
+    {
+      id = "wc";
+      title = "WC";
+    }
+  ];
+  uzdilExclude = [
+    {entity_category = "diagnostic";}
+    {entity_category = "config";}
+    {domain = "device_tracker";}
+    {domain = "update";}
+  ];
+  uzdilDashboardFile = pkgs.writeText "ui-lovelace-uzdil.yaml" (builtins.toJSON {
+    title = "Home";
+    views = [
+      {
+        title = "Home";
+        path = "home";
+        icon = "mdi:home";
+        cards =
+          (map (a: {
+              type = "custom:auto-entities";
+              show_empty = false;
+              card = {
+                type = "entities";
+                title = a.title;
+                state_color = true;
+              };
+              filter = {
+                include = [{area = a.id;}];
+                exclude = uzdilExclude;
+              };
+            })
+            uzdilAreas)
+          # Server Room is not an allowed area for uzdil; only this single
+          # temperature sensor is explicitly granted (via entity_ids in his
+          # group policy), so list it directly rather than via an area card.
+          ++ [
+            {
+              type = "entities";
+              title = "Server Room";
+              state_color = true;
+              entities = ["sensor.temperature_server_room_temperature"];
+            }
+          ];
+      }
+    ];
+  });
 in {
   sops.secrets."home-assistant-google-sa" = {
     sopsFile = self.outPath + "/secrets/home-assistant-google-sa.json";
@@ -77,6 +160,9 @@ in {
       ${pkgs.jq}/bin/jq '.data.core.default_panel = "nixos-lovelace"' "$file" > "$file.tmp" \
         && mv "$file.tmp" "$file"
     fi
+    # Place the uzdil "Home" dashboard (areas strategy) where its dashboards
+    # entry references it. The HA module only manages ui-lovelace.yaml itself.
+    ln -fns ${uzdilDashboardFile} ${dataDir}/ui-lovelace-uzdil.yaml
   '';
 
   services.home-assistant = {
@@ -139,6 +225,46 @@ in {
     config = {
       default_config = {};
       frontend = {};
+
+      # Second YAML dashboard for the restricted "uzdil" user (file symlinked in
+      # preStart above). The main `nixos-lovelace` dashboard is auto-declared by
+      # the module from `lovelaceConfig`; this is an additional sibling.
+      lovelace.dashboards."uzdil-home" = {
+        mode = "yaml";
+        filename = "ui-lovelace-uzdil.yaml";
+        title = "Home";
+        icon = "mdi:home";
+        show_in_sidebar = true;
+        require_admin = false;
+      };
+
+      # Hide the main Overview from all non-admins (uzdil + tomas). HA's only
+      # enforced dashboard restriction is `require_admin` (gated on admin status,
+      # not per-user), so this hides Overview from every non-admin; only admins
+      # see it. Overriding the module's auto-declared default means repeating its
+      # fields. Non-admins fall back to the "Home" dashboard above.
+      lovelace.dashboards.nixos-lovelace = {
+        mode = "yaml";
+        filename = "ui-lovelace.yaml";
+        title = "Overview";
+        icon = "mdi:view-dashboard";
+        show_in_sidebar = true;
+        require_admin = true;
+      };
+
+      # Keep the per-person presence helpers out of the Logbook. The logbook
+      # component has NO per-entity permission filtering (unlike history/states),
+      # so without this the restricted "uzdil" user could read everyone's
+      # presence ("<name> Room changed to Away") in the logbook. This exclude is
+      # global — these `sensor.*_room` template helpers are internal noise in the
+      # logbook for admins anyway.
+      logbook.exclude.entities = [
+        "sensor.martin_room"
+        "sensor.uzdil_room"
+        "sensor.stefanko_room"
+        "sensor.samira_room"
+      ];
+
       # 2026.8+ lovelace schema: top-level `lovelace.mode` is removed.
       # The default Overview dashboard is auto-declared by the NixOS module as
       # `dashboards.nixos-lovelace` whenever `lovelaceConfig` is set, and
