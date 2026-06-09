@@ -8,6 +8,7 @@
     unifi.enable = lib.mkDefault config.generated.services.unifi-os-server.enable;
     nginx-status.enable = lib.mkDefault config.services.nginx.statusPage;
     smartctl.enable = lib.mkDefault config.generated.services.smartd.enable;
+    smokeping.enable = lib.mkDefault true;
     node.enable = lib.mkDefault true;
   };
 

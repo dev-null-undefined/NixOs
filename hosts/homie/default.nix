@@ -68,6 +68,12 @@ in {
     }
   ];
 
+  # WAN-health facts specific to this host's uplink (enp6s0, behind the ISP
+  # MikroTik at 94.230.159.1). The shared prometheus modules keep these out of
+  # generic config; see services/prometheus/{recording-rules,exporters/smokeping}.nix.
+  generated.services.prometheus.recording-rules.wanDevice = "enp6s0";
+  services.prometheus.exporters.smokeping.hosts = ["94.230.159.1"]; # WAN first hop (ISP MikroTik)
+
   # Bootloader configuration lives in ./secure-boot.nix (lanzaboote).
 
   boot.binfmt.emulatedSystems = ["aarch64-linux"];

@@ -22,6 +22,21 @@ in {
       };
       security.secret_key = "$__file{${config.sops.secrets."grafana-secret-key".path}}";
     };
+    # Declaratively provision the Nix-managed dashboards (currently the WAN
+    # "Network Health" board). allowUiUpdates keeps them editable in the UI; the
+    # committed JSON stays the source of truth and is re-applied on rebuild.
+    provision = {
+      enable = true;
+      dashboards.settings.providers = [
+        {
+          name = "nix-dashboards";
+          folder = "Networking";
+          folderUid = "af4m65ehnlpmod";
+          allowUiUpdates = true;
+          options.path = ./dashboards;
+        }
+      ];
+    };
   };
   services.nginx.virtualHosts.${grafanaFqdn} = {
     enableACME = true;

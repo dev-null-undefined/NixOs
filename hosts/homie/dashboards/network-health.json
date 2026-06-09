@@ -1,0 +1,310 @@
+{
+  "uid": "network-health",
+  "title": "Network Health",
+  "tags": ["network", "wan", "bufferbloat"],
+  "timezone": "browser",
+  "editable": true,
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "time": { "from": "now-6h", "to": "now" },
+  "annotations": { "list": [] },
+  "templating": {
+    "list": [
+      {
+        "name": "client_host",
+        "label": "ntopng host",
+        "type": "query",
+        "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" },
+        "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: \"ntopng\", tag: \"host\", predicate: (r) => r._measurement == \"host:tcp_tx_stats\", start: -6h)",
+        "refresh": 2,
+        "includeAll": false,
+        "multi": false,
+        "sort": 1,
+        "current": { "text": "C0:BF:BE:8D:EB:DA_v4 (honey)", "value": "C0:BF:BE:8D:EB:DA_v4" }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Download capacity (last test)",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 100000000 }, { "color": "green", "value": 300000000 } ] }
+        },
+        "overrides": []
+      },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "area", "textMode": "auto", "orientation": "auto" },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_download_bits_per_second" } ]
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Upload capacity (last test)",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bps",
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "yellow", "value": 100000000 }, { "color": "green", "value": 300000000 } ] }
+        },
+        "overrides": []
+      },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "area", "textMode": "auto", "orientation": "auto" },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_upload_bits_per_second" } ]
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "p95 latency to 1.1.1.1",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null }, { "color": "yellow", "value": 0.04 }, { "color": "red", "value": 0.1 } ] }
+        },
+        "overrides": []
+      },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "area", "textMode": "auto", "orientation": "auto" },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_p95{host=\"1.1.1.1\"}" } ]
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Speedtest status",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "mappings": [ { "type": "value", "options": { "0": { "text": "FAIL", "color": "red" }, "1": { "text": "OK", "color": "green" } } } ],
+          "color": { "mode": "thresholds" },
+          "thresholds": { "mode": "absolute", "steps": [ { "color": "red", "value": null }, { "color": "green", "value": 1 } ] }
+        },
+        "overrides": []
+      },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "background", "graphMode": "none", "textMode": "auto", "orientation": "auto" },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_up" } ]
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "WAN throughput vs measured capacity",
+      "description": "Solid = live usage (node_exporter on enp6s0). Points = hourly Ookla capacity. The gap between them is your headroom.",
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 4 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "bps", "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 10, "showPoints": "never", "spanNulls": false, "gradientMode": "none", "axisCenteredZero": false } },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "C" }, "properties": [ { "id": "custom.drawStyle", "value": "points" }, { "id": "custom.pointSize", "value": 8 }, { "id": "custom.lineWidth", "value": 0 } ] },
+          { "matcher": { "id": "byFrameRefID", "options": "D" }, "properties": [ { "id": "custom.drawStyle", "value": "points" }, { "id": "custom.pointSize", "value": 8 }, { "id": "custom.lineWidth", "value": 0 } ] }
+        ]
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:throughput_down_bps", "legendFormat": "Download (used)" },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:throughput_up_bps", "legendFormat": "Upload (used)" },
+        { "refId": "C", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_download_bits_per_second", "legendFormat": "Download capacity" },
+        { "refId": "D", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_upload_bits_per_second", "legendFormat": "Upload capacity" }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "timeseries",
+      "title": "Latency percentiles per target (p50/p90/p95/p99)",
+      "description": "From the smokeping prober (1s pings). Rising tail (p95/p99) under upload load = bufferbloat. Gateway (94.230.159.1) high but internet OK = upstream/air link, not local queueing.",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 13 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "s", "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 5, "showPoints": "never", "spanNulls": true, "gradientMode": "none" } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_p50", "legendFormat": "{{host}} p50" },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_p90", "legendFormat": "{{host}} p90" },
+        { "refId": "C", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_p95", "legendFormat": "{{host}} p95" },
+        { "refId": "D", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_p99", "legendFormat": "{{host}} p99" }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "Packet loss per target",
+      "description": "From smokeping (continuous) + hourly Ookla loss. Sustained loss to the internet while gaming is the smoking gun.",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 13 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "percentunit", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 20, "showPoints": "never", "spanNulls": true } },
+        "overrides": [
+          { "matcher": { "id": "byFrameRefID", "options": "Z" }, "properties": [ { "id": "unit", "value": "percent" }, { "id": "custom.drawStyle", "value": "points" }, { "id": "custom.pointSize", "value": 7 } ] }
+        ]
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:packet_loss_ratio", "legendFormat": "{{host}} loss" }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Speedtest latency: idle vs loaded (bufferbloat)",
+      "description": "Hourly Ookla. Loaded latency far above idle = bufferbloat on that direction. Upload-loaded spikes point at seeding contention.",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 22 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "ms", "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 0, "showPoints": "always", "pointSize": 6, "spanNulls": true } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_ping_latency_ms", "legendFormat": "idle" },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_download_loaded_latency_ms", "legendFormat": "loaded (download)" },
+        { "refId": "C", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "speedtest_upload_loaded_latency_ms", "legendFormat": "loaded (upload)" }
+      ]
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "WAN interface drops & errors (enp6s0)",
+      "description": "Kernel NIC counters. Usually near zero; non-zero rx/tx drops indicate the NIC queue itself is overflowing.",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 22 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "pps", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 10, "showPoints": "never", "spanNulls": false } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:transmit_drop_rate", "legendFormat": "tx drops" },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:receive_drop_rate", "legendFormat": "rx drops" },
+        { "refId": "C", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "rate(node_network_transmit_errs_total{device=\"enp6s0\"}[5m])", "legendFormat": "tx errors" },
+        { "refId": "D", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "rate(node_network_receive_errs_total{device=\"enp6s0\"}[5m])", "legendFormat": "rx errors" }
+      ]
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Worst-tail latency: % of pings over threshold",
+      "description": "The 'bottom worst 10%' made explicit. >100ms = noticeably laggy; >800ms catches the multi-second League spikes that p95 smooths away.",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 31 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "fieldConfig": {
+        "defaults": { "unit": "percentunit", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 15, "showPoints": "never", "spanNulls": true } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_frac_over_100ms", "legendFormat": "{{host}} >100ms" },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "wan:latency_frac_over_800ms", "legendFormat": "{{host}} >800ms" }
+      ]
+    },
+    {
+      "id": 17,
+      "type": "timeseries",
+      "title": "Host TCP retrans / lost / out-of-order (ntopng) — $client_host",
+      "description": "Per-host from ntopng. Pick the gaming host (honey) in the 'ntopng host' dropdown. retran/lost/OOO climbing during play = its TCP suffering congestion.",
+      "gridPos": { "h": 9, "w": 12, "x": 12, "y": 31 },
+      "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" },
+      "fieldConfig": {
+        "defaults": { "unit": "pps", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 10, "showPoints": "never", "spanNulls": false } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" }, "query": "from(bucket: \"ntopng\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"host:tcp_tx_stats\" or r._measurement == \"host:tcp_rx_stats\")\n  |> filter(fn: (r) => r.host == \"${client_host}\")\n  |> filter(fn: (r) => r._field == \"retran_pkts\" or r._field == \"lost_packets\" or r._field == \"out_of_order_pkts\")\n  |> derivative(unit: 1s, nonNegative: true)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> map(fn: (r) => ({r with dir: if r._measurement == \"host:tcp_tx_stats\" then \"tx \" else \"rx \"}))", "rawQuery": true }
+      ]
+    },
+    {
+      "id": 18,
+      "type": "timeseries",
+      "title": "Host UDP traffic (ntopng) — $client_host",
+      "description": "Per-host UDP throughput (League is UDP, so this is the game-traffic volume). A drop-out during a lag spike points at packet loss for that host. From host:l4protos (l4proto=udp).",
+      "gridPos": { "h": 9, "w": 12, "x": 0, "y": 40 },
+      "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" },
+      "fieldConfig": {
+        "defaults": { "unit": "Bps", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 10, "showPoints": "never", "spanNulls": false } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" }, "query": "from(bucket: \"ntopng\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"host:l4protos\" and r.l4proto == \"udp\")\n  |> filter(fn: (r) => r.host == \"${client_host}\")\n  |> filter(fn: (r) => r._field == \"bytes_rcvd\" or r._field == \"bytes_sent\")\n  |> derivative(unit: 1s, nonNegative: true)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)", "rawQuery": true }
+      ]
+    },
+    {
+      "id": 19,
+      "type": "heatmap",
+      "title": "Latency heatmap — internet (1.1.1.1)",
+      "description": "Full smokeping bucket distribution over time, log-scaled y-axis. A 2s spike shows as a faint cell high on the axis even when p95/p99 look calm. Compare with the gateway heatmap: if BOTH spike together it's local (bufferbloat) or the air-link; if only the internet one spikes, it's upstream.",
+      "gridPos": { "h": 10, "w": 12, "x": 0, "y": 49 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "sum by (le) (rate(smokeping_response_duration_seconds_bucket{host=\"1.1.1.1\"}[$__rate_interval]))", "format": "heatmap", "legendFormat": "{{le}}" }
+      ],
+      "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": { "mode": "scheme", "scheme": "Spectral", "steps": 64, "reverse": false, "fill": "dark-orange" },
+        "yAxis": { "axisPlacement": "left", "unit": "s" },
+        "rowsFrame": { "layout": "auto" },
+        "tooltip": { "show": true, "yHistogram": true },
+        "legend": { "show": true },
+        "exemplars": { "color": "rgba(255,0,255,0.7)" }
+      },
+      "fieldConfig": {
+        "defaults": { "custom": { "scaleDistribution": { "type": "log", "log": 2 }, "hideFrom": { "tooltip": false, "viz": false, "legend": false } } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 20,
+      "type": "heatmap",
+      "title": "Latency heatmap — ISP gateway (94.230.159.1)",
+      "description": "Latency to the first hop (across the air-link). If this stays low while the internet heatmap spikes, the air-link and your local queue are fine and the problem is upstream. If this ALSO spikes, it's local bufferbloat or air-link degradation.",
+      "gridPos": { "h": 10, "w": 12, "x": 12, "y": 49 },
+      "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "ce5fzybu3f4lcc" }, "expr": "sum by (le) (rate(smokeping_response_duration_seconds_bucket{host=\"94.230.159.1\"}[$__rate_interval]))", "format": "heatmap", "legendFormat": "{{le}}" }
+      ],
+      "options": {
+        "calculate": false,
+        "cellGap": 1,
+        "color": { "mode": "scheme", "scheme": "Spectral", "steps": 64, "reverse": false, "fill": "dark-orange" },
+        "yAxis": { "axisPlacement": "left", "unit": "s" },
+        "rowsFrame": { "layout": "auto" },
+        "tooltip": { "show": true, "yHistogram": true },
+        "legend": { "show": true },
+        "exemplars": { "color": "rgba(255,0,255,0.7)" }
+      },
+      "fieldConfig": {
+        "defaults": { "custom": { "scaleDistribution": { "type": "log", "log": 2 }, "hideFrom": { "tooltip": false, "viz": false, "legend": false } } },
+        "overrides": []
+      }
+    },
+    {
+      "id": 21,
+      "type": "timeseries",
+      "title": "League of Legends traffic (ntopng nDPI: RiotGames) — $client_host",
+      "description": "When honey is actually playing League (nDPI-classified RiotGames throughput). Riot blocks ICMP so we can't smokeping the game server directly; instead, line this up against the latency heatmaps/throughput above to see what the network was doing during a match.",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 59 },
+      "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" },
+      "fieldConfig": {
+        "defaults": { "unit": "Bps", "min": 0, "custom": { "drawStyle": "line", "lineInterpolation": "linear", "lineWidth": 1, "fillOpacity": 25, "showPoints": "never", "spanNulls": false } },
+        "overrides": []
+      },
+      "options": { "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["last", "max"] }, "tooltip": { "mode": "multi", "sort": "desc" } },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "influxdb", "uid": "ffh9ux4o7mp6oa" }, "query": "from(bucket: \"ntopng\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"host:ndpi\" and r.protocol == \"RiotGames\")\n  |> filter(fn: (r) => r.host == \"${client_host}\")\n  |> filter(fn: (r) => r._field == \"bytes_rcvd\" or r._field == \"bytes_sent\")\n  |> derivative(unit: 1s, nonNegative: true)\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)", "rawQuery": true }
+      ]
+    }
+  ]
+}
