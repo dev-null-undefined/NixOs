@@ -12,7 +12,7 @@
   environment.systemPackages = with pkgs; [
     xdg-utils
     qt6.qtwayland
-    libsForQt5.qt5.qtwayland
+    qt5.qtwayland
     kdePackages.polkit-kde-agent-1
 
     wl-clipboard
