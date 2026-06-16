@@ -108,7 +108,10 @@
 
     unifi-os-server = {
       url = "github:rcambrj/unifi-os-server";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Point at stable: unstable's uefi-firmware-parser fails to build (missing
+      # setuptools-scm build dep), breaking binwalk which this input uses to
+      # extract the firmware image. Revert to "nixpkgs" once unstable is fixed.
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
