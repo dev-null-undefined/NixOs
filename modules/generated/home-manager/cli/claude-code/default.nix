@@ -99,6 +99,7 @@ in {
   home.file.".claude/skills/consolidate/SKILL.md".source = ./skills/consolidate/SKILL.md;
   home.file.".claude/skills/prompt-craft/SKILL.md".source = ./skills/prompt-craft/SKILL.md;
   home.file.".claude/skills/review/SKILL.md".source = ./skills/review/SKILL.md;
+  home.file.".claude/skills/sync-config/SKILL.md".source = ./skills/sync-config/SKILL.md;
   home.file.".claude/skills/sync-memory/SKILL.md".source = ./skills/sync-memory/SKILL.md;
   home.file.".claude/skills/sync-memory/scripts/gather-state.sh" = {
     source = ./skills/sync-memory/scripts/gather-state.sh;
