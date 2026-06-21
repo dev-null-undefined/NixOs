@@ -3,6 +3,20 @@
   lib,
   ...
 }: {
+  # Betaflight Configurator (below) ships no udev rules. Flight controllers need:
+  #  - DFU bootloader access for firmware flashing (raw libusb device, root-only by default)
+  #  - the serial VCP hidden from ModemManager, which otherwise probes /dev/ttyACM* as a
+  #    modem and steals the port. ModemManager stays enabled here (WWAN modem on x1), so we
+  #    flag just the FC's VID:PID with ID_MM_DEVICE_IGNORE instead of disabling the daemon.
+  services.udev.extraRules = ''
+    # DFU bootloader — STM32 (0483) and AT32/Artery (2e3c) MCUs
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", TAG+="uaccess", MODE="0660", GROUP="dialout"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="2e3c", ATTRS{idProduct}=="df11", TAG+="uaccess", MODE="0660", GROUP="dialout"
+    # STM32 Virtual COM Port — normal MSP connection
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
+  '';
+
   generated.packages.development.ides = {
     jetbrains.enable = lib.mkDefault true;
     vscode.enable = lib.mkDefault true;
