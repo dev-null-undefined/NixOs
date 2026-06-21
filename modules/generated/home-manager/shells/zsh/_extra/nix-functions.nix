@@ -218,5 +218,35 @@ in
     manyx() {
       manix "" | grep '^# ' | sed 's/^# \(.*\) (.*/\1/;s/ (.*//;s/^# //' | fzf --preview="manix '{}'" | xargs manix
     }
+
+    # Focus-stack a set of RAW files: develop each to a 16-bit TIFF with
+    # RawTherapee, then merge with focus-stack. Tools come ephemerally from
+    # nixpkgs (nothing is installed). Temp TIFFs are large (~0.4 GB each at
+    # 60MP), written next to the output and deleted afterwards. Add a
+    # "-p profile.pp3" to the rawtherapee-cli line to pin a fixed look.
+    rawstack() {
+      local out="stacked.jpg"
+      if [[ "$1" == "-o" ]]; then
+        out="$2"
+        shift 2
+      fi
+      if (( $# < 2 )); then
+        echo "usage: rawstack [-o out.jpg] raw1 raw2 ..." >&2
+        return 1
+      fi
+      local tmp
+      tmp="$(mktemp -d "$(dirname -- "$out")/.rawstack.XXXXXX")" || return 1
+      echo "rawstack: developing $# RAW(s) to 16-bit TIFF ..."
+      if ! nix shell nixpkgs#rawtherapee -c rawtherapee-cli -o "$tmp" -t -b16 -Y -c "$@"; then
+        rm -rf "$tmp"
+        return 1
+      fi
+      echo "rawstack: stacking to $out ..."
+      nix shell nixpkgs#focus-stack -c focus-stack --output="$out" "$tmp"/*.tif
+      local rc=$?
+      rm -rf "$tmp"
+      (( rc == 0 )) && echo "rawstack: done -> $out"
+      return $rc
+    }
   ''
   + (import ./hey-helper.nix)
