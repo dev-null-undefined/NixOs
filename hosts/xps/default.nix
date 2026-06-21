@@ -5,7 +5,6 @@
   lib,
   inputs,
   pkgs,
-  self,
   ...
 }: {
   imports = [
@@ -18,18 +17,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.money-machine = {
-    enable = true;
-    secretsFile = self.outPath + "/secrets/money-machine.env";
-  };
-
-  # DataPacket AI baseURL for opencode; resolved via {file:...} at load time.
-  sops.secrets."opencode-dp-baseurl" = {
-    sopsFile = self.outPath + "/secrets/opencode-dp-baseurl";
-    format = "binary";
-    owner = "martin";
-  };
-
   generated = {
     network-manager.enable = true;
     plymouth.enable = true;
@@ -38,6 +25,8 @@
     hardware.fingerprint.enable = true;
     services = {
       distributed-builds.enable = true;
+      money-machine.enable = true;
+      opencode.enable = true;
       # syncthing.enable = true;
       # opensnitch.enable = true;
       # mariadb.enable = true;
