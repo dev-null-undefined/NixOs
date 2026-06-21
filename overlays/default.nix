@@ -59,4 +59,17 @@ with self.lib'.internal; {
   };
 
   rust-overlay = inputs.rust-overlay.overlays.default;
+
+  # Build darktable against a rawspeed carrying Sony A7R VI (ILCE-7RM6) ARW6
+  # (TIFF compression 32766) decode support by swapping in the patched tree.
+  darktable-arw6 = final: super: {
+    darktable = super.darktable.overrideAttrs (old: {
+      postPatch =
+        (old.postPatch or "")
+        + ''
+          rm -rf src/external/rawspeed
+          cp -r --no-preserve=mode,ownership ${inputs.rawspeed-arw6}/. src/external/rawspeed
+        '';
+    });
+  };
 }

@@ -1165,6 +1165,23 @@
         "type": "github"
       }
     },
+    "rawspeed-arw6": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1781877482,
+        "narHash": "sha256-AfxxCKCsLm4BMmCtgBzbGWfEBP+QeUoTyaVqn7uHBmg=",
+        "owner": "dev-null-undefined",
+        "repo": "rawspeed",
+        "rev": "395faefd2d52600386f1606c6e8bc0dc69dd7cb7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dev-null-undefined",
+        "ref": "arw6-ilce7rm6",
+        "repo": "rawspeed",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "admin-helper-scripts": "admin-helper-scripts",
@@ -1190,6 +1207,7 @@
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixvim": "nixvim",
+        "rawspeed-arw6": "rawspeed-arw6",
         "rust-overlay": "rust-overlay_2",
         "sops": "sops",
         "spicetify-nix": "spicetify-nix",

@@ -10,6 +10,13 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    # Sony A7R VI (ILCE-7RM6) ARW6 / compression-32766 decode support, on top
+    # of darktable's bundled rawspeed (see the darktable-arw6 overlay).
+    rawspeed-arw6 = {
+      url = "github:dev-null-undefined/rawspeed/arw6-ilce7rm6";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
