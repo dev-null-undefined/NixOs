@@ -88,7 +88,7 @@ Uses SOPS with age encryption (`.sops.yaml`). Encrypted files in `secrets/`. Key
 
 ### Custom Packages (`pkgs/`)
 
-Small set of custom package derivations (plymouth theme, material-symbols, prometheus exporter).
+Small set of custom package derivations (plymouth theme, material-symbols, prometheus exporter, slack/thunderbird MCP servers).
 
 ## Nixpkgs Channels
 
