@@ -142,6 +142,7 @@ in {
   home.file.".claude/CLAUDE.md".source = ./CLAUDE.md;
   home.file.".claude/skills/commit/SKILL.md".source = ./skills/commit/SKILL.md;
   home.file.".claude/skills/consolidate/SKILL.md".source = ./skills/consolidate/SKILL.md;
+  home.file.".claude/skills/grill-me/SKILL.md".source = ./skills/grill-me/SKILL.md;
   home.file.".claude/skills/prompt-craft/SKILL.md".source = ./skills/prompt-craft/SKILL.md;
   home.file.".claude/skills/review/SKILL.md".source = ./skills/review/SKILL.md;
   home.file.".claude/skills/sync-config/SKILL.md".source = ./skills/sync-config/SKILL.md;
