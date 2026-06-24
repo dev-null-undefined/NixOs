@@ -4,6 +4,18 @@
   config,
   ...
 }: let
+  # ponytail — "lazy senior dev" ruleset plugin (github.com/DietrichGebert/ponytail).
+  # Pinned inline so upgrades are Nix-managed: bump rev + hash here, then rebuild
+  # (no flake input, no runtime `git clone`). Registered below as a read-only
+  # "directory" marketplace and enabled by default; Claude Code copies it into its
+  # writable plugin cache on first launch and activates it from the next session on.
+  ponytail = pkgs.fetchFromGitHub {
+    owner = "DietrichGebert";
+    repo = "ponytail";
+    rev = "v4.7.0";
+    hash = "sha256-Q6vlkbTfBFrNFTxEwYeMe5ciOe6QdULegvExwT//gJs=";
+  };
+
   # Items in ~/.claude-kos that should be symlinks to the matching path in
   # ~/.claude. Anything NOT listed stays as a real file in ~/.claude-kos —
   # those are credential/account-bound (.credentials.json, .claude.json,
@@ -83,6 +95,15 @@ in {
         "WebSearch"
       ];
     };
+    extraKnownMarketplaces = {
+      # Read-only marketplace served straight from the Nix store (see `ponytail` above).
+      ponytail = {
+        source = {
+          source = "directory";
+          path = "${ponytail}";
+        };
+      };
+    };
     enabledPlugins = {
       "rust-analyzer-lsp@claude-plugins-official" = true;
       "clangd-lsp@claude-plugins-official" = true;
@@ -91,6 +112,7 @@ in {
       "code-review@claude-plugins-official" = true;
       "pyright-lsp@claude-plugins-official" = true;
       "context7@claude-plugins-official" = true;
+      "ponytail@ponytail" = true;
     };
   };
 
