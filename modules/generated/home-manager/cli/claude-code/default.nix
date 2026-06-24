@@ -16,6 +16,14 @@
     hash = "sha256-Q6vlkbTfBFrNFTxEwYeMe5ciOe6QdULegvExwT//gJs=";
   };
 
+  # Desktop-notification hook (see notify.sh). Built into the Nix store with its
+  # deps pinned; referenced by absolute path from the `Notification` hook below.
+  notifyHook = pkgs.writeShellApplication {
+    name = "claude-code-notify";
+    runtimeInputs = [pkgs.jq pkgs.libnotify pkgs.coreutils pkgs.gawk];
+    text = builtins.readFile ./notify.sh;
+  };
+
   # Items in ~/.claude-kos that should be symlinks to the matching path in
   # ~/.claude. Anything NOT listed stays as a real file in ~/.claude-kos —
   # those are credential/account-bound (.credentials.json, .claude.json,
@@ -93,6 +101,21 @@ in {
         "WebFetch(domain:github.com)"
         "WebFetch(domain:raw.githubusercontent.com)"
         "WebSearch"
+      ];
+    };
+    hooks = {
+      # Pop a desktop notification (unless this session's terminal is focused)
+      # when Claude is idle, needs permission, opens an MCP dialog, or finishes auth.
+      Notification = [
+        {
+          matcher = "idle_prompt|permission_prompt|elicitation_dialog|auth_success";
+          hooks = [
+            {
+              type = "command";
+              command = lib.getExe notifyHook;
+            }
+          ];
+        }
       ];
     };
     extraKnownMarketplaces = {
