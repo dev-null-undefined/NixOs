@@ -91,6 +91,7 @@ in {
     effortLevel = "xhigh";
     voiceEnabled = false;
     spinnerTipsEnabled = false;
+    preferredNotifChannel = "notifications_disabled"; # built-in off; Notification hook below handles it
     awaySummaryEnabled = false;
     theme = "dark";
     tui = "fullscreen";
