@@ -4,6 +4,8 @@
   config,
   ...
 }: let
+  homeDirectory = config.home.homeDirectory;
+
   # ponytail — "lazy senior dev" ruleset plugin (github.com/DietrichGebert/ponytail).
   # Pinned inline so upgrades are Nix-managed: bump rev + hash here, then rebuild
   # (no flake input, no runtime `git clone`). Registered below as a read-only
@@ -24,68 +26,110 @@
     text = builtins.readFile ./notify.sh;
   };
 
-  # Items in ~/.claude-kos that should be symlinks to the matching path in
-  # ~/.claude. Anything NOT listed stays as a real file in ~/.claude-kos —
-  # those are credential/account-bound (.credentials.json, .claude.json,
-  # settings.json, mcp-needs-auth-cache.json, policy-limits.json,
-  # stats-cache.json, remote-settings.json, telemetry/).
-  sharedDirs = [
-    "backups"
-    "cache"
-    "file-history"
-    "plans"
-    "plugins"
-    "projects"
-    "session-env"
-    "sessions"
-    "shell-snapshots"
-    "skills"
-    "tasks"
-    "todos"
-  ];
-  sharedFiles = [
-    "CLAUDE.md"
-    "history.jsonl"
-    ".last-cleanup"
-    "settings.json"
-  ];
+  # ccstatusline — status line renderer (github.com/sirmalloc/ccstatusline).
+  # Not in nixpkgs. The published npm tarball ships a single pre-bundled
+  # dist/ccstatusline.js (bun build --target=node), so we just fetch + wrap with
+  # node — no bun, no npm install, no build step. Bump version + hash to upgrade.
+  # git is on PATH for its branch/status widgets.
+  ccstatusline = let
+    version = "2.2.22";
+  in
+    pkgs.stdenv.mkDerivation {
+      pname = "ccstatusline";
+      inherit version;
+      src = pkgs.fetchurl {
+        url = "https://registry.npmjs.org/ccstatusline/-/ccstatusline-${version}.tgz";
+        hash = "sha256-FKDBeocIjiP4xXxNycTAJFlr7s+I8zm+gNv9IchcsQA=";
+      };
+      nativeBuildInputs = [pkgs.makeWrapper];
+      sourceRoot = "package"; # tarball's single top-level dir
+      dontBuild = true;
+      installPhase = ''
+        runHook preInstall
+        mkdir -p $out/libexec
+        cp dist/ccstatusline.js $out/libexec/
+        makeWrapper ${pkgs.nodejs}/bin/node $out/bin/ccstatusline \
+          --add-flags $out/libexec/ccstatusline.js \
+          --prefix PATH : ${lib.makeBinPath [pkgs.git]}
+        runHook postInstall
+      '';
+    };
 
-  claudeDir = "${config.home.homeDirectory}/.claude";
-  kosDir = "${config.home.homeDirectory}/.claude-kos";
+  ############################################################################
+  ## Claude Code profiles — single source of truth.
+  ##
+  ## Each profile is a Claude Code config directory (set via CLAUDE_CONFIG_DIR).
+  ## This attrset drives THREE consumers from one definition:
+  ##   1. shell aliases          (programs.zsh.shellAliases, below)
+  ##   2. per-profile config      (CLAUDE.md / settings.json written by home.file)
+  ##   3. shared-state symlinks   (non-primary profiles symlink shared items to
+  ##                               the primary profile's dir)
+  ##
+  ## Compose rules (per-item):
+  ##   - CLAUDE.md   : base text  + per-profile `claudeMdExtra` (append)
+  ##   - settings.json: recursiveUpdate baseSettings `settingsExtra` (deep merge;
+  ##                     covers permissions/hooks/model/effort/enabledPlugins/mcp)
+  ##   - skills       : shared from the primary (in `shared.dirs`); a profile that
+  ##                     wants its own set drops "skills" from shared.dirs and adds
+  ##                     home.file entries — not needed yet.
+  ##
+  ## Anything a profile neither shares nor has Nix-defined stays as its own real,
+  ## account-bound file (.credentials.json, .claude.json, policy-limits.json, ...).
+  ############################################################################
 
-  # Files: do NOT pre-create the target — symlinks to non-existent paths
-  # are fine, and pre-touching .last-cleanup would reset its mtime and
-  # suppress Claude's cleanup logic.
-  mkSymlink = {
-    ensureTarget,
-    kind,
-  }: name: let
-    src = lib.escapeShellArg "${claudeDir}/${name}";
-    dst = lib.escapeShellArg "${kosDir}/${name}";
-  in ''
-    ${lib.optionalString ensureTarget "$DRY_RUN_CMD mkdir -p ${src}"}
-    if [ "$(readlink ${dst} 2>/dev/null)" = ${src} ]; then
-      :
-    elif [ -L ${dst} ]; then
-      $DRY_RUN_CMD ln -sfn ${src} ${dst}
-    elif [ -e ${dst} ]; then
-      echo "warning: ${kosDir}/${name} exists as real ${kind}; not overwriting. Migrate manually if you want it symlinked." >&2
-    else
-      $DRY_RUN_CMD ln -s ${src} ${dst}
-    fi
-  '';
-  mkDirSymlink = mkSymlink {
-    ensureTarget = true;
-    kind = "directory";
+  primaryName = "main";
+
+  # Default shared set for non-primary profiles. CLAUDE.md and settings.json are
+  # intentionally NOT here — they are written per-profile by home.file below.
+  defaultShared = {
+    dirs = [
+      "backups"
+      "cache"
+      "file-history"
+      "plans"
+      "plugins"
+      "projects"
+      "session-env"
+      "sessions"
+      "shell-snapshots"
+      "skills"
+      "tasks"
+      "todos"
+    ];
+    files = [
+      "history.jsonl"
+      ".last-cleanup"
+    ];
   };
-  mkFileSymlink = mkSymlink {
-    ensureTarget = false;
-    kind = "file";
-  };
-in {
-  home.packages = [pkgs.claude-code];
 
-  home.file.".claude/settings.json".text = builtins.toJSON {
+  profiles = {
+    main = {
+      dir = ".claude";
+      primary = true;
+      label = "main"; # statusline badge (phase: status line)
+      color = 39; # ANSI 256 (blue-ish) — statusline badge tint
+      # plain `claude`, no alias
+      claudeMdExtra = "";
+      settingsExtra = {};
+    };
+    kos = {
+      dir = ".claude-kos";
+      label = "kos";
+      color = 203; # ANSI 256 (red-ish) — visually distinct work account
+      alias = "claude-kos";
+      claudeMdExtra = "\n" + builtins.readFile ./profiles/kos/CLAUDE.md;
+      settingsExtra = {}; # e.g. {permissions.defaultMode = "default";} to diverge
+      # shared = defaultShared;  # override to isolate e.g. projects/sessions
+    };
+  };
+
+  primaryDir = profiles.${primaryName}.dir;
+  nonPrimary = lib.filterAttrs (_: p: !(p.primary or false)) profiles;
+
+  # ---- base config inherited by every profile ----
+  baseClaudeMd = builtins.readFile ./CLAUDE.md;
+
+  baseSettings = {
     skipDangerousModePermissionPrompt = true;
     skipAutoPermissionPrompt = true;
     effortLevel = "xhigh";
@@ -96,6 +140,14 @@ in {
     theme = "dark";
     tui = "fullscreen";
     worktree.baseRef = "fresh";
+    # Two-line Powerline status line (ccstatusline) reading a read-only Nix-store
+    # config. Inherited by every profile from base. Tweak the look in the live TUI
+    # (`ccstatusline`), then copy ~/.config/ccstatusline/settings.json over
+    # ./ccstatusline-settings.json and rebuild to freeze it.
+    statusLine = {
+      type = "command";
+      command = "${ccstatusline}/bin/ccstatusline --config ${ccstatuslineConfig}";
+    };
     permissions = {
       defaultMode = "auto";
       allow = [
@@ -140,23 +192,154 @@ in {
     };
   };
 
-  home.file.".claude/CLAUDE.md".source = ./CLAUDE.md;
-  home.file.".claude/skills/commit/SKILL.md".source = ./skills/commit/SKILL.md;
-  home.file.".claude/skills/consolidate/SKILL.md".source = ./skills/consolidate/SKILL.md;
-  home.file.".claude/skills/grill-me/SKILL.md".source = ./skills/grill-me/SKILL.md;
-  home.file.".claude/skills/prompt-craft/SKILL.md".source = ./skills/prompt-craft/SKILL.md;
-  home.file.".claude/skills/review/SKILL.md".source = ./skills/review/SKILL.md;
-  home.file.".claude/skills/sync-config/SKILL.md".source = ./skills/sync-config/SKILL.md;
-  home.file.".claude/skills/sync-memory/SKILL.md".source = ./skills/sync-memory/SKILL.md;
-  home.file.".claude/skills/sync-memory/scripts/gather-state.sh" = {
-    source = ./skills/sync-memory/scripts/gather-state.sh;
-    executable = true;
+  # Skills live in the primary profile's dir; non-primary profiles get them via
+  # the "skills" entry in shared.dirs (symlinked below).
+  baseSkills = {
+    "commit/SKILL.md" = {source = ./skills/commit/SKILL.md;};
+    "consolidate/SKILL.md" = {source = ./skills/consolidate/SKILL.md;};
+    "grill-me/SKILL.md" = {source = ./skills/grill-me/SKILL.md;};
+    "prompt-craft/SKILL.md" = {source = ./skills/prompt-craft/SKILL.md;};
+    "review/SKILL.md" = {source = ./skills/review/SKILL.md;};
+    "sync-config/SKILL.md" = {source = ./skills/sync-config/SKILL.md;};
+    "sync-memory/SKILL.md" = {source = ./skills/sync-memory/SKILL.md;};
+    "sync-memory/scripts/gather-state.sh" = {
+      source = ./skills/sync-memory/scripts/gather-state.sh;
+      executable = true;
+    };
   };
 
-  home.activation.claudeKosSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  # ---- generated home.file entries ----
+  perProfileFiles =
+    lib.foldlAttrs (
+      acc: _: p:
+        acc
+        // {
+          "${p.dir}/CLAUDE.md".text = baseClaudeMd + (p.claudeMdExtra or "");
+          "${p.dir}/settings.json".text =
+            builtins.toJSON (lib.recursiveUpdate baseSettings (p.settingsExtra or {}));
+        }
+    ) {}
+    profiles;
+
+  skillFiles =
+    lib.mapAttrs'
+    (relPath: v: lib.nameValuePair "${primaryDir}/skills/${relPath}" v)
+    baseSkills;
+
+  # ---- generated shell aliases (non-primary profiles only) ----
+  profileAliases =
+    lib.foldlAttrs (
+      acc: _: p:
+        acc
+        // lib.optionalAttrs (p ? alias) {
+          ${p.alias} = "CLAUDE_CONFIG_DIR=${homeDirectory}/${p.dir} claude";
+        }
+    ) {}
+    profiles;
+
+  # ---- status line profile badge ----
+  # Prints the active profile's label, ANSI-256-colored per profile, by matching
+  # $CLAUDE_CONFIG_DIR against the profile dirs. Generated from `profiles` so the
+  # status line stays in sync with the rest. The ccstatusline custom-command
+  # widget calls this by name with preserveColors=true to keep the color.
+  profileBadge = pkgs.writeShellApplication {
+    name = "claude-profile-badge";
+    text = ''
+      dir="''${CLAUDE_CONFIG_DIR:-$HOME/${primaryDir}}"
+      dir="''${dir%/}" # tolerate a trailing slash
+      case "$dir" in
+      ${lib.concatStringsSep "\n" (lib.mapAttrsToList (_: p: ''
+        ${p.dir} | */${p.dir}) printf '\033[38;5;${toString p.color}m%s\033[0m' ${lib.escapeShellArg p.label} ;;'')
+      nonPrimary)}
+        *) printf '\033[38;5;${toString profiles.${primaryName}.color}m%s\033[0m' ${lib.escapeShellArg profiles.${primaryName}.label} ;;
+      esac
+    '';
+  };
+
+  # Frozen ccstatusline config as a read-only store path. The repo JSON keeps
+  # bare command names ("claude-profile-badge"/"hostname") so it stays editable
+  # via the live TUI; here we substitute absolute store paths so the status line
+  # resolves regardless of the PATH Claude Code was launched with.
+  ccstatuslineConfig = pkgs.runCommand "ccstatusline-settings.json" {} ''
+    substitute ${./ccstatusline-settings.json} "$out" \
+      --replace-fail '"claude-profile-badge"' '"${profileBadge}/bin/claude-profile-badge"' \
+      --replace-fail '"hostname"' '"${lib.getExe' pkgs.nettools "hostname"}"'
+  '';
+
+  # ---- symlink helper (non-primary <item> -> primary <item>) ----
+  mkSymlink = {
+    ensureTarget,
+    kind,
+    profileDir,
+  }: name: let
+    src = lib.escapeShellArg "${homeDirectory}/${primaryDir}/${name}";
+    dst = lib.escapeShellArg "${profileDir}/${name}";
+  in ''
+    ${lib.optionalString ensureTarget "$DRY_RUN_CMD mkdir -p ${src}"}
+    if [ "$(readlink ${dst} 2>/dev/null)" = ${src} ]; then
+      :
+    elif [ -L ${dst} ]; then
+      $DRY_RUN_CMD ln -sfn ${src} ${dst}
+    elif [ -e ${dst} ]; then
+      echo "warning: ${dst} exists as real ${kind}; not overwriting. Migrate manually if you want it symlinked." >&2
+    else
+      $DRY_RUN_CMD ln -s ${src} ${dst}
+    fi
+  '';
+
+  symlinkScript = lib.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList (
+      _: p: let
+        profileDir = "${homeDirectory}/${p.dir}";
+        shared = p.shared or defaultShared;
+        mkDir = mkSymlink {
+          ensureTarget = true;
+          kind = "directory";
+          inherit profileDir;
+        };
+        mkFile = mkSymlink {
+          ensureTarget = false;
+          kind = "file";
+          inherit profileDir;
+        };
+      in
+        ["$DRY_RUN_CMD mkdir -p ${lib.escapeShellArg profileDir}"]
+        ++ map mkDir shared.dirs
+        ++ map mkFile shared.files
+    )
+    nonPrimary));
+
+  # ---- migration: drop the OLD shared symlinks for files that are now written
+  #      per-profile by home.file, so home-manager's checkLinkTargets does not
+  #      abort with "would be clobbered". Only removes symlinks, never real files.
+  managedPerProfile = ["CLAUDE.md" "settings.json"];
+  migrateScript = lib.concatStringsSep "\n" (lib.flatten (lib.mapAttrsToList (
+      _: p:
+        map (
+          f: let
+            path = lib.escapeShellArg "${homeDirectory}/${p.dir}/${f}";
+          in ''
+            if [ -L ${path} ]; then $DRY_RUN_CMD rm -f ${path}; fi
+          ''
+        )
+        managedPerProfile
+    )
+    nonPrimary));
+in {
+  home.packages = [pkgs.claude-code ccstatusline profileBadge];
+
+  home.file = perProfileFiles // skillFiles;
+
+  programs.zsh.shellAliases = profileAliases;
+
+  # Remove stale per-profile shared symlinks BEFORE home-manager links its files.
+  home.activation.claudeProfileMigrate = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
     set -eu
-    $DRY_RUN_CMD mkdir -p ${lib.escapeShellArg claudeDir} ${lib.escapeShellArg kosDir}
-    ${lib.concatStringsSep "\n" (map mkDirSymlink sharedDirs)}
-    ${lib.concatStringsSep "\n" (map mkFileSymlink sharedFiles)}
+    ${migrateScript}
+  '';
+
+  # Wire shared state: non-primary profiles symlink their shared items to primary.
+  home.activation.claudeProfileSymlinks = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    set -eu
+    ${symlinkScript}
   '';
 }

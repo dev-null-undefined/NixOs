@@ -40,8 +40,8 @@ in
     cd = "z";
 
     pping = "trip";
-
-    claude-kos = "CLAUDE_CONFIG_DIR=~/.claude-kos claude";
+    # claude-kos alias is emitted by the claude-code module (single source of
+    # truth: modules/generated/home-manager/cli/claude-code/default.nix profiles).
   }
   // (builtins.foldl' (acc: value: let
     key = repeateString "." value;

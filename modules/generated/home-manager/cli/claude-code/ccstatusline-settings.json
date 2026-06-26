@@ -1,0 +1,127 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "badge",
+        "type": "custom-command",
+        "commandPath": "claude-profile-badge",
+        "preserveColors": true,
+        "timeout": 1000
+      },
+      {
+        "id": "s1",
+        "type": "separator"
+      },
+      {
+        "id": "effort",
+        "type": "thinking-effort",
+        "color": "magenta"
+      },
+      {
+        "id": "s3",
+        "type": "separator"
+      },
+      {
+        "id": "cwd",
+        "type": "cwd",
+        "color": "blue"
+      },
+      {
+        "id": "s4",
+        "type": "separator"
+      },
+      {
+        "id": "gbranch",
+        "type": "git-branch",
+        "color": "green"
+      },
+      {
+        "id": "s5",
+        "type": "separator"
+      },
+      {
+        "id": "gstatus",
+        "type": "git-status",
+        "color": "yellow"
+      },
+      {
+        "id": "s6",
+        "type": "separator"
+      },
+      {
+        "id": "cpct",
+        "type": "context-percentage",
+        "color": "brightBlack"
+      },
+      {
+        "id": "s8",
+        "type": "separator"
+      },
+      {
+        "id": "host",
+        "type": "custom-command",
+        "color": "brightBlack",
+        "commandPath": "hostname",
+        "timeout": 1000
+      }
+    ],
+    [
+      {
+        "id": "gchanges",
+        "type": "git-changes",
+        "color": "yellow"
+      },
+      {
+        "id": "s10",
+        "type": "separator"
+      },
+      {
+        "id": "dur",
+        "type": "duration",
+        "color": "brightBlack"
+      },
+      {
+        "id": "s11",
+        "type": "separator"
+      },
+      {
+        "id": "usage5h",
+        "type": "session-usage",
+        "color": "green"
+      },
+      {
+        "id": "s12",
+        "type": "separator"
+      },
+      {
+        "id": "usage7d",
+        "type": "weekly-usage",
+        "color": "cyan"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [
+      ""
+    ],
+    "autoAlign": false,
+    "continueThemeAcrossLines": false,
+    "theme": "tokyonight"
+  }
+}
