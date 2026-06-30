@@ -17,8 +17,16 @@ with self.lib'.internal; {
 
   # Lift hyprlock's hard-coded 3-attempt fingerprint cap. Upstream offers no
   # config knob for this; see https://github.com/hyprwm/hyprlock/issues/711.
+  #
+  # Built from the *stable* hyprlock (via final.stable, so it is independent of
+  # overlay application order): the hyprland flake overlay pins hyprutils to a
+  # post-0.13.1 git snapshot that made CSharedPointer's `operator bool`
+  # explicit, which fails to compile hyprlock 0.9.5 ("cannot convert
+  # CSharedPointer<CCWlSeat> to bool"). nixpkgs-stable's hyprlock 0.9.5 builds
+  # against stable's matching hyprutils 0.13.1. Revisit once unstable's hyprlock
+  # catches up to the newer hyprutils API.
   hyprlock-no-retry-cap = final: super: {
-    hyprlock = super.hyprlock.overrideAttrs (old: {
+    hyprlock = final.stable.hyprlock.overrideAttrs (old: {
       postPatch =
         (old.postPatch or "")
         + ''
