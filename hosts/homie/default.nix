@@ -105,6 +105,12 @@ in {
     iifname "podman0" oifname "${config.generated.router.external.interface}" accept
   '';
 
+  # The unifi-os-server container must own UDP 10001 (UniFi device discovery).
+  # Home Assistant opens a listener on the same port, so whichever starts first
+  # wins; if HA wins, the UOS container fails to bind 10001 and crash-loops.
+  # Order HA after UOS so the controller always claims 10001 first.
+  systemd.services.home-assistant.after = ["podman-unifi-os-server.service"];
+
   # Open service ports on the main LAN for direct access (bypassing nginx)
   networking.firewall.interfaces.${config.generated.router.vlans.main.vlanInterface}.allowedTCPPorts = map (name: svc.${name}.port) [
     "jellyseerr"
