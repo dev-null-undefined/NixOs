@@ -21,6 +21,7 @@ in {
     services = {
       ssh.enable = true;
       nextcloud.enable = true;
+      kimai.enable = true;
       unifi-os-server.enable = true;
       home-assistant.enable = true;
       prometheus.enable = true;

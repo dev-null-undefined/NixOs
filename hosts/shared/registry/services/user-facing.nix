@@ -45,6 +45,11 @@
       port = 443;
       subdomain = "cloud";
     };
+    kimai = {
+      host = "homie";
+      port = 443;
+      subdomain = "time";
+    };
     unifi = {
       host = "homie";
       port = 11443;
