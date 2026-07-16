@@ -39,8 +39,31 @@ with self.lib'.internal; {
   stable-pkgs = final: super: {
     inherit
       (super.stable)
+      # AppArmor 5.0.0 on unstable ships a broken aa-remove-unknown: it sources
+      # apparmor-parser's lib/apparmor/rc.apparmor.functions, which 5.0.0 no
+      # longer installs, so apparmor.service's ExecReload fails on switch. Pin
+      # parser+utils+profiles to stable 4.1.7 until unstable is fixed (profiles
+      # must match the parser, or their check phase rejects 5.0.0-only syntax).
+      # Not libapparmor — that's linked by systemd and would force a
+      # system-wide rebuild.
+      apparmor-parser
+      apparmor-profiles
+      apparmor-utils
       bat-extras
       batgrep
+      # freecad 1.1.1's postInstall does `substituteInPlace ... --replace-fail
+      # "TryExec=freecad-thumbnailer"` on FreeCAD.thumbnailer, but that pattern
+      # isn't in the installed file → build dies. Same buggy expr on all
+      # channels, so source builds fail everywhere; only stable has a cached
+      # prebuilt binary. Pin to stable (fetches the binary, skips the rebuild).
+      freecad
+      # GDAL 3.13.1 on unstable const-ified its CSL string-list API
+      # (CSLConstList, was char**). Reverse-deps that still pass char** fail to
+      # compile: pdal 2.9.3 (Raster.cpp) and vtk 9.5.2 (vtkGDALRasterReader.cxx),
+      # breaking vtk → freecad on x1/xps. Pin GDAL to stable 3.12.4 (old API) to
+      # fix the whole fallout at the root; gdalMinimal follows via gdal.override.
+      # Unpin once unstable's pdal+vtk adopt the const API.
+      gdal
       lutris
       wineWowPackages
       ;
