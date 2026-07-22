@@ -805,14 +805,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1780414260,
-        "narHash": "sha256-tCYaTBnJYu9q89SbcNzs5NNEeRvaVG2Nj4udhagx7xg=",
-        "path": "/home/martin/GitHub/martin/money-machine",
-        "type": "path"
+        "lastModified": 1782914116,
+        "narHash": "sha256-r3VTaQRaVE+rhERoeJ0GX1D4oulcHCeZG13h4ebwh2M=",
+        "owner": "dev-null-undefined",
+        "repo": "money-machine",
+        "rev": "42c2b2b7508eae5423b519df5ef9e7696449abb2",
+        "type": "github"
       },
       "original": {
-        "path": "/home/martin/GitHub/martin/money-machine",
-        "type": "path"
+        "owner": "dev-null-undefined",
+        "repo": "money-machine",
+        "type": "github"
       }
     },
     "nix-alien": {

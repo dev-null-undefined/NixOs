@@ -103,7 +103,7 @@
     };
 
     money-machine = {
-      url = "path:/home/martin/GitHub/martin/money-machine";
+      url = "github:dev-null-undefined/money-machine";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
