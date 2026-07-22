@@ -52,6 +52,31 @@ in {
     '';
   };
 
+  # Public-exposure lockdown for services that publish to 0.0.0.0 and are reached
+  # via DNAT (unifi-os-server podman container; qBittorrent WebUI in the ProtonVPN
+  # netns). DNAT bypasses the INPUT firewall, so the module firewall opening is
+  # turned off and access is gated here:
+  #   - LAN may reach the UniFi adoption ports. Unicast inform (8080) is DNAT'd,
+  #     but broadcast discovery (10001) hits the host listener via INPUT, so these
+  #     need explicit LAN INPUT accepts.
+  #   - every published port is dropped on the WAN interface at prerouting (before
+  #     DNAT), so nothing is reachable from the public internet.
+  networking.firewall.interfaces.${lan} = {
+    allowedTCPPorts = [8080]; # UniFi UAP device inform
+    allowedUDPPorts = [3478 10001]; # UniFi STUN + device discovery
+  };
+
+  networking.nftables.tables.wan-lockdown = {
+    family = "inet";
+    content = ''
+      chain prerouting {
+        type filter hook prerouting priority mangle; policy accept;
+        iifname "${wan}" tcp dport { 8080, 11443, 9091 } drop
+        iifname "${wan}" udp dport { 3478, 10001 } drop
+      }
+    '';
+  };
+
   generated.router = {
     enable = true;
     vlans = {
