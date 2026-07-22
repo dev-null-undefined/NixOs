@@ -47,6 +47,13 @@
             output = 128000;
           };
         };
+        "heretic" = {
+          name = "Unhinged Qwen coder";
+          limit = {
+            context = 256000;
+            output = 128000;
+          };
+        };
       };
     };
 
