@@ -24,6 +24,7 @@
 
     qbt_login() {
       SID=$(${curl} -s -i \
+        --header "Referer: http://$QB_HOST:$QB_PORT" \
         --data-urlencode "username=$QB_USER" \
         --data-urlencode "password=$QB_PASS" \
         "http://$QB_HOST:$QB_PORT/api/v2/auth/login" \
@@ -35,7 +36,9 @@
     qbt_set_port() {
       local port="$1"
       local sid="$2"
+      # Referer header is required or qBittorrent rejects the request with "Forbidden" (CSRF guard).
       ${curl} -s \
+        --header "Referer: http://$QB_HOST:$QB_PORT" \
         --cookie "SID=$sid" \
         --data "json={\"listen_port\":$port}" \
         "http://$QB_HOST:$QB_PORT/api/v2/app/setPreferences"
