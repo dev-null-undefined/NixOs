@@ -24,7 +24,7 @@
       },
       {
         "id": "cwd",
-        "type": "cwd",
+        "type": "current-working-dir",
         "color": "blue"
       },
       {
