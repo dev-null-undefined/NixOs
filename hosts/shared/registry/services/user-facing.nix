@@ -35,6 +35,11 @@
       port = 6767;
       subdomain = "bazarr";
     };
+    cleanuparr = {
+      host = "homie";
+      port = 11011;
+      subdomain = "cleanuparr";
+    };
     transmission = {
       host = "homie-vpn";
       port = 9091;

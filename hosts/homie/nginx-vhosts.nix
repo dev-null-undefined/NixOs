@@ -124,6 +124,12 @@
         proxyPass = proxyTo "transmission";
       };
     };
+    "${vhost "cleanuparr"}" = {
+      locations."/" = {
+        proxyWebsockets = true;
+        proxyPass = proxyTo "cleanuparr";
+      };
+    };
   };
 
   hosts' =
