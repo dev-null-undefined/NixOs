@@ -4,6 +4,7 @@
     # TUI
     termdown # timer/stopwatch
     tre-command # better tree
+    herdr # agent multiplexer in the terminal
 
     mc # file manager
     ranger # file manager
